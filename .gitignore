@@ -1,1 +1,8 @@
 FileManager.pro.user
+FileManager.app
+.qmake.stash
+*.o
+*.autosave
+Makefile
+moc_*.cpp
+ui_*.h
