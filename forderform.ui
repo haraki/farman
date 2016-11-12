@@ -50,7 +50,7 @@
     </layout>
    </item>
    <item>
-    <widget class="FolderView" name="tableView">
+    <widget class="QTableView" name="forderView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -67,13 +67,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>FolderView</class>
-   <extends>QTableView</extends>
-   <header>folderview.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
