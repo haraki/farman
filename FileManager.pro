@@ -14,10 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    forderform.cpp
+    forderform.cpp \
+    twocolumnform.cpp
 
 HEADERS  += mainwindow.h \
-    forderform.h
+    forderform.h \
+    twocolumnform.h
 
 FORMS    += mainwindow.ui \
-    forderform.ui
+    forderform.ui \
+    twocolumnform.ui
