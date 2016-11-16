@@ -7,6 +7,9 @@ namespace Ui {
 class MainWindow;
 }
 
+class FolderForm;
+class FolderModel;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -17,6 +20,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    FolderForm* m_folderForm;
+
+    FolderModel* m_folderModel;
 };
 
 #endif // MAINWINDOW_H

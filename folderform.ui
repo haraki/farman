@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ForderForm</class>
- <widget class="QWidget" name="ForderForm">
+ <class>FolderForm</class>
+ <widget class="QWidget" name="FolderForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -50,7 +50,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="forderView">
+    <widget class="QTableView" name="folderView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
