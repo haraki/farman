@@ -11,9 +11,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_folderModel = new FolderModel();
 
-    QVBoxLayout* vLayout = new QVBoxLayout();
+    QVBoxLayout* vLayout = new QVBoxLayout(ui->mainWidget);
+    vLayout->setSpacing(6);
+    vLayout->setObjectName(QStringLiteral("vLayout"));
+    vLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_folderForm = new FolderForm();
+    m_folderForm = new FolderForm(ui->mainWidget);
+    m_folderForm->setObjectName(QStringLiteral("folderForm"));
+
     m_folderForm->setModel(m_folderModel);
 
     vLayout->addWidget(m_folderForm);
