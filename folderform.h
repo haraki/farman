@@ -3,10 +3,14 @@
 
 #include <QWidget>
 
+class FolderModel;
+
 namespace Ui {
 class FolderForm;
 }
 class QAbstractItemModel;
+class QString;
+class FolderModel;
 
 class FolderForm : public QWidget
 {
@@ -16,10 +20,12 @@ public:
     explicit FolderForm(QWidget *parent = 0);
     ~FolderForm();
 
-    void setModel(QAbstractItemModel *model);
+    void setModel(FolderModel *model);
+    void setPath(QString& path);
 
 private:
     Ui::FolderForm *ui;
+    FolderModel *m_folderModel;
 };
 
 #endif // FOLDERFORM_H

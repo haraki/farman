@@ -2,14 +2,25 @@
 #include "ui_mainwindow.h"
 #include "foldermodel.h"
 #include "folderform.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_nameFilters(),
+    m_filterFlags(QDir::AllEntries),
+    m_sortFlags(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name)
 {
     ui->setupUi(this);
 
-    m_folderModel = new FolderModel();
+    QString path = QDir::currentPath();
+    qDebug() << path;
+
+    m_folderModel = new FolderModel(this);
+
+    m_folderModel->setFilter(m_filterFlags);
+    m_folderModel->setSorting(m_sortFlags);
+    m_folderModel->setReadOnly(true);
 
     QVBoxLayout* vLayout = new QVBoxLayout(ui->mainWidget);
     vLayout->setSpacing(6);
@@ -20,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_folderForm->setObjectName(QStringLiteral("folderForm"));
 
     m_folderForm->setModel(m_folderModel);
+    m_folderForm->setPath(path);
 
     vLayout->addWidget(m_folderForm);
 
@@ -29,4 +41,5 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete m_folderModel;
 }

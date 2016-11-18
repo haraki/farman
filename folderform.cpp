@@ -1,5 +1,6 @@
 #include "folderform.h"
 #include "ui_folderform.h"
+#include "foldermodel.h"
 
 FolderForm::FolderForm(QWidget *parent) :
     QWidget(parent),
@@ -13,7 +14,19 @@ FolderForm::~FolderForm()
     delete ui;
 }
 
-void FolderForm::setModel(QAbstractItemModel *model)
+void FolderForm::setModel(FolderModel *model)
 {
+    m_folderModel = model;
     ui->folderView->setModel(model);
+}
+
+void FolderForm::setPath(QString& path)
+{
+    if(m_folderModel != nullptr)
+    {
+        QModelIndex index = m_folderModel->index(path);
+        ui->folderView->setRootIndex(index);
+
+        ui->lineEdit->setText(path);
+    }
 }

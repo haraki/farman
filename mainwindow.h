@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qdir.h>
+
+class QDirModel;
+class QStringList;
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +28,10 @@ private:
     FolderForm* m_folderForm;
 
     FolderModel* m_folderModel;
+
+    QStringList m_nameFilters;
+    QDir::Filters m_filterFlags;
+    QDir::SortFlags m_sortFlags;
 };
 
 #endif // MAINWINDOW_H
