@@ -1,3 +1,5 @@
+#include <QDebug>
+#include <QResizeEvent>
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -29,4 +31,13 @@ void FolderForm::setPath(QString& path)
 
         ui->lineEdit->setText(path);
     }
+}
+
+void FolderForm::resizeEvent(QResizeEvent *event)
+{
+    qDebug() << "<<<< RESIZE >>>>";
+
+    QSize diff = event->size() - event->oldSize();
+
+//    ui->folderView->setColumnWidth(0, ui->folderView->columnWidth(0) + diff.width());
 }

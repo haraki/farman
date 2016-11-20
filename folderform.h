@@ -10,6 +10,7 @@ class FolderForm;
 }
 class QAbstractItemModel;
 class QString;
+class QResizeEvent;
 class FolderModel;
 
 class FolderForm : public QWidget
@@ -23,7 +24,11 @@ public:
     void setModel(FolderModel *model);
     void setPath(QString& path);
 
+protected:
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+
 private:
+
     Ui::FolderForm *ui;
     FolderModel *m_folderModel;
 };
