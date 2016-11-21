@@ -35,9 +35,9 @@ void FolderForm::setPath(QString& path)
 
 void FolderForm::resizeEvent(QResizeEvent *event)
 {
-    qDebug() << "<<<< RESIZE >>>>";
-
     QSize diff = event->size() - event->oldSize();
 
-//    ui->folderView->setColumnWidth(0, ui->folderView->columnWidth(0) + diff.width());
+    qDebug() << "<<<< RESIZE >>>> " << event->size();
+
+    ui->folderView->setColumnWidth(0, event->size().width() - ui->folderView->columnWidth(1) - ui->folderView->columnWidth(2) - ui->folderView->columnWidth(3));
 }
