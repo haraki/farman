@@ -27,8 +27,13 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
-private:
+protected slots:
+    void columnResized(int column, int oldWidth, int newWidth);
 
+private:
+    int getTotalColumnWidth(int withOutColumn = -1);
+
+private:
     Ui::FolderForm *ui;
     FolderModel *m_folderModel;
 };
