@@ -24,9 +24,15 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
 {
     QVariant ret;
 
+    if(!index.isValid())
+    {
+        return ret;
+    }
+
     switch(role)
     {
     case Qt::DisplayRole:
+    case Qt::EditRole:
         switch(index.column())
         {
         case 0:
@@ -35,9 +41,24 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         case 1:
             ret = fileInfo(index).size();
             break;
+        case 2:
+            ret = iconProvider()->type(fileInfo(index));
+            break;
         case 3:
             ret = fileInfo(index).lastModified().toString("yyyy-MM-dd HH:mm:ss");
             break;
+        }
+
+        break;
+
+    case Qt::TextAlignmentRole:
+        if(index.column() == 1)
+        {
+            ret = Qt::AlignRight;
+        }
+        else
+        {
+            ret = Qt::AlignLeft;
         }
 
         break;
@@ -49,11 +70,31 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         }
 
         break;
-    }
 
-    if(ret.isNull())
-    {
-        ret = QDirModel::data(index, role);
+    case FileIconRole:
+        if(index.column() == 0)
+        {
+            ret = fileIcon(index);
+        }
+
+        break;
+
+    case FilePathRole:
+        if(index.column() == 0)
+        {
+            ret = filePath(index);
+        }
+
+        break;
+
+    case FileNameRole:
+        if(index.column() == 0)
+        {
+            ret = fileName(index);
+        }
+
+        break;
+
     }
 
 //    qDebug() << "data(" << index << "," << static_cast<Qt::ItemDataRole>(role) << ") : ret = " << ret;
