@@ -71,6 +71,11 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
 
         break;
 
+    case Qt::BackgroundRole:
+        ret = m_palette.base();
+
+        break;
+
     case FileIconRole:
         if(index.column() == 0)
         {
