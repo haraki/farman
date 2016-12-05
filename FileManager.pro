@@ -18,12 +18,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     folderform.cpp \
     twocolumnform.cpp \
-    foldermodel.cpp \
-    folderview.cpp
+    folderview.cpp \
+    folderviewstyleditemdelegate.cpp \
+    foldermodel.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
     twocolumnform.h \
+    folderviewstyleditemdelegate.h \
     foldermodel.h \
     folderview.h
 
