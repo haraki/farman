@@ -30,7 +30,8 @@ protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 protected slots:
-    void columnResized(int column, int oldWidth, int newWidth);
+    void onColumnResized(int column, int oldWidth, int newWidth);
+    void onOpen(const QModelIndex& index);
 
 private:
     int getTotalColumnWidth(int withOutColumn = -1);

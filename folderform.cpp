@@ -21,7 +21,8 @@ FolderForm::FolderForm(QWidget *parent) :
 
     ui->folderView->setModel(m_folderModel);
 
-    QObject::connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(columnResized(int,int,int)));
+    connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)),       this, SLOT(columnResized(int,int,int)));
+    connect(ui->folderView,                     SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onOpen(const QModelIndex&)));
 }
 
 FolderForm::~FolderForm()
@@ -56,12 +57,14 @@ void FolderForm::setPath(QString& path)
         ui->folderView->setRootIndex(index);
 
         ui->lineEdit->setText(path);
+
+        ui->folderView->selectRow(0);
     }
 }
 
 void FolderForm::resizeEvent(QResizeEvent *event)
 {
-    QSize diff = event->size() - event->oldSize();
+//    QSize diff = event->size() - event->oldSize();
 
 //    qDebug() << "<<<< RESIZE >>>> " << event->size();
 
@@ -72,7 +75,7 @@ void FolderForm::resizeEvent(QResizeEvent *event)
     ui->folderView->horizontalHeader()->blockSignals(false);
 }
 
-void FolderForm::columnResized(int column, int oldWidth, int newWidth)
+void FolderForm::onColumnResized(int column, int oldWidth, int newWidth)
 {
 //    qDebug() << "resizeSection(" << column << ", " << oldWidth << ", " << newWidth << ")";
 
@@ -102,6 +105,22 @@ void FolderForm::columnResized(int column, int oldWidth, int newWidth)
         ui->folderView->setColumnWidth(lastColumn, newLastColumnWidth);
 
         ui->folderView->horizontalHeader()->blockSignals(false);
+    }
+}
+
+void FolderForm::onOpen(const QModelIndex& index)
+{
+    Q_UNUSED(index);
+
+    QModelIndex currentIndex = ui->folderView->currentIndex();
+
+    if(m_folderModel->isDir(currentIndex))
+    {
+        QString path = m_folderModel->filePath(currentIndex);
+
+        qDebug() << "================== onOpen() : " << currentIndex << " -> " << path;
+
+        setPath(path);
     }
 }
 
