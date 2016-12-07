@@ -2,6 +2,7 @@
 #define FOLDERFORM_H
 
 #include <QWidget>
+#include <QDir>
 
 class FolderModel;
 
@@ -21,7 +22,8 @@ public:
     explicit FolderForm(QWidget *parent = 0);
     ~FolderForm();
 
-    void setModel(FolderModel *model);
+    void setFilterFlags(QDir::Filters filterFlags);
+    void setSortFlags(QDir::SortFlags sortFlags);
     void setPath(QString& path);
 
 protected:
@@ -35,6 +37,10 @@ private:
 
 private:
     Ui::FolderForm *ui;
+
+    QDir::Filters m_filterFlags;
+    QDir::SortFlags m_sortFlags;
+
     FolderModel *m_folderModel;
 };
 

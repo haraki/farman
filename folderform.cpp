@@ -7,22 +7,45 @@
 
 FolderForm::FolderForm(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FolderForm)
+    ui(new Ui::FolderForm),
+    m_filterFlags(QDir::AllEntries),
+    m_sortFlags(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name),
+    m_folderModel(nullptr)
 {
     ui->setupUi(this);
+
+    m_folderModel = new FolderModel(this);
+    m_folderModel->setReadOnly(true);
+    m_folderModel->setFilter(m_filterFlags);
+    m_folderModel->setSorting(m_sortFlags);
+
+    ui->folderView->setModel(m_folderModel);
 
     QObject::connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)), this, SLOT(columnResized(int,int,int)));
 }
 
 FolderForm::~FolderForm()
 {
+    delete m_folderModel;
     delete ui;
 }
 
-void FolderForm::setModel(FolderModel *model)
+void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 {
-    m_folderModel = model;
-    ui->folderView->setModel(model);
+    m_filterFlags = filterFlags;
+    if(m_folderModel != nullptr)
+    {
+        m_folderModel->setFilter(filterFlags);
+    }
+}
+
+void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
+{
+    m_sortFlags = sortFlags;
+    if(m_folderModel != nullptr)
+    {
+        m_folderModel->setSorting(sortFlags);
+    }
 }
 
 void FolderForm::setPath(QString& path)

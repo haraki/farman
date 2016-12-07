@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <qdir.h>
 
-class QDirModel;
 class QStringList;
 
 namespace Ui {
@@ -12,7 +11,6 @@ class MainWindow;
 }
 
 class FolderForm;
-class FolderModel;
 
 class MainWindow : public QMainWindow
 {
@@ -26,8 +24,6 @@ private:
     Ui::MainWindow *ui;
 
     FolderForm* m_folderForm;
-
-    FolderModel* m_folderModel;
 
     QStringList m_nameFilters;
     QDir::Filters m_filterFlags;
