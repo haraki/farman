@@ -4,8 +4,7 @@
 FolderView::FolderView(QWidget *parent)
     : QTableView(parent)
 {
-
-    setItemDelegate(new FolderViewStyledItemDelegate());
+    setItemDelegate(new FolderViewStyledItemDelegate(this));
 }
 
 FolderView::~FolderView()

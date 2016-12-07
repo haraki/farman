@@ -16,12 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    m_folderModel = new FolderModel(this);
-
-    m_folderModel->setFilter(m_filterFlags);
-    m_folderModel->setSorting(m_sortFlags);
-    m_folderModel->setReadOnly(true);
-
     QVBoxLayout* vLayout = new QVBoxLayout(ui->mainWidget);
     vLayout->setSpacing(6);
     vLayout->setObjectName(QStringLiteral("vLayout"));
@@ -29,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_folderForm = new FolderForm(ui->mainWidget);
     m_folderForm->setObjectName(QStringLiteral("folderForm"));
+
+    m_folderModel = new FolderModel(this);
+    m_folderModel->setFilter(m_filterFlags);
+    m_folderModel->setSorting(m_sortFlags);
+    m_folderModel->setReadOnly(true);
 
     m_folderForm->setModel(m_folderModel);
     m_folderForm->setPath(path);

@@ -9,7 +9,6 @@
 FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
 {
-
 }
 
 void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -20,7 +19,8 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
     QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);
 
-    opt.state &= ~QStyle::State_Selected;           // カーソル位置の背景・文字を通常と同じ色にする
+    // カーソル位置の背景・文字を通常と同じ色にする
+    opt.state &= ~QStyle::State_Selected;
 
     const QWidget *widget = option.widget;
     QStyle *style = widget ? widget->style() : QApplication::style();
@@ -29,6 +29,10 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
     if(option.state & QStyle::State_Selected)
     {
         // カーソル位置をアンダーラインで表示
+        painter->save();
+        QPen pen(widget->palette().highlight(), 2);
+        painter->setPen(pen);
         painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
+        painter->restore();
     }
 }
