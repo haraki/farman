@@ -5,11 +5,11 @@
 #include "ui_folderform.h"
 #include "foldermodel.h"
 
-FolderForm::FolderForm(QWidget *parent) :
+FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FolderForm),
-    m_filterFlags(QDir::AllEntries),
-    m_sortFlags(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name),
+    m_filterFlags(filterFlags),
+    m_sortFlags(sortFlags),
     m_folderModel(nullptr)
 {
     ui->setupUi(this);

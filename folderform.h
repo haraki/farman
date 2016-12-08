@@ -20,7 +20,7 @@ class FolderForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit FolderForm(QWidget *parent = 0);
+    explicit FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent = 0);
     ~FolderForm();
 
     void setFilterFlags(QDir::Filters filterFlags);
