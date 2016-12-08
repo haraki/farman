@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     m_nameFilters(),
-    m_filterFlags(QDir::AllEntries | QDir::NoDot),
+    m_filterFlags(QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot),
     m_sortFlags(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name)
 {
     ui->setupUi(this);
