@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDir>
+#include <QModelIndex>
 
 class FolderModel;
 
@@ -31,10 +32,11 @@ protected:
 
 protected slots:
     void onColumnResized(int column, int oldWidth, int newWidth);
-    void onOpen(const QModelIndex& index);
+    void onOpen(const QModelIndex& index = QModelIndex());
 
 private:
     int getTotalColumnWidth(int withOutColumn = -1);
+    bool eventFilter(QObject *watched, QEvent *e) override;
 
 private:
     Ui::FolderForm *ui;

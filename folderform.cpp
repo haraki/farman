@@ -21,6 +21,8 @@ FolderForm::FolderForm(QWidget *parent) :
 
     ui->folderView->setModel(m_folderModel);
 
+    ui->folderView->installEventFilter(this);
+
     connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)),       this, SLOT(onColumnResized(int,int,int)));
     connect(ui->folderView,                     SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onOpen(const QModelIndex&)));
 }
@@ -108,7 +110,7 @@ void FolderForm::onColumnResized(int column, int oldWidth, int newWidth)
     }
 }
 
-void FolderForm::onOpen(const QModelIndex& index)
+void FolderForm::onOpen(const QModelIndex& index/* = QModelIndex()*/)
 {
     Q_UNUSED(index);
 
@@ -139,3 +141,29 @@ int FolderForm::getTotalColumnWidth(int withOutColumn)
     return totalWidth;
 }
 
+bool FolderForm::eventFilter(QObject *watched, QEvent *e)
+{
+    Q_UNUSED(watched);
+
+    bool ret = false;
+
+    switch (e->type()) {
+    case QEvent::KeyPress:
+    {
+        Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
+
+        qDebug() << key;
+
+        if(key == Qt::Key_Return)
+        {
+            this->onOpen();
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+
+    return ret;
+}
