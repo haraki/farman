@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     vLayout->addWidget(m_folderForm);
 
-    setLayout(vLayout);
+    ui->mainWidget->setLayout(vLayout);
 }
 
 MainWindow::~MainWindow()
