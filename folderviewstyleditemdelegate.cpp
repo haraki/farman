@@ -30,7 +30,7 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
     {
         // カーソル位置をアンダーラインで表示
         painter->save();
-        QPen pen(widget->palette().highlight(), 2);
+        QPen pen(widget->palette().highlight(), 1);
         painter->setPen(pen);
         painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
         painter->restore();
