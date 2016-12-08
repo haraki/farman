@@ -92,6 +92,11 @@
    <header>folderview.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>folderView</tabstop>
+  <tabstop>toolButton</tabstop>
+  <tabstop>lineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
