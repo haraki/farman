@@ -21,7 +21,7 @@ FolderForm::FolderForm(QWidget *parent) :
 
     ui->folderView->setModel(m_folderModel);
 
-    connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)),       this, SLOT(columnResized(int,int,int)));
+    connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)),       this, SLOT(onColumnResized(int,int,int)));
     connect(ui->folderView,                     SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onOpen(const QModelIndex&)));
 }
 
