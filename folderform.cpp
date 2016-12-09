@@ -55,16 +55,25 @@ void FolderForm::setPath(QString& path)
 {
     if(m_folderModel != nullptr)
     {
-        QFileInfo fileinfo(path);
+        QDir dir(path);
+        QDir::Filters filterFlags;
 
-        if(fileinfo.isRoot())
+        if(dir.isRoot())
         {
-            m_folderModel->setFilter(m_filterFlags | QDir::NoDotDot);
+            filterFlags = m_filterFlags | QDir::NoDotDot;
         }
         else
         {
-            m_folderModel->setFilter(m_filterFlags & ~QDir::NoDotDot);
+            filterFlags = m_filterFlags & ~QDir::NoDotDot;
         }
+
+        if(dir.entryInfoList(filterFlags, m_sortFlags).size() == 0)
+        {
+            qDebug() << path << " size() == 0";
+            return;
+        }
+
+        m_folderModel->setFilter(filterFlags);
 
         QModelIndex index = m_folderModel->index(path);
         ui->folderView->setRootIndex(index);
