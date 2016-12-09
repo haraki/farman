@@ -55,6 +55,14 @@ void FolderForm::setPath(QString& path)
 {
     if(m_folderModel != nullptr)
     {
+        if(path == "/")
+        {
+            m_folderModel->setFilter(m_filterFlags | QDir::NoDotDot);
+        }
+        else
+        {
+            m_folderModel->setFilter(m_filterFlags & ~QDir::NoDotDot);
+        }
         QModelIndex index = m_folderModel->index(path);
         ui->folderView->setRootIndex(index);
 
