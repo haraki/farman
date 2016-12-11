@@ -29,30 +29,35 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         return ret;
     }
 
+    SectionType sectionType = getSectionTypeFromColumn(index.column());
+    Q_ASSERT(sectionType != Unknown);
+
     switch(role)
     {
     case Qt::DisplayRole:
     case Qt::EditRole:
-        switch(index.column())
+        switch(sectionType)
         {
-        case 0:
+        case FileName:
             ret = fileInfo(index).fileName();
             break;
-        case 1:
+        case FileSize:
             ret = fileInfo(index).size();
             break;
-        case 2:
+        case FileType:
             ret = iconProvider()->type(fileInfo(index));
             break;
-        case 3:
+        case LastModified:
             ret = fileInfo(index).lastModified().toString("yyyy-MM-dd HH:mm:ss");
+            break;
+        default:
             break;
         }
 
         break;
 
     case Qt::TextAlignmentRole:
-        if(index.column() == 1)
+        if(sectionType == FileSize)
         {
             ret = Qt::AlignRight;
         }
@@ -77,7 +82,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case FileIconRole:
-        if(index.column() == 0)
+        if(sectionType == FileName)
         {
             ret = fileIcon(index);
         }
@@ -85,7 +90,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case FilePathRole:
-        if(index.column() == 0)
+        if(sectionType == FileName)
         {
             ret = filePath(index);
         }
@@ -93,7 +98,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case FileNameRole:
-        if(index.column() == 0)
+        if(sectionType == FileName)
         {
             ret = fileName(index);
         }
@@ -111,21 +116,26 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
 {
     QVariant ret;
 
+    SectionType sectionType = getSectionTypeFromColumn(section);
+    Q_ASSERT(sectionType != Unknown);
+
     if(role == Qt::DisplayRole)
     {
-        switch(section)
+        switch(sectionType)
         {
-        case 0:
+        case FileName:
             ret = QString("ファイル名");
             break;
-        case 1:
+        case FileSize:
             ret = QString("サイズ");
             break;
-        case 2:
+        case FileType:
             ret = QString("種類");
             break;
-        case 3:
+        case LastModified:
             ret = QString("更新日時");
+            break;
+        default:
             break;
         }
 
@@ -150,6 +160,28 @@ void FolderModel::sort(int column, Qt::SortOrder order)
     qDebug() << "================= sorting : " << QDirModel::sorting();
 }
 
+FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
+{
+    // Todo: 将来的に可変にする
+    if(column == 0)
+    {
+        return FileName;
+    }
+    else if(column == 1)
+    {
+        return FileSize;
+    }
+    else if(column == 2)
+    {
+        return FileType;
+    }
+    else if(column == 3)
+    {
+        return LastModified;
+    }
+
+    return Unknown;
+}
 
 #if 0
 FolderModel::FolderModel(QObject *parent)

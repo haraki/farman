@@ -25,6 +25,20 @@ public:
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
 
 private:
+    enum SectionType
+    {
+        Unknown = -1,
+
+        FileName = 0,
+        FileSize,
+        FileType,
+        LastModified,
+
+        SectionTypeNum
+    };
+
+    SectionType getSectionTypeFromColumn(int column) const;
+
     QPalette m_palette;
 };
 
