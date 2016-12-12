@@ -25,7 +25,7 @@ public:
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
 
 private:
-    enum SectionType
+    enum class SectionType : int
     {
         Unknown = -1,
 
@@ -39,7 +39,24 @@ private:
 
     SectionType getSectionTypeFromColumn(int column) const;
 
-    QPalette m_palette;
+    enum class BrushType : int
+    {
+        Unknown = -1,
+
+        Background,
+
+        Normal,
+        ReadOnly,
+        Hidden,
+
+        BrushTypeNum
+    };
+
+    QBrush getTextBrush(const QModelIndex& index) const;
+    QBrush getBrush(BrushType brushType) const;
+    void initBrush();
+
+    std::map<BrushType, QBrush> m_brush;
 };
 
 

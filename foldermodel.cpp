@@ -8,11 +8,13 @@
 FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent)
     : QDirModel(nameFilters, filters, sort, parent)
 {
+    initBrush();
 }
 
 FolderModel::FolderModel(QObject *parent)
     : QDirModel(parent)
 {
+    initBrush();
 }
 
 FolderModel::~FolderModel()
@@ -30,7 +32,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
     }
 
     SectionType sectionType = getSectionTypeFromColumn(index.column());
-    Q_ASSERT(sectionType != Unknown);
+    Q_ASSERT(sectionType != SectionType::Unknown);
 
     switch(role)
     {
@@ -38,16 +40,16 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
     case Qt::EditRole:
         switch(sectionType)
         {
-        case FileName:
+        case SectionType::FileName:
             ret = fileInfo(index).fileName();
             break;
-        case FileSize:
+        case SectionType::FileSize:
             ret = fileInfo(index).size();
             break;
-        case FileType:
+        case SectionType::FileType:
             ret = iconProvider()->type(fileInfo(index));
             break;
-        case LastModified:
+        case SectionType::LastModified:
             ret = fileInfo(index).lastModified().toString("yyyy-MM-dd HH:mm:ss");
             break;
         default:
@@ -57,7 +59,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case Qt::TextAlignmentRole:
-        if(sectionType == FileSize)
+        if(sectionType == SectionType::FileSize)
         {
             ret = Qt::AlignRight;
         }
@@ -69,20 +71,17 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case Qt::TextColorRole:
-        if((fileName(index) != "..") && (fileInfo(index).isHidden()))
-        {
-            ret = m_palette.dark();
-        }
+        ret = getTextBrush(index);
 
         break;
 
     case Qt::BackgroundRole:
-        ret = m_palette.base();
+        ret = getBrush(BrushType::Background);
 
         break;
 
     case FileIconRole:
-        if(sectionType == FileName)
+        if(sectionType == SectionType::FileName)
         {
             ret = fileIcon(index);
         }
@@ -90,7 +89,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case FilePathRole:
-        if(sectionType == FileName)
+        if(sectionType == SectionType::FileName)
         {
             ret = filePath(index);
         }
@@ -98,7 +97,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case FileNameRole:
-        if(sectionType == FileName)
+        if(sectionType == SectionType::FileName)
         {
             ret = fileName(index);
         }
@@ -117,22 +116,22 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
     QVariant ret;
 
     SectionType sectionType = getSectionTypeFromColumn(section);
-    Q_ASSERT(sectionType != Unknown);
+    Q_ASSERT(sectionType != SectionType::Unknown);
 
     if(role == Qt::DisplayRole)
     {
         switch(sectionType)
         {
-        case FileName:
+        case SectionType::FileName:
             ret = QString("ファイル名");
             break;
-        case FileSize:
+        case SectionType::FileSize:
             ret = QString("サイズ");
             break;
-        case FileType:
+        case SectionType::FileType:
             ret = QString("種類");
             break;
-        case LastModified:
+        case SectionType::LastModified:
             ret = QString("更新日時");
             break;
         default:
@@ -165,22 +164,62 @@ FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
     // Todo: 将来的に可変にする
     if(column == 0)
     {
-        return FileName;
+        return SectionType::FileName;
     }
     else if(column == 1)
     {
-        return FileSize;
+        return SectionType::FileSize;
     }
     else if(column == 2)
     {
-        return FileType;
+        return SectionType::FileType;
     }
     else if(column == 3)
     {
-        return LastModified;
+        return SectionType::LastModified;
     }
 
-    return Unknown;
+    return SectionType::Unknown;
+}
+
+QBrush FolderModel::getTextBrush(const QModelIndex& index) const
+{
+    QBrush ret;
+
+    if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
+    {
+        ret = getBrush(BrushType::ReadOnly);
+    }
+    else if((fileName(index) != "..") && (fileInfo(index).isHidden()))
+    {
+        ret = getBrush(BrushType::Hidden);
+    }
+    else
+    {
+        ret = getBrush(BrushType::Normal);
+    }
+
+    return ret;
+}
+
+QBrush FolderModel::getBrush(BrushType brushType) const
+{
+    QBrush ret;
+
+    if(m_brush.find(brushType) != m_brush.end())
+    {
+        ret = m_brush.at(brushType);
+    }
+
+    return ret;
+}
+
+void FolderModel::initBrush()
+{
+    m_brush[BrushType::Background] = QPalette().base();
+    m_brush[BrushType::Normal] = QPalette().text();
+    m_brush[BrushType::ReadOnly] = QPalette().highlightedText();
+    m_brush[BrushType::Hidden] = QPalette().dark();
 }
 
 #if 0
