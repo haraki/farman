@@ -175,10 +175,9 @@ bool FolderModel::isChecked(const QModelIndex& modelIndex) const
 {
     bool ret = false;
 
-    QMap<QString, Qt::CheckState>::const_iterator itr = m_checked.find(fileName(modelIndex));
-    if(itr != m_checked.end())
+    if(m_checked.find(fileName(modelIndex)) != m_checked.cend())
     {
-        ret = (*itr == Qt::Checked);
+        ret = true;
     }
 
     return ret;
@@ -189,15 +188,14 @@ bool FolderModel::toggleCheck(const QModelIndex& modelIndex)
     bool ret = false;
 
     QString filename = fileName(modelIndex);
-    QMap<QString, Qt::CheckState>::iterator itr = m_checked.find(filename);
-    if(itr != m_checked.end())
+    if(m_checked.find(filename) != m_checked.cend())
     {
-        *itr = (*itr == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
-        ret = (*itr == Qt::Checked);
+        m_checked.remove(filename);
+        ret = false;
     }
     else
     {
-        m_checked[filename] = Qt::Checked;
+        m_checked.insert(filename);
         ret = true;
     }
 

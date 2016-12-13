@@ -1,10 +1,9 @@
 #ifndef FOLDERMODEL_H
 #define FOLDERMODEL_H
 
+#include <QSet>
 #include <QAbstractItemModel>
 #include <qdir.h>
-
-
 #include <QDir>
 #include <QDirModel>
 #include <QPalette>
@@ -29,7 +28,7 @@ public:
     bool toggleCheck(const QModelIndex& modelIndex);
 
 private:
-    QMap<QString, Qt::CheckState> m_checked;
+    QSet<QString> m_checked;
 
     enum class SectionType : int
     {
