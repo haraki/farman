@@ -56,7 +56,7 @@ private:
     QBrush getBrush(BrushType brushType) const;
     void initBrush();
 
-    std::map<BrushType, QBrush> m_brush;
+    QMap<BrushType, QBrush> m_brush;
 };
 
 

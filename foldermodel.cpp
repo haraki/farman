@@ -206,9 +206,10 @@ QBrush FolderModel::getBrush(BrushType brushType) const
 {
     QBrush ret;
 
-    if(m_brush.find(brushType) != m_brush.end())
+    QMap<BrushType, QBrush>::const_iterator itr = m_brush.find(brushType);
+    if(itr != m_brush.end())
     {
-        ret = m_brush.at(brushType);
+        ret = *itr;
     }
 
     return ret;
