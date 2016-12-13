@@ -20,11 +20,17 @@ public:
     explicit FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent = Q_NULLPTR);
     FolderModel(QObject *parent = Q_NULLPTR);
     ~FolderModel();
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
 
+    void clearChecked();
+    bool isChecked(const QModelIndex& modelIndex) const;
+    bool toggleCheck(const QModelIndex& modelIndex);
+
 private:
+    QMap<QString, Qt::CheckState> m_checked;
+
     enum class SectionType : int
     {
         Unknown = -1,
@@ -44,10 +50,14 @@ private:
         Unknown = -1,
 
         Background,
+        Background_Checked,
 
         Normal,
+        Normal_Checked,
         ReadOnly,
+        ReadOnly_Checked,
         Hidden,
+        Hidden_Checked,
 
         BrushTypeNum
     };

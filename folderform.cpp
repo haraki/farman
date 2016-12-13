@@ -73,6 +73,7 @@ void FolderForm::setPath(QString& path)
             return;
         }
 
+        m_folderModel->clearChecked();
         m_folderModel->setFilter(filterFlags);
 
         QModelIndex index = m_folderModel->index(path);
@@ -146,6 +147,25 @@ void FolderForm::onOpen(const QModelIndex& index/* = QModelIndex()*/)
     }
 }
 
+void FolderForm::onToggleCheck()
+{
+    QModelIndex currentIndex = ui->folderView->currentIndex();
+
+    if(m_folderModel->fileName(currentIndex) != "..")
+    {
+        m_folderModel->toggleCheck(currentIndex);
+    }
+
+    qDebug() << currentIndex.row() << "," << m_folderModel->rowCount(currentIndex.parent());
+
+    if(currentIndex.row() + 1 < m_folderModel->rowCount(currentIndex.parent()))
+    {
+        // カーソルを1行下に移動
+        QModelIndex newIndex = m_folderModel->index(currentIndex.row() + 1, 0, currentIndex.parent());
+        ui->folderView->setCurrentIndex(newIndex);
+    }
+}
+
 int FolderForm::getTotalColumnWidth(int withOutColumn)
 {
     int totalWidth = 0;
@@ -177,6 +197,14 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
         if(key == Qt::Key_Return)
         {
             this->onOpen();
+
+            ret = true;
+        }
+        else if(key == Qt::Key_Space)
+        {
+            this->onToggleCheck();
+
+            ret = true;
         }
 
         break;

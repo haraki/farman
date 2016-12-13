@@ -22,16 +22,16 @@ FolderModel::~FolderModel()
 
 }
 
-QVariant FolderModel::data(const QModelIndex &index, int role) const
+QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 {
     QVariant ret;
 
-    if(!index.isValid())
+    if(!modelIndex.isValid())
     {
         return ret;
     }
 
-    SectionType sectionType = getSectionTypeFromColumn(index.column());
+    SectionType sectionType = getSectionTypeFromColumn(modelIndex.column());
     Q_ASSERT(sectionType != SectionType::Unknown);
 
     switch(role)
@@ -41,16 +41,16 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         switch(sectionType)
         {
         case SectionType::FileName:
-            ret = fileInfo(index).fileName();
+            ret = fileInfo(modelIndex).fileName();
             break;
         case SectionType::FileSize:
-            ret = fileInfo(index).size();
+            ret = fileInfo(modelIndex).size();
             break;
         case SectionType::FileType:
-            ret = iconProvider()->type(fileInfo(index));
+            ret = iconProvider()->type(fileInfo(modelIndex));
             break;
         case SectionType::LastModified:
-            ret = fileInfo(index).lastModified().toString("yyyy-MM-dd HH:mm:ss");
+            ret = fileInfo(modelIndex).lastModified().toString("yyyy-MM-dd HH:mm:ss");
             break;
         default:
             break;
@@ -71,19 +71,26 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
         break;
 
     case Qt::TextColorRole:
-        ret = getTextBrush(index);
+        ret = getTextBrush(modelIndex);
 
         break;
 
     case Qt::BackgroundRole:
-        ret = getBrush(BrushType::Background);
+        if(isChecked(modelIndex))
+        {
+            ret = getBrush(BrushType::Background_Checked);
+        }
+        else
+        {
+            ret = getBrush(BrushType::Background);
+        }
 
         break;
 
     case FileIconRole:
         if(sectionType == SectionType::FileName)
         {
-            ret = fileIcon(index);
+            ret = fileIcon(modelIndex);
         }
 
         break;
@@ -91,7 +98,7 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
     case FilePathRole:
         if(sectionType == SectionType::FileName)
         {
-            ret = filePath(index);
+            ret = filePath(modelIndex);
         }
 
         break;
@@ -99,14 +106,14 @@ QVariant FolderModel::data(const QModelIndex &index, int role) const
     case FileNameRole:
         if(sectionType == SectionType::FileName)
         {
-            ret = fileName(index);
+            ret = fileName(modelIndex);
         }
 
         break;
 
     }
 
-//    qDebug() << "data(" << index << "," << static_cast<Qt::ItemDataRole>(role) << ") : ret = " << ret;
+//    qDebug() << "data(" << modelIndex << "," << static_cast<Qt::ItemDataRole>(role) << ") : ret = " << ret;
 
     return ret;
 }
@@ -159,6 +166,46 @@ void FolderModel::sort(int column, Qt::SortOrder order)
     qDebug() << "================= sorting : " << QDirModel::sorting();
 }
 
+void FolderModel::clearChecked()
+{
+    m_checked.clear();
+}
+
+bool FolderModel::isChecked(const QModelIndex& modelIndex) const
+{
+    bool ret = false;
+
+    QMap<QString, Qt::CheckState>::const_iterator itr = m_checked.find(fileName(modelIndex));
+    if(itr != m_checked.end())
+    {
+        ret = (*itr == Qt::Checked);
+    }
+
+    return ret;
+}
+
+bool FolderModel::toggleCheck(const QModelIndex& modelIndex)
+{
+    bool ret = false;
+
+    QString filename = fileName(modelIndex);
+    QMap<QString, Qt::CheckState>::iterator itr = m_checked.find(filename);
+    if(itr != m_checked.end())
+    {
+        *itr = (*itr == Qt::Checked) ? Qt::Unchecked : Qt::Checked;
+        ret = (*itr == Qt::Checked);
+    }
+    else
+    {
+        m_checked[filename] = Qt::Checked;
+        ret = true;
+    }
+
+    emit dataChanged(index(0, modelIndex.row()), index(columnCount(), modelIndex.row()));
+
+    return ret;
+}
+
 FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
 {
     // Todo: 将来的に可変にする
@@ -188,15 +235,36 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
 
     if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
     {
-        ret = getBrush(BrushType::ReadOnly);
+        if(isChecked(index))
+        {
+            ret = getBrush(BrushType::ReadOnly_Checked);
+        }
+        else
+        {
+            ret = getBrush(BrushType::ReadOnly);
+        }
     }
     else if((fileName(index) != "..") && (fileInfo(index).isHidden()))
     {
-        ret = getBrush(BrushType::Hidden);
+        if(isChecked(index))
+        {
+            ret = getBrush(BrushType::Hidden_Checked);
+        }
+        else
+        {
+            ret = getBrush(BrushType::Hidden);
+        }
     }
     else
     {
-        ret = getBrush(BrushType::Normal);
+        if(isChecked(index))
+        {
+            ret = getBrush(BrushType::Normal_Checked);
+        }
+        else
+        {
+            ret = getBrush(BrushType::Normal);
+        }
     }
 
     return ret;
@@ -218,9 +286,13 @@ QBrush FolderModel::getBrush(BrushType brushType) const
 void FolderModel::initBrush()
 {
     m_brush[BrushType::Background] = QPalette().base();
+    m_brush[BrushType::Background_Checked] = QPalette().highlight();
     m_brush[BrushType::Normal] = QPalette().text();
+    m_brush[BrushType::Normal_Checked] = QPalette().text();
     m_brush[BrushType::ReadOnly] = QPalette().highlightedText();
+    m_brush[BrushType::ReadOnly_Checked] = QPalette().highlightedText();
     m_brush[BrushType::Hidden] = QPalette().dark();
+    m_brush[BrushType::Hidden_Checked] = QPalette().dark();
 }
 
 #if 0
