@@ -25,7 +25,7 @@ public:
 
     void setFilterFlags(QDir::Filters filterFlags);
     void setSortFlags(QDir::SortFlags sortFlags);
-    void setPath(QString& path);
+    void setPath(const QString& dirPath);
 
 protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;

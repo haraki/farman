@@ -51,11 +51,11 @@ void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
     }
 }
 
-void FolderForm::setPath(QString& path)
+void FolderForm::setPath(const QString& dirPath)
 {
     if(m_folderModel != nullptr)
     {
-        QDir dir(path);
+        QDir dir(dirPath);
         QDir::Filters filterFlags;
 
         if(dir.isRoot())
@@ -69,17 +69,17 @@ void FolderForm::setPath(QString& path)
 
         if(dir.entryInfoList(filterFlags, m_sortFlags).size() == 0)
         {
-            qDebug() << path << " size() == 0";
+            qDebug() << dirPath << " size() == 0";
             return;
         }
 
         m_folderModel->clearChecked();
         m_folderModel->setFilter(filterFlags);
 
-        QModelIndex index = m_folderModel->index(path);
-        ui->folderView->setRootIndex(index);
+        QModelIndex newDirIndex = m_folderModel->index(dirPath);
+        ui->folderView->setRootIndex(newDirIndex);
 
-        ui->lineEdit->setText(path);
+        ui->lineEdit->setText(dirPath);
 
         ui->folderView->selectRow(0);
     }
