@@ -58,6 +58,7 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         QDir dir(dirPath);
         QDir::Filters filterFlags;
 
+        // ルートディレクトリの場合は".."を表示しないようにする
         if(dir.isRoot())
         {
             filterFlags = m_filterFlags | QDir::NoDotDot;
@@ -73,8 +74,9 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
             return;
         }
 
-        m_folderModel->clearChecked();
         m_folderModel->setFilter(filterFlags);
+
+        m_folderModel->clearChecked();
 
         QModelIndex newDirIndex = m_folderModel->index(dirPath);
         ui->folderView->setRootIndex(newDirIndex);
@@ -85,15 +87,16 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
             beforeIndex = m_folderModel->index(beforePath);
         }
 
-        if(beforeIndex.parent() != newDirIndex || beforeIndex.row() < 0)
+        if(beforeIndex.parent() == newDirIndex && beforeIndex.row() >= 0)
         {
-            ui->folderView->selectRow(0);
-            ui->folderView->scrollToTop();
+            // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
+            ui->folderView->setCurrentIndex(beforeIndex);
+            ui->folderView->scrollTo(beforeIndex);
         }
         else
         {
-            ui->folderView->setCurrentIndex(beforeIndex);
-            ui->folderView->scrollTo(beforeIndex);
+            ui->folderView->selectRow(0);
+            ui->folderView->scrollToTop();
         }
 
         ui->folderPathEdit->setText(dirPath);

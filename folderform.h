@@ -39,7 +39,7 @@ private:
     void onGoToParent();
     void onToggleCheck();
     int getTotalColumnWidth(int withOutColumn = -1);
-    bool eventFilter(QObject *watched, QEvent *e) override;
+    bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
 private:
     Ui::FolderForm *ui;
