@@ -96,7 +96,7 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
             ui->folderView->scrollTo(beforeIndex);
         }
 
-        ui->lineEdit->setText(dirPath);
+        ui->folderPathEdit->setText(dirPath);
     }
 }
 
