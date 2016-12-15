@@ -35,6 +35,7 @@ protected slots:
     void onOpen(const QModelIndex& index = QModelIndex());
 
 private:
+    void onGoToParent();
     void onToggleCheck();
     int getTotalColumnWidth(int withOutColumn = -1);
     bool eventFilter(QObject *watched, QEvent *e) override;

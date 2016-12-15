@@ -164,6 +164,21 @@ void FolderForm::onOpen(const QModelIndex& index/* = QModelIndex()*/)
     }
 }
 
+void FolderForm::onGoToParent()
+{
+    const QModelIndex currentDirIndex = ui->folderView->rootIndex();
+    const QString currentPath = m_folderModel->filePath(currentDirIndex);
+
+    if(!QDir(currentPath).isRoot())
+    {
+        const QString newPath = m_folderModel->filePath(currentDirIndex.parent());
+
+        qDebug() << "================== onGoToParent() : " << newPath;
+
+        setPath(newPath, currentPath);
+    }
+}
+
 void FolderForm::onToggleCheck()
 {
     QModelIndex currentIndex = ui->folderView->currentIndex();
@@ -211,17 +226,31 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
         qDebug() << key;
 
-        if(key == Qt::Key_Return)
+        switch(key)
         {
+        case Qt::Key_Return:
             this->onOpen();
 
             ret = true;
-        }
-        else if(key == Qt::Key_Space)
-        {
+
+            break;
+
+        case Qt::Key_Left:
+            this->onGoToParent();
+
+            ret = true;
+
+            break;
+
+        case Qt::Key_Space:
             this->onToggleCheck();
 
             ret = true;
+
+            break;
+
+        default:
+            break;
         }
 
         break;
