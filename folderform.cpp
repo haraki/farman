@@ -51,7 +51,7 @@ void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
     }
 }
 
-void FolderForm::setPath(const QString& dirPath)
+void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
 {
     if(m_folderModel != nullptr)
     {
@@ -79,9 +79,24 @@ void FolderForm::setPath(const QString& dirPath)
         QModelIndex newDirIndex = m_folderModel->index(dirPath);
         ui->folderView->setRootIndex(newDirIndex);
 
-        ui->lineEdit->setText(dirPath);
+        QModelIndex beforeIndex;
+        if(!beforePath.isEmpty())
+        {
+            beforeIndex = m_folderModel->index(beforePath);
+        }
 
-        ui->folderView->selectRow(0);
+        if(beforeIndex.parent() != newDirIndex || beforeIndex.row() < 0)
+        {
+            ui->folderView->selectRow(0);
+            ui->folderView->scrollToTop();
+        }
+        else
+        {
+            ui->folderView->setCurrentIndex(beforeIndex);
+            ui->folderView->scrollTo(beforeIndex);
+        }
+
+        ui->lineEdit->setText(dirPath);
     }
 }
 
@@ -139,11 +154,13 @@ void FolderForm::onOpen(const QModelIndex& index/* = QModelIndex()*/)
 
     if(m_folderModel->isDir(currentIndex))
     {
-        QString path = m_folderModel->filePath(currentIndex);
+        QString newPath = m_folderModel->filePath(currentIndex);
 
-        qDebug() << "================== onOpen() : " << currentIndex << " -> " << path;
+        qDebug() << "================== onOpen() : " << currentIndex << " -> " << newPath;
 
-        setPath(path);
+        QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
+
+        setPath(newPath, beforePath);
     }
 }
 
@@ -156,7 +173,7 @@ void FolderForm::onToggleCheck()
         m_folderModel->toggleCheck(currentIndex);
     }
 
-    qDebug() << currentIndex.row() << "," << m_folderModel->rowCount(currentIndex.parent());
+//    qDebug() << currentIndex.row() << "," << m_folderModel->rowCount(currentIndex.parent());
 
     if(currentIndex.row() + 1 < m_folderModel->rowCount(currentIndex.parent()))
     {
