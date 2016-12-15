@@ -32,9 +32,10 @@ protected:
 
 protected slots:
     void onColumnResized(int column, int oldWidth, int newWidth);
-    void onOpen(const QModelIndex& index = QModelIndex());
+    void onOpen(const QModelIndex& index);
 
 private:
+    void onOpen();
     void onGoToParent();
     void onToggleCheck();
     int getTotalColumnWidth(int withOutColumn = -1);

@@ -146,19 +146,24 @@ void FolderForm::onColumnResized(int column, int oldWidth, int newWidth)
     }
 }
 
-void FolderForm::onOpen(const QModelIndex& index/* = QModelIndex()*/)
+void FolderForm::onOpen(const QModelIndex& index)
 {
     Q_UNUSED(index);
 
-    QModelIndex currentIndex = ui->folderView->currentIndex();
+    onOpen();
+}
+
+void FolderForm::onOpen()
+{
+    const QModelIndex currentIndex = ui->folderView->currentIndex();
 
     if(m_folderModel->isDir(currentIndex))
     {
-        QString newPath = m_folderModel->filePath(currentIndex);
+        const QString newPath = m_folderModel->filePath(currentIndex);
 
         qDebug() << "================== onOpen() : " << currentIndex << " -> " << newPath;
 
-        QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
+        const QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
 
         setPath(newPath, beforePath);
     }
