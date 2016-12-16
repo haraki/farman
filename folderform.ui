@@ -45,7 +45,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="folderPathEdit"/>
+      <widget class="QLineEdit" name="folderPathEdit">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
