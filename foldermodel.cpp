@@ -76,14 +76,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
         break;
 
     case Qt::BackgroundRole:
-        if(isChecked(modelIndex))
-        {
-            ret = getBrush(BrushType::Background_Checked);
-        }
-        else
-        {
-            ret = getBrush(BrushType::Background);
-        }
+        ret = getBackgroundBrush(modelIndex);
 
         break;
 
@@ -263,6 +256,22 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
         {
             ret = getBrush(BrushType::Normal);
         }
+    }
+
+    return ret;
+}
+
+QBrush FolderModel::getBackgroundBrush(const QModelIndex& index) const
+{
+    QBrush ret;
+
+    if(isChecked(index))
+    {
+        ret = getBrush(BrushType::Background_Checked);
+    }
+    else
+    {
+        ret = getBrush(BrushType::Background);
     }
 
     return ret;

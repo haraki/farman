@@ -62,6 +62,7 @@ private:
     };
 
     QBrush getTextBrush(const QModelIndex& index) const;
+    QBrush getBackgroundBrush(const QModelIndex& index) const;
     QBrush getBrush(BrushType brushType) const;
     void initBrush();
 
