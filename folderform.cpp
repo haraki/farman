@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QResizeEvent>
 #include <QHeaderView>
+#include <QFileDialog>
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -268,4 +269,17 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
     }
 
     return ret;
+}
+
+void FolderForm::on_folderSelectButton_clicked()
+{
+    QString dirPath = QFileDialog::getExistingDirectory(this,
+                                                        tr("Select folder."),
+                                                        m_folderModel->filePath(ui->folderView->rootIndex()),
+                                                        QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
+
+    if(!dirPath.isEmpty())
+    {
+        setPath(dirPath);
+    }
 }

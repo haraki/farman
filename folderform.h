@@ -34,6 +34,9 @@ protected slots:
     void onColumnResized(int column, int oldWidth, int newWidth);
     void onOpen(const QModelIndex& index);
 
+private slots:
+    void on_folderSelectButton_clicked();
+
 private:
     void onOpen();
     void onGoToParent();
