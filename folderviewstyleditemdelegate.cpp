@@ -26,7 +26,7 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
     QStyle *style = widget ? widget->style() : QApplication::style();
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
-    if(option.state & QStyle::State_Selected)
+    if(option.state & QStyle::State_Active && option.state & QStyle::State_Selected)
     {
         // カーソル位置をアンダーラインで表示
         painter->save();
