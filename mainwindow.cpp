@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "foldermodel.h"
 #include "folderform.h"
+#include "twocolumnform.h"
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -21,12 +22,20 @@ MainWindow::MainWindow(QWidget *parent) :
     vLayout->setObjectName(QStringLiteral("vLayout"));
     vLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_folderForm = new FolderForm(m_filterFlags, m_sortFlags, ui->mainWidget);
-    m_folderForm->setObjectName(QStringLiteral("folderForm"));
+    if(0)
+    {
+        FolderForm* folderForm = new FolderForm(m_filterFlags, m_sortFlags, ui->mainWidget);
+        folderForm->setObjectName(QStringLiteral("folderForm"));
+        folderForm->setPath(path);
 
-    m_folderForm->setPath(path);
+        vLayout->addWidget(folderForm);
+    }
+    else
+    {
+        TwoColumnForm* twoColumnForm = new TwoColumnForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
 
-    vLayout->addWidget(m_folderForm);
+        vLayout->addWidget(twoColumnForm);
+    }
 
     ui->mainWidget->setLayout(vLayout);
 }

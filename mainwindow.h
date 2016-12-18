@@ -10,8 +10,6 @@ namespace Ui {
 class MainWindow;
 }
 
-class FolderForm;
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -22,8 +20,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
-    FolderForm* m_folderForm;
 
     QStringList m_nameFilters;
     QDir::Filters m_filterFlags;
