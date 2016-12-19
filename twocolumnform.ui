@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -49,8 +49,8 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="LPanel" native="true"/>
-     <widget class="QWidget" name="RPanel" native="true"/>
+     <widget class="QWidget" name="leftPanel" native="true"/>
+     <widget class="QWidget" name="rightPanel" native="true"/>
     </widget>
    </item>
   </layout>

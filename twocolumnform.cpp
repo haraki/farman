@@ -21,7 +21,7 @@ TwoColumnForm::TwoColumnForm(QString& path, QDir::Filters filterFlags, QDir::Sor
 
     l_vLayout->addWidget(l_folderForm);
 
-    ui->LPanel->setLayout(l_vLayout);
+    ui->leftPanel->setLayout(l_vLayout);
 
     QVBoxLayout* r_vLayout = new QVBoxLayout(this);
     r_vLayout->setSpacing(6);
@@ -34,7 +34,7 @@ TwoColumnForm::TwoColumnForm(QString& path, QDir::Filters filterFlags, QDir::Sor
 
     r_vLayout->addWidget(r_folderForm);
 
-    ui->RPanel->setLayout(r_vLayout);
+    ui->rightPanel->setLayout(r_vLayout);
 }
 
 TwoColumnForm::~TwoColumnForm()
