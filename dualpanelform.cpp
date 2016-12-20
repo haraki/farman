@@ -78,13 +78,6 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
 
         switch(key)
         {
-        case Qt::Key_Return:
-            activeForm->onOpen();
-
-            ret = true;
-
-            break;
-
         case Qt::Key_Left:
             if(activeForm->objectName() == "l_folderForm")
             {
@@ -108,13 +101,6 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
             {
                 setActiveFolderForm("r_folderForm");
             }
-
-            ret = true;
-
-            break;
-
-        case Qt::Key_Space:
-            activeForm->onToggleCheck();
 
             ret = true;
 
