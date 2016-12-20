@@ -27,6 +27,9 @@ public:
     void setSortFlags(QDir::SortFlags sortFlags);
     void setPath(const QString& dirPath, const QString& beforePath = QString());
 
+    void onOpen();
+    void onGoToParent();
+    void onToggleCheck();
 protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
@@ -38,11 +41,7 @@ private slots:
     void on_folderSelectButton_clicked();
 
 private:
-    void onOpen();
-    void onGoToParent();
-    void onToggleCheck();
     int getTotalColumnWidth(int withOutColumn = -1);
-    bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
 private:
     Ui::FolderForm *ui;

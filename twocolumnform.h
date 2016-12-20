@@ -8,6 +8,7 @@ namespace Ui {
 class TwoColumnForm;
 }
 class QString;
+class FolderForm;
 
 class TwoColumnForm : public QWidget
 {
@@ -18,6 +19,10 @@ public:
     ~TwoColumnForm();
 
 private:
+    bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
+    void setActiveFolderForm(const QString& objectName);
+    FolderForm* getActiveFolderForm();
+
     Ui::TwoColumnForm *ui;
 };
 

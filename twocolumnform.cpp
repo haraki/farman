@@ -1,8 +1,11 @@
+#include <QKeyEvent>
+#include <QDebug>
 #include <QVBoxLayout>
 #include <qdir.h>
 #include "twocolumnform.h"
 #include "ui_twocolumnform.h"
 #include "folderform.h"
+#include "folderview.h"
 
 TwoColumnForm::TwoColumnForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent) :
     QWidget(parent),
@@ -10,7 +13,7 @@ TwoColumnForm::TwoColumnForm(QString& path, QDir::Filters filterFlags, QDir::Sor
 {
     ui->setupUi(this);
 
-    QVBoxLayout* l_vLayout = new QVBoxLayout(this);
+    QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);
     l_vLayout->setObjectName(QStringLiteral("l_vLayout"));
     l_vLayout->setContentsMargins(0, 0, 0, 0);
@@ -23,7 +26,13 @@ TwoColumnForm::TwoColumnForm(QString& path, QDir::Filters filterFlags, QDir::Sor
 
     ui->leftPanel->setLayout(l_vLayout);
 
-    QVBoxLayout* r_vLayout = new QVBoxLayout(this);
+    FolderView* l_folderView = l_folderForm->findChild<FolderView*>("folderView");
+    if(l_folderView != nullptr)
+    {
+        l_folderView->installEventFilter(this);
+    }
+
+    QVBoxLayout* r_vLayout = new QVBoxLayout();
     r_vLayout->setSpacing(6);
     r_vLayout->setObjectName(QStringLiteral("r_vLayout"));
     r_vLayout->setContentsMargins(0, 0, 0, 0);
@@ -35,9 +44,121 @@ TwoColumnForm::TwoColumnForm(QString& path, QDir::Filters filterFlags, QDir::Sor
     r_vLayout->addWidget(r_folderForm);
 
     ui->rightPanel->setLayout(r_vLayout);
+
+    FolderView* r_folderView = r_folderForm->findChild<FolderView*>("folderView");
+    if(r_folderView != nullptr)
+    {
+        r_folderView->installEventFilter(this);
+    }
 }
 
 TwoColumnForm::~TwoColumnForm()
 {
     delete ui;
+}
+
+bool TwoColumnForm::eventFilter(QObject *watched, QEvent *e)
+{
+    Q_UNUSED(watched);
+
+    bool ret = false;
+
+    switch (e->type()) {
+    case QEvent::KeyPress:
+    {
+        Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
+
+        qDebug() << key;
+
+        FolderForm* activeForm = getActiveFolderForm();
+        if(activeForm == nullptr)
+        {
+            break;
+        }
+
+        switch(key)
+        {
+        case Qt::Key_Return:
+            activeForm->onOpen();
+
+            ret = true;
+
+            break;
+
+        case Qt::Key_Left:
+            if(activeForm->objectName() == "l_folderForm")
+            {
+                activeForm->onGoToParent();
+            }
+            else
+            {
+                setActiveFolderForm("l_folderForm");
+            }
+
+            ret = true;
+
+            break;
+
+        case Qt::Key_Right:
+            if(activeForm->objectName() == "r_folderForm")
+            {
+                activeForm->onGoToParent();
+            }
+            else
+            {
+                setActiveFolderForm("r_folderForm");
+            }
+
+            ret = true;
+
+            break;
+
+        case Qt::Key_Space:
+            activeForm->onToggleCheck();
+
+            ret = true;
+
+            break;
+
+        default:
+            break;
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+
+    return ret;
+}
+
+FolderForm* TwoColumnForm::getActiveFolderForm()
+{
+    QWidget* fw = focusWidget();
+    if(fw == nullptr)
+    {
+        return nullptr;
+    }
+
+    qDebug() << "focusWidget() : " << fw->objectName();
+    if(fw->objectName() != "folderView")
+    {
+        return nullptr;
+    }
+
+    return dynamic_cast<FolderForm*>(fw->parent());
+}
+
+void TwoColumnForm::setActiveFolderForm(const QString& objectName)
+{
+    FolderForm* folderForm = findChild<FolderForm*>(objectName);
+    if(folderForm != nullptr)
+    {
+        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+        if(folderView != nullptr)
+        {
+            folderView->setFocus();
+        }
+    }
 }
