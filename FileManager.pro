@@ -17,18 +17,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     folderform.cpp \
-    twocolumnform.cpp \
     folderview.cpp \
     folderviewstyleditemdelegate.cpp \
-    foldermodel.cpp
+    foldermodel.cpp \
+    dualpanelform.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
-    twocolumnform.h \
     folderviewstyleditemdelegate.h \
     foldermodel.h \
-    folderview.h
+    folderview.h \
+    dualpanelform.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
-    twocolumnform.ui
+    dualpanelform.ui

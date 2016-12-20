@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TwoColumnForm</class>
- <widget class="QWidget" name="TwoColumnForm">
+ <class>DualPanelForm</class>
+ <widget class="QWidget" name="DualPanelForm">
   <property name="geometry">
    <rect>
     <x>0</x>

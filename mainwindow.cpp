@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "foldermodel.h"
 #include "folderform.h"
-#include "twocolumnform.h"
+#include "dualpanelform.h"
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        TwoColumnForm* twoColumnForm = new TwoColumnForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
+        DualPanelForm* dualPanelForm = new DualPanelForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
 
-        vLayout->addWidget(twoColumnForm);
+        vLayout->addWidget(dualPanelForm);
     }
 
     ui->mainWidget->setLayout(vLayout);
