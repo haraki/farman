@@ -5,13 +5,12 @@
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
-
-FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FolderForm),
-    m_filterFlags(filterFlags),
-    m_sortFlags(sortFlags),
-    m_folderModel(nullptr)
+FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+    : QWidget(parent)
+    , ui(new Ui::FolderForm)
+    , m_filterFlags(filterFlags)
+    , m_sortFlags(sortFlags)
+    , m_folderModel(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -79,7 +78,7 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 {
     m_filterFlags = filterFlags;
-    if(m_folderModel != nullptr)
+    if(m_folderModel != Q_NULLPTR)
     {
         m_folderModel->setFilter(filterFlags);
     }
@@ -88,7 +87,7 @@ void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
 {
     m_sortFlags = sortFlags;
-    if(m_folderModel != nullptr)
+    if(m_folderModel != Q_NULLPTR)
     {
         m_folderModel->setSorting(sortFlags);
     }
@@ -96,7 +95,7 @@ void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
 
 void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
 {
-    if(m_folderModel != nullptr)
+    if(m_folderModel != Q_NULLPTR)
     {
         QDir dir(dirPath);
         QDir::Filters filterFlags;

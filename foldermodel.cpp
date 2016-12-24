@@ -5,13 +5,13 @@
 #include <QDateTime>
 #include <QPalette>
 
-FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent)
+FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent/* = Q_NULLPTR*/)
     : QDirModel(nameFilters, filters, sort, parent)
 {
     initBrush();
 }
 
-FolderModel::FolderModel(QObject *parent)
+FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
     : QDirModel(parent)
 {
     initBrush();

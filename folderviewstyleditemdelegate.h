@@ -10,9 +10,8 @@ class QPalette;
 class FolderViewStyledItemDelegate : public QStyledItemDelegate
 {
 public:
-    FolderViewStyledItemDelegate(QObject *parent = nullptr);
+    explicit FolderViewStyledItemDelegate(QObject *parent = Q_NULLPTR);
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-//    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 #endif // FOLDERVIEWSTYLEDITEMDELEGATE_H

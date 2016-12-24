@@ -6,7 +6,7 @@
 class FolderView : public QTableView
 {
 public:
-    FolderView(QWidget *parent = Q_NULLPTR);
+    explicit FolderView(QWidget *parent = Q_NULLPTR);
     virtual ~FolderView();
 };
 

@@ -15,7 +15,7 @@ class DualPanelForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent = 0);
+    explicit DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent = Q_NULLPTR);
     ~DualPanelForm();
 
 private:

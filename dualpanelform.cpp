@@ -7,9 +7,9 @@
 #include "folderform.h"
 #include "folderview.h"
 
-DualPanelForm::DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DualPanelForm)
+DualPanelForm::DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+    : QWidget(parent)
+    , ui(new Ui::DualPanelForm)
 {
     ui->setupUi(this);
 
@@ -27,7 +27,7 @@ DualPanelForm::DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::Sor
     ui->leftPanel->setLayout(l_vLayout);
 
     FolderView* l_folderView = l_folderForm->findChild<FolderView*>("folderView");
-    if(l_folderView != nullptr)
+    if(l_folderView != Q_NULLPTR)
     {
         l_folderView->installEventFilter(this);
     }
@@ -46,7 +46,7 @@ DualPanelForm::DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::Sor
     ui->rightPanel->setLayout(r_vLayout);
 
     FolderView* r_folderView = r_folderForm->findChild<FolderView*>("folderView");
-    if(r_folderView != nullptr)
+    if(r_folderView != Q_NULLPTR)
     {
         r_folderView->installEventFilter(this);
     }
@@ -71,7 +71,7 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
         qDebug() << key;
 
         FolderForm* activeForm = getActiveFolderForm();
-        if(activeForm == nullptr)
+        if(activeForm == Q_NULLPTR)
         {
             break;
         }
@@ -122,14 +122,14 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
 FolderForm* DualPanelForm::getActiveFolderForm()
 {
     QWidget* fw = focusWidget();
-    if(fw == nullptr)
+    if(fw == Q_NULLPTR)
     {
-        return nullptr;
+        return Q_NULLPTR;
     }
 
     if(fw->objectName() != "folderView")
     {
-        return nullptr;
+        return Q_NULLPTR;
     }
 
     return dynamic_cast<FolderForm*>(fw->parent());
@@ -138,10 +138,10 @@ FolderForm* DualPanelForm::getActiveFolderForm()
 void DualPanelForm::setActiveFolderForm(const QString& objectName)
 {
     FolderForm* folderForm = findChild<FolderForm*>(objectName);
-    if(folderForm != nullptr)
+    if(folderForm != Q_NULLPTR)
     {
         FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
-        if(folderView != nullptr)
+        if(folderView != Q_NULLPTR)
         {
             folderView->setFocus();
         }

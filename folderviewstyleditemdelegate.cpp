@@ -6,7 +6,7 @@
 #include <QPainter>
 #include <QApplication>
 
-FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent)
+FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent/* = Q_NULLPTR*/)
     : QStyledItemDelegate(parent)
 {
 }
