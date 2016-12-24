@@ -8,6 +8,10 @@ class FolderView : public QTableView
 public:
     explicit FolderView(QWidget *parent = Q_NULLPTR);
     virtual ~FolderView();
+
+    QItemSelectionModel::SelectionFlags selectionCommand(const QModelIndex &index, const QEvent *e = Q_NULLPTR) const;
+
+    void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 };
 
 #endif // FOLDERVIEW_H

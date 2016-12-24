@@ -10,10 +10,10 @@ class FolderModel;
 namespace Ui {
 class FolderForm;
 }
-class QAbstractItemModel;
 class QString;
 class QResizeEvent;
 class FolderModel;
+class QItemSelectionModel;
 
 class FolderForm : public QWidget
 {
@@ -34,6 +34,7 @@ protected:
 protected slots:
     void onColumnResized(int column, int oldWidth, int newWidth);
     void onOpen(const QModelIndex& index);
+    void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
 
 private slots:
     void on_folderSelectButton_clicked();
@@ -53,6 +54,7 @@ private:
     QDir::SortFlags m_sortFlags;
 
     FolderModel *m_folderModel;
+    QItemSelectionModel* m_folderSelectionModel;
 };
 
 #endif // FOLDERFORM_H

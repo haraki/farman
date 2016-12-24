@@ -2,6 +2,7 @@
 #include <QResizeEvent>
 #include <QHeaderView>
 #include <QFileDialog>
+#include <QItemSelectionModel>
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -11,6 +12,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     , m_filterFlags(filterFlags)
     , m_sortFlags(sortFlags)
     , m_folderModel(Q_NULLPTR)
+    , m_folderSelectionModel(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -18,9 +20,15 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     m_folderModel->setReadOnly(true);
     m_folderModel->setFilter(m_filterFlags);
     m_folderModel->setSorting(m_sortFlags);
-
     ui->folderView->setModel(m_folderModel);
 
+    m_folderSelectionModel = new QItemSelectionModel(m_folderModel);
+    ui->folderView->setSelectionModel(m_folderSelectionModel);
+
+    connect(m_folderSelectionModel,
+            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this,
+            SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
     connect(ui->folderView->horizontalHeader(), SIGNAL(sectionResized(int,int,int)),       this, SLOT(onColumnResized(int,int,int)));
     connect(ui->folderView,                     SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onOpen(const QModelIndex&)));
 
@@ -29,6 +37,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
 
 FolderForm::~FolderForm()
 {
+    delete m_folderSelectionModel;
     delete m_folderModel;
     delete ui;
 }
@@ -196,6 +205,26 @@ void FolderForm::onOpen(const QModelIndex& index)
     Q_UNUSED(index);
 
     onOpen();
+}
+
+void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex)
+{
+//    qDebug() << "onCurrentChanged : old : " << oldIndex.row() << " new : " << newIndex.row();
+
+    QModelIndex topLeft, bottomRight;
+    if(newIndex.row() < oldIndex.row())
+    {
+        topLeft = m_folderModel->index(newIndex.row(), 0);
+        bottomRight = m_folderModel->index(oldIndex.row(), m_folderModel->columnCount());
+    }
+    else
+    {
+        topLeft = m_folderModel->index(oldIndex.row(), 0);
+        bottomRight = m_folderModel->index(newIndex.row(), m_folderModel->columnCount());
+    }
+
+    // カーソルが移動した箇所を再描画する
+    emit ui->folderView->refresh(topLeft, bottomRight);
 }
 
 void FolderForm::onOpen()

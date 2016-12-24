@@ -6,6 +6,8 @@
 #include <QPainter>
 #include <QApplication>
 
+#include "folderview.h"
+
 FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent/* = Q_NULLPTR*/)
     : QStyledItemDelegate(parent)
 {
@@ -13,26 +15,20 @@ FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent/* = Q
 
 void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    Q_ASSERT(index.isValid());
+    QStyledItemDelegate::paint(painter, option, index);
 
-//    qDebug() << "FolderViewStyledItemDelegate::paint(" << painter << "," << hex << (unsigned long)option.state << "," << index << ")";
-    QStyleOptionViewItem opt = option;
-    initStyleOption(&opt, index);
-
-    // カーソル位置の背景・文字を通常と同じ色にする
-    opt.state &= ~QStyle::State_Selected;
-
-    const QWidget *widget = option.widget;
-    QStyle *style = widget ? widget->style() : QApplication::style();
-    style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
-
-    if(option.state & QStyle::State_Active && option.state & QStyle::State_Selected)
+    FolderView* parent = dynamic_cast<FolderView*>(this->parent());
+    if(parent != Q_NULLPTR)
     {
-        // カーソル位置をアンダーラインで表示
-        painter->save();
-        QPen pen(widget->palette().highlight(), 1);
-        painter->setPen(pen);
-        painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
-        painter->restore();
+        if(parent->currentIndex().row() == index.row())
+        {
+            // カーソル位置をアンダーラインで表示
+            const QWidget *widget = option.widget;
+            painter->save();
+            QPen pen((option.state & QStyle::State_Active) ? widget->palette().highlight() : widget->palette().dark(), 1);
+            painter->setPen(pen);
+            painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
+            painter->restore();
+        }
     }
 }
