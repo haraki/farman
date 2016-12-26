@@ -146,7 +146,7 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         }
         else
         {
-            ui->folderView->selectRow(0);
+            ui->folderView->setCurrentIndex(m_folderModel->index(0, 0));
             ui->folderView->scrollToTop();
         }
 
