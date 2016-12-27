@@ -1,7 +1,9 @@
 #include <QDebug>
 #include <QKeyEvent>
+#include <QItemSelectionModel>
 #include "folderview.h"
 #include "folderviewstyleditemdelegate.h"
+#include "foldermodel.h"
 
 FolderView::FolderView(QWidget *parent/* = Q_NULLPTR*/)
     : QTableView(parent)
@@ -17,21 +19,22 @@ FolderView::~FolderView()
 QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelIndex& index, const QEvent* e/* = Q_NULLPTR*/) const
 {
     QItemSelectionModel::SelectionFlags ret = QTableView::selectionCommand(index, e);
-    const QKeyEvent* keyEv = dynamic_cast<const QKeyEvent*>(e);
+    ret &= ~QItemSelectionModel::SelectionFlag::ClearAndSelect;
 
-    if(keyEv == Q_NULLPTR)
-    {
-        ret &= ~QItemSelectionModel::SelectionFlag::ClearAndSelect;
-    }
-    else
+    const QKeyEvent* keyEv = dynamic_cast<const QKeyEvent*>(e);
+    if(keyEv != Q_NULLPTR)
     {
         Qt::Key key = static_cast<Qt::Key>(keyEv->key());
 
         qDebug() << key;
 
-        if(((key & Qt::Key_Shift) != Qt::Key_Shift) && ((key & Qt::Key_Control) != Qt::Key_Control))
+        if(key == Qt::Key_Space)
         {
-            ret &= ~QItemSelectionModel::SelectionFlag::ClearAndSelect;
+            const FolderModel* folderModel = dynamic_cast<FolderModel*>(this->model());
+            if(folderModel != Q_NULLPTR && folderModel->fileName(index) != "..")
+            {
+                ret |= QItemSelectionModel::SelectionFlag::Toggle;
+            }
         }
     }
 

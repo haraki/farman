@@ -65,9 +65,9 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
             break;
 
         case Qt::Key_Space:
-            onToggleCheck();
+//            onToggleCheck();
 
-            ret = true;
+//            ret = true;
 
             break;
 
