@@ -31,9 +31,23 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
         if(key == Qt::Key_Space)
         {
             const FolderModel* folderModel = dynamic_cast<FolderModel*>(this->model());
-            if(folderModel != Q_NULLPTR && folderModel->fileName(index) != "..")
+            if(folderModel != Q_NULLPTR)
             {
-                ret |= QItemSelectionModel::SelectionFlag::Toggle;
+                if(folderModel->fileName(index) != "..")
+                {
+                    ret |= QItemSelectionModel::SelectionFlag::Toggle;
+                }
+
+                if(index.row() + 1 < folderModel->rowCount(index.parent()))
+                {
+                    QItemSelectionModel* selectionModel = this->selectionModel();
+                    if(selectionModel != Q_NULLPTR)
+                    {
+                        // カーソルを1行下に移動
+                        QModelIndex newIndex = folderModel->index(index.row() + 1, 0, index.parent());
+                        selectionModel->setCurrentIndex(newIndex, QItemSelectionModel::NoUpdate);
+                    }
+                }
             }
         }
     }
