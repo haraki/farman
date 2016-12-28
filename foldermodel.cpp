@@ -159,44 +159,6 @@ void FolderModel::sort(int column, Qt::SortOrder order)
     qDebug() << "================= sorting : " << QDirModel::sorting();
 }
 
-void FolderModel::clearChecked()
-{
-    m_checked.clear();
-}
-
-bool FolderModel::isChecked(const QModelIndex& modelIndex) const
-{
-    bool ret = false;
-
-    if(m_checked.find(fileName(modelIndex)) != m_checked.cend())
-    {
-        ret = true;
-    }
-
-    return ret;
-}
-
-bool FolderModel::toggleCheck(const QModelIndex& modelIndex)
-{
-    bool ret = false;
-
-    QString filename = fileName(modelIndex);
-    if(m_checked.find(filename) != m_checked.cend())
-    {
-        m_checked.remove(filename);
-        ret = false;
-    }
-    else
-    {
-        m_checked.insert(filename);
-        ret = true;
-    }
-
-    emit dataChanged(index(0, modelIndex.row()), index(columnCount(), modelIndex.row()));
-
-    return ret;
-}
-
 FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
 {
     // Todo: 将来的に可変にする
@@ -226,36 +188,36 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
 
     if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
     {
-        if(isChecked(index))
-        {
-            ret = getBrush(BrushType::ReadOnly_Checked);
-        }
-        else
-        {
+//        if(isChecked(index))
+//        {
+//            ret = getBrush(BrushType::ReadOnly_Checked);
+//        }
+//        else
+//        {
             ret = getBrush(BrushType::ReadOnly);
-        }
+//        }
     }
     else if((fileName(index) != "..") && (fileInfo(index).isHidden()))
     {
-        if(isChecked(index))
-        {
-            ret = getBrush(BrushType::Hidden_Checked);
-        }
-        else
-        {
+//        if(isChecked(index))
+//        {
+//            ret = getBrush(BrushType::Hidden_Checked);
+//        }
+//        else
+//        {
             ret = getBrush(BrushType::Hidden);
-        }
+//        }
     }
     else
     {
-        if(isChecked(index))
-        {
-            ret = getBrush(BrushType::Normal_Checked);
-        }
-        else
-        {
+//        if(isChecked(index))
+//        {
+//            ret = getBrush(BrushType::Normal_Checked);
+//        }
+//        else
+//        {
             ret = getBrush(BrushType::Normal);
-        }
+//        }
     }
 
     return ret;
@@ -265,14 +227,14 @@ QBrush FolderModel::getBackgroundBrush(const QModelIndex& index) const
 {
     QBrush ret;
 
-    if(isChecked(index))
-    {
-        ret = getBrush(BrushType::Background_Checked);
-    }
-    else
-    {
+//    if(isChecked(index))
+//    {
+//        ret = getBrush(BrushType::Background_Checked);
+//    }
+//    else
+//    {
         ret = getBrush(BrushType::Background);
-    }
+//    }
 
     return ret;
 }

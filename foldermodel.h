@@ -23,13 +23,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
 
-    void clearChecked();
-    bool isChecked(const QModelIndex& modelIndex) const;
-    bool toggleCheck(const QModelIndex& modelIndex);
-
 private:
-    QSet<QString> m_checked;
-
     enum class SectionType : int
     {
         Unknown = -1,

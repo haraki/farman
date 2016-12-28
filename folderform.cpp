@@ -64,13 +64,6 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
             break;
 
-        case Qt::Key_Space:
-//            onToggleCheck();
-
-//            ret = true;
-
-            break;
-
         default:
             break;
         }
@@ -127,7 +120,7 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
 
         m_folderModel->setFilter(filterFlags);
 
-        m_folderModel->clearChecked();
+        m_folderSelectionModel->clear();
 
         QModelIndex newDirIndex = m_folderModel->index(dirPath);
         ui->folderView->setRootIndex(newDirIndex);
@@ -252,25 +245,6 @@ void FolderForm::onGoToParent()
         qDebug() << "================== onGoToParent() : " << newPath;
 
         setPath(newPath, currentPath);
-    }
-}
-
-void FolderForm::onToggleCheck()
-{
-    QModelIndex currentIndex = ui->folderView->currentIndex();
-
-    if(m_folderModel->fileName(currentIndex) != "..")
-    {
-        m_folderModel->toggleCheck(currentIndex);
-    }
-
-//    qDebug() << currentIndex.row() << "," << m_folderModel->rowCount(currentIndex.parent());
-
-    if(currentIndex.row() + 1 < m_folderModel->rowCount(currentIndex.parent()))
-    {
-        // カーソルを1行下に移動
-        QModelIndex newIndex = m_folderModel->index(currentIndex.row() + 1, 0, currentIndex.parent());
-        ui->folderView->setCurrentIndex(newIndex);
     }
 }
 
