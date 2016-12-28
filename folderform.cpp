@@ -132,23 +132,20 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         QModelIndex newDirIndex = m_folderModel->index(dirPath);
         ui->folderView->setRootIndex(newDirIndex);
 
-        QModelIndex beforeIndex;
+        QModelIndex newCursorIndex;
         if(!beforePath.isEmpty())
         {
-            beforeIndex = m_folderModel->index(beforePath);
+            // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
+            newCursorIndex = m_folderModel->index(beforePath);
         }
 
-        if(beforeIndex.parent() == newDirIndex && beforeIndex.row() >= 0)
+        if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
         {
-            // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
-            ui->folderView->setCurrentIndex(beforeIndex);
-            ui->folderView->scrollTo(beforeIndex);
+            // 初期カーソル位置はリストの先頭
+            newCursorIndex = newDirIndex.child(0, 0);
         }
-        else
-        {
-            ui->folderView->setCurrentIndex(m_folderModel->index(0, 0));
-            ui->folderView->scrollToTop();
-        }
+        ui->folderView->setCurrentIndex(newCursorIndex);
+        ui->folderView->scrollTo(newCursorIndex);
 
         ui->folderPathEdit->setText(dirPath);
     }
