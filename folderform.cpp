@@ -53,7 +53,7 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
     {
         Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
 
-        qDebug() << key;
+        qDebug() << "FolderForm::eventFilter : " << key;
 
         switch(key)
         {

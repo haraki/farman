@@ -68,7 +68,7 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
     {
         Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
 
-        qDebug() << key;
+        qDebug() << "DualPanelForm::eventFilter : " << key;
 
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm == Q_NULLPTR)

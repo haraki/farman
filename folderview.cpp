@@ -26,7 +26,7 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
     {
         Qt::Key key = static_cast<Qt::Key>(keyEv->key());
 
-        qDebug() << key;
+        qDebug() << "FolderView::selectionCommand : " << key;
 
         if(key == Qt::Key_Space)
         {
@@ -50,6 +50,8 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
                 }
             }
         }
+
+        qDebug() << "ret == " << ret;
     }
 
     return ret;
