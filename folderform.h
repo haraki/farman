@@ -13,7 +13,6 @@ class FolderForm;
 class QString;
 class QResizeEvent;
 class FolderModel;
-class QItemSelectionModel;
 
 class FolderForm : public QWidget
 {
@@ -53,7 +52,6 @@ private:
     QDir::SortFlags m_sortFlags;
 
     FolderModel *m_folderModel;
-    QItemSelectionModel* m_folderSelectionModel;
 };
 
 #endif // FOLDERFORM_H

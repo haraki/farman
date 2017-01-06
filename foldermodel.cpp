@@ -10,6 +10,8 @@ FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, 
     : QDirModel(nameFilters, filters, sort, parent)
     , m_selectionModel(Q_NULLPTR)
 {
+    m_selectionModel = new QItemSelectionModel(this);
+
     initBrush();
 }
 
@@ -17,12 +19,14 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
     : QDirModel(parent)
     , m_selectionModel(Q_NULLPTR)
 {
+    m_selectionModel = new QItemSelectionModel(this);
+
     initBrush();
 }
 
 FolderModel::~FolderModel()
 {
-
+    delete m_selectionModel;
 }
 
 QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
@@ -162,6 +166,19 @@ void FolderModel::sort(int column, Qt::SortOrder order)
     qDebug() << "================= sorting : " << QDirModel::sorting();
 }
 
+QItemSelectionModel* FolderModel::getSelectionModel()
+{
+    return m_selectionModel;
+}
+
+void FolderModel::clearSelected()
+{
+    if(m_selectionModel != Q_NULLPTR)
+    {
+        m_selectionModel->clear();
+    }
+}
+
 FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
 {
     // Todo: 将来的に可変にする
@@ -275,11 +292,6 @@ bool FolderModel::isSelected(const QModelIndex& index) const
     }
 
     return false;
-}
-
-void FolderModel::setItemSelectionModel(QItemSelectionModel* selectionModel)
-{
-    m_selectionModel = selectionModel;
 }
 
 #if 0

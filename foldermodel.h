@@ -23,7 +23,8 @@ public:
     QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
-    void setItemSelectionModel(QItemSelectionModel* selectionModel);
+    QItemSelectionModel* getSelectionModel();
+    void clearSelected();
 
 private:
     enum class SectionType : int

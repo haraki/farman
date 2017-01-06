@@ -12,7 +12,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     , m_filterFlags(filterFlags)
     , m_sortFlags(sortFlags)
     , m_folderModel(Q_NULLPTR)
-    , m_folderSelectionModel(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -22,11 +21,9 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     m_folderModel->setSorting(m_sortFlags);
     ui->folderView->setModel(m_folderModel);
 
-    m_folderSelectionModel = new QItemSelectionModel(m_folderModel);
-    m_folderModel->setItemSelectionModel(m_folderSelectionModel);
-    ui->folderView->setSelectionModel(m_folderSelectionModel);
+    ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
 
-    connect(m_folderSelectionModel,
+    connect(m_folderModel->getSelectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
@@ -38,7 +35,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
 
 FolderForm::~FolderForm()
 {
-    delete m_folderSelectionModel;
     delete m_folderModel;
     delete ui;
 }
@@ -121,7 +117,7 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
 
         m_folderModel->setFilter(filterFlags);
 
-        m_folderSelectionModel->clear();
+        m_folderModel->clearSelected();
 
         QModelIndex newDirIndex = m_folderModel->index(dirPath);
         ui->folderView->setRootIndex(newDirIndex);
