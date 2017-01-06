@@ -12,16 +12,18 @@ class QObject;
 class QStringList;
 class QDirModel;
 class QVariant;
+class QItemSelectionModel;
 
 class FolderModel : public QDirModel
 {
 public:
     explicit FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent = Q_NULLPTR);
-    FolderModel(QObject *parent = Q_NULLPTR);
+    explicit FolderModel(QObject *parent = Q_NULLPTR);
     ~FolderModel();
     QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
+    void setItemSelectionModel(QItemSelectionModel* selectionModel);
 
 private:
     enum class SectionType : int
@@ -43,14 +45,14 @@ private:
         Unknown = -1,
 
         Background,
-        Background_Checked,
+        Background_Selected,
 
         Normal,
-        Normal_Checked,
+        Normal_Selected,
         ReadOnly,
-        ReadOnly_Checked,
+        ReadOnly_Selected,
         Hidden,
-        Hidden_Checked,
+        Hidden_Selected,
 
         BrushTypeNum
     };
@@ -61,6 +63,10 @@ private:
     void initBrush();
 
     QMap<BrushType, QBrush> m_brush;
+
+    bool isSelected(const QModelIndex& index) const;
+
+    QItemSelectionModel* m_selectionModel;
 };
 
 

@@ -15,7 +15,10 @@ FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent/* = Q
 
 void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::paint(painter, option, index);
+    QStyleOptionViewItem opt = option;
+    opt.state &= ~QStyle::State_Selected;       // FolderModel の TextColorRole・BackgroundRole の Brush を使用するため、ここでは Selected を無効にするｓ
+
+    QStyledItemDelegate::paint(painter, opt, index);
 
     FolderView* parent = dynamic_cast<FolderView*>(this->parent());
     if(parent != Q_NULLPTR)

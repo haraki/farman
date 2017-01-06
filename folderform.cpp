@@ -23,6 +23,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     ui->folderView->setModel(m_folderModel);
 
     m_folderSelectionModel = new QItemSelectionModel(m_folderModel);
+    m_folderModel->setItemSelectionModel(m_folderSelectionModel);
     ui->folderView->setSelectionModel(m_folderSelectionModel);
 
     connect(m_folderSelectionModel,

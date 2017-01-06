@@ -4,15 +4,18 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QPalette>
+#include <QItemSelectionModel>
 
 FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent/* = Q_NULLPTR*/)
     : QDirModel(nameFilters, filters, sort, parent)
+    , m_selectionModel(Q_NULLPTR)
 {
     initBrush();
 }
 
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
     : QDirModel(parent)
+    , m_selectionModel(Q_NULLPTR)
 {
     initBrush();
 }
@@ -188,36 +191,36 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
 
     if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
     {
-//        if(isChecked(index))
-//        {
-//            ret = getBrush(BrushType::ReadOnly_Checked);
-//        }
-//        else
-//        {
+        if(isSelected(index))
+        {
+            ret = getBrush(BrushType::ReadOnly_Selected);
+        }
+        else
+        {
             ret = getBrush(BrushType::ReadOnly);
-//        }
+        }
     }
     else if((fileName(index) != "..") && (fileInfo(index).isHidden()))
     {
-//        if(isChecked(index))
-//        {
-//            ret = getBrush(BrushType::Hidden_Checked);
-//        }
-//        else
-//        {
+        if(isSelected(index))
+        {
+            ret = getBrush(BrushType::Hidden_Selected);
+        }
+        else
+        {
             ret = getBrush(BrushType::Hidden);
-//        }
+        }
     }
     else
     {
-//        if(isChecked(index))
-//        {
-//            ret = getBrush(BrushType::Normal_Checked);
-//        }
-//        else
-//        {
+        if(isSelected(index))
+        {
+            ret = getBrush(BrushType::Normal_Selected);
+        }
+        else
+        {
             ret = getBrush(BrushType::Normal);
-//        }
+        }
     }
 
     return ret;
@@ -227,14 +230,14 @@ QBrush FolderModel::getBackgroundBrush(const QModelIndex& index) const
 {
     QBrush ret;
 
-//    if(isChecked(index))
-//    {
-//        ret = getBrush(BrushType::Background_Checked);
-//    }
-//    else
-//    {
+    if(isSelected(index))
+    {
+        ret = getBrush(BrushType::Background_Selected);
+    }
+    else
+    {
         ret = getBrush(BrushType::Background);
-//    }
+    }
 
     return ret;
 }
@@ -255,13 +258,28 @@ QBrush FolderModel::getBrush(BrushType brushType) const
 void FolderModel::initBrush()
 {
     m_brush[BrushType::Background] = QPalette().base();
-    m_brush[BrushType::Background_Checked] = QPalette().highlight();
+    m_brush[BrushType::Background_Selected] = QPalette().highlight();
     m_brush[BrushType::Normal] = QPalette().text();
-    m_brush[BrushType::Normal_Checked] = QPalette().text();
+    m_brush[BrushType::Normal_Selected] = QPalette().text();
     m_brush[BrushType::ReadOnly] = QPalette().highlightedText();
-    m_brush[BrushType::ReadOnly_Checked] = QPalette().highlightedText();
+    m_brush[BrushType::ReadOnly_Selected] = QPalette().highlightedText();
     m_brush[BrushType::Hidden] = QPalette().dark();
-    m_brush[BrushType::Hidden_Checked] = QPalette().dark();
+    m_brush[BrushType::Hidden_Selected] = QPalette().dark();
+}
+
+bool FolderModel::isSelected(const QModelIndex& index) const
+{
+    if(m_selectionModel != Q_NULLPTR)
+    {
+        return m_selectionModel->isSelected(index);
+    }
+
+    return false;
+}
+
+void FolderModel::setItemSelectionModel(QItemSelectionModel* selectionModel)
+{
+    m_selectionModel = selectionModel;
 }
 
 #if 0
