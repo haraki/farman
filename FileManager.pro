@@ -20,15 +20,15 @@ SOURCES += main.cpp\
     folderview.cpp \
     folderviewstyleditemdelegate.cpp \
     foldermodel.cpp \
-    dualpanelform.cpp
+    doublepanelform.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
     folderviewstyleditemdelegate.h \
     foldermodel.h \
     folderview.h \
-    dualpanelform.h
+    doublepanelform.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
-    dualpanelform.ui
+    doublepanelform.ui

@@ -2,14 +2,14 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <qdir.h>
-#include "dualpanelform.h"
-#include "ui_dualpanelform.h"
+#include "doublepanelform.h"
+#include "ui_doublepanelform.h"
 #include "folderform.h"
 #include "folderview.h"
 
-DualPanelForm::DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+DoublePanelForm::DoublePanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
-    , ui(new Ui::DualPanelForm)
+    , ui(new Ui::DoublePanelForm)
 {
     ui->setupUi(this);
 
@@ -52,12 +52,12 @@ DualPanelForm::DualPanelForm(QString& path, QDir::Filters filterFlags, QDir::Sor
     }
 }
 
-DualPanelForm::~DualPanelForm()
+DoublePanelForm::~DoublePanelForm()
 {
     delete ui;
 }
 
-bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
+bool DoublePanelForm::eventFilter(QObject *watched, QEvent *e)
 {
     Q_UNUSED(watched);
 
@@ -68,7 +68,7 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
     {
         Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
 
-        qDebug() << "DualPanelForm::eventFilter : " << key;
+        qDebug() << "DoublePanelForm::eventFilter : " << key;
 
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm == Q_NULLPTR)
@@ -119,7 +119,7 @@ bool DualPanelForm::eventFilter(QObject *watched, QEvent *e)
     return ret;
 }
 
-FolderForm* DualPanelForm::getActiveFolderForm()
+FolderForm* DoublePanelForm::getActiveFolderForm()
 {
     QWidget* fw = focusWidget();
     if(fw == Q_NULLPTR)
@@ -135,7 +135,7 @@ FolderForm* DualPanelForm::getActiveFolderForm()
     return dynamic_cast<FolderForm*>(fw->parent());
 }
 
-void DualPanelForm::setActiveFolderForm(const QString& objectName)
+void DoublePanelForm::setActiveFolderForm(const QString& objectName)
 {
     FolderForm* folderForm = findChild<FolderForm*>(objectName);
     if(folderForm != Q_NULLPTR)
