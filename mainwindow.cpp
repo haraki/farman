@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "foldermodel.h"
 #include "folderform.h"
+#include "singlepanelform.h"
 #include "doublepanelform.h"
 #include <QDebug>
 
@@ -17,20 +18,18 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    if(0)
-    {
-        FolderForm* folderForm = new FolderForm(m_filterFlags, m_sortFlags, ui->mainWidget);
-        folderForm->setObjectName(QStringLiteral("folderForm"));
-        folderForm->setPath(path);
+    QWidget* panelForm = nullptr;
 
-        ui->mainWidget->layout()->addWidget(folderForm);
+    if(1)
+    {
+        panelForm = new SinglePanelForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
     }
     else
     {
-        DoublePanelForm* doublePanelForm = new DoublePanelForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
-
-        ui->mainWidget->layout()->addWidget(doublePanelForm);
+        panelForm = new DoublePanelForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
     }
+
+    ui->mainWidget->layout()->addWidget(panelForm);
 }
 
 MainWindow::~MainWindow()
