@@ -17,27 +17,20 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    QVBoxLayout* vLayout = new QVBoxLayout(ui->mainWidget);
-    vLayout->setSpacing(6);
-    vLayout->setObjectName(QStringLiteral("vLayout"));
-    vLayout->setContentsMargins(0, 0, 0, 0);
-
     if(0)
     {
         FolderForm* folderForm = new FolderForm(m_filterFlags, m_sortFlags, ui->mainWidget);
         folderForm->setObjectName(QStringLiteral("folderForm"));
         folderForm->setPath(path);
 
-        vLayout->addWidget(folderForm);
+        ui->mainWidget->layout()->addWidget(folderForm);
     }
     else
     {
         DoublePanelForm* doublePanelForm = new DoublePanelForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
 
-        vLayout->addWidget(doublePanelForm);
+        ui->mainWidget->layout()->addWidget(doublePanelForm);
     }
-
-    ui->mainWidget->setLayout(vLayout);
 }
 
 MainWindow::~MainWindow()
