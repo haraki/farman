@@ -50,6 +50,8 @@ DoublePanelForm::DoublePanelForm(QString& path, QDir::Filters filterFlags, QDir:
     {
         r_folderView->installEventFilter(this);
     }
+
+    setActiveFolderForm("l_folderForm");
 }
 
 DoublePanelForm::~DoublePanelForm()
