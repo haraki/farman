@@ -130,16 +130,16 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
         switch(sectionType)
         {
         case SectionType::FileName:
-            ret = tr("ファイル名");
+            ret = tr("Name");
             break;
         case SectionType::FileSize:
-            ret = tr("サイズ");
+            ret = tr("Size");
             break;
         case SectionType::FileType:
-            ret = tr("種類");
+            ret = tr("Type");
             break;
         case SectionType::LastModified:
-            ret = tr("更新日時");
+            ret = tr("Last modified");
             break;
         default:
             break;

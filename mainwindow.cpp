@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
 
     QWidget* panelForm = nullptr;
 
-    if(1)
+    if(0)
     {
         panelForm = new SinglePanelForm(path, m_filterFlags, m_sortFlags, ui->mainWidget);
     }
