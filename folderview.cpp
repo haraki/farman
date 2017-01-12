@@ -1,4 +1,4 @@
-#include <QDebug>
+﻿#include <QDebug>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 #include "folderview.h"

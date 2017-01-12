@@ -1,4 +1,4 @@
-#ifndef FOLDERVIEW_H
+﻿#ifndef FOLDERVIEW_H
 #define FOLDERVIEW_H
 
 #include <QTableView>

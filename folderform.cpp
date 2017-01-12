@@ -1,4 +1,4 @@
-#include <QDebug>
+﻿#include <QDebug>
 #include <QResizeEvent>
 #include <QHeaderView>
 #include <QFileDialog>

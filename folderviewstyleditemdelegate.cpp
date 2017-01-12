@@ -1,4 +1,4 @@
-#include "folderviewstyleditemdelegate.h"
+﻿#include "folderviewstyleditemdelegate.h"
 
 #include <QStyleOptionViewItem>
 #include <QModelIndex>

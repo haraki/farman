@@ -1,4 +1,4 @@
-#ifndef SINGLEPANELFORM_H
+﻿#ifndef SINGLEPANELFORM_H
 #define SINGLEPANELFORM_H
 
 #include <QWidget>

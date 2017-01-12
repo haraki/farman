@@ -1,4 +1,4 @@
-#ifndef DOUBLEPANELFORM_H
+﻿#ifndef DOUBLEPANELFORM_H
 #define DOUBLEPANELFORM_H
 
 #include <QWidget>

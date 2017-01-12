@@ -1,4 +1,4 @@
-#include "foldermodel.h"
+﻿#include "foldermodel.h"
 
 #include <QVariant>
 #include <QDebug>

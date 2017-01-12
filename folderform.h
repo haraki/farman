@@ -1,4 +1,4 @@
-#ifndef FOLDERFORM_H
+﻿#ifndef FOLDERFORM_H
 #define FOLDERFORM_H
 
 #include <QWidget>

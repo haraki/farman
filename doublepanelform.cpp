@@ -1,4 +1,4 @@
-#include <QKeyEvent>
+﻿#include <QKeyEvent>
 #include <QDebug>
 #include <QVBoxLayout>
 #include <qdir.h>

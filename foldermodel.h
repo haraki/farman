@@ -1,4 +1,4 @@
-#ifndef FOLDERMODEL_H
+﻿#ifndef FOLDERMODEL_H
 #define FOLDERMODEL_H
 
 #include <QSet>

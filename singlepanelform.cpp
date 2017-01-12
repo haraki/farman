@@ -1,4 +1,4 @@
-#include <QGridLayout>
+﻿#include <QGridLayout>
 #include "singlepanelform.h"
 #include "ui_singlepanelform.h"
 #include "folderform.h"
