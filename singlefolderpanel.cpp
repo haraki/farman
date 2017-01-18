@@ -4,7 +4,7 @@
 #include "folderform.h"
 
 SingleFolderPanel::SingleFolderPanel(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
-    : QWidget(parent)
+    : FolderPanelBase(parent)
     , ui(new Ui::SingleFolderPanel)
 {
     ui->setupUi(this);
@@ -25,4 +25,9 @@ SingleFolderPanel::SingleFolderPanel(QString& path, QDir::Filters filterFlags, Q
 SingleFolderPanel::~SingleFolderPanel()
 {
     delete ui;
+}
+
+FolderForm* SingleFolderPanel::getFolderForm()
+{
+    return findChild<FolderForm*>(QStringLiteral("folderForm"));
 }

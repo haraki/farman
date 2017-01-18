@@ -26,6 +26,10 @@ public:
     void setSortFlags(QDir::SortFlags sortFlags);
     void setPath(const QString& dirPath, const QString& beforePath = QString());
 
+    QDir::Filters getFilterFlags();
+    QDir::SortFlags getSortFlags();
+    QString getPath();
+
     void onGoToParent();
 protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <qdir.h>
+#include "folderpanelbase.h"
 
 namespace Ui {
 class DoubleFolderPanel;
@@ -10,7 +11,7 @@ class DoubleFolderPanel;
 class QString;
 class FolderForm;
 
-class DoubleFolderPanel : public QWidget
+class DoubleFolderPanel : public FolderPanelBase
 {
     Q_OBJECT
 
@@ -22,6 +23,7 @@ private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);
     FolderForm* getActiveFolderForm();
+    FolderForm* getFolderForm() Q_DECL_OVERRIDE;
 
     Ui::DoubleFolderPanel *ui;
 };

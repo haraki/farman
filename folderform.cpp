@@ -141,6 +141,23 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
     }
 }
 
+QDir::Filters FolderForm::getFilterFlags()
+{
+    return m_filterFlags;
+}
+
+QDir::SortFlags FolderForm::getSortFlags()
+{
+    return m_sortFlags;
+}
+
+QString FolderForm::getPath()
+{
+    const QModelIndex currentIndex = ui->folderView->currentIndex();
+
+    return m_folderModel->filePath(currentIndex);
+}
+
 void FolderForm::resizeEvent(QResizeEvent *event)
 {
 //    QSize diff = event->size() - event->oldSize();

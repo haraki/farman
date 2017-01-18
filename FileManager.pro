@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     folderviewstyleditemdelegate.cpp \
     foldermodel.cpp \
     doublefolderpanel.cpp \
-    singlefolderpanel.cpp
+    singlefolderpanel.cpp \
+    folderpanelbase.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     foldermodel.h \
     folderview.h \
     singlefolderpanel.h \
-    doublefolderpanel.h
+    doublefolderpanel.h \
+    folderpanelbase.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \

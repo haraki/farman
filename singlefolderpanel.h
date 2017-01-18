@@ -3,12 +3,15 @@
 
 #include <QWidget>
 #include <qdir.h>
+#include "folderpanelbase.h"
 
 namespace Ui {
 class SingleFolderPanel;
 }
+class QString;
+class FolderForm;
 
-class SingleFolderPanel : public QWidget
+class SingleFolderPanel : public FolderPanelBase
 {
     Q_OBJECT
 
@@ -17,6 +20,8 @@ public:
     ~SingleFolderPanel();
 
 private:
+    FolderForm* getFolderForm() Q_DECL_OVERRIDE;
+
     Ui::SingleFolderPanel *ui;
 };
 

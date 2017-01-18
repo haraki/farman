@@ -8,7 +8,7 @@
 #include "folderview.h"
 
 DoubleFolderPanel::DoubleFolderPanel(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
-    : QWidget(parent)
+    : FolderPanelBase(parent)
     , ui(new Ui::DoubleFolderPanel)
 {
     ui->setupUi(this);
@@ -121,6 +121,19 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     return ret;
 }
 
+void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
+{
+    FolderForm* folderForm = findChild<FolderForm*>(objectName);
+    if(folderForm != Q_NULLPTR)
+    {
+        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+        if(folderView != Q_NULLPTR)
+        {
+            folderView->setFocus();
+        }
+    }
+}
+
 FolderForm* DoubleFolderPanel::getActiveFolderForm()
 {
     QWidget* fw = focusWidget();
@@ -137,15 +150,7 @@ FolderForm* DoubleFolderPanel::getActiveFolderForm()
     return dynamic_cast<FolderForm*>(fw->parent());
 }
 
-void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
+FolderForm* DoubleFolderPanel::getFolderForm()
 {
-    FolderForm* folderForm = findChild<FolderForm*>(objectName);
-    if(folderForm != Q_NULLPTR)
-    {
-        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
-        if(folderView != Q_NULLPTR)
-        {
-            folderView->setFocus();
-        }
-    }
+    return getActiveFolderForm();
 }
