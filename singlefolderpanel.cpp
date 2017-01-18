@@ -1,11 +1,11 @@
 ﻿#include <QGridLayout>
-#include "singlepanelform.h"
-#include "ui_singlepanelform.h"
+#include "singlefolderpanel.h"
+#include "ui_singlefolderpanel.h"
 #include "folderform.h"
 
-SinglePanelForm::SinglePanelForm(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+SingleFolderPanel::SingleFolderPanel(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
-    , ui(new Ui::SinglePanelForm)
+    , ui(new Ui::SingleFolderPanel)
 {
     ui->setupUi(this);
 
@@ -22,7 +22,7 @@ SinglePanelForm::SinglePanelForm(QString& path, QDir::Filters filterFlags, QDir:
     this->setLayout(vLayout);
 }
 
-SinglePanelForm::~SinglePanelForm()
+SingleFolderPanel::~SingleFolderPanel()
 {
     delete ui;
 }
