@@ -2,6 +2,7 @@
 #include "singlefolderpanel.h"
 #include "ui_singlefolderpanel.h"
 #include "folderform.h"
+#include "folderview.h"
 
 SingleFolderPanel::SingleFolderPanel(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : FolderPanelBase(parent)
@@ -20,6 +21,12 @@ SingleFolderPanel::SingleFolderPanel(QString& path, QDir::Filters filterFlags, Q
     vLayout->addWidget(folderForm);
 
     this->setLayout(vLayout);
+
+    FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+    if(folderView != Q_NULLPTR)
+    {
+        folderView->setFocus();
+    }
 }
 
 SingleFolderPanel::~SingleFolderPanel()
