@@ -43,8 +43,6 @@ void MainWindow::on_actionSingleView_triggered()
 
     destroyFolderPanel(path, filterFlags, sortFlags);
 
-    qDebug() << "create SinglePanel";
-
     createFolderPanel(ViewMode::Single, path, filterFlags, sortFlags);
 }
 
@@ -64,8 +62,6 @@ void MainWindow::on_actionDoubleView_triggered()
 
     destroyFolderPanel(path, filterFlags, sortFlags);
 
-    qDebug() << "create DoublePanel";
-
     createFolderPanel(ViewMode::Double, path, filterFlags, sortFlags);
 }
 
@@ -75,11 +71,13 @@ void MainWindow::createFolderPanel(ViewMode viewMode, QString& path, QDir::Filte
 
     if(viewMode == ViewMode::Single)
     {
+        qDebug() << "create SinglePanel";
         panelForm = new SingleFolderPanel(path, filterFlags, sortFlags, ui->mainWidget);
     }
     else
     {
         panelForm = new DoubleFolderPanel(path, filterFlags, sortFlags, ui->mainWidget);
+        qDebug() << "create DoublePanel";
     }
     panelForm->setObjectName("FolderPanel");
 
@@ -93,7 +91,7 @@ void MainWindow::destroyFolderPanel(QString& path, QDir::Filters& filterFlags, Q
     FolderPanelBase* folderPanel = ui->mainWidget->findChild<FolderPanelBase*>("FolderPanel");
     if(folderPanel != Q_NULLPTR)
     {
-        qDebug() << "remove DoublePanel";
+        qDebug() << "remove FolderPanel";
 
         path        = folderPanel->getPath();
         filterFlags = folderPanel->getFilterFlags();
