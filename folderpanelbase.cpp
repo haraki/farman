@@ -7,6 +7,11 @@ FolderPanelBase::FolderPanelBase(QWidget *parent/* = Q_NULLPTR*/)
 
 }
 
+FolderPanelBase::~FolderPanelBase()
+{
+
+}
+
 QString FolderPanelBase::getPath()
 {
     FolderForm* folderForm = getFolderForm();

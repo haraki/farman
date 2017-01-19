@@ -10,6 +10,7 @@ class FolderPanelBase : public QWidget
 {
 public:
     FolderPanelBase(QWidget *parent = Q_NULLPTR);
+    virtual ~FolderPanelBase();
 
     QString getPath();
     QDir::Filters getFilterFlags();
