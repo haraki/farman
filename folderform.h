@@ -52,9 +52,6 @@ private:
 private:
     Ui::FolderForm *ui;
 
-    QDir::Filters m_filterFlags;
-    QDir::SortFlags m_sortFlags;
-
     FolderModel *m_folderModel;
 };
 

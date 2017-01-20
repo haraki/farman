@@ -9,16 +9,14 @@
 FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::FolderForm)
-    , m_filterFlags(filterFlags)
-    , m_sortFlags(sortFlags)
     , m_folderModel(Q_NULLPTR)
 {
     ui->setupUi(this);
 
     m_folderModel = new FolderModel(this);
     m_folderModel->setReadOnly(true);
-    m_folderModel->setFilter(m_filterFlags);
-    m_folderModel->setSorting(m_sortFlags);
+    m_folderModel->setFilter(filterFlags);
+    m_folderModel->setSorting(sortFlags);
     ui->folderView->setModel(m_folderModel);
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
@@ -76,7 +74,6 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
 void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 {
-    m_filterFlags = filterFlags;
     if(m_folderModel != Q_NULLPTR)
     {
         m_folderModel->setFilter(filterFlags);
@@ -85,7 +82,6 @@ void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 
 void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
 {
-    m_sortFlags = sortFlags;
     if(m_folderModel != Q_NULLPTR)
     {
         m_folderModel->setSorting(sortFlags);
@@ -102,14 +98,14 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         // ルートディレクトリの場合は".."を表示しないようにする
         if(dir.isRoot())
         {
-            filterFlags = m_filterFlags | QDir::NoDotDot;
+            filterFlags = m_folderModel->filter() | QDir::NoDotDot;
         }
         else
         {
-            filterFlags = m_filterFlags & ~QDir::NoDotDot;
+            filterFlags = m_folderModel->filter() & ~QDir::NoDotDot;
         }
 
-        if(dir.entryInfoList(filterFlags, m_sortFlags).size() == 0)
+        if(dir.entryInfoList(filterFlags, m_folderModel->sorting()).size() == 0)
         {
             qDebug() << dirPath << " size() == 0";
             return;
