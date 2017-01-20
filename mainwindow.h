@@ -39,8 +39,6 @@ private:
     ViewMode m_viewMode;
 
     QStringList m_nameFilters;
-    QDir::Filters m_filterFlags;
-    QDir::SortFlags m_sortFlags;
 };
 
 #endif // MAINWINDOW_H

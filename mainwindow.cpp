@@ -11,15 +11,13 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     , ui(new Ui::MainWindow)
     , m_viewMode(ViewMode::Double)
     , m_nameFilters()
-    , m_filterFlags(QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot)
-    , m_sortFlags(QDir::DirsFirst | QDir::IgnoreCase | QDir::Name)
 {
     ui->setupUi(this);
 
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    createFolderPanel(m_viewMode, path, m_filterFlags, m_sortFlags);
+    createFolderPanel(m_viewMode, path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
 }
 
 MainWindow::~MainWindow()
