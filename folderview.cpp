@@ -21,7 +21,7 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
     QItemSelectionModel::SelectionFlags ret = QTableView::selectionCommand(index, e);
 
     // ここでは選択処理は行わない
-    ret &= ~QItemSelectionModel::SelectionFlag::ClearAndSelect;
+    ret &= ~(QItemSelectionModel::SelectionFlag::ClearAndSelect | QItemSelectionModel::SelectionFlag::Toggle);
 
     return ret;
 }
