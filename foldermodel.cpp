@@ -171,6 +171,15 @@ QItemSelectionModel* FolderModel::getSelectionModel()
     return m_selectionModel;
 }
 
+void FolderModel::setSelect(int row, QItemSelectionModel::SelectionFlags selectionFlags, const QModelIndex &parentIndex)
+{
+    if(m_selectionModel != Q_NULLPTR)
+    {
+        QItemSelection selection(index(row, 0, parentIndex), index(row, columnCount() - 1, parentIndex));
+        m_selectionModel->select(selection, selectionFlags);
+    }
+}
+
 void FolderModel::clearSelected()
 {
     if(m_selectionModel != Q_NULLPTR)

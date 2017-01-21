@@ -46,6 +46,7 @@ private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
     void onOpen();
+    void onSelect();
 
     int getTotalColumnWidth(int withOutColumn = -1);
 

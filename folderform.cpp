@@ -6,6 +6,7 @@
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
+
 FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::FolderForm)
@@ -54,6 +55,13 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
         {
         case Qt::Key_Return:
             onOpen();
+
+            ret = true;
+
+            break;
+
+        case Qt::Key_Space:
+            onSelect();
 
             ret = true;
 
@@ -238,6 +246,23 @@ void FolderForm::onOpen()
         const QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
 
         setPath(newPath, beforePath);
+    }
+}
+
+void FolderForm::onSelect()
+{
+    const QModelIndex currentIndex = ui->folderView->currentIndex();
+    if(m_folderModel->fileName(currentIndex) != "..")
+    {
+        m_folderModel->setSelect(currentIndex.row(), QItemSelectionModel::Toggle, currentIndex.parent());
+    }
+
+    if(currentIndex.row() + 1 < m_folderModel->rowCount(currentIndex.parent()))
+    {
+        QModelIndex newIndex = m_folderModel->index(currentIndex.row() + 1, 0, currentIndex.parent());
+
+        ui->folderView->setCurrentIndex(newIndex);
+        ui->folderView->scrollTo(newIndex);
     }
 }
 

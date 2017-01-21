@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QDirModel>
 #include <QPalette>
+#include <QItemSelectionModel>
 
 class QObject;
 class QStringList;
@@ -24,6 +25,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
     QItemSelectionModel* getSelectionModel();
+    void setSelect(int row, QItemSelectionModel::SelectionFlags selectionFlags, const QModelIndex &parentIndex);
     void clearSelected();
 
 private:
