@@ -152,7 +152,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
         switch(key)
         {
         case Qt::Key_Left:
-            if(activeForm->objectName() == "l_folderForm")
+            if(m_viewMode == ViewMode::Single || activeForm->objectName() == "l_folderForm")
             {
                 activeForm->onGoToParent();
             }
@@ -166,13 +166,16 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
             break;
 
         case Qt::Key_Right:
-            if(activeForm->objectName() == "r_folderForm")
+            if(m_viewMode == ViewMode::Double)
             {
-                activeForm->onGoToParent();
-            }
-            else
-            {
-                setActiveFolderForm("r_folderForm");
+                if(activeForm->objectName() == "r_folderForm")
+                {
+                    activeForm->onGoToParent();
+                }
+                else
+                {
+                    setActiveFolderForm("r_folderForm");
+                }
             }
 
             ret = true;
