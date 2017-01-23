@@ -7,9 +7,10 @@
 #include "folderform.h"
 #include "folderview.h"
 
-DoubleFolderPanel::DoubleFolderPanel(QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
-    : FolderPanelBase(parent)
+DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+    : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
+    , m_viewMode(viewMode)
 {
     ui->setupUi(this);
 
@@ -52,11 +53,81 @@ DoubleFolderPanel::DoubleFolderPanel(QString& path, QDir::Filters filterFlags, Q
     }
 
     setActiveFolderForm("l_folderForm");
+
+    changeViewMode(viewMode);
 }
 
 DoubleFolderPanel::~DoubleFolderPanel()
 {
     delete ui;
+}
+
+void DoubleFolderPanel::changeViewMode(ViewMode viewMode)
+{
+    if(viewMode == m_viewMode)
+    {
+        return;
+    }
+
+    m_viewMode = viewMode;
+
+    switch(viewMode)
+    {
+    case ViewMode::Single:
+        if(getActiveFolderForm()->objectName() == "l_folderForm")
+        {
+            ui->leftPanel->setVisible(true);
+            ui->rightPanel->setVisible(false);
+        }
+        else
+        {
+            ui->leftPanel->setVisible(false);
+            ui->rightPanel->setVisible(true);
+        }
+
+        break;
+
+    case ViewMode::Double:
+        ui->leftPanel->setVisible(true);
+        ui->rightPanel->setVisible(true);
+        break;
+
+    default:
+        break;
+    }
+}
+
+QString DoubleFolderPanel::getPath()
+{
+    FolderForm* folderForm = getFolderForm();
+    if(folderForm == Q_NULLPTR)
+    {
+        return QString("");
+    }
+
+    return folderForm->getPath();
+}
+
+QDir::Filters DoubleFolderPanel::getFilterFlags()
+{
+    FolderForm* folderForm = getFolderForm();
+    if(folderForm == Q_NULLPTR)
+    {
+        return QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot;
+    }
+
+    return folderForm->getFilterFlags();
+}
+
+QDir::SortFlags DoubleFolderPanel::getSortFlags()
+{
+    FolderForm* folderForm = getFolderForm();
+    if(folderForm == Q_NULLPTR)
+    {
+        return QDir::DirsFirst | QDir::IgnoreCase | QDir::Name;
+    }
+
+    return folderForm->getSortFlags();
 }
 
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
@@ -70,7 +141,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     {
         Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
 
-        qDebug() << "DoublePanelForm::eventFilter : " << key;
+        qDebug() << "DoubleFolderPanel::eventFilter : " << key;
 
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm == Q_NULLPTR)
