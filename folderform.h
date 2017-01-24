@@ -31,11 +31,8 @@ public:
     QString getPath();
 
     void onGoToParent();
-protected:
-    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 protected slots:
-    void onColumnResized(int column, int oldWidth, int newWidth);
     void onOpen(const QModelIndex& index);
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
 

@@ -1,6 +1,7 @@
 ﻿#include <QDebug>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
+#include <QHeaderView>
 #include "folderview.h"
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
@@ -14,6 +15,14 @@ FolderView::FolderView(QWidget *parent/* = Q_NULLPTR*/)
 FolderView::~FolderView()
 {
 
+}
+
+void FolderView::setModel(QAbstractItemModel *model)
+{
+    QTableView::setModel(model);
+
+    horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 }
 
 QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelIndex& index, const QEvent* e/* = Q_NULLPTR*/) const
