@@ -32,12 +32,17 @@ public:
 
     void onGoToParent();
 
+Q_SIGNALS:
+    void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+
 protected slots:
     void onOpen(const QModelIndex& index);
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
 
 private slots:
     void on_folderSelectButton_clicked();
+
+    void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;

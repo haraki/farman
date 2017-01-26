@@ -26,7 +26,10 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
-    connect(ui->folderView,                     SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(onOpen(const QModelIndex&)));
+    connect(ui->folderView,
+            SIGNAL(doubleClicked(const QModelIndex&)),
+            this,
+            SLOT(onOpen(const QModelIndex&)));
 
     ui->folderView->installEventFilter(this);
 }
@@ -168,7 +171,7 @@ void FolderForm::onOpen(const QModelIndex& index)
 
 void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex)
 {
-//    qDebug() << "onCurrentChanged : old : " << oldIndex.row() << " new : " << newIndex.row();
+    qDebug() << "FolderForm::onCurrentChanged : old : " << oldIndex.row() << " new : " << newIndex.row();
 
     QModelIndex topLeft, bottomRight;
     if(newIndex.row() < oldIndex.row())
@@ -184,6 +187,9 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
 
     // カーソルが移動した箇所を再描画する
     emit ui->folderView->refresh(topLeft, bottomRight);
+
+    emitCurrentChanged((newIndex.row() >= 0) ? m_folderModel->fileInfo(newIndex) : QFileInfo(),
+                       (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
 }
 
 void FolderForm::onOpen()
@@ -260,4 +266,9 @@ void FolderForm::on_folderSelectButton_clicked()
     {
         setPath(dirPath);
     }
+}
+
+void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
+{
+    emit currentChanged(newFileInfo, oldFileInfo);
 }

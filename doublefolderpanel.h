@@ -31,6 +31,15 @@ public:
     QDir::Filters getFilterFlags();
     QDir::SortFlags getSortFlags();
 
+Q_SIGNALS:
+    void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+
+protected slots:
+    void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void onRightCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+
+    void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);

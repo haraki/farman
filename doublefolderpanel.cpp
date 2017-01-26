@@ -52,6 +52,15 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Fil
         r_folderView->installEventFilter(this);
     }
 
+    connect(l_folderForm,
+            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
+            this,
+            SLOT(onLeftCurrentChanged(QFileInfo,QFileInfo)));
+    connect(r_folderForm,
+            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
+            this,
+            SLOT(onRightCurrentChanged(QFileInfo,QFileInfo)));
+
     setActiveFolderForm("l_folderForm");
 
     changeViewMode(viewMode);
@@ -90,6 +99,7 @@ void DoubleFolderPanel::changeViewMode(ViewMode viewMode)
     case ViewMode::Double:
         ui->leftPanel->setVisible(true);
         ui->rightPanel->setVisible(true);
+
         break;
 
     default:
@@ -193,6 +203,33 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     }
 
     return ret;
+}
+
+void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
+{
+    qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
+    {
+        emitCurrentChanged(newFileInfo, oldFileInfo);
+    }
+}
+
+void DoubleFolderPanel::onRightCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
+{
+    qDebug() << "DoubleFolderPanel::onRightCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
+    {
+        emitCurrentChanged(newFileInfo, oldFileInfo);
+    }
+}
+
+void DoubleFolderPanel::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
+{
+    emit currentChanged(newFileInfo, oldFileInfo);
 }
 
 void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)

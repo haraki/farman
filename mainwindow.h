@@ -20,6 +20,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void onCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();
 
