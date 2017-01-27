@@ -26,8 +26,6 @@ private Q_SLOTS:
     void on_actionDoubleView_triggered();
 
 private:
-    void createFolderPanel(DoubleFolderPanel::ViewMode viewMode, QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags);
-
     Ui::MainWindow *ui;
 
     QStringList m_nameFilters;

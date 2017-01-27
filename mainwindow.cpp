@@ -16,7 +16,17 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    createFolderPanel(DoubleFolderPanel::ViewMode::Double, path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name);
+    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(DoubleFolderPanel::ViewMode::Double,
+                                                                 path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name,
+                                                                 path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name,
+                                                                 ui->mainWidget);
+
+    ui->mainWidget->layout()->addWidget(doubleFolderPanel);
+
+    connect(doubleFolderPanel,
+            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
+            this,
+            SLOT(onCurrentChanged(QFileInfo,QFileInfo)));
 }
 
 MainWindow::~MainWindow()
@@ -45,18 +55,4 @@ void MainWindow::on_actionDoubleView_triggered()
 
     DoubleFolderPanel* folderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     folderPanel->changeViewMode(DoubleFolderPanel::ViewMode::Double);
-}
-
-void MainWindow::createFolderPanel(DoubleFolderPanel::ViewMode viewMode, QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags)
-{
-    qDebug() << "create DoubleFolderPanel";
-
-    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(viewMode, path, filterFlags, sortFlags, ui->mainWidget);
-
-    ui->mainWidget->layout()->addWidget(doubleFolderPanel);
-
-    connect(doubleFolderPanel,
-            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
-            this,
-            SLOT(onCurrentChanged(QFileInfo,QFileInfo)));
 }

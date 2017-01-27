@@ -23,7 +23,10 @@ public:
         ViewModeNum
     };
 
-    explicit DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent = Q_NULLPTR);
+    explicit DoubleFolderPanel(ViewMode viewMode,
+                               QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
+                               QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
+                               QWidget* parent = Q_NULLPTR);
     ~DoubleFolderPanel();
     void changeViewMode(ViewMode viewMode);
 

@@ -8,7 +8,10 @@
 #include "folderview.h"
 #include "foldermodel.h"
 
-DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
+                                     QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
+                                     QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
+                                     QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
     , m_viewMode(viewMode)
@@ -20,9 +23,9 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Fil
     l_vLayout->setObjectName(QStringLiteral("l_vLayout"));
     l_vLayout->setContentsMargins(0, 0, 0, 0);
 
-    FolderForm* l_folderForm = new FolderForm(filterFlags, sortFlags, this);
+    FolderForm* l_folderForm = new FolderForm(l_filterFlags, l_sortFlags, this);
     l_folderForm->setObjectName(QStringLiteral("l_folderForm"));
-    l_folderForm->setPath(path);
+    l_folderForm->setPath(l_path);
 
     l_vLayout->addWidget(l_folderForm);
 
@@ -39,9 +42,9 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Fil
     r_vLayout->setObjectName(QStringLiteral("r_vLayout"));
     r_vLayout->setContentsMargins(0, 0, 0, 0);
 
-    FolderForm* r_folderForm = new FolderForm(filterFlags, sortFlags, this);
+    FolderForm* r_folderForm = new FolderForm(r_filterFlags, r_sortFlags, this);
     r_folderForm->setObjectName(QStringLiteral("r_folderForm"));
-    r_folderForm->setPath(path);
+    r_folderForm->setPath(r_path);
 
     r_vLayout->addWidget(r_folderForm);
 
