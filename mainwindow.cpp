@@ -6,6 +6,8 @@
 #include "doublefolderpanel.h"
 #include <QDebug>
 
+using namespace Farman;
+
 MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(DoubleFolderPanel::ViewMode::Double,
+    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ViewMode::Double,
                                                                  path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name,
                                                                  path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name,
                                                                  ui->mainWidget);
@@ -46,7 +48,7 @@ void MainWindow::on_actionSingleView_triggered()
     qDebug() << "MainWindow::on_actionSingleView_triggered()";
 
     DoubleFolderPanel* folderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    folderPanel->changeViewMode(DoubleFolderPanel::ViewMode::Single);
+    folderPanel->changeViewMode(ViewMode::Single);
 }
 
 void MainWindow::on_actionDoubleView_triggered()
@@ -54,5 +56,5 @@ void MainWindow::on_actionDoubleView_triggered()
     qDebug() << "MainWindow::on_actionDoubleView_triggered()";
 
     DoubleFolderPanel* folderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    folderPanel->changeViewMode(DoubleFolderPanel::ViewMode::Double);
+    folderPanel->changeViewMode(ViewMode::Double);
 }

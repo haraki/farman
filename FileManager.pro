@@ -27,7 +27,8 @@ HEADERS  += mainwindow.h \
     folderviewstyleditemdelegate.h \
     foldermodel.h \
     folderview.h \
-    doublefolderpanel.h
+    doublefolderpanel.h \
+    types.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \

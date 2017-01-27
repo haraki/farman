@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <qdir.h>
+#include "types.h"
 
 namespace Ui {
 class DoubleFolderPanel;
@@ -10,19 +11,13 @@ class DoubleFolderPanel;
 class QString;
 class FolderForm;
 
+using namespace Farman;
+
 class DoubleFolderPanel : public QWidget
 {
     Q_OBJECT
 
 public:
-    enum class ViewMode : int
-    {
-        Single = 0,
-        Double = 1,
-
-        ViewModeNum
-    };
-
     explicit DoubleFolderPanel(ViewMode viewMode,
                                QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
                                QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
