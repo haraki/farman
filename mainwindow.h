@@ -19,9 +19,8 @@ public:
     explicit MainWindow(QWidget *parent = Q_NULLPTR);
     ~MainWindow();
 
-private slots:
+private Q_SLOTS:
     void onCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
-    void onFocusChanged(QWidget* oldWidget, QWidget* nowWidget);
 
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();

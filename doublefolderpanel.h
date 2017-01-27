@@ -37,6 +37,7 @@ Q_SIGNALS:
 protected slots:
     void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void onRightCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void onFocusChanged(QWidget* oldWidget, QWidget* nowWidget);
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
 

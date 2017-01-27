@@ -6,6 +6,7 @@
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
 #include "folderview.h"
+#include "foldermodel.h"
 
 DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
@@ -60,6 +61,10 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode, QString& path, QDir::Fil
             SIGNAL(currentChanged(QFileInfo,QFileInfo)),
             this,
             SLOT(onRightCurrentChanged(QFileInfo,QFileInfo)));
+    connect(qApp,
+            SIGNAL(focusChanged(QWidget*,QWidget*)),
+            this,
+            SLOT(onFocusChanged(QWidget*,QWidget*)));
 
     setActiveFolderForm("l_folderForm");
 
@@ -224,6 +229,26 @@ void DoubleFolderPanel::onRightCurrentChanged(const QFileInfo& newFileInfo, cons
     if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
     {
         emitCurrentChanged(newFileInfo, oldFileInfo);
+    }
+}
+
+void DoubleFolderPanel::onFocusChanged(QWidget* oldWidget, QWidget* nowWidget)
+{
+    qDebug() << "DoubleFolderPanel::onFocusChanged(" <<
+                ((oldWidget == nullptr) ? "null" : oldWidget->objectName()) << ", " <<
+                ((nowWidget == nullptr) ? "null" : nowWidget->objectName()) << ")";
+
+    if(nowWidget != nullptr)
+    {
+        FolderView* newFolderView = dynamic_cast<FolderView*>(nowWidget);
+        if(newFolderView != nullptr && newFolderView->objectName() == "folderView")
+        {
+            FolderModel* folderModel = dynamic_cast<FolderModel*>(newFolderView->model());
+            if(folderModel != Q_NULLPTR)
+            {
+                emitCurrentChanged(folderModel->fileInfo(newFolderView->currentIndex()), QFileInfo());
+            }
+        }
     }
 }
 

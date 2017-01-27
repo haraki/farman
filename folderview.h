@@ -14,8 +14,6 @@ public:
 
     QItemSelectionModel::SelectionFlags selectionCommand(const QModelIndex &index, const QEvent *e = Q_NULLPTR) const Q_DECL_OVERRIDE;
 
-    QString currentPath();
-
     void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 };
 

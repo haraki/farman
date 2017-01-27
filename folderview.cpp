@@ -35,17 +35,6 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
     return ret;
 }
 
-QString FolderView::currentPath()
-{
-    FolderModel* folderModel = dynamic_cast<FolderModel*>(this->model());
-    if(folderModel != Q_NULLPTR)
-    {
-        return folderModel->filePath(this->currentIndex());
-    }
-
-    return QString("");
-}
-
 void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
     emit dataChanged(topLeft, bottomRight);
