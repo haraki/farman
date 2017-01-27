@@ -5,13 +5,15 @@
 #include <qdir.h>
 #include "types.h"
 
-namespace Ui {
+namespace Ui
+{
 class DoubleFolderPanel;
 }
 class QString;
-class FolderForm;
 
-using namespace Farman;
+namespace Farman
+{
+class FolderForm;
 
 class DoubleFolderPanel : public QWidget
 {
@@ -49,5 +51,7 @@ private:
 
     ViewMode m_viewMode;
 };
+
+}           // namespace Farman
 
 #endif // DOUBLEFOLDERPANEL_H

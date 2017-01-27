@@ -4,6 +4,9 @@
 #include <QTableView>
 #include <QString>
 
+namespace Farman
+{
+
 class FolderView : public QTableView
 {
 public:
@@ -16,5 +19,7 @@ public:
 
     void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 };
+
+}           // namespace Farman
 
 #endif // FOLDERVIEW_H

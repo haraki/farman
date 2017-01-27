@@ -11,6 +11,9 @@ namespace Ui {
 class MainWindow;
 }
 
+namespace Farman
+{
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -30,5 +33,7 @@ private:
 
     QStringList m_nameFilters;
 };
+
+}           // namespace Farman
 
 #endif // MAINWINDOW_H

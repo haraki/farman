@@ -6,6 +6,9 @@
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
 
+namespace Farman
+{
+
 FolderView::FolderView(QWidget *parent/* = Q_NULLPTR*/)
     : QTableView(parent)
 {
@@ -39,3 +42,5 @@ void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRi
 {
     emit dataChanged(topLeft, bottomRight);
 }
+
+}           // namespace Farman

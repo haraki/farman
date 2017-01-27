@@ -6,7 +6,8 @@
 #include "doublefolderpanel.h"
 #include <QDebug>
 
-using namespace Farman;
+namespace Farman
+{
 
 MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     : QMainWindow(parent)
@@ -58,3 +59,5 @@ void MainWindow::on_actionDoubleView_triggered()
     DoubleFolderPanel* folderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     folderPanel->changeViewMode(ViewMode::Double);
 }
+
+}           // namespace Farman

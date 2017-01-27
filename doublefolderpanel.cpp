@@ -8,6 +8,9 @@
 #include "folderview.h"
 #include "foldermodel.h"
 
+namespace Farman
+{
+
 DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
                                      QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
                                      QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
@@ -293,3 +296,5 @@ FolderForm* DoubleFolderPanel::getFolderForm()
 {
     return getActiveFolderForm();
 }
+
+}           // namespace Farman

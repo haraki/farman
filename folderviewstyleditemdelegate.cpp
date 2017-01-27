@@ -8,6 +8,9 @@
 
 #include "folderview.h"
 
+namespace Farman
+{
+
 FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent/* = Q_NULLPTR*/)
     : QStyledItemDelegate(parent)
 {
@@ -35,3 +38,5 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
         }
     }
 }
+
+}           // namespace Farman

@@ -57,7 +57,7 @@
     </layout>
    </item>
    <item>
-    <widget class="FolderView" name="folderView">
+    <widget class="Farman::FolderView" name="folderView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -97,7 +97,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>FolderView</class>
+   <class>Farman::FolderView</class>
    <extends>QTableView</extends>
    <header>folderview.h</header>
   </customwidget>

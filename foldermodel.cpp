@@ -6,6 +6,9 @@
 #include <QPalette>
 #include <QItemSelectionModel>
 
+namespace Farman
+{
+
 FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent/* = Q_NULLPTR*/)
     : QDirModel(nameFilters, filters, sort, parent)
     , m_selectionModel(Q_NULLPTR)
@@ -536,3 +539,5 @@ QFileInfo FolderModel::fileInfo(const QModelIndex &index) const
     // FIXME: Implement me!
 }
 #endif
+
+}           // namespace Farman

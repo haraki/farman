@@ -5,13 +5,14 @@
 #include <QDir>
 #include <QModelIndex>
 
-class FolderModel;
-
 namespace Ui {
 class FolderForm;
 }
 class QString;
 class QResizeEvent;
+
+namespace Farman
+{
 class FolderModel;
 
 class FolderForm : public QWidget
@@ -57,5 +58,7 @@ private:
 
     FolderModel *m_folderModel;
 };
+
+}           // namespace Farman
 
 #endif // FOLDERFORM_H

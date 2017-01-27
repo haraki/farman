@@ -7,6 +7,9 @@
 #include "ui_folderform.h"
 #include "foldermodel.h"
 
+namespace Farman
+{
+
 FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::FolderForm)
@@ -272,3 +275,5 @@ void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInf
 {
     emit currentChanged(newFileInfo, oldFileInfo);
 }
+
+}           // namespace Farman

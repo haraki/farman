@@ -15,6 +15,9 @@ class QDirModel;
 class QVariant;
 class QItemSelectionModel;
 
+namespace Farman
+{
+
 class FolderModel : public QDirModel
 {
 public:
@@ -159,5 +162,7 @@ public:
 };
 
 #endif
+
+}           // namespace Farman
 
 #endif // FOLDERMODEL_H
