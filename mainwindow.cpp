@@ -1,5 +1,6 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "folderview.h"
 #include "foldermodel.h"
 #include "folderform.h"
 #include "doublefolderpanel.h"
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     , m_nameFilters()
 {
     ui->setupUi(this);
+
+    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)), this, SLOT(onFocusChanged(QWidget*,QWidget*)));
 
     QString path = QDir::currentPath();
     qDebug() << path;
@@ -28,6 +31,23 @@ void MainWindow::onCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo&
     qDebug() << "MainWindow::onCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
 
     statusBar()->showMessage(newFileInfo.filePath());
+}
+
+void MainWindow::onFocusChanged(QWidget* oldWidget, QWidget* nowWidget)
+{
+    qDebug() << "MainWindow::onFocusChanged(" <<
+                ((oldWidget == nullptr) ? "null" : oldWidget->objectName()) << ", " <<
+                ((nowWidget == nullptr) ? "null" : nowWidget->objectName()) << ")";
+
+    if(nowWidget != nullptr)
+    {
+        FolderView* newFolderView = dynamic_cast<FolderView*>(nowWidget);
+        if(newFolderView != nullptr && newFolderView->objectName() == "folderView")
+        {
+            statusBar()->showMessage(newFolderView->currentPath());
+        }
+    }
+
 }
 
 void MainWindow::on_actionSingleView_triggered()
