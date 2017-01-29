@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     qDebug() << path;
 
     DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ViewMode::Double,
-                                                                 path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name,
-                                                                 path, QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot, QDir::DirsFirst | QDir::IgnoreCase | QDir::Name,
+                                                                 path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
+                                                                 path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
                                                                  ui->mainWidget);
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
