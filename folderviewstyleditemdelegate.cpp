@@ -19,7 +19,8 @@ FolderViewStyledItemDelegate::FolderViewStyledItemDelegate(QObject *parent/* = Q
 void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QStyleOptionViewItem opt = option;
-    opt.state &= ~QStyle::State_Selected;       // FolderModel の TextColorRole・BackgroundRole の Brush を使用するため、ここでは Selected を無効にするｓ
+    opt.state &= ~QStyle::State_Selected;       // FolderModel の TextColorRole・BackgroundRole の Brush を使用するため、ここでは Selected を無効にする
+    opt.state &= ~QStyle::State_HasFocus;       // カーソル位置の枠を表示しないようにするため、ここでは Has_Focus を無効にする(Windows用)
 
     QStyledItemDelegate::paint(painter, opt, index);
 
