@@ -27,10 +27,6 @@ public:
     ~DoubleFolderPanel();
     void changeViewMode(ViewMode viewMode);
 
-    QString getPath();
-    QDir::Filters getFilterFlags();
-    QDir::SortFlags getSortFlags();
-
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
 
@@ -45,7 +41,6 @@ private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);
     FolderForm* getActiveFolderForm();
-    FolderForm* getFolderForm();
 
     Ui::DoubleFolderPanel *ui;
 

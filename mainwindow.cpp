@@ -48,16 +48,16 @@ void MainWindow::on_actionSingleView_triggered()
 {
     qDebug() << "MainWindow::on_actionSingleView_triggered()";
 
-    DoubleFolderPanel* folderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    folderPanel->changeViewMode(ViewMode::Single);
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    doubleFolderPanel->changeViewMode(ViewMode::Single);
 }
 
 void MainWindow::on_actionDoubleView_triggered()
 {
     qDebug() << "MainWindow::on_actionDoubleView_triggered()";
 
-    DoubleFolderPanel* folderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    folderPanel->changeViewMode(ViewMode::Double);
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    doubleFolderPanel->changeViewMode(ViewMode::Double);
 }
 
 }           // namespace Farman

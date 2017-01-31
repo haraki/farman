@@ -118,39 +118,6 @@ void DoubleFolderPanel::changeViewMode(ViewMode viewMode)
     }
 }
 
-QString DoubleFolderPanel::getPath()
-{
-    FolderForm* folderForm = getFolderForm();
-    if(folderForm == Q_NULLPTR)
-    {
-        return QString("");
-    }
-
-    return folderForm->getPath();
-}
-
-QDir::Filters DoubleFolderPanel::getFilterFlags()
-{
-    FolderForm* folderForm = getFolderForm();
-    if(folderForm == Q_NULLPTR)
-    {
-        return QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot;
-    }
-
-    return folderForm->getFilterFlags();
-}
-
-QDir::SortFlags DoubleFolderPanel::getSortFlags()
-{
-    FolderForm* folderForm = getFolderForm();
-    if(folderForm == Q_NULLPTR)
-    {
-        return QDir::DirsFirst | QDir::IgnoreCase | QDir::Name;
-    }
-
-    return folderForm->getSortFlags();
-}
-
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 {
     Q_UNUSED(watched);
@@ -290,11 +257,6 @@ FolderForm* DoubleFolderPanel::getActiveFolderForm()
     }
 
     return dynamic_cast<FolderForm*>(fw->parent());
-}
-
-FolderForm* DoubleFolderPanel::getFolderForm()
-{
-    return getActiveFolderForm();
 }
 
 }           // namespace Farman
