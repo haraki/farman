@@ -44,6 +44,8 @@
     </property>
     <addaction name="actionSingleView"/>
     <addaction name="actionDoubleView"/>
+    <addaction name="separator"/>
+    <addaction name="actionSortSetting"/>
    </widget>
    <addaction name="viewMenu"/>
   </widget>
@@ -53,7 +55,7 @@
     <string>SingleView</string>
    </property>
    <property name="toolTip">
-    <string>SingleView</string>
+    <string>Single View</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
@@ -64,10 +66,18 @@
     <string>DoubleView</string>
    </property>
    <property name="toolTip">
-    <string>DoubleView</string>
+    <string>Double View</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
+   </property>
+  </action>
+  <action name="actionSortSetting">
+   <property name="text">
+    <string>Sort Setting...</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
    </property>
   </action>
  </widget>

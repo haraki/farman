@@ -1,10 +1,11 @@
-﻿#include "mainwindow.h"
+﻿#include <QDebug>
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "folderview.h"
 #include "foldermodel.h"
 #include "folderform.h"
 #include "doublefolderpanel.h"
-#include <QDebug>
+#include "sortdialog.h"
 
 namespace Farman
 {
@@ -58,6 +59,14 @@ void MainWindow::on_actionDoubleView_triggered()
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     doubleFolderPanel->changeViewMode(ViewMode::Double);
+}
+
+void Farman::MainWindow::on_actionSortSetting_triggered()
+{
+    qDebug() << "MainWindow::on_actionSortSetting_triggered()";
+
+    SortDialog dialog(this);
+    dialog.exec();
 }
 
 }           // namespace Farman
