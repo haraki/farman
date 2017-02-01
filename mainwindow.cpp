@@ -50,7 +50,10 @@ void MainWindow::on_actionSingleView_triggered()
     qDebug() << "MainWindow::on_actionSingleView_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    doubleFolderPanel->changeViewMode(ViewMode::Single);
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->changeViewMode(ViewMode::Single);
+    }
 }
 
 void MainWindow::on_actionDoubleView_triggered()
@@ -58,15 +61,34 @@ void MainWindow::on_actionDoubleView_triggered()
     qDebug() << "MainWindow::on_actionDoubleView_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    doubleFolderPanel->changeViewMode(ViewMode::Double);
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->changeViewMode(ViewMode::Double);
+    }
 }
 
 void Farman::MainWindow::on_actionSortSettings_triggered()
 {
     qDebug() << "MainWindow::on_actionSortSetting_triggered()";
 
-    SortDialog dialog(this);
-    dialog.exec();
+    QDir::SortFlags sortFlags = DEFAULT_SORT_FLAGS;
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+        if(activeFolderForm != Q_NULLPTR)
+        {
+            sortFlags = activeFolderForm->getSortFlags();
+
+            SortDialog dialog(sortFlags, this);
+            if(dialog.exec())
+            {
+                sortFlags = dialog.getSortFlags();
+                activeFolderForm->setSortFlags(sortFlags);
+            }
+        }
+    }
 }
 
 }           // namespace Farman

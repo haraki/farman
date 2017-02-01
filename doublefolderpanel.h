@@ -26,6 +26,7 @@ public:
                                QWidget* parent = Q_NULLPTR);
     ~DoubleFolderPanel();
     void changeViewMode(ViewMode viewMode);
+    FolderForm* getActiveFolderForm();
 
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
@@ -40,7 +41,6 @@ protected slots:
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);
-    FolderForm* getActiveFolderForm();
 
     Ui::DoubleFolderPanel *ui;
 
