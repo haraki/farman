@@ -2,6 +2,9 @@
 #include "sortdialog.h"
 #include "ui_sortdialog.h"
 
+namespace Farman
+{
+
 SortDialog::SortDialog(QDir::SortFlags sortFlags, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SortDialog),
@@ -114,3 +117,5 @@ void SortDialog::accept()
 
     QDialog::accept();
 }
+
+}           // namespace Farman

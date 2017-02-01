@@ -8,6 +8,9 @@ namespace Ui {
 class SortDialog;
 }
 
+namespace Farman
+{
+
 class SortDialog : public QDialog
 {
     Q_OBJECT
@@ -24,5 +27,7 @@ private:
     Ui::SortDialog *ui;
     QDir::SortFlags m_sortFlags;
 };
+
+}           // namespace Farman
 
 #endif // SORTDIALOG_H
