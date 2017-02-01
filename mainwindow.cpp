@@ -61,7 +61,7 @@ void MainWindow::on_actionDoubleView_triggered()
     doubleFolderPanel->changeViewMode(ViewMode::Double);
 }
 
-void Farman::MainWindow::on_actionSortSetting_triggered()
+void Farman::MainWindow::on_actionSortSettings_triggered()
 {
     qDebug() << "MainWindow::on_actionSortSetting_triggered()";
 

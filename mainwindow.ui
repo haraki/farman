@@ -45,7 +45,7 @@
     <addaction name="actionSingleView"/>
     <addaction name="actionDoubleView"/>
     <addaction name="separator"/>
-    <addaction name="actionSortSetting"/>
+    <addaction name="actionSortSettings"/>
    </widget>
    <addaction name="viewMenu"/>
   </widget>
@@ -72,9 +72,9 @@
     <string>Ctrl+2</string>
    </property>
   </action>
-  <action name="actionSortSetting">
+  <action name="actionSortSettings">
    <property name="text">
-    <string>Sort Setting...</string>
+    <string>Sort Settings...</string>
    </property>
    <property name="shortcut">
     <string>S</string>
