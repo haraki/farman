@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     folderviewstyleditemdelegate.cpp \
     foldermodel.cpp \
     doublefolderpanel.cpp \
-    sortdialog.cpp
+    sortdialog.cpp \
+    filterdialog.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -30,9 +31,11 @@ HEADERS  += mainwindow.h \
     folderview.h \
     doublefolderpanel.h \
     types.h \
-    sortdialog.h
+    sortdialog.h \
+    filterdialog.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
     doublefolderpanel.ui \
-    sortdialog.ui
+    sortdialog.ui \
+    filterdialog.ui
