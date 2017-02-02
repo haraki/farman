@@ -55,7 +55,7 @@
     </property>
     <layout class="QVBoxLayout" name="sortTypeVerticalLayout">
      <item>
-      <widget class="QRadioButton" name="nameRadioButton">
+      <widget class="QRadioButton" name="sortNameRadioButton">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
@@ -65,7 +65,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="sizeRadioButton">
+      <widget class="QRadioButton" name="sortSizeRadioButton">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
@@ -75,7 +75,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="lastModifiedRadioButton">
+      <widget class="QRadioButton" name="sortLastModifiedRadioButton">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
@@ -85,7 +85,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="typeRadioButton">
+      <widget class="QRadioButton" name="sortTypeRadioButton">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
@@ -120,7 +120,7 @@
     </property>
     <layout class="QVBoxLayout" name="orderVerticalLayout">
      <item>
-      <widget class="QRadioButton" name="ascendingRadioButton">
+      <widget class="QRadioButton" name="orderAscendingRadioButton">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
@@ -130,7 +130,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="descendingRadioButton">
+      <widget class="QRadioButton" name="orderDescendingRadioButton">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>

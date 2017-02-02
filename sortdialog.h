@@ -21,9 +21,9 @@ public:
 
     QDir::SortFlags getSortFlags();
 
+private:
     void accept() Q_DECL_OVERRIDE;
 
-private:
     Ui::SortDialog *ui;
     QDir::SortFlags m_sortFlags;
 };

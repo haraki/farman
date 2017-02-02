@@ -14,28 +14,28 @@ SortDialog::SortDialog(QDir::SortFlags sortFlags, QWidget *parent) :
 
     if(sortFlags & QDir::SortFlag::Time)
     {
-        ui->lastModifiedRadioButton->setChecked(true);
+        ui->sortLastModifiedRadioButton->setChecked(true);
     }
     else if(sortFlags & QDir::SortFlag::Size)
     {
-        ui->sizeRadioButton->setChecked(true);
+        ui->sortSizeRadioButton->setChecked(true);
     }
     else if(sortFlags & QDir::SortFlag::Type)
     {
-        ui->typeRadioButton->setChecked(true);
+        ui->sortTypeRadioButton->setChecked(true);
     }
     else
     {
-        ui->nameRadioButton->setChecked(true);
+        ui->sortNameRadioButton->setChecked(true);
     }
 
     if(sortFlags & QDir::SortFlag::Reversed)
     {
-        ui->descendingRadioButton->setChecked(true);
+        ui->orderDescendingRadioButton->setChecked(true);
     }
     else
     {
-        ui->ascendingRadioButton->setChecked(true);
+        ui->orderAscendingRadioButton->setChecked(true);
     }
 
     if(sortFlags & QDir::SortFlag::DirsFirst)
@@ -74,15 +74,15 @@ QDir::SortFlags SortDialog::getSortFlags()
 void SortDialog::accept()
 {
     m_sortFlags &= ~(QDir::SortFlag::Time | QDir::SortFlag::Size | QDir::SortFlag::Type);
-    if(ui->lastModifiedRadioButton->isChecked())
+    if(ui->sortLastModifiedRadioButton->isChecked())
     {
         m_sortFlags |= QDir::SortFlag::Time;
     }
-    else if(ui->sizeRadioButton->isChecked())
+    else if(ui->sortSizeRadioButton->isChecked())
     {
         m_sortFlags |= QDir::SortFlag::Size;
     }
-    else if(ui->typeRadioButton->isChecked())
+    else if(ui->sortTypeRadioButton->isChecked())
     {
         m_sortFlags |= QDir::SortFlag::Type;
     }
@@ -92,7 +92,7 @@ void SortDialog::accept()
     }
 
     m_sortFlags &= ~(QDir::SortFlag::Reversed);
-    if(ui->descendingRadioButton->isChecked())
+    if(ui->orderDescendingRadioButton->isChecked())
     {
         m_sortFlags |= QDir::SortFlag::Reversed;
     }
