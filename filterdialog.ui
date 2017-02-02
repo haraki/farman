@@ -38,6 +38,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
    <property name="text">
     <string>Show hidden files</string>
    </property>
@@ -50,6 +53,9 @@
      <width>151</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
    </property>
    <property name="text">
     <string>Show system files</string>
