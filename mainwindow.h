@@ -28,6 +28,7 @@ private Q_SLOTS:
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();
     void on_actionSortSettings_triggered();
+    void on_actionFilterSettings_triggered();
 
 private:
     Ui::MainWindow *ui;

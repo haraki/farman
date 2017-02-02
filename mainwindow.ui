@@ -46,6 +46,7 @@
     <addaction name="actionDoubleView"/>
     <addaction name="separator"/>
     <addaction name="actionSortSettings"/>
+    <addaction name="actionFilterSettings"/>
    </widget>
    <addaction name="viewMenu"/>
   </widget>
@@ -78,6 +79,14 @@
    </property>
    <property name="shortcut">
     <string>S</string>
+   </property>
+  </action>
+  <action name="actionFilterSettings">
+   <property name="text">
+    <string>Filter Settings...</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
    </property>
   </action>
  </widget>

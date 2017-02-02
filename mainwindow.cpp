@@ -6,6 +6,7 @@
 #include "folderform.h"
 #include "doublefolderpanel.h"
 #include "sortdialog.h"
+#include "filterdialog.h"
 
 namespace Farman
 {
@@ -86,6 +87,30 @@ void Farman::MainWindow::on_actionSortSettings_triggered()
             {
                 sortFlags = dialog.getSortFlags();
                 activeFolderForm->setSortFlags(sortFlags);
+            }
+        }
+    }
+}
+
+void MainWindow::on_actionFilterSettings_triggered()
+{
+    qDebug() << "MainWindow::on_actionFilterSettings_triggered()";
+
+    QDir::Filters filterFlags = DEFAULT_FILTER_FLAGS;
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+        if(activeFolderForm != Q_NULLPTR)
+        {
+            filterFlags = activeFolderForm->getFilterFlags();
+
+            FilterDialog dialog(filterFlags, this);
+            if(dialog.exec())
+            {
+                filterFlags = dialog.getFilterFlags();
+                activeFolderForm->setFilterFlags(filterFlags);
             }
         }
     }
