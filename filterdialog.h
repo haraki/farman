@@ -25,7 +25,6 @@ private:
     void accept() Q_DECL_OVERRIDE;
 
     Ui::FilterDialog *ui;
-
     QDir::Filters m_filterFlags;
 };
 
