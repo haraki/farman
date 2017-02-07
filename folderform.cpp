@@ -98,6 +98,8 @@ void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
     if(m_folderModel != Q_NULLPTR)
     {
         m_folderModel->setSorting(sortFlags);
+
+        ui->folderView->scrollTo(ui->folderView->currentIndex());
     }
 }
 
