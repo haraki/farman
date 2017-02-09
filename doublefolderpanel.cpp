@@ -190,7 +190,7 @@ void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
     {
-        emitCurrentChanged(newFileInfo, oldFileInfo);
+        emitStatusChanged(newFileInfo.absoluteFilePath());
     }
 }
 
@@ -201,7 +201,7 @@ void DoubleFolderPanel::onRightCurrentChanged(const QFileInfo& newFileInfo, cons
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
     {
-        emitCurrentChanged(newFileInfo, oldFileInfo);
+        emitStatusChanged(newFileInfo.absoluteFilePath());
     }
 }
 
@@ -219,15 +219,15 @@ void DoubleFolderPanel::onFocusChanged(QWidget* oldWidget, QWidget* nowWidget)
             FolderModel* folderModel = dynamic_cast<FolderModel*>(newFolderView->model());
             if(folderModel != Q_NULLPTR)
             {
-                emitCurrentChanged(folderModel->fileInfo(newFolderView->currentIndex()), QFileInfo());
+                emitStatusChanged(folderModel->fileInfo(newFolderView->currentIndex()).absoluteFilePath());
             }
         }
     }
 }
 
-void DoubleFolderPanel::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
+void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 {
-    emit currentChanged(newFileInfo, oldFileInfo);
+    emit statusChanged(statusString);
 }
 
 void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)

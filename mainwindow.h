@@ -23,7 +23,7 @@ public:
     ~MainWindow();
 
 private Q_SLOTS:
-    void onCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void onStatusChanged(const QString& statusString);
 
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();

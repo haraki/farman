@@ -29,14 +29,14 @@ public:
     FolderForm* getActiveFolderForm();
 
 Q_SIGNALS:
-    void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void statusChanged(const QString& statusString);
 
 protected slots:
     void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void onRightCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void onFocusChanged(QWidget* oldWidget, QWidget* nowWidget);
 
-    void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void emitStatusChanged(const QString& statusString);
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;

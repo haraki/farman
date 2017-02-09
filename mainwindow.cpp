@@ -29,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
     connect(doubleFolderPanel,
-            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
+            SIGNAL(statusChanged(const QString)),
             this,
-            SLOT(onCurrentChanged(QFileInfo,QFileInfo)));
+            SLOT(onStatusChanged(const QString)));
 }
 
 MainWindow::~MainWindow()
@@ -39,11 +39,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
+void MainWindow::onStatusChanged(const QString& statusString)
 {
-    qDebug() << "MainWindow::onCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
+    qDebug() << "MainWindow::onStatusChanged : " << statusString;
 
-    statusBar()->showMessage(newFileInfo.absoluteFilePath());
+    statusBar()->showMessage(statusString);
 }
 
 void MainWindow::on_actionSingleView_triggered()
