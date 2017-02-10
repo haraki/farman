@@ -31,10 +31,13 @@ public:
     QDir::SortFlags getSortFlags();
     QString getPath();
 
+    QFileInfo getCurrentFileInfo();
+
     void onGoToParent();
 
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void focusChanged(bool inFocus);
 
 protected slots:
     void onOpen(const QModelIndex& index);
@@ -44,6 +47,7 @@ private slots:
     void on_folderSelectButton_clicked();
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void emitFocusChanged(bool inFocus);
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;

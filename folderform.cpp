@@ -49,7 +49,8 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
     bool ret = false;
 
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::KeyPress:
     {
         Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
@@ -78,6 +79,15 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
         break;
     }
+    case QEvent::FocusIn:
+        emitFocusChanged(true);
+
+        break;
+
+    case QEvent::FocusOut:
+        emitFocusChanged(false);
+        break;
+
     default:
         break;
     }
@@ -174,6 +184,11 @@ QDir::SortFlags FolderForm::getSortFlags()
 QString FolderForm::getPath()
 {
     return m_folderModel->filePath(ui->folderView->rootIndex());
+}
+
+QFileInfo FolderForm::getCurrentFileInfo()
+{
+    return m_folderModel->fileInfo(ui->folderView->currentIndex());
 }
 
 void FolderForm::onOpen(const QModelIndex& index)
@@ -285,6 +300,11 @@ void FolderForm::on_folderSelectButton_clicked()
 void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     emit currentChanged(newFileInfo, oldFileInfo);
+}
+
+void FolderForm::emitFocusChanged(bool inFocus)
+{
+    emit focusChanged(inFocus);
 }
 
 }           // namespace Farman

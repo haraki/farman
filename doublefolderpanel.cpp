@@ -67,10 +67,14 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
             SIGNAL(currentChanged(QFileInfo,QFileInfo)),
             this,
             SLOT(onRightCurrentChanged(QFileInfo,QFileInfo)));
-    connect(qApp,
-            SIGNAL(focusChanged(QWidget*,QWidget*)),
+    connect(l_folderForm,
+            SIGNAL(focusChanged(bool)),
             this,
-            SLOT(onFocusChanged(QWidget*,QWidget*)));
+            SLOT(onLeftFocusChanged(bool)));
+    connect(r_folderForm,
+            SIGNAL(focusChanged(bool)),
+            this,
+            SLOT(onRightFocusChanged(bool)));
 
     setActiveFolderForm("l_folderForm");
 
@@ -205,22 +209,30 @@ void DoubleFolderPanel::onRightCurrentChanged(const QFileInfo& newFileInfo, cons
     }
 }
 
-void DoubleFolderPanel::onFocusChanged(QWidget* oldWidget, QWidget* nowWidget)
+void DoubleFolderPanel::onLeftFocusChanged(bool inFocus)
 {
-    qDebug() << "DoubleFolderPanel::onFocusChanged(" <<
-                ((oldWidget == nullptr) ? "null" : oldWidget->objectName()) << ", " <<
-                ((nowWidget == nullptr) ? "null" : nowWidget->objectName()) << ")";
+    qDebug() << "DoubleFolderPanel::onLeftFocusChanged : inFocus : " << inFocus;
 
-    if(nowWidget != nullptr)
+    if(inFocus)
     {
-        FolderView* newFolderView = dynamic_cast<FolderView*>(nowWidget);
-        if(newFolderView != nullptr && newFolderView->objectName() == "folderView")
+        FolderForm* activeForm = getActiveFolderForm();
+        if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
         {
-            FolderModel* folderModel = dynamic_cast<FolderModel*>(newFolderView->model());
-            if(folderModel != Q_NULLPTR)
-            {
-                emitStatusChanged(folderModel->fileInfo(newFolderView->currentIndex()).absoluteFilePath());
-            }
+            emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
+        }
+    }
+}
+
+void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
+{
+    qDebug() << "DoubleFolderPanel::onRightFocusChanged : inFocus : " << inFocus;
+
+    if(inFocus)
+    {
+        FolderForm* activeForm = getActiveFolderForm();
+        if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
+        {
+            emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
         }
     }
 }
