@@ -48,7 +48,16 @@
     <addaction name="actionSortSettings"/>
     <addaction name="actionFilterSettings"/>
    </widget>
+   <widget class="QMenu" name="menuOperation">
+    <property name="title">
+     <string>Operation</string>
+    </property>
+    <addaction name="actionCopy"/>
+    <addaction name="actionMove"/>
+    <addaction name="actionDelete"/>
+   </widget>
    <addaction name="viewMenu"/>
+   <addaction name="menuOperation"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSingleView">
@@ -87,6 +96,30 @@
    </property>
    <property name="shortcut">
     <string>F</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy...</string>
+   </property>
+   <property name="shortcut">
+    <string>C</string>
+   </property>
+  </action>
+  <action name="actionMove">
+   <property name="text">
+    <string>Move...</string>
+   </property>
+   <property name="shortcut">
+    <string>M</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Delete...</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
    </property>
   </action>
  </widget>

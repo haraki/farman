@@ -116,4 +116,11 @@ void MainWindow::on_actionFilterSettings_triggered()
     }
 }
 
+void MainWindow::on_actionCopy_triggered()
+{
+    qDebug() << "MainWindow::on_actionCopy_triggered()";
+
+
+}
+
 }           // namespace Farman
