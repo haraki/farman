@@ -1,6 +1,8 @@
 ﻿#ifndef TYPES_H
 #define TYPES_H
 
+#include <qdir.h>
+
 namespace Farman
 {
 
