@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     doublefolderpanel.cpp \
     sortdialog.cpp \
     filterdialog.cpp \
-    workingdialog.cpp
+    workingdialog.cpp \
+    worker.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -34,7 +35,8 @@ HEADERS  += mainwindow.h \
     types.h \
     sortdialog.h \
     filterdialog.h \
-    workingdialog.h
+    workingdialog.h \
+    worker.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
