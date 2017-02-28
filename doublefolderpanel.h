@@ -1,8 +1,9 @@
 ﻿#ifndef DOUBLEFOLDERPANEL_H
 #define DOUBLEFOLDERPANEL_H
 
-#include <QWidget>
 #include <qdir.h>
+#include <QWidget>
+#include <QModelIndexList>
 #include "types.h"
 
 namespace Ui
@@ -29,10 +30,12 @@ public:
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
 
+    void onCopy();
+
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
 
-protected slots:
+protected Q_SLOTS:
     void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void onRightCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void onLeftFocusChanged(bool inFocus);
@@ -43,6 +46,7 @@ protected slots:
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);
+    void fileCopy(const QStringList& srcPaths, const QString& dstPath);
 
     Ui::DoubleFolderPanel *ui;
 

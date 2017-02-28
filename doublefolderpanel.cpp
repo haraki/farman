@@ -1,12 +1,14 @@
-﻿#include <QKeyEvent>
+﻿#include <qdir.h>
+#include <QKeyEvent>
 #include <QDebug>
 #include <QVBoxLayout>
-#include <qdir.h>
+#include <QMessageBox>
 #include "doublefolderpanel.h"
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
 #include "folderview.h"
 #include "foldermodel.h"
+#include "copyworker.h"
 
 namespace Farman
 {
@@ -187,6 +189,34 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     return ret;
 }
 
+void DoubleFolderPanel::onCopy()
+{
+    qDebug() << "DoubleFolderPanel::onCopy()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
+        if(selectedFileInfoList.size() > 0)
+        {
+            FolderForm* inactiveForm = getInactiveFolderForm();
+            if(inactiveForm != Q_NULLPTR)
+            {
+                QStringList srcPaths;
+
+                for(QFileInfo fileInfo : selectedFileInfoList)
+                {
+                    srcPaths.push_back(fileInfo.absoluteFilePath());
+
+                    qDebug() << fileInfo.absoluteFilePath();
+                }
+
+                fileCopy(srcPaths, inactiveForm->getCurrentDirPath());
+            }
+        }
+    }
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
@@ -288,6 +318,15 @@ FolderForm* DoubleFolderPanel::getInactiveFolderForm()
     }
 
     return inactiveForm;
+}
+
+void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dstPath)
+{
+    if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
+    {
+
+        return;
+    }
 }
 
 }           // namespace Farman
