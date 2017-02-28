@@ -271,4 +271,23 @@ FolderForm* DoubleFolderPanel::getActiveFolderForm()
     return dynamic_cast<FolderForm*>(fw->parent());
 }
 
+FolderForm* DoubleFolderPanel::getInactiveFolderForm()
+{
+    FolderForm* inactiveForm = Q_NULLPTR;
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        if(activeForm->objectName() == "r_folderForm")
+        {
+            inactiveForm = findChild<FolderForm*>("l_folderForm");
+        }
+        else
+        {
+            inactiveForm = findChild<FolderForm*>("r_folderForm");
+        }
+    }
+
+    return inactiveForm;
+}
+
 }           // namespace Farman

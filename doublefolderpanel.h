@@ -27,6 +27,7 @@ public:
     ~DoubleFolderPanel();
     void changeViewMode(ViewMode viewMode);
     FolderForm* getActiveFolderForm();
+    FolderForm* getInactiveFolderForm();
 
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
