@@ -1,10 +1,9 @@
-﻿#include "foldermodel.h"
-
-#include <QVariant>
+﻿#include <QVariant>
 #include <QDebug>
 #include <QDateTime>
 #include <QPalette>
 #include <QItemSelectionModel>
+#include "foldermodel.h"
 
 namespace Farman
 {
@@ -181,6 +180,18 @@ void FolderModel::setSelect(int row, QItemSelectionModel::SelectionFlags selecti
         QItemSelection selection(index(row, 0, parentIndex), index(row, columnCount() - 1, parentIndex));
         m_selectionModel->select(selection, selectionFlags);
     }
+}
+
+QModelIndexList FolderModel::getSelectedIndexList()
+{
+    QModelIndexList indexList;
+
+    if(m_selectionModel != Q_NULLPTR)
+    {
+        indexList = m_selectionModel->selectedRows();
+    }
+
+    return indexList;
 }
 
 void FolderModel::clearSelected()

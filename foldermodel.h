@@ -29,6 +29,7 @@ public:
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) Q_DECL_OVERRIDE;
     QItemSelectionModel* getSelectionModel();
     void setSelect(int row, QItemSelectionModel::SelectionFlags selectionFlags, const QModelIndex &parentIndex);
+    QModelIndexList getSelectedIndexList();
     void clearSelected();
 
 private:

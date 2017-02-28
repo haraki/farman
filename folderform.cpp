@@ -186,9 +186,32 @@ QString FolderForm::getCurrentDirPath()
     return m_folderModel->filePath(ui->folderView->rootIndex());
 }
 
+QString FolderForm::getCurrentFileName()
+{
+    return m_folderModel->fileName(ui->folderView->currentIndex());
+}
+
 QFileInfo FolderForm::getCurrentFileInfo()
 {
     return m_folderModel->fileInfo(ui->folderView->currentIndex());
+}
+
+QList<QFileInfo> FolderForm::getSelectedFileInfoList()
+{
+    QModelIndexList indexList = m_folderModel->getSelectedIndexList();
+    if(indexList.size() == 0 && getCurrentFileName() != "..")
+    {
+        // 選択しているアイテムが無くても、".." 以外の箇所にカーソルがあれば、それを選択しているものとする
+        indexList.push_back(ui->folderView->currentIndex());
+    }
+
+    QList<QFileInfo> selectedFileInfoList;
+    for(auto modelIndex : indexList)
+    {
+        selectedFileInfoList.push_back(m_folderModel->fileInfo(modelIndex).absoluteFilePath());
+    }
+
+    return selectedFileInfoList;
 }
 
 void FolderForm::onOpen(const QModelIndex& index)

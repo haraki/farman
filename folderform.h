@@ -31,7 +31,10 @@ public:
     QDir::SortFlags getSortFlags();
 
     QString getCurrentDirPath();
+    QString getCurrentFileName();
     QFileInfo getCurrentFileInfo();
+
+    QList<QFileInfo> getSelectedFileInfoList();
 
     void onGoToParent();
 
