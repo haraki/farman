@@ -29,8 +29,8 @@ public:
 
     QDir::Filters getFilterFlags();
     QDir::SortFlags getSortFlags();
-    QString getPath();
 
+    QString getCurrentDirPath();
     QFileInfo getCurrentFileInfo();
 
     void onGoToParent();

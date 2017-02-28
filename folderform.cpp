@@ -181,7 +181,7 @@ QDir::SortFlags FolderForm::getSortFlags()
     return m_folderModel->sorting();
 }
 
-QString FolderForm::getPath()
+QString FolderForm::getCurrentDirPath()
 {
     return m_folderModel->filePath(ui->folderView->rootIndex());
 }
