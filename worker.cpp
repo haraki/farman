@@ -1,4 +1,5 @@
 ﻿#include <QThread>
+#include <QAtomicInt>
 #include "worker.h"
 
 namespace Farman
@@ -7,6 +8,7 @@ namespace Farman
 Worker::Worker(QObject *parent)
     : QObject(parent)
     , m_thread(new QThread())
+    , m_abort(0)
 {
 //    connect(this, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
     connect(m_thread, SIGNAL(started()), this, SLOT(process()));
@@ -26,9 +28,24 @@ void Worker::start()
     m_thread->start();
 }
 
-void Worker::emitFinished()
+void Worker::abort()
 {
-    emit finished();
+    m_abort = 1;
+}
+
+bool Worker::isAborted()
+{
+    return (m_abort != 0);
+}
+
+void Worker::emitFinished(int result)
+{
+    emit finished(result);
+}
+
+void Worker::emitError(const QString& err)
+{
+    emit error(err);
 }
 
 }           // Farman
