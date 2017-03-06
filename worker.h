@@ -18,11 +18,13 @@ public:
     {
         Success = 0,                        // 成功
         Abort = 1,                          // 中断
+        Skip = 2,                           // スキップ
 
         Error = static_cast<int>(0x80000000),   // エラー
 
-        ErrorUnknown = Error | 1,           // 不明なエラー
-        ErrorMakeDir = Error | 2,           // ディレクトリ作成失敗
+        ErrorUnknown  = Error | 1,          // 不明なエラー
+        ErrorMakeDir  = Error | 2,          // ディレクトリ作成失敗
+        ErrorCopyFile = Error | 3,          // ファイルコピー失敗
     };
 
     explicit Worker(QObject *parent = 0);

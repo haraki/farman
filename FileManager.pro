@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     sortdialog.cpp \
     filterdialog.cpp \
     workingdialog.cpp \
-    worker.cpp
+    worker.cpp \
+    copyworker.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -36,7 +37,8 @@ HEADERS  += mainwindow.h \
     sortdialog.h \
     filterdialog.h \
     workingdialog.h \
-    worker.h
+    worker.h \
+    copyworker.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
