@@ -12,7 +12,7 @@ enum class ViewMode : int
     ViewModeNum
 };
 
-const QDir::Filters DEFAULT_FILTER_FLAGS = QDir::AllEntries | QDir::NoSymLinks | QDir::AccessMask | QDir::NoDot;
+const QDir::Filters DEFAULT_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
 const QDir::SortFlags DEFAULT_SORT_FLAGS = QDir::DirsFirst | QDir::IgnoreCase | QDir::Name;
 
 }
