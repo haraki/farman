@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     filterdialog.cpp \
     workingdialog.cpp \
     worker.cpp \
-    copyworker.cpp
+    copyworker.cpp \
+    overwritedialog.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -38,11 +39,13 @@ HEADERS  += mainwindow.h \
     filterdialog.h \
     workingdialog.h \
     worker.h \
-    copyworker.h
+    copyworker.h \
+    overwritedialog.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
     doublefolderpanel.ui \
     sortdialog.ui \
     filterdialog.ui \
-    workingdialog.ui
+    workingdialog.ui \
+    overwritedialog.ui
