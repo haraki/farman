@@ -324,6 +324,7 @@ void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
     {
+        (new CopyWorker(srcPaths, dstPath, this))->start();
 
         return;
     }

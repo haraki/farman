@@ -2,7 +2,9 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFile>
+#include <QDateTime>
 #include "copyworker.h"
+#include "overwritedialog.h"
 
 namespace Farman
 {
@@ -133,9 +135,41 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
     else
     {
         // ファイル
-        if(dstFileInfo.exists())
+        while(dstFileInfo.exists())
         {
             // コピー先にファイルが存在している場合は確認する
+            OverwriteDialog dialog(OverwriteMethodType::Overwrite, dstFileInfo.fileName());
+            if(dialog.exec() == QDialog::Rejected)
+            {
+                // 中断
+                return static_cast<int>(Result::Abort);
+            }
+
+            OverwriteMethodType methodType = dialog.getMethodType();
+            if(methodType == OverwriteMethodType::Overwrite)
+            {
+                break;
+            }
+            else if(methodType == OverwriteMethodType::OverwriteIfNewer)
+            {
+                if(srcFileInfo.lastModified() <= dstFileInfo.lastModified())
+                {
+                    return static_cast<int>(Result::Skip);
+                }
+            }
+            else if(methodType == OverwriteMethodType::Skip)
+            {
+                return static_cast<int>(Result::Skip);
+            }
+            else if(methodType == OverwriteMethodType::Rename)
+            {
+                dstFileInfo.setFile(dstFileInfo.absolutePath(), dialog.getRenameFileName());
+            }
+            else
+            {
+                // ここにくることはありえないはず
+                return static_cast<int>(Result::ErrorFatal);
+            }
         }
 
         if(!QFile::copy(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath()))

@@ -25,6 +25,8 @@ public:
         ErrorUnknown  = Error | 1,          // 不明なエラー
         ErrorMakeDir  = Error | 2,          // ディレクトリ作成失敗
         ErrorCopyFile = Error | 3,          // ファイルコピー失敗
+
+        ErrorFatal = Error | 0xFFFF,        // 異常なエラー
     };
 
     explicit Worker(QObject *parent = 0);
