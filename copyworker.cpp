@@ -13,6 +13,7 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, QObj
     : Worker(parent)
     , m_srcPaths(srcPaths)
     , m_dstPath(dstPath)
+    , m_methodType(OverwriteMethodType::Default)
 {
 
 }
@@ -138,30 +139,30 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
         while(dstFileInfo.exists())
         {
             // コピー先にファイルが存在している場合は確認する
-            OverwriteDialog dialog(OverwriteMethodType::Overwrite, dstFileInfo.fileName());
+            OverwriteDialog dialog(m_methodType, dstFileInfo.fileName());
             if(dialog.exec() == QDialog::Rejected)
             {
                 // 中断
                 return static_cast<int>(Result::Abort);
             }
 
-            OverwriteMethodType methodType = dialog.getMethodType();
-            if(methodType == OverwriteMethodType::Overwrite)
+            m_methodType = dialog.getMethodType();
+            if(m_methodType == OverwriteMethodType::Overwrite)
             {
                 break;
             }
-            else if(methodType == OverwriteMethodType::OverwriteIfNewer)
+            else if(m_methodType == OverwriteMethodType::OverwriteIfNewer)
             {
                 if(srcFileInfo.lastModified() <= dstFileInfo.lastModified())
                 {
                     return static_cast<int>(Result::Skip);
                 }
             }
-            else if(methodType == OverwriteMethodType::Skip)
+            else if(m_methodType == OverwriteMethodType::Skip)
             {
                 return static_cast<int>(Result::Skip);
             }
-            else if(methodType == OverwriteMethodType::Rename)
+            else if(m_methodType == OverwriteMethodType::Rename)
             {
                 dstFileInfo.setFile(dstFileInfo.absolutePath(), dialog.getRenameFileName());
             }

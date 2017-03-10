@@ -1,6 +1,7 @@
 ﻿#ifndef COPYWORKER_H
 #define COPYWORKER_H
 
+#include "types.h"
 #include "worker.h"
 
 class QString;
@@ -26,6 +27,8 @@ private:
 
     QStringList m_srcPaths;
     QString m_dstPath;
+
+    OverwriteMethodType m_methodType;
 };
 
 }           // namespace Farman
