@@ -29,6 +29,7 @@ private:
     QString m_dstPath;
 
     OverwriteMethodType m_methodType;
+    bool m_methodTypeKeep;
 };
 
 }           // namespace Farman

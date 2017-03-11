@@ -21,14 +21,12 @@ public:
 
     OverwriteMethodType getMethodType() const;
     QString getRenameFileName() const;
+    bool getKeepSetting() const;
 
 private slots:
     void on_methodOverwriteRadioButton_clicked();
-
     void on_methodOverwriteIfNewerRadioButton_clicked();
-
     void on_methodSkipRadioButton_clicked();
-
     void on_methodRenameRadioButton_clicked();
 
 private:
@@ -38,6 +36,7 @@ private:
 
     OverwriteMethodType m_methodType;
     QString m_renameFileName;
+    bool m_keepSetting;
 };
 
 }           // namespace Farman

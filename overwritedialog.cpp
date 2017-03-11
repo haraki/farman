@@ -9,6 +9,7 @@ OverwriteDialog::OverwriteDialog(OverwriteMethodType methodType, const QString& 
     , ui(new Ui::OverwriteDialog)
     , m_methodType(methodType)
     , m_renameFileName(renameText)
+    , m_keepSetting(false)
 {
     ui->setupUi(this);
 
@@ -16,18 +17,22 @@ OverwriteDialog::OverwriteDialog(OverwriteMethodType methodType, const QString& 
     {
     case OverwriteMethodType::Overwrite:
         ui->methodOverwriteRadioButton->setChecked(true);
+        ui->keeySetting->setEnabled(true);
         break;
     case OverwriteMethodType::OverwriteIfNewer:
         ui->methodOverwriteIfNewerRadioButton->setChecked(true);
+        ui->keeySetting->setEnabled(true);
         break;
     case OverwriteMethodType::Skip:
         ui->methodSkipRadioButton->setChecked(true);
+        ui->keeySetting->setEnabled(true);
         break;
     case OverwriteMethodType::Rename:
         ui->methodRenameRadioButton->setChecked(true);
+        ui->keeySetting->setEnabled(false);
         break;
     default:
-        ui->methodOverwriteRadioButton->setChecked(true);
+        // ここに来ることはありえない
         break;
     }
 
@@ -47,6 +52,11 @@ OverwriteMethodType OverwriteDialog::getMethodType() const
 QString OverwriteDialog::getRenameFileName() const
 {
     return m_renameFileName;
+}
+
+bool OverwriteDialog::getKeepSetting() const
+{
+    return m_keepSetting;
 }
 
 void OverwriteDialog::accept()
@@ -74,27 +84,33 @@ void OverwriteDialog::accept()
         m_renameFileName = ui->renameLineEdit->text();
     }
 
+    m_keepSetting = (ui->keeySetting->isEnabled() && ui->keeySetting->isChecked());
+
     QDialog::accept();
 }
 
 void OverwriteDialog::on_methodOverwriteRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(false);
+    ui->keeySetting->setEnabled(true);
 }
 
 void OverwriteDialog::on_methodOverwriteIfNewerRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(false);
+    ui->keeySetting->setEnabled(true);
 }
 
 void OverwriteDialog::on_methodSkipRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(false);
+    ui->keeySetting->setEnabled(true);
 }
 
 void OverwriteDialog::on_methodRenameRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(true);
+    ui->keeySetting->setEnabled(false);
 }
 
 }           // namespace Farman

@@ -14,6 +14,7 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, QObj
     , m_srcPaths(srcPaths)
     , m_dstPath(dstPath)
     , m_methodType(OverwriteMethodType::Default)
+    , m_methodTypeKeep(false)
 {
 
 }
@@ -54,7 +55,7 @@ void CopyWorker::process()
         int ret = copyExec(itr.key(), itr.value());
         if(ret < 0)
         {
-            qDebug() << "copyExec() : ret =" << ret;
+            qDebug() << "copyExec() : ret =" << QString("%1").arg(ret, 0, 16);
             emitFinished(ret);
 
             return;
@@ -138,17 +139,30 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
         // ファイル
         while(dstFileInfo.exists())
         {
-            // コピー先にファイルが存在している場合は確認する
-            OverwriteDialog dialog(m_methodType, dstFileInfo.fileName());
-            if(dialog.exec() == QDialog::Rejected)
+            // コピー先にファイルが存在している
+            QString renameFileName = dstFileInfo.fileName();
+            if(!m_methodTypeKeep || m_methodType == OverwriteMethodType::Rename)
             {
-                // 中断
-                return static_cast<int>(Result::Abort);
+                OverwriteDialog dialog(m_methodType, dstFileInfo.fileName());
+                if(dialog.exec() == QDialog::Rejected)
+                {
+                    // 中断
+                    return static_cast<int>(Result::Abort);
+                }
+
+                m_methodType = dialog.getMethodType();
+                m_methodTypeKeep = dialog.getKeepSetting();
+
+                renameFileName = dialog.getRenameFileName();
             }
 
-            m_methodType = dialog.getMethodType();
             if(m_methodType == OverwriteMethodType::Overwrite)
             {
+                if(!QFile::remove(dstFileInfo.absoluteFilePath()))
+                {
+                    return static_cast<int>(Result::ErrorRemoveFile);
+                }
+
                 break;
             }
             else if(m_methodType == OverwriteMethodType::OverwriteIfNewer)
@@ -157,6 +171,13 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
                 {
                     return static_cast<int>(Result::Skip);
                 }
+
+                if(!QFile::remove(dstFileInfo.absoluteFilePath()))
+                {
+                    return static_cast<int>(Result::ErrorRemoveFile);
+                }
+
+                break;
             }
             else if(m_methodType == OverwriteMethodType::Skip)
             {
@@ -164,7 +185,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             }
             else if(m_methodType == OverwriteMethodType::Rename)
             {
-                dstFileInfo.setFile(dstFileInfo.absolutePath(), dialog.getRenameFileName());
+                dstFileInfo.setFile(dstFileInfo.absolutePath(), renameFileName);
             }
             else
             {
