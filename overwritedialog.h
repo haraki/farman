@@ -16,7 +16,11 @@ class OverwriteDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OverwriteDialog(OverwriteMethodType methodType, const QString& renameText, QWidget *parent = Q_NULLPTR);
+    explicit OverwriteDialog(const QString& srcPath,
+                             const QString& dstPath,
+                             OverwriteMethodType methodType,
+                             const QString& renameText,
+                             QWidget *parent = Q_NULLPTR);
     ~OverwriteDialog();
 
     OverwriteMethodType getMethodType() const;

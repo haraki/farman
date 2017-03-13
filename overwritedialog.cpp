@@ -4,7 +4,11 @@
 namespace Farman
 {
 
-OverwriteDialog::OverwriteDialog(OverwriteMethodType methodType, const QString& renameText, QWidget *parent/* = Q_NULLPTR*/)
+OverwriteDialog::OverwriteDialog(const QString& srcPath,
+                                 const QString& dstPath,
+                                 OverwriteMethodType methodType,
+                                 const QString& renameText,
+                                 QWidget *parent/* = Q_NULLPTR*/)
     : QDialog(parent)
     , ui(new Ui::OverwriteDialog)
     , m_methodType(methodType)
@@ -12,6 +16,9 @@ OverwriteDialog::OverwriteDialog(OverwriteMethodType methodType, const QString& 
     , m_keepSetting(false)
 {
     ui->setupUi(this);
+
+    ui->srcLabel->setText(QString("Src: ") + srcPath);
+    ui->dstLabel->setText(QString("Dst: ") + dstPath);
 
     switch(methodType)
     {
