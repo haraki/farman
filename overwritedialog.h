@@ -8,6 +8,8 @@ namespace Ui {
 class OverwriteDialog;
 }
 
+class QFileInfo;
+
 namespace Farman
 {
 
@@ -16,8 +18,8 @@ class OverwriteDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OverwriteDialog(const QString& srcPath,
-                             const QString& dstPath,
+    explicit OverwriteDialog(const QFileInfo& srcFileInfo,
+                             const QFileInfo& dstFileInfo,
                              OverwriteMethodType methodType,
                              const QString& renameText,
                              QWidget *parent = Q_NULLPTR);

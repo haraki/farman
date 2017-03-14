@@ -1,11 +1,13 @@
-﻿#include "overwritedialog.h"
+﻿#include <QDateTime>
+#include <QFileInfo>
+#include "overwritedialog.h"
 #include "ui_overwritedialog.h"
 
 namespace Farman
 {
 
-OverwriteDialog::OverwriteDialog(const QString& srcPath,
-                                 const QString& dstPath,
+OverwriteDialog::OverwriteDialog(const QFileInfo& srcFileInfo,
+                                 const QFileInfo& dstFileInfo,
                                  OverwriteMethodType methodType,
                                  const QString& renameText,
                                  QWidget *parent/* = Q_NULLPTR*/)
@@ -17,8 +19,10 @@ OverwriteDialog::OverwriteDialog(const QString& srcPath,
 {
     ui->setupUi(this);
 
-    ui->srcLabel->setText(QString("Src: ") + srcPath);
-    ui->dstLabel->setText(QString("Dst: ") + dstPath);
+    ui->srcFilePathLabel->setText(QString("Src: ") + srcFileInfo.absoluteFilePath());
+    ui->srcInfoLabel->setText(QString("Size: ") + QString("%1").arg(srcFileInfo.size()) + QString(" Byte(s), Last modified: ") + srcFileInfo.lastModified().toString());
+    ui->dstFilePathLabel->setText(QString("Dst: ") + dstFileInfo.absoluteFilePath());
+    ui->dstInfoLabel->setText(QString("Size: ") + QString("%1").arg(dstFileInfo.size()) + QString(" Byte(s), Last modified: ") + dstFileInfo.lastModified().toString());
 
     switch(methodType)
     {

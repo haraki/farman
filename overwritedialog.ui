@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
-    <height>327</height>
+    <width>413</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,13 +46,23 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="srcLabel">
+      <widget class="QLabel" name="srcFilePathLabel">
        <property name="text">
         <string>Src:</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="srcInfoLabel">
+     <property name="text">
+      <string>Size &amp; Last modified</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="dstLabelHorizontalLayout">
@@ -73,13 +83,23 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="dstLabel">
+      <widget class="QLabel" name="dstFilePathLabel">
        <property name="text">
         <string>Dst:</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="dstInfoLabel">
+     <property name="text">
+      <string>Size &amp; Last modified</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">
