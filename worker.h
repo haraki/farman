@@ -38,6 +38,8 @@ public:
     bool isAborted();
 
 Q_SIGNALS:
+    void minMax(int min, int max);
+    void progress(int value);
     void finished(int result);
     void error(const QString& err);
 
@@ -45,6 +47,8 @@ public Q_SLOTS:
     virtual void process() = 0;
 
 protected:
+    void emitMinMax(int min, int max);
+    void emitProgress(int value);
     void emitFinished(int result);
     void emitError(const QString& err);
 

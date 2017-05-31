@@ -38,6 +38,16 @@ bool Worker::isAborted()
     return (m_abort != 0);
 }
 
+void Worker::emitMinMax(int min, int max)
+{
+    emit minMax(min, max);
+}
+
+void Worker::emitProgress(int value)
+{
+    emit progress(value);
+}
+
 void Worker::emitFinished(int result)
 {
     emit finished(result);

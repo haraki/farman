@@ -50,6 +50,10 @@ void CopyWorker::process()
         }
     }
 
+    emitMinMax(0, copyList.size());
+    emitProgress(0);
+
+    int progress = 0;
     for(QMap<QString, QString>::const_iterator itr = copyList.cbegin();itr != copyList.cend();itr++)
     {
         int ret = copyExec(itr.key(), itr.value());
@@ -60,6 +64,9 @@ void CopyWorker::process()
 
             return;
         }
+
+        progress++;
+        emitProgress(progress);
     }
 
     qDebug() << "finish CopyWorker::process()";
