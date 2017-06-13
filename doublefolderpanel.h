@@ -41,6 +41,9 @@ protected Q_SLOTS:
     void onLeftFocusChanged(bool inFocus);
     void onRightFocusChanged(bool inFocus);
 
+    void onFileCopyFinished(int result);
+    void onFileCopyError(const QString& err);
+
     void emitStatusChanged(const QString& statusString);
 
 private:

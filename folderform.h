@@ -37,6 +37,7 @@ public:
     QList<QFileInfo> getSelectedFileInfoList();
 
     void onGoToParent();
+    void refresh();
 
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);

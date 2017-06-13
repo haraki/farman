@@ -292,6 +292,19 @@ void FolderForm::onGoToParent()
     }
 }
 
+void FolderForm::refresh()
+{
+    m_folderModel->refresh();
+
+    QModelIndex cursorIndex = ui->folderView->currentIndex();
+    if(!cursorIndex.isValid() || cursorIndex.parent() != ui->folderView->rootIndex() || cursorIndex.row() < 0)
+    {
+        cursorIndex = ui->folderView->rootIndex().child(0,0);
+    }
+
+    ui->folderView->setCurrentIndex(cursorIndex);
+}
+
 int FolderForm::getTotalColumnWidth(int withOutColumn)
 {
     int totalWidth = 0;

@@ -324,10 +324,44 @@ void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
     {
-        (new CopyWorker(srcPaths, dstPath, this))->start();
+        Worker* worker = new CopyWorker(srcPaths, dstPath, this);
+
+        connect(worker,
+                SIGNAL(finished(int)),
+                this,
+                SLOT(onFileCopyFinished(int)));
+        connect(worker,
+                SIGNAL(error(QString)),
+                this,
+                SLOT(onFileCopyError(QString)));
+
+        worker->start();
 
         return;
     }
+}
+
+void DoubleFolderPanel::onFileCopyFinished(int result)
+{
+    qDebug() << "DoubleFolderPanel::onFileCopyFinished : result : " << result;
+
+    FolderForm* activeFolderForm = getActiveFolderForm();
+    if(activeFolderForm != nullptr)
+    {
+        activeFolderForm->refresh();
+    }
+
+    FolderForm* inactiveFolderForm = getInactiveFolderForm();
+    if(inactiveFolderForm != nullptr)
+    {
+        inactiveFolderForm->refresh();
+    }
+}
+
+void DoubleFolderPanel::onFileCopyError(const QString& err)
+{
+    qDebug() << "DoubleFolderPanel::onFileCopyError : err : " << err;
+
 }
 
 }           // namespace Farman
