@@ -101,14 +101,7 @@ void FolderForm::setFilterFlags(QDir::Filters filterFlags)
     {
         m_folderModel->setFilter(filterFlags);
 
-        QModelIndex cursorIndex = ui->folderView->currentIndex();
-        if(!cursorIndex.isValid() || cursorIndex.parent() != ui->folderView->rootIndex() || cursorIndex.row() < 0)
-        {
-            cursorIndex = ui->folderView->rootIndex().child(0,0);
-        }
-
-        ui->folderView->setCurrentIndex(cursorIndex);
-        ui->folderView->scrollTo(cursorIndex);
+        refresh();
     }
 }
 
@@ -118,7 +111,7 @@ void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
     {
         m_folderModel->setSorting(sortFlags);
 
-        ui->folderView->scrollTo(ui->folderView->currentIndex());
+        refresh();
     }
 }
 
