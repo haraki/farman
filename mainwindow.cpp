@@ -127,4 +127,15 @@ void MainWindow::on_actionCopy_triggered()
     }
 }
 
+void MainWindow::on_actionMove_triggered()
+{
+    qDebug() << "MainWindow::on_actionMove_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onMove();
+    }
+}
+
 }           // namespace Farman

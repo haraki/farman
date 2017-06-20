@@ -217,6 +217,34 @@ void DoubleFolderPanel::onCopy()
     }
 }
 
+void DoubleFolderPanel::onMove()
+{
+    qDebug() << "DoubleFolderPanel::onMove()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
+        if(selectedFileInfoList.size() > 0)
+        {
+            FolderForm* inactiveForm = getInactiveFolderForm();
+            if(inactiveForm != Q_NULLPTR)
+            {
+                QStringList srcPaths;
+
+                for(QFileInfo fileInfo : selectedFileInfoList)
+                {
+                    srcPaths.push_back(fileInfo.absoluteFilePath());
+
+                    qDebug() << fileInfo.absoluteFilePath();
+                }
+
+                fileMove(srcPaths, inactiveForm->getCurrentDirPath());
+            }
+        }
+    }
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
@@ -341,9 +369,47 @@ void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dst
     }
 }
 
+void DoubleFolderPanel::fileMove(const QStringList& srcPaths, const QString& dstPath)
+{
+    if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("move?")) == QMessageBox::Yes)
+    {
+        Worker* worker = new CopyWorker(srcPaths, dstPath, true, this);
+
+        connect(worker,
+                SIGNAL(finished(int)),
+                this,
+                SLOT(onFileMoveFinished(int)));
+        connect(worker,
+                SIGNAL(error(QString)),
+                this,
+                SLOT(onFileMoveError(QString)));
+
+        worker->start();
+
+        return;
+    }
+}
+
 void DoubleFolderPanel::onFileCopyFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onFileCopyFinished : result : " << result;
+
+    FolderForm* inactiveFolderForm = getInactiveFolderForm();
+    if(inactiveFolderForm != nullptr)
+    {
+        inactiveFolderForm->refresh();
+    }
+}
+
+void DoubleFolderPanel::onFileCopyError(const QString& err)
+{
+    qDebug() << "DoubleFolderPanel::onFileCopyError : err : " << err;
+
+}
+
+void DoubleFolderPanel::onFileMoveFinished(int result)
+{
+    qDebug() << "DoubleFolderPanel::onFileMoveFinished : result : " << result;
 
     FolderForm* activeFolderForm = getActiveFolderForm();
     if(activeFolderForm != nullptr)
@@ -358,9 +424,9 @@ void DoubleFolderPanel::onFileCopyFinished(int result)
     }
 }
 
-void DoubleFolderPanel::onFileCopyError(const QString& err)
+void DoubleFolderPanel::onFileMoveError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onFileCopyError : err : " << err;
+    qDebug() << "DoubleFolderPanel::onFileMoveError : err : " << err;
 
 }
 

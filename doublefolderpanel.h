@@ -31,6 +31,7 @@ public:
     FolderForm* getInactiveFolderForm();
 
     void onCopy();
+    void onMove();
 
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
@@ -43,6 +44,8 @@ protected Q_SLOTS:
 
     void onFileCopyFinished(int result);
     void onFileCopyError(const QString& err);
+    void onFileMoveFinished(int result);
+    void onFileMoveError(const QString& err);
 
     void emitStatusChanged(const QString& statusString);
 
@@ -50,6 +53,7 @@ private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);
     void fileCopy(const QStringList& srcPaths, const QString& dstPath);
+    void fileMove(const QStringList& srcPaths, const QString& dstPath);
 
     Ui::DoubleFolderPanel *ui;
 

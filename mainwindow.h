@@ -31,6 +31,8 @@ private Q_SLOTS:
     void on_actionFilterSettings_triggered();
     void on_actionCopy_triggered();
 
+    void on_actionMove_triggered();
+
 private:
     Ui::MainWindow *ui;
 

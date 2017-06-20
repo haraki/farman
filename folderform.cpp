@@ -303,6 +303,7 @@ void FolderForm::refresh()
     }
 
     ui->folderView->setCurrentIndex(cursorIndex);
+    ui->folderView->scrollTo(cursorIndex);
 }
 
 int FolderForm::getTotalColumnWidth(int withOutColumn)
