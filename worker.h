@@ -25,7 +25,8 @@ public:
         ErrorUnknown    = Error | 1,        // 不明なエラー
         ErrorMakeDir    = Error | 2,        // ディレクトリ作成失敗
         ErrorCopyFile   = Error | 3,        // ファイルコピー失敗
-        ErrorRemoveFile = Error | 4,        // ファイル削除失敗
+        ErrorRemoveDir  = Error | 4,        // ディレクトリ削除失敗
+        ErrorRemoveFile = Error | 5,        // ファイル削除失敗
 
         ErrorFatal = Error | 0xFFFF,        // 異常なエラー
     };

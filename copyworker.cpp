@@ -9,10 +9,11 @@
 namespace Farman
 {
 
-CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, QObject *parent)
+CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool moveMode, QObject *parent)
     : Worker(parent)
     , m_srcPaths(srcPaths)
     , m_dstPath(dstPath)
+    , m_moveMode(moveMode)
     , m_methodType(OverwriteMethodType::Default)
     , m_methodTypeKeep(false)
 {
@@ -29,6 +30,7 @@ void CopyWorker::process()
     qDebug() << "start CopyWorker::process()";
 
     QMap<QString, QString> copyList;
+    QList<QString> removeDirList;
 
     // コピーするファイル・ディレクトリのリストを作成
     for(auto srcPath : m_srcPaths)
@@ -40,7 +42,7 @@ void CopyWorker::process()
             return;
         }
 
-        int ret = makeList(srcPath, m_dstPath, copyList);
+        int ret = makeList(srcPath, m_dstPath, copyList, removeDirList);
         if(ret != static_cast<int>(Result::Success))
         {
             qDebug() << "makeList() : ret =" << ret;
@@ -69,12 +71,30 @@ void CopyWorker::process()
         emitProgress(progress);
     }
 
+    if(m_moveMode)
+    {
+        // ディレクトリ削除
+        for(auto dirPath : removeDirList)
+        {
+            qDebug() << "remove dir :" << dirPath;
+
+            if(!QDir().rmdir(dirPath))
+            {
+                // 移動元のディレクトリ削除失敗
+                qDebug() << "remove dir error :" << dirPath;
+                emitFinished(static_cast<int>(Result::ErrorRemoveDir));
+
+                return;
+            }
+        }
+    }
+
     qDebug() << "finish CopyWorker::process()";
 
     emitFinished(static_cast<int>(Result::Success));
 }
 
-int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap<QString, QString>& copyList)
+int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap<QString, QString>& copyList, QList<QString>& removeDirList)
 {
     if(isAborted())
     {
@@ -102,11 +122,17 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
 
         for(auto srcChildFileInfo : srcChildFileInfoList)
         {
-            int ret = makeList(srcChildFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), copyList);
+            int ret = makeList(srcChildFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), copyList, removeDirList);
             if(ret < 0)
             {
                 return ret;
             }
+        }
+
+        if(m_moveMode)
+        {
+            // 最後にディレクトリをまとめて削除するためのリストを作成
+            removeDirList.push_back(srcFileInfo.absoluteFilePath());
         }
     }
 
@@ -205,6 +231,17 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
         {
             // コピー失敗
             return static_cast<int>(Result::ErrorCopyFile);
+        }
+
+        if(m_moveMode)
+        {
+            qDebug() << "remove file : " << srcFileInfo.absoluteFilePath();
+
+            if(!QFile::remove(srcFileInfo.absoluteFilePath()))
+            {
+                // 移動元のファイル削除失敗
+                return static_cast<int>(Result::ErrorRemoveFile);
+            }
         }
     }
 
