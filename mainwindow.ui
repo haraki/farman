@@ -54,7 +54,7 @@
     </property>
     <addaction name="actionCopy"/>
     <addaction name="actionMove"/>
-    <addaction name="actionDelete"/>
+    <addaction name="actionRemove"/>
    </widget>
    <addaction name="viewMenu"/>
    <addaction name="menuOperation"/>
@@ -114,9 +114,9 @@
     <string>M</string>
    </property>
   </action>
-  <action name="actionDelete">
+  <action name="actionRemove">
    <property name="text">
-    <string>Delete...</string>
+    <string>Remove...</string>
    </property>
    <property name="shortcut">
     <string>D</string>
