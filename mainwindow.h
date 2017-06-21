@@ -33,6 +33,8 @@ private Q_SLOTS:
 
     void on_actionMove_triggered();
 
+    void on_actionRemove_triggered();
+
 private:
     Ui::MainWindow *ui;
 

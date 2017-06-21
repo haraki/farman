@@ -9,6 +9,7 @@
 #include "folderview.h"
 #include "foldermodel.h"
 #include "copyworker.h"
+#include "removeworker.h"
 
 namespace Farman
 {
@@ -245,6 +246,30 @@ void DoubleFolderPanel::onMove()
     }
 }
 
+void DoubleFolderPanel::onRemove()
+{
+    qDebug() << "DoubleFolderPanel::onRemove()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
+        if(selectedFileInfoList.size() > 0)
+        {
+            QStringList paths;
+
+            for(QFileInfo fileInfo : selectedFileInfoList)
+            {
+                paths.push_back(fileInfo.absoluteFilePath());
+
+                qDebug() << fileInfo.absoluteFilePath();
+            }
+
+            fileRemove(paths);
+        }
+    }
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
@@ -390,6 +415,27 @@ void DoubleFolderPanel::fileMove(const QStringList& srcPaths, const QString& dst
     }
 }
 
+void DoubleFolderPanel::fileRemove(const QStringList& paths)
+{
+    if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("remove?")) == QMessageBox::Yes)
+    {
+        Worker* worker = new RemoveWorker(paths, this);
+
+        connect(worker,
+                SIGNAL(finished(int)),
+                this,
+                SLOT(onFileRemoveFinished(int)));
+        connect(worker,
+                SIGNAL(error(QString)),
+                this,
+                SLOT(onFileRemoveError(QString)));
+
+        worker->start();
+
+        return;
+    }
+}
+
 void DoubleFolderPanel::onFileCopyFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onFileCopyFinished : result : " << result;
@@ -427,6 +473,23 @@ void DoubleFolderPanel::onFileMoveFinished(int result)
 void DoubleFolderPanel::onFileMoveError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onFileMoveError : err : " << err;
+
+}
+
+void DoubleFolderPanel::onFileRemoveFinished(int result)
+{
+    qDebug() << "DoubleFolderPanel::onFileRemoveFinished : result : " << result;
+
+    FolderForm* activeFolderForm = getActiveFolderForm();
+    if(activeFolderForm != nullptr)
+    {
+        activeFolderForm->refresh();
+    }
+}
+
+void DoubleFolderPanel::onFileRemoveError(const QString& err)
+{
+    qDebug() << "DoubleFolderPanel::onFileREmoveError : err : " << err;
 
 }
 
