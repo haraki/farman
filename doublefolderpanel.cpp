@@ -436,61 +436,61 @@ void DoubleFolderPanel::fileRemove(const QStringList& paths)
     }
 }
 
-void DoubleFolderPanel::onFileCopyFinished(int result)
+void DoubleFolderPanel::refresh()
 {
-    qDebug() << "DoubleFolderPanel::onFileCopyFinished : result : " << result;
+    FolderForm* activeFolderForm = getActiveFolderForm();
+    if(activeFolderForm != nullptr)
+    {
+        activeFolderForm->refresh();
+    }
 
     FolderForm* inactiveFolderForm = getInactiveFolderForm();
     if(inactiveFolderForm != nullptr)
     {
         inactiveFolderForm->refresh();
     }
+}
+
+void DoubleFolderPanel::onFileCopyFinished(int result)
+{
+    qDebug() << "DoubleFolderPanel::onFileCopyFinished : result : " << result;
+
+    refresh();
 }
 
 void DoubleFolderPanel::onFileCopyError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onFileCopyError : err : " << err;
 
+    refresh();
 }
 
 void DoubleFolderPanel::onFileMoveFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onFileMoveFinished : result : " << result;
 
-    FolderForm* activeFolderForm = getActiveFolderForm();
-    if(activeFolderForm != nullptr)
-    {
-        activeFolderForm->refresh();
-    }
-
-    FolderForm* inactiveFolderForm = getInactiveFolderForm();
-    if(inactiveFolderForm != nullptr)
-    {
-        inactiveFolderForm->refresh();
-    }
+    refresh();
 }
 
 void DoubleFolderPanel::onFileMoveError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onFileMoveError : err : " << err;
 
+    refresh();
 }
 
 void DoubleFolderPanel::onFileRemoveFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onFileRemoveFinished : result : " << result;
 
-    FolderForm* activeFolderForm = getActiveFolderForm();
-    if(activeFolderForm != nullptr)
-    {
-        activeFolderForm->refresh();
-    }
+    refresh();
 }
 
 void DoubleFolderPanel::onFileRemoveError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onFileREmoveError : err : " << err;
 
+    refresh();
 }
 
 }           // namespace Farman

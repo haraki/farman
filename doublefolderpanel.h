@@ -59,6 +59,8 @@ private:
     void fileMove(const QStringList& srcPaths, const QString& dstPath);
     void fileRemove(const QStringList& paths);
 
+    void refresh();
+
     Ui::DoubleFolderPanel *ui;
 
     ViewMode m_viewMode;
