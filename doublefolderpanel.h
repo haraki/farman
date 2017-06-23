@@ -43,21 +43,21 @@ protected Q_SLOTS:
     void onLeftFocusChanged(bool inFocus);
     void onRightFocusChanged(bool inFocus);
 
-    void onFileCopyFinished(int result);
-    void onFileCopyError(const QString& err);
-    void onFileMoveFinished(int result);
-    void onFileMoveError(const QString& err);
-    void onFileRemoveFinished(int result);
-    void onFileRemoveError(const QString& err);
+    void onCopyFileFinished(int result);
+    void onCopyFileError(const QString& err);
+    void onMoveFileFinished(int result);
+    void onMoveFileError(const QString& err);
+    void onRemoveFileFinished(int result);
+    void onRemoveFileError(const QString& err);
 
     void emitStatusChanged(const QString& statusString);
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
     void setActiveFolderForm(const QString& objectName);
-    void fileCopy(const QStringList& srcPaths, const QString& dstPath);
-    void fileMove(const QStringList& srcPaths, const QString& dstPath);
-    void fileRemove(const QStringList& paths);
+    void copyFile(const QStringList& srcPaths, const QString& dstPath);
+    void moveFile(const QStringList& srcPaths, const QString& dstPath);
+    void removeFile(const QStringList& paths);
 
     void refresh();
 

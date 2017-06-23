@@ -212,7 +212,7 @@ void DoubleFolderPanel::onCopy()
                     qDebug() << fileInfo.absoluteFilePath();
                 }
 
-                fileCopy(srcPaths, inactiveForm->getCurrentDirPath());
+                copyFile(srcPaths, inactiveForm->getCurrentDirPath());
             }
         }
     }
@@ -240,7 +240,7 @@ void DoubleFolderPanel::onMove()
                     qDebug() << fileInfo.absoluteFilePath();
                 }
 
-                fileMove(srcPaths, inactiveForm->getCurrentDirPath());
+                moveFile(srcPaths, inactiveForm->getCurrentDirPath());
             }
         }
     }
@@ -265,7 +265,7 @@ void DoubleFolderPanel::onRemove()
                 qDebug() << fileInfo.absoluteFilePath();
             }
 
-            fileRemove(paths);
+            removeFile(paths);
         }
     }
 }
@@ -373,7 +373,7 @@ FolderForm* DoubleFolderPanel::getInactiveFolderForm()
     return inactiveForm;
 }
 
-void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dstPath)
+void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dstPath)
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
     {
@@ -382,11 +382,11 @@ void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dst
         connect(worker,
                 SIGNAL(finished(int)),
                 this,
-                SLOT(onFileCopyFinished(int)));
+                SLOT(onCopyFileFinished(int)));
         connect(worker,
                 SIGNAL(error(QString)),
                 this,
-                SLOT(onFileCopyError(QString)));
+                SLOT(onCopyFileError(QString)));
 
         worker->start();
 
@@ -394,7 +394,7 @@ void DoubleFolderPanel::fileCopy(const QStringList& srcPaths, const QString& dst
     }
 }
 
-void DoubleFolderPanel::fileMove(const QStringList& srcPaths, const QString& dstPath)
+void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dstPath)
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("move?")) == QMessageBox::Yes)
     {
@@ -403,11 +403,11 @@ void DoubleFolderPanel::fileMove(const QStringList& srcPaths, const QString& dst
         connect(worker,
                 SIGNAL(finished(int)),
                 this,
-                SLOT(onFileMoveFinished(int)));
+                SLOT(onMoveFileFinished(int)));
         connect(worker,
                 SIGNAL(error(QString)),
                 this,
-                SLOT(onFileMoveError(QString)));
+                SLOT(onMoveFileError(QString)));
 
         worker->start();
 
@@ -415,7 +415,7 @@ void DoubleFolderPanel::fileMove(const QStringList& srcPaths, const QString& dst
     }
 }
 
-void DoubleFolderPanel::fileRemove(const QStringList& paths)
+void DoubleFolderPanel::removeFile(const QStringList& paths)
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("remove?")) == QMessageBox::Yes)
     {
@@ -424,11 +424,11 @@ void DoubleFolderPanel::fileRemove(const QStringList& paths)
         connect(worker,
                 SIGNAL(finished(int)),
                 this,
-                SLOT(onFileRemoveFinished(int)));
+                SLOT(onRemoveFileFinished(int)));
         connect(worker,
                 SIGNAL(error(QString)),
                 this,
-                SLOT(onFileRemoveError(QString)));
+                SLOT(onRemoveFileError(QString)));
 
         worker->start();
 
@@ -451,44 +451,44 @@ void DoubleFolderPanel::refresh()
     }
 }
 
-void DoubleFolderPanel::onFileCopyFinished(int result)
+void DoubleFolderPanel::onCopyFileFinished(int result)
 {
-    qDebug() << "DoubleFolderPanel::onFileCopyFinished : result : " << result;
+    qDebug() << "DoubleFolderPanel::onCopyFileFinished : result : " << result;
 
     refresh();
 }
 
-void DoubleFolderPanel::onFileCopyError(const QString& err)
+void DoubleFolderPanel::onCopyFileError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onFileCopyError : err : " << err;
+    qDebug() << "DoubleFolderPanel::onCopyFileError : err : " << err;
 
     refresh();
 }
 
-void DoubleFolderPanel::onFileMoveFinished(int result)
+void DoubleFolderPanel::onMoveFileFinished(int result)
 {
-    qDebug() << "DoubleFolderPanel::onFileMoveFinished : result : " << result;
+    qDebug() << "DoubleFolderPanel::onMoveFileFinished : result : " << result;
 
     refresh();
 }
 
-void DoubleFolderPanel::onFileMoveError(const QString& err)
+void DoubleFolderPanel::onMoveFileError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onFileMoveError : err : " << err;
+    qDebug() << "DoubleFolderPanel::onMoveFileError : err : " << err;
 
     refresh();
 }
 
-void DoubleFolderPanel::onFileRemoveFinished(int result)
+void DoubleFolderPanel::onRemoveFileFinished(int result)
 {
-    qDebug() << "DoubleFolderPanel::onFileRemoveFinished : result : " << result;
+    qDebug() << "DoubleFolderPanel::onRemoveFileFinished : result : " << result;
 
     refresh();
 }
 
-void DoubleFolderPanel::onFileRemoveError(const QString& err)
+void DoubleFolderPanel::onRemoveFileError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onFileREmoveError : err : " << err;
+    qDebug() << "DoubleFolderPanel::onRemoveFileError : err : " << err;
 
     refresh();
 }
