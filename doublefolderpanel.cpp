@@ -377,7 +377,7 @@ void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
     {
-        Worker* worker = new CopyWorker(srcPaths, dstPath, false, this);
+        Worker* worker = new CopyWorker(srcPaths, dstPath, false);
 
         connect(worker,
                 SIGNAL(finished(int)),
@@ -398,7 +398,7 @@ void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("move?")) == QMessageBox::Yes)
     {
-        Worker* worker = new CopyWorker(srcPaths, dstPath, true, this);
+        Worker* worker = new CopyWorker(srcPaths, dstPath, true);
 
         connect(worker,
                 SIGNAL(finished(int)),
@@ -419,7 +419,7 @@ void DoubleFolderPanel::removeFile(const QStringList& paths)
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("remove?")) == QMessageBox::Yes)
     {
-        Worker* worker = new RemoveWorker(paths, this);
+        Worker* worker = new RemoveWorker(paths);
 
         connect(worker,
                 SIGNAL(finished(int)),
