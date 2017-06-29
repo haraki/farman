@@ -11,6 +11,7 @@
 #include "copyworker.h"
 #include "removeworker.h"
 #include "overwritedialog.h"
+#include "workingdialog.h"
 
 namespace Farman
 {
@@ -393,7 +394,13 @@ void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dst
                 this,
                 SLOT(onConfirmOverwrite(QString,QString,int)));
 
-        copyWorker->start();
+        WorkingDialog dialog(copyWorker, this);
+        if(dialog.exec())
+        {
+
+        }
+
+        return;
     }
 }
 
@@ -416,7 +423,13 @@ void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dst
                 this,
                 SLOT(onConfirmOverwrite(QString,QString,int)));
 
-        copyWorker->start();
+        WorkingDialog dialog(copyWorker, this);
+        if(dialog.exec())
+        {
+
+        }
+
+        return;
     }
 }
 
@@ -435,7 +448,13 @@ void DoubleFolderPanel::removeFile(const QStringList& paths)
                 this,
                 SLOT(onRemoveFileError(QString)));
 
-        worker->start();
+        WorkingDialog dialog(worker, this);
+        if(dialog.exec())
+        {
+
+        }
+
+        return;
     }
 }
 
