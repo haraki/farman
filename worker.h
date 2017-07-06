@@ -32,7 +32,7 @@ public:
     };
 
     explicit Worker(QObject *parent = 0);
-    virtual ~Worker();
+    virtual ~Worker() = default;
     void start();
 
     void abort();

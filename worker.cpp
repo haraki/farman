@@ -17,11 +17,6 @@ Worker::Worker(QObject *parent)
     connect(m_thread, SIGNAL(finished()), m_thread, SLOT(deleteLater()));
 }
 
-Worker::~Worker()
-{
-    delete m_thread;
-}
-
 void Worker::start()
 {
     moveToThread(m_thread);
