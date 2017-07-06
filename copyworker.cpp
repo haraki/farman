@@ -176,7 +176,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             QString renameFileName = dstFileInfo.fileName();
             if(!m_methodTypeKeep || m_methodType == OverwriteMethodType::Rename)
             {
-                OverwriteDialog dialog(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), m_methodType, dstFileInfo.fileName());
+                OverwriteDialog dialog(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), m_methodType);
                 if(dialog.exec() == QDialog::Rejected)
                 {
                     // 中断

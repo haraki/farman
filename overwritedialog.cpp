@@ -6,18 +6,22 @@
 namespace Farman
 {
 
-OverwriteDialog::OverwriteDialog(const QFileInfo& srcFileInfo,
-                                 const QFileInfo& dstFileInfo,
+OverwriteDialog::OverwriteDialog(const QString& srcFilePath,
+                                 const QString& dstFilePath,
                                  OverwriteMethodType methodType,
-                                 const QString& renameText,
                                  QWidget *parent/* = Q_NULLPTR*/)
     : QDialog(parent)
     , ui(new Ui::OverwriteDialog)
     , m_methodType(methodType)
-    , m_renameFileName(renameText)
+    , m_renameFileName("")
     , m_keepSetting(false)
 {
     ui->setupUi(this);
+
+    QFileInfo srcFileInfo(srcFilePath);
+    QFileInfo dstFileInfo(dstFilePath);
+
+    m_renameFileName = dstFileInfo.fileName();
 
     ui->srcFilePathLabel->setText(QString("Src: ") + srcFileInfo.absoluteFilePath());
     ui->srcInfoLabel->setText(QString("Size: ") + QString("%1").arg(srcFileInfo.size()) + QString(" Byte(s), Last modified: ") + srcFileInfo.lastModified().toString());
@@ -47,7 +51,7 @@ OverwriteDialog::OverwriteDialog(const QFileInfo& srcFileInfo,
         break;
     }
 
-    ui->renameLineEdit->setText(renameText);
+    ui->renameLineEdit->setText(m_renameFileName);
 }
 
 OverwriteDialog::~OverwriteDialog()
