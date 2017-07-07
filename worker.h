@@ -53,9 +53,10 @@ protected:
     void emitFinished(int result);
     void emitError(const QString& err);
 
+    QAtomicInt m_abort;
+
 private:
     QThread* m_thread;
-    QAtomicInt m_abort;
 };
 
 }           // namespace Farman

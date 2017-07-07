@@ -7,8 +7,8 @@ namespace Farman
 
 Worker::Worker(QObject *parent)
     : QObject(parent)
-    , m_thread(new QThread())
     , m_abort(0)
+    , m_thread(new QThread())
 {
 //    connect(this, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
     connect(m_thread, SIGNAL(started()), this, SLOT(process()));
