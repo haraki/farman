@@ -33,18 +33,22 @@ OverwriteDialog::OverwriteDialog(const QString& srcFilePath,
     case OverwriteMethodType::Overwrite:
         ui->methodOverwriteRadioButton->setChecked(true);
         ui->keeySetting->setEnabled(true);
+        ui->renameLineEdit->setEnabled(false);
         break;
     case OverwriteMethodType::OverwriteIfNewer:
         ui->methodOverwriteIfNewerRadioButton->setChecked(true);
         ui->keeySetting->setEnabled(true);
+        ui->renameLineEdit->setEnabled(false);
         break;
     case OverwriteMethodType::Skip:
         ui->methodSkipRadioButton->setChecked(true);
         ui->keeySetting->setEnabled(true);
+        ui->renameLineEdit->setEnabled(false);
         break;
     case OverwriteMethodType::Rename:
         ui->methodRenameRadioButton->setChecked(true);
         ui->keeySetting->setEnabled(false);
+        ui->renameLineEdit->setEnabled(true);
         break;
     default:
         // ここに来ることはありえない
