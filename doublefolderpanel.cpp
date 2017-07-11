@@ -10,6 +10,7 @@
 #include "foldermodel.h"
 #include "copyworker.h"
 #include "removeworker.h"
+#include "overwritedialog.h"
 
 namespace Farman
 {
@@ -21,6 +22,7 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
     , m_viewMode(viewMode)
+    , m_copyWorker(nullptr)
 {
     ui->setupUi(this);
 
@@ -377,18 +379,22 @@ void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
     {
-        Worker* worker = new CopyWorker(srcPaths, dstPath, false);
+        m_copyWorker = new CopyWorker(srcPaths, dstPath, false);
 
-        connect(worker,
+        connect(m_copyWorker,
                 SIGNAL(finished(int)),
                 this,
                 SLOT(onCopyFileFinished(int)));
-        connect(worker,
+        connect(m_copyWorker,
                 SIGNAL(error(QString)),
                 this,
                 SLOT(onCopyFileError(QString)));
+        connect(m_copyWorker,
+                SIGNAL(confirmOverwrite(QString,QString,int)),
+                this,
+                SLOT(onConfirmOverwrite(QString,QString,int)));
 
-        worker->start();
+        m_copyWorker->start();
 
         return;
     }
@@ -398,18 +404,22 @@ void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("move?")) == QMessageBox::Yes)
     {
-        Worker* worker = new CopyWorker(srcPaths, dstPath, true);
+        m_copyWorker = new CopyWorker(srcPaths, dstPath, true);
 
-        connect(worker,
+        connect(m_copyWorker,
                 SIGNAL(finished(int)),
                 this,
                 SLOT(onMoveFileFinished(int)));
-        connect(worker,
+        connect(m_copyWorker,
                 SIGNAL(error(QString)),
                 this,
                 SLOT(onMoveFileError(QString)));
+        connect(m_copyWorker,
+                SIGNAL(confirmOverwrite(QString,QString,int)),
+                this,
+                SLOT(onConfirmOverwrite(QString,QString,int)));
 
-        worker->start();
+        m_copyWorker->start();
 
         return;
     }
@@ -491,6 +501,19 @@ void DoubleFolderPanel::onRemoveFileError(const QString& err)
     qDebug() << "DoubleFolderPanel::onRemoveFileError : err : " << err;
 
     refresh();
+}
+
+void DoubleFolderPanel::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType)
+{
+    OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType));
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        m_copyWorker->finishConfirmOverwrite(dialog.getMethodType(), dialog.getKeepSetting(), dialog.getRenameFileName());
+    }
+    else
+    {
+        m_copyWorker->cancelConfirmOverwrite();
+    }
 }
 
 }           // namespace Farman

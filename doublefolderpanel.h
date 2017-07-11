@@ -15,6 +15,7 @@ class QString;
 namespace Farman
 {
 class FolderForm;
+class CopyWorker;
 
 class DoubleFolderPanel : public QWidget
 {
@@ -50,10 +51,11 @@ protected Q_SLOTS:
     void onRemoveFileFinished(int result);
     void onRemoveFileError(const QString& err);
 
-    void emitStatusChanged(const QString& statusString);
+    void onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType);
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
+    void emitStatusChanged(const QString& statusString);
     void setActiveFolderForm(const QString& objectName);
     void copyFile(const QStringList& srcPaths, const QString& dstPath);
     void moveFile(const QStringList& srcPaths, const QString& dstPath);
@@ -64,6 +66,8 @@ private:
     Ui::DoubleFolderPanel *ui;
 
     ViewMode m_viewMode;
+
+    CopyWorker* m_copyWorker;
 };
 
 }           // namespace Farman

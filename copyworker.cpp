@@ -4,7 +4,6 @@
 #include <QFile>
 #include <QDateTime>
 #include "copyworker.h"
-#include "overwritedialog.h"
 
 namespace Farman
 {
@@ -16,6 +15,7 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool
     , m_moveMode(moveMode)
     , m_methodType(OverwriteMethodType::Default)
     , m_methodTypeKeep(false)
+    , m_renameFileName("")
 {
 
 }
@@ -173,20 +173,14 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
         while(dstFileInfo.exists())
         {
             // コピー先にファイルが存在している
-            QString renameFileName = dstFileInfo.fileName();
+            m_renameFileName = "";
             if(!m_methodTypeKeep || m_methodType == OverwriteMethodType::Rename)
             {
-                OverwriteDialog dialog(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), m_methodType);
-                if(dialog.exec() == QDialog::Rejected)
+                if(showConfirmOverwrite(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), m_methodType))
                 {
                     // 中断
                     return static_cast<int>(Result::Abort);
                 }
-
-                m_methodType = dialog.getMethodType();
-                m_methodTypeKeep = dialog.getKeepSetting();
-
-                renameFileName = dialog.getRenameFileName();
             }
 
             if(m_methodType == OverwriteMethodType::Overwrite)
@@ -218,7 +212,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             }
             else if(m_methodType == OverwriteMethodType::Rename)
             {
-                dstFileInfo.setFile(dstFileInfo.absolutePath(), renameFileName);
+                dstFileInfo.setFile(dstFileInfo.absolutePath(), m_renameFileName);
             }
             else
             {
@@ -246,6 +240,41 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
     }
 
     return static_cast<int>(Result::Success);
+}
+
+bool CopyWorker::showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)
+{
+    emitConfirmOverwrite(srcFilePath, dstFilePath, methodType);
+
+    QMutex mutex;
+    {
+        QMutexLocker locker(&mutex);
+
+        m_confirmWait.wait(&mutex);
+    }
+
+    return false;
+}
+
+void CopyWorker::emitConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)
+{
+    emit confirmOverwrite(srcFilePath, dstFilePath, static_cast<int>(methodType));
+}
+
+void CopyWorker::finishConfirmOverwrite(OverwriteMethodType methodType, bool methodTypeKeep, const QString& renameFileName)
+{
+    m_methodType = methodType;
+    m_methodTypeKeep = methodTypeKeep;
+    m_renameFileName = renameFileName;
+
+    m_confirmWait.wakeAll();
+}
+
+void CopyWorker::cancelConfirmOverwrite()
+{
+    m_abort = 1;
+
+    m_confirmWait.wakeAll();
 }
 
 }           // namespace Farman
