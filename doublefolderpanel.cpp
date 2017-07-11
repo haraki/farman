@@ -22,7 +22,6 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
     , m_viewMode(viewMode)
-    , m_copyWorker(nullptr)
 {
     ui->setupUi(this);
 
@@ -379,24 +378,22 @@ void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
     {
-        m_copyWorker = new CopyWorker(srcPaths, dstPath, false);
+        CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, false);
 
-        connect(m_copyWorker,
+        connect(copyWorker,
                 SIGNAL(finished(int)),
                 this,
                 SLOT(onCopyFileFinished(int)));
-        connect(m_copyWorker,
+        connect(copyWorker,
                 SIGNAL(error(QString)),
                 this,
                 SLOT(onCopyFileError(QString)));
-        connect(m_copyWorker,
+        connect(copyWorker,
                 SIGNAL(confirmOverwrite(QString,QString,int)),
                 this,
                 SLOT(onConfirmOverwrite(QString,QString,int)));
 
-        m_copyWorker->start();
-
-        return;
+        copyWorker->start();
     }
 }
 
@@ -404,24 +401,22 @@ void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dst
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("move?")) == QMessageBox::Yes)
     {
-        m_copyWorker = new CopyWorker(srcPaths, dstPath, true);
+        CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true);
 
-        connect(m_copyWorker,
+        connect(copyWorker,
                 SIGNAL(finished(int)),
                 this,
                 SLOT(onMoveFileFinished(int)));
-        connect(m_copyWorker,
+        connect(copyWorker,
                 SIGNAL(error(QString)),
                 this,
                 SLOT(onMoveFileError(QString)));
-        connect(m_copyWorker,
+        connect(copyWorker,
                 SIGNAL(confirmOverwrite(QString,QString,int)),
                 this,
                 SLOT(onConfirmOverwrite(QString,QString,int)));
 
-        m_copyWorker->start();
-
-        return;
+        copyWorker->start();
     }
 }
 
@@ -441,8 +436,6 @@ void DoubleFolderPanel::removeFile(const QStringList& paths)
                 SLOT(onRemoveFileError(QString)));
 
         worker->start();
-
-        return;
     }
 }
 
@@ -505,14 +498,18 @@ void DoubleFolderPanel::onRemoveFileError(const QString& err)
 
 void DoubleFolderPanel::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType)
 {
-    OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType));
-    if(dialog.exec() == QDialog::Accepted)
+    CopyWorker* copyWorker = dynamic_cast<CopyWorker*>(sender());
+    if(copyWorker != nullptr)
     {
-        m_copyWorker->finishConfirmOverwrite(dialog.getMethodType(), dialog.getKeepSetting(), dialog.getRenameFileName());
-    }
-    else
-    {
-        m_copyWorker->cancelConfirmOverwrite();
+        OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType));
+        if(dialog.exec() == QDialog::Accepted)
+        {
+            copyWorker->finishConfirmOverwrite(dialog.getMethodType(), dialog.getKeepSetting(), dialog.getRenameFileName());
+        }
+        else
+        {
+            copyWorker->cancelConfirmOverwrite();
+        }
     }
 }
 

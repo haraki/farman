@@ -15,7 +15,6 @@ class QString;
 namespace Farman
 {
 class FolderForm;
-class CopyWorker;
 
 class DoubleFolderPanel : public QWidget
 {
@@ -66,8 +65,6 @@ private:
     Ui::DoubleFolderPanel *ui;
 
     ViewMode m_viewMode;
-
-    CopyWorker* m_copyWorker;
 };
 
 }           // namespace Farman
