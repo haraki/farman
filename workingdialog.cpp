@@ -12,6 +12,11 @@ WorkingDialog::WorkingDialog(Worker* worker, QWidget *parent/*= Q_NULLPTR*/) :
     m_worker(worker)
 {
     ui->setupUi(this);
+
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->setMaximum(1);
+    ui->progressBar->setValue(0);
+    ui->progressLabel->setVisible(false);
 }
 
 WorkingDialog::~WorkingDialog()
@@ -25,6 +30,9 @@ void WorkingDialog::onMinMax(int min, int max)
 
     ui->progressBar->setMinimum(min);
     ui->progressBar->setMaximum(max);
+
+    ui->progressLabel->setText(tr("( 0 / %1 )").arg(max));
+    ui->progressLabel->setVisible(true);
 }
 
 void WorkingDialog::onProgress(int value)
@@ -32,6 +40,8 @@ void WorkingDialog::onProgress(int value)
     qDebug() << "WorkingDialog::onProgress(" << value << ");";
 
     ui->progressBar->setValue(value);
+
+    ui->progressLabel->setText(tr("( %1 / %2 )").arg(value).arg(ui->progressBar->maximum()));
 }
 
 void WorkingDialog::onFinished(int result)
