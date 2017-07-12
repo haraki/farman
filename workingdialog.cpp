@@ -19,7 +19,6 @@ WorkingDialog::~WorkingDialog()
     delete ui;
 }
 
-
 void WorkingDialog::onMinMax(int min, int max)
 {
     qDebug() << "WorkingDialog::onMinMax(" << min << "," << max << ");";
@@ -39,7 +38,10 @@ void WorkingDialog::onFinished(int result)
 {
     qDebug() << "WorkingDialog::onFinished(" << result << ");";
 
-    QDialog::accept();
+    if(ui->autoCloseCheckBox->checkState() == Qt::Checked)
+    {
+        QDialog::accept();
+    }
 }
 
 void WorkingDialog::onError(const QString& err)
