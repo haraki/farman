@@ -272,7 +272,7 @@ void CopyWorker::finishConfirmOverwrite(OverwriteMethodType methodType, bool met
 
 void CopyWorker::cancelConfirmOverwrite()
 {
-    m_abort = 1;
+    abort();
 
     m_confirmWait.wakeAll();
 }
