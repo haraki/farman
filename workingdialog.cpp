@@ -26,6 +26,13 @@ WorkingDialog::~WorkingDialog()
     delete ui;
 }
 
+void WorkingDialog::onPrepare(const QString& str)
+{
+    qDebug() << "WorkingDialog::onPrepare(" << str << ");";
+
+    ui->descriptionLabel->setText(str);
+}
+
 void WorkingDialog::onMinMax(int min, int max)
 {
     qDebug() << "WorkingDialog::onMinMax(" << min << "," << max << ");";
@@ -74,6 +81,7 @@ int WorkingDialog::exec()
         return -1;
     }
 
+    connect(m_worker, SIGNAL(prepare(QString)), this, SLOT(onPrepare(QString)));
     connect(m_worker, SIGNAL(minMax(int,int)), this, SLOT(onMinMax(int,int)));
     connect(m_worker, SIGNAL(progress(int)), this, SLOT(onProgress(int)));
     connect(m_worker, SIGNAL(finished(int)), this, SLOT(onFinished(int)));

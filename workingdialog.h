@@ -24,6 +24,7 @@ public Q_SLOTS:
     virtual int exec() Q_DECL_OVERRIDE;
 
 protected Q_SLOTS:
+    virtual void onPrepare(const QString& str);
     virtual void onMinMax(int min, int max);
     virtual void onProgress(int value);
     virtual void onFinished(int result);

@@ -29,6 +29,8 @@ void CopyWorker::process()
 {
     qDebug() << "start CopyWorker::process()";
 
+    emitPrepare((m_moveMode) ? "Preparing move..." : "Preparing copy...");
+
     QMap<QString, QString> copyList;
     QList<QString> removeDirList;
 

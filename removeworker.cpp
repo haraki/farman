@@ -23,6 +23,8 @@ void RemoveWorker::process()
 {
     qDebug() << "start RemoveWorker::process()";
 
+    emitPrepare("Preparing remove...");
+
     QList<QString> removeList;
 
     // コピーするファイル・ディレクトリのリストを作成

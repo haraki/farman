@@ -33,6 +33,11 @@ bool Worker::isAborted()
     return (m_abort != 0);
 }
 
+void Worker::emitPrepare(const QString& str)
+{
+    emit prepare(str);
+}
+
 void Worker::emitMinMax(int min, int max)
 {
     emit minMax(min, max);
