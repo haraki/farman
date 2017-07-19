@@ -30,11 +30,13 @@ protected Q_SLOTS:
     virtual void onError(const QString& err);
 
 private slots:
-    void on_cancelPushButton_clicked();
+    void on_closePushButton_clicked();
 
 private:
     Ui::WorkingDialog *ui;
     Worker* m_worker;
+
+    bool m_finishedWork;
 };
 
 }           // namespace Farman

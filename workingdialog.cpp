@@ -9,7 +9,8 @@ namespace Farman
 WorkingDialog::WorkingDialog(Worker* worker, QWidget *parent/*= Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::WorkingDialog),
-    m_worker(worker)
+    m_worker(worker),
+    m_finishedWork(false)
 {
     ui->setupUi(this);
 
@@ -17,6 +18,7 @@ WorkingDialog::WorkingDialog(Worker* worker, QWidget *parent/*= Q_NULLPTR*/) :
     ui->progressBar->setMaximum(1);
     ui->progressBar->setValue(0);
     ui->progressLabel->setVisible(false);
+    ui->closePushButton->setText(tr("Cancel"));
 }
 
 WorkingDialog::~WorkingDialog()
@@ -48,10 +50,14 @@ void WorkingDialog::onFinished(int result)
 {
     qDebug() << "WorkingDialog::onFinished(" << result << ");";
 
+    ui->closePushButton->setText(tr("Close"));
+
     if(ui->autoCloseCheckBox->checkState() == Qt::Checked)
     {
         QDialog::accept();
     }
+
+    m_finishedWork = true;
 }
 
 void WorkingDialog::onError(const QString& err)
@@ -78,11 +84,19 @@ int WorkingDialog::exec()
     return QDialog::exec();
 }
 
-void WorkingDialog::on_cancelPushButton_clicked()
+void WorkingDialog::on_closePushButton_clicked()
 {
-    if(m_worker != Q_NULLPTR)
+    if(m_finishedWork)
+    {
+        QDialog::accept();
+    }
+    else if(m_worker != Q_NULLPTR)
     {
         m_worker->abort();
+    }
+    else
+    {
+        QDialog::accept();
     }
 }
 
