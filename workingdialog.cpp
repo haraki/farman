@@ -33,14 +33,15 @@ void WorkingDialog::onPrepare(const QString& str)
     ui->descriptionLabel->setText(str);
 }
 
-void WorkingDialog::onMinMax(int min, int max)
+void WorkingDialog::onStart(int min, int max)
 {
-    qDebug() << "WorkingDialog::onMinMax(" << min << "," << max << ");";
+    qDebug() << "WorkingDialog::onStart(" << min << "," << max << ");";
 
     ui->progressBar->setMinimum(min);
     ui->progressBar->setMaximum(max);
+    ui->progressBar->setValue(min);
 
-    ui->progressLabel->setText(tr("( 0 / %1 )").arg(max));
+    ui->progressLabel->setText(tr("( %1 / %2 )").arg(min).arg(max));
     ui->progressLabel->setVisible(true);
 }
 
@@ -82,13 +83,13 @@ int WorkingDialog::exec()
     }
 
     connect(m_worker, SIGNAL(prepare(QString)), this, SLOT(onPrepare(QString)));
-    connect(m_worker, SIGNAL(minMax(int,int)), this, SLOT(onMinMax(int,int)));
+    connect(m_worker, SIGNAL(start(int,int)), this, SLOT(onStart(int,int)));
     connect(m_worker, SIGNAL(progress(int)), this, SLOT(onProgress(int)));
     connect(m_worker, SIGNAL(finished(int)), this, SLOT(onFinished(int)));
     connect(m_worker, SIGNAL(error(QString)), this, SLOT(onError(QString)));
 //    connect(m_worker, SIGNAL(information(QString)), ui->label, SLOT(setText(QString)));
 
-    m_worker->start();
+    m_worker->exec();
     return QDialog::exec();
 }
 

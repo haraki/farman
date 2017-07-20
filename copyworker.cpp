@@ -54,8 +54,7 @@ void CopyWorker::process()
         }
     }
 
-    emitMinMax(0, copyList.size());
-    emitProgress(0);
+    emitStart(0, copyList.size());
 
     int progress = 0;
     for(QMap<QString, QString>::const_iterator itr = copyList.cbegin();itr != copyList.cend();itr++)

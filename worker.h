@@ -33,14 +33,14 @@ public:
 
     explicit Worker(QObject *parent = 0);
     virtual ~Worker() = default;
-    void start();
+    void exec();
 
     void abort();
     bool isAborted();
 
 Q_SIGNALS:
     void prepare(const QString& str);
-    void minMax(int min, int max);
+    void start(int min, int max);
     void progress(int value);
     void finished(int result);
     void error(const QString& err);
@@ -50,7 +50,7 @@ public Q_SLOTS:
 
 protected:
     void emitPrepare(const QString& str);
-    void emitMinMax(int min, int max);
+    void emitStart(int min, int max);
     void emitProgress(int value);
     void emitFinished(int result);
     void emitError(const QString& err);

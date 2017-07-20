@@ -17,7 +17,7 @@ Worker::Worker(QObject *parent)
     connect(m_thread, SIGNAL(finished()), m_thread, SLOT(deleteLater()));
 }
 
-void Worker::start()
+void Worker::exec()
 {
     moveToThread(m_thread);
     m_thread->start();
@@ -38,9 +38,9 @@ void Worker::emitPrepare(const QString& str)
     emit prepare(str);
 }
 
-void Worker::emitMinMax(int min, int max)
+void Worker::emitStart(int min, int max)
 {
-    emit minMax(min, max);
+    emit start(min, max);
 }
 
 void Worker::emitProgress(int value)

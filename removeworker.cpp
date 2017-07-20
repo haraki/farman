@@ -47,8 +47,7 @@ void RemoveWorker::process()
         }
     }
 
-    emitMinMax(0, removeList.size());
-    emitProgress(0);
+    emitStart(0, removeList.size());
 
     int progress = 0;
     for(auto path : removeList)
