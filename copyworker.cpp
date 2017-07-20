@@ -25,9 +25,9 @@ CopyWorker::~CopyWorker()
 
 }
 
-void CopyWorker::process()
+void CopyWorker::run()
 {
-    qDebug() << "start CopyWorker::process()";
+    qDebug() << "start CopyWorker::run()";
 
     emitPrepare((m_moveMode) ? "Preparing move..." : "Preparing copy...");
 
@@ -90,7 +90,7 @@ void CopyWorker::process()
         }
     }
 
-    qDebug() << "finish CopyWorker::process()";
+    qDebug() << "finish CopyWorker::run()";
 
     emitFinished(static_cast<int>(Result::Success));
 }

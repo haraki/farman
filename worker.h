@@ -46,7 +46,7 @@ Q_SIGNALS:
     void error(const QString& err);
 
 public Q_SLOTS:
-    virtual void process() = 0;
+    virtual void run() = 0;
 
 protected:
     void emitPrepare(const QString& str);

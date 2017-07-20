@@ -19,9 +19,9 @@ RemoveWorker::~RemoveWorker()
 
 }
 
-void RemoveWorker::process()
+void RemoveWorker::run()
 {
-    qDebug() << "start RemoveWorker::process()";
+    qDebug() << "start RemoveWorker::run()";
 
     emitPrepare("Preparing remove...");
 
@@ -84,7 +84,7 @@ void RemoveWorker::process()
         emitProgress(progress);
     }
 
-    qDebug() << "finish RemoveWorker::process()";
+    qDebug() << "finish RemoveWorker::run()";
 
     emitFinished(static_cast<int>(Result::Success));
 }

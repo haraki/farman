@@ -19,7 +19,7 @@ public:
     ~RemoveWorker();
 
 public Q_SLOTS:
-    void process() Q_DECL_OVERRIDE;
+    void run() Q_DECL_OVERRIDE;
 
 private:
     int makeList(const QString& path, QList<QString>& removeList);
