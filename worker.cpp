@@ -33,14 +33,14 @@ bool Worker::isAborted()
     return (m_abort != 0);
 }
 
-void Worker::emitPrepare(const QString& str)
-{
-    emit prepare(str);
-}
-
 void Worker::emitStart(int min, int max)
 {
     emit start(min, max);
+}
+
+void Worker::emitProcess(const QString& description)
+{
+    emit process(description);
 }
 
 void Worker::emitProgress(int value)

@@ -23,7 +23,7 @@ void RemoveWorker::run()
 {
     qDebug() << "start RemoveWorker::run()";
 
-    emitPrepare("Preparing remove...");
+    emitProcess(tr("Preparing remove..."));
 
     QList<QString> removeList;
 
@@ -52,6 +52,8 @@ void RemoveWorker::run()
     int progress = 0;
     for(auto path : removeList)
     {
+        emitProcess(QString(tr("%1 file(s) remove...")).arg(progress + 1));
+
         QFileInfo fileInfo(path);
         if(fileInfo.isDir())
         {
@@ -79,6 +81,8 @@ void RemoveWorker::run()
                 return;
             }
         }
+
+        emitProcess(QString(tr("%1 file(s) remove...done.")).arg(progress + 1));
 
         progress++;
         emitProgress(progress);

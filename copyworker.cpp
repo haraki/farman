@@ -29,7 +29,7 @@ void CopyWorker::run()
 {
     qDebug() << "start CopyWorker::run()";
 
-    emitPrepare((m_moveMode) ? "Preparing move..." : "Preparing copy...");
+    emitProcess((m_moveMode) ? tr("Preparing move...") : tr("Preparing copy..."));
 
     QMap<QString, QString> copyList;
     QList<QString> removeDirList;
@@ -56,9 +56,14 @@ void CopyWorker::run()
 
     emitStart(0, copyList.size());
 
+    QString preStr = (m_moveMode) ? tr("%1 file(s) move...") : tr("%1 file(s) copy...");
+    QString postStr = (m_moveMode) ? tr("%1 file(s) move...done") : tr("%1 file(s) copy...done");
+
     int progress = 0;
     for(QMap<QString, QString>::const_iterator itr = copyList.cbegin();itr != copyList.cend();itr++)
     {
+        emitProcess(QString(preStr).arg(progress + 1));
+
         int ret = copyExec(itr.key(), itr.value());
         if(ret != static_cast<int>(Result::Success))
         {
@@ -67,6 +72,8 @@ void CopyWorker::run()
 
             return;
         }
+
+        emitProcess(QString(postStr).arg(progress + 1));
 
         progress++;
         emitProgress(progress);
