@@ -46,6 +46,8 @@ void MainWindow::initialize()
                                                                  ui->mainWidget);
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
+
+    resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
 }
 
 MainWindow::~MainWindow()
