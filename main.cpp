@@ -4,8 +4,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Farman::MainWindow w;
-    w.show();
+    Farman::MainWindow::create();
 
     return a.exec();
 }

@@ -12,6 +12,7 @@
 #include "removeworker.h"
 #include "overwritedialog.h"
 #include "workingdialog.h"
+#include "mainwindow.h"
 
 namespace Farman
 {
@@ -25,6 +26,11 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
     , m_viewMode(viewMode)
 {
     ui->setupUi(this);
+
+    connect(this,
+            SIGNAL(statusChanged(const QString)),
+            MainWindow::getInstance(),
+            SLOT(onStatusChanged(const QString)));
 
     QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);

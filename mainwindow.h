@@ -19,12 +19,19 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    static void create();
+    static MainWindow* getInstance();
+
+public Q_SLOTS:
+    void onStatusChanged(const QString& statusString);
+
+private:
     explicit MainWindow(QWidget *parent = Q_NULLPTR);
     ~MainWindow();
 
-private Q_SLOTS:
-    void onStatusChanged(const QString& statusString);
+    void initialize();
 
+private Q_SLOTS:
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();
     void on_actionSortSettings_triggered();
@@ -36,6 +43,8 @@ private Q_SLOTS:
     void on_actionRemove_triggered();
 
 private:
+    static MainWindow* s_instance;
+
     Ui::MainWindow *ui;
 
     QStringList m_nameFilters;

@@ -11,13 +11,32 @@
 namespace Farman
 {
 
+MainWindow* MainWindow::s_instance = Q_NULLPTR;
+
+void MainWindow::create()
+{
+    Q_ASSERT(s_instance == Q_NULLPTR);
+    s_instance = new MainWindow();
+    Q_ASSERT(s_instance != Q_NULLPTR);
+    s_instance->initialize();
+    s_instance->show();
+}
+
+MainWindow* MainWindow::getInstance()
+{
+    return s_instance;
+}
+
 MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_nameFilters()
 {
     ui->setupUi(this);
+}
 
+void MainWindow::initialize()
+{
     QString path = QDir::currentPath();
     qDebug() << path;
 
@@ -27,11 +46,6 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
                                                                  ui->mainWidget);
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
-
-    connect(doubleFolderPanel,
-            SIGNAL(statusChanged(const QString)),
-            this,
-            SLOT(onStatusChanged(const QString)));
 }
 
 MainWindow::~MainWindow()
