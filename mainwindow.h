@@ -24,6 +24,7 @@ public:
 
 public Q_SLOTS:
     void onStatusChanged(const QString& statusString);
+    void onOutputConsole(const QString& consoleString);
 
 private:
     explicit MainWindow(QWidget *parent = Q_NULLPTR);

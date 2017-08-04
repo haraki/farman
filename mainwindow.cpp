@@ -62,6 +62,14 @@ void MainWindow::onStatusChanged(const QString& statusString)
     statusBar()->showMessage(statusString);
 }
 
+void MainWindow::onOutputConsole(const QString& consoleString)
+{
+    qDebug() << "MainWindow::onOutputConsole : " << consoleString;
+
+    ui->consolePlainTextEdit->insertPlainText(consoleString);
+    ui->consolePlainTextEdit->moveCursor(QTextCursor::End);
+}
+
 void MainWindow::on_actionSingleView_triggered()
 {
     qDebug() << "MainWindow::on_actionSingleView_triggered()";

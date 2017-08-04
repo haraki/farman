@@ -48,6 +48,11 @@ void Worker::emitProgress(int value)
     emit progress(value);
 }
 
+void Worker::emitOutputConsole(const QString& consoleString)
+{
+    emit outputConsole(consoleString);
+}
+
 void Worker::emitFinished(int result)
 {
     emit finished(result);
