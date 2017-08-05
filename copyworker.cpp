@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFile>
 #include <QDateTime>
+#include <QMutex>
 #include "copyworker.h"
 #include "mainwindow.h"
 
