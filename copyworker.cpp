@@ -50,7 +50,7 @@ void CopyWorker::run()
         }
 
         int ret = makeList(srcPath, m_dstPath, copyList, removeDirList);
-        if(ret != static_cast<int>(Result::Success))
+        if(isError(ret))
         {
             qDebug() << "makeList() : ret =" << QString("%1").arg(ret, 0, 16);
             emitFinished(ret);
@@ -70,7 +70,7 @@ void CopyWorker::run()
         emitProcess(QString(preStr).arg(progress + 1));
 
         int ret = copyExec(itr.key(), itr.value());
-        if(ret != static_cast<int>(Result::Success))
+        if(isError(ret))
         {
             qDebug() << "copyExec() : ret =" << QString("%1").arg(ret, 0, 16);
             emitFinished(ret);
@@ -137,7 +137,7 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
         for(auto srcChildFileInfo : srcChildFileInfoList)
         {
             int ret = makeList(srcChildFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), copyList, removeDirList);
-            if(ret != static_cast<int>(Result::Success))
+            if(isError(ret))
             {
                 return ret;
             }

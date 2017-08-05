@@ -33,6 +33,11 @@ bool Worker::isAborted()
     return (m_abort != 0);
 }
 
+bool Worker::isError(int result)
+{
+    return (static_cast<int>(result) & static_cast<int>(Result::ErrorMask));
+}
+
 void Worker::emitStart(int min, int max)
 {
     emit start(min, max);

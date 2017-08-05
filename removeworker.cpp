@@ -43,7 +43,7 @@ void RemoveWorker::run()
         }
 
         int ret = makeList(path, removeList);
-        if(ret != static_cast<int>(Result::Success))
+        if(isError(ret))
         {
             qDebug() << "makeList() : ret =" << QString("%1").arg(ret, 0, 16);
             emitFinished(ret);
@@ -128,7 +128,7 @@ int RemoveWorker::makeList(const QString& path, QList<QString>& removeList)
         for(auto childFileInfo : childFileInfoList)
         {
             int ret = makeList(childFileInfo.absoluteFilePath(), removeList);
-            if(ret != static_cast<int>(Result::Success))
+            if(isError(ret))
             {
                 return ret;
             }

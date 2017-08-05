@@ -20,15 +20,15 @@ public:
         Abort = 1,                          // 中断
         Skip = 2,                           // スキップ
 
-        Error = static_cast<int>(0x80000000),   // エラー
+        ErrorMask = static_cast<int>(0x80000000),   // エラー
 
-        ErrorUnknown    = Error | 1,        // 不明なエラー
-        ErrorMakeDir    = Error | 2,        // ディレクトリ作成失敗
-        ErrorCopyFile   = Error | 3,        // ファイルコピー失敗
-        ErrorRemoveDir  = Error | 4,        // ディレクトリ削除失敗
-        ErrorRemoveFile = Error | 5,        // ファイル削除失敗
+        ErrorUnknown    = ErrorMask | 1,        // 不明なエラー
+        ErrorMakeDir    = ErrorMask | 2,        // ディレクトリ作成失敗
+        ErrorCopyFile   = ErrorMask | 3,        // ファイルコピー失敗
+        ErrorRemoveDir  = ErrorMask | 4,        // ディレクトリ削除失敗
+        ErrorRemoveFile = ErrorMask | 5,        // ファイル削除失敗
 
-        ErrorFatal = Error | 0xFFFF,        // 異常なエラー
+        ErrorFatal = ErrorMask | 0xFFFF,        // 異常なエラー
     };
 
     explicit Worker(QObject *parent = 0);
@@ -37,6 +37,8 @@ public:
 
     void abort();
     bool isAborted();
+
+    bool isError(int result);
 
 Q_SIGNALS:
     void start(int min, int max);
