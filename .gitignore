@@ -4,5 +4,8 @@ FileManager.app
 *.o
 *.autosave
 Makefile
+Makefile.*
 moc_*.cpp
 ui_*.h
+debug
+release
