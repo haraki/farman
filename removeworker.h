@@ -22,9 +22,6 @@ public Q_SLOTS:
     void run() Q_DECL_OVERRIDE;
 
 private:
-    int makeList(const QString& path, QList<QString>& removeList);
-    int copyExec(const QString& path);
-
     QStringList m_paths;
 };
 

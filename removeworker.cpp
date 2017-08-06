@@ -27,11 +27,9 @@ void RemoveWorker::run()
 {
     qDebug() << "start RemoveWorker::run()";
 
-    emitProcess(tr("Preparing remove..."));
+    emitStart(0, m_paths.size());
 
-    QList<QString> removeList;
-
-    // コピーするファイル・ディレクトリのリストを作成
+    int progress = 0;
     for(auto path : m_paths)
     {
         if(isAborted())
@@ -42,30 +40,12 @@ void RemoveWorker::run()
             return;
         }
 
-        int ret = makeList(path, removeList);
-        if(isError(ret))
-        {
-            qDebug() << "makeList() : ret =" << QString("%1").arg(ret, 0, 16);
-            emitFinished(ret);
-
-            return;
-        }
-    }
-
-    emitStart(0, removeList.size());
-
-    int progress = 0;
-    for(auto path : removeList)
-    {
-        emitProcess(QString(tr("%1 file(s) remove...")).arg(progress + 1));
-
-        QFileInfo fileInfo(path);
-        if(fileInfo.isDir())
+        if(QFileInfo(path).isDir())
         {
             emitOutputConsole(QString("%1 ... ").arg(path));
             qDebug() << "remove dir  :" << path;
 
-            if(!QDir().rmdir(path))
+            if(!QDir(path).removeRecursively())
             {
                 // ディレクトリ削除失敗
                 emitOutputConsole(tr("Failed remove directory.\n"));
@@ -104,41 +84,6 @@ void RemoveWorker::run()
     qDebug() << "finish RemoveWorker::run()";
 
     emitFinished(static_cast<int>(Result::Success));
-}
-
-int RemoveWorker::makeList(const QString& path, QList<QString>& removeList)
-{
-    if(isAborted())
-    {
-        return static_cast<int>(Result::Abort);
-    }
-
-    QFileInfo fileInfo(path);
-
-    if(fileInfo.isDir())
-    {
-        // 再帰処理でディレクトリ内のエントリをリストに追加する
-        QDir          removeDir(path);
-        QFileInfoList childFileInfoList = removeDir.entryInfoList(QDir::AllEntries |
-                                                                  QDir::AccessMask |
-                                                                  QDir::AllDirs |
-                                                                  QDir::NoDotAndDotDot,
-                                                                  QDir::DirsFirst);
-
-        for(auto childFileInfo : childFileInfoList)
-        {
-            int ret = makeList(childFileInfo.absoluteFilePath(), removeList);
-            if(isError(ret))
-            {
-                return ret;
-            }
-        }
-    }
-
-    removeList.push_back(fileInfo.absoluteFilePath());
-    qDebug() << fileInfo.absoluteFilePath();
-
-    return static_cast<int>(Result::Success);
 }
 
 }           // namespace Farman
