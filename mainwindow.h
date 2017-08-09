@@ -38,10 +38,9 @@ private Q_SLOTS:
     void on_actionSortSettings_triggered();
     void on_actionFilterSettings_triggered();
     void on_actionCopy_triggered();
-
     void on_actionMove_triggered();
-
     void on_actionRemove_triggered();
+    void on_actionMakeDirectory_triggered();
 
 private:
     static MainWindow* s_instance;

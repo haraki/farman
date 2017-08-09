@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QInputDialog>
 #include "doublefolderpanel.h"
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
@@ -31,6 +32,11 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
             SIGNAL(statusChanged(const QString)),
             MainWindow::getInstance(),
             SLOT(onStatusChanged(const QString)));
+
+    connect(this,
+            SIGNAL(outputConsole(const QString)),
+            MainWindow::getInstance(),
+            SLOT(onOutputConsole(const QString)));
 
     QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);
@@ -278,6 +284,17 @@ void DoubleFolderPanel::onRemove()
     }
 }
 
+void DoubleFolderPanel::onMakeDirectory()
+{
+    qDebug() << "DoubleFolderPanel::onMakeDirectory()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        makeDirectory(activeForm->getCurrentDirPath());
+    }
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
@@ -331,6 +348,11 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 {
     emit statusChanged(statusString);
+}
+
+void DoubleFolderPanel::emitOutputConsole(const QString& consoleString)
+{
+    emit outputConsole(consoleString);
 }
 
 void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
@@ -462,6 +484,45 @@ void DoubleFolderPanel::removeFile(const QStringList& paths)
 
         return;
     }
+}
+
+void DoubleFolderPanel::makeDirectory(const QString& path)
+{
+    bool ok = false;
+    QString name = QInputDialog::getText(this->parentWidget(),
+                                         tr("Make directory"),
+                                         tr("Directory name:"),
+                                         QLineEdit::Normal, QString(), &ok);
+
+    if(!ok || name.isEmpty())
+    {
+        // キャンセル
+        return;
+    }
+
+    QDir dir(path);
+    QString absPath = dir.absoluteFilePath(name);
+
+    emitOutputConsole(QString("%1 ... ").arg(absPath));
+    qDebug() << absPath;
+
+    if(dir.exists(name))
+    {
+        // 既に存在しているので何もしない
+        emitOutputConsole(tr("is exists.\n"));
+        return;
+    }
+
+    if(!dir.mkdir(name))
+    {
+        // ディレクトリ作成失敗
+        emitOutputConsole(tr("Failed make directory.\n"));
+        return;
+    }
+
+    emitOutputConsole(tr("Made directory.\n"));
+
+    refresh();
 }
 
 void DoubleFolderPanel::refresh()

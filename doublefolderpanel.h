@@ -33,9 +33,11 @@ public:
     void onCopy();
     void onMove();
     void onRemove();
+    void onMakeDirectory();
 
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
+    void outputConsole(const QString& consoleString);
 
 protected Q_SLOTS:
     void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
@@ -59,8 +61,11 @@ private:
     void copyFile(const QStringList& srcPaths, const QString& dstPath);
     void moveFile(const QStringList& srcPaths, const QString& dstPath);
     void removeFile(const QStringList& paths);
+    void makeDirectory(const QString& path);
 
     void refresh();
+
+    void emitOutputConsole(const QString& consoleString);
 
     Ui::DoubleFolderPanel *ui;
 

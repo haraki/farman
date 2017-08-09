@@ -162,9 +162,7 @@ void MainWindow::on_actionMove_triggered()
     }
 }
 
-}           // namespace Farman
-
-void Farman::MainWindow::on_actionRemove_triggered()
+void MainWindow::on_actionRemove_triggered()
 {
     qDebug() << "MainWindow::on_actionRemove_triggered()";
 
@@ -174,3 +172,16 @@ void Farman::MainWindow::on_actionRemove_triggered()
         doubleFolderPanel->onRemove();
     }
 }
+
+void MainWindow::on_actionMakeDirectory_triggered()
+{
+    qDebug() << "MainWindow::on_actionMakeDirectory_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onMakeDirectory();
+    }
+}
+
+}           // namespace Farman
