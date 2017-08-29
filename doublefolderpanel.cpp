@@ -13,6 +13,7 @@
 #include "removeworker.h"
 #include "overwritedialog.h"
 #include "workingdialog.h"
+#include "renamedialog.h"
 #include "mainwindow.h"
 
 namespace Farman
@@ -295,6 +296,17 @@ void DoubleFolderPanel::onMakeDirectory()
     }
 }
 
+void DoubleFolderPanel::onRename()
+{
+    qDebug() << "DoubleFolderPanel::onRename()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        renameFile(activeForm->getCurrentDirPath(), activeForm->getCurrentFileName());
+    }
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
@@ -521,6 +533,32 @@ void DoubleFolderPanel::makeDirectory(const QString& path)
     }
 
     emitOutputConsole(tr("Made directory.\n"));
+
+    refresh();
+}
+
+void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
+{
+    RenameDialog dialog(name);
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    QString newFileName = dialog.getNewFileName();
+    if(newFileName.isEmpty() || name == newFileName)
+    {
+        return;
+    }
+
+    QDir dir(path);
+    if(!dir.rename(name, newFileName))
+    {
+        return;
+    }
+
+    emitOutputConsole(QString("%1 >> %2 ... ").arg(name).arg(newFileName));
+    emitOutputConsole(tr("Renamed.\n"));
 
     refresh();
 }

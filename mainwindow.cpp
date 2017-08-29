@@ -184,4 +184,15 @@ void MainWindow::on_actionMakeDirectory_triggered()
     }
 }
 
+void MainWindow::on_actionRename_triggered()
+{
+    qDebug() << "MainWindow::on_actionRename_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onRename();
+    }
+}
+
 }           // namespace Farman

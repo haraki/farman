@@ -56,6 +56,7 @@
     <addaction name="actionMove"/>
     <addaction name="actionRemove"/>
     <addaction name="actionMakeDirectory"/>
+    <addaction name="actionRename"/>
    </widget>
    <addaction name="viewMenu"/>
    <addaction name="menuOperation"/>
@@ -157,6 +158,14 @@
    </property>
    <property name="shortcut">
     <string>K</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="text">
+    <string>Rename...</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
    </property>
   </action>
  </widget>

@@ -41,6 +41,7 @@ private Q_SLOTS:
     void on_actionMove_triggered();
     void on_actionRemove_triggered();
     void on_actionMakeDirectory_triggered();
+    void on_actionRename_triggered();
 
 private:
     static MainWindow* s_instance;

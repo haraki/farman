@@ -34,6 +34,7 @@ public:
     void onMove();
     void onRemove();
     void onMakeDirectory();
+    void onRename();
 
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
@@ -62,6 +63,7 @@ private:
     void moveFile(const QStringList& srcPaths, const QString& dstPath);
     void removeFile(const QStringList& paths);
     void makeDirectory(const QString& path);
+    void renameFile(const QString& path, const QString& name);
 
     void refresh();
 
