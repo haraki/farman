@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     worker.cpp \
     copyworker.cpp \
     overwritedialog.cpp \
-    removeworker.cpp
+    removeworker.cpp \
+    renamedialog.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     worker.h \
     copyworker.h \
     overwritedialog.h \
-    removeworker.h
+    removeworker.h \
+    renamedialog.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
@@ -50,4 +52,5 @@ FORMS    += mainwindow.ui \
     sortdialog.ui \
     filterdialog.ui \
     workingdialog.ui \
-    overwritedialog.ui
+    overwritedialog.ui \
+    renamedialog.ui
