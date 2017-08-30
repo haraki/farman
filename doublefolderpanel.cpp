@@ -303,7 +303,10 @@ void DoubleFolderPanel::onRename()
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR)
     {
-        renameFile(activeForm->getCurrentDirPath(), activeForm->getCurrentFileName());
+        if(activeForm->getCurrentFileName() != "..")
+        {
+            renameFile(activeForm->getCurrentDirPath(), activeForm->getCurrentFileName());
+        }
     }
 }
 
