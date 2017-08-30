@@ -8,7 +8,6 @@
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
 #include "folderview.h"
-#include "foldermodel.h"
 #include "copyworker.h"
 #include "removeworker.h"
 #include "overwritedialog.h"
@@ -575,13 +574,13 @@ void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
 void DoubleFolderPanel::refresh()
 {
     FolderForm* activeFolderForm = getActiveFolderForm();
-    if(activeFolderForm != nullptr)
+    if(activeFolderForm != Q_NULLPTR)
     {
         activeFolderForm->refresh();
     }
 
     FolderForm* inactiveFolderForm = getInactiveFolderForm();
-    if(inactiveFolderForm != nullptr)
+    if(inactiveFolderForm != Q_NULLPTR)
     {
         inactiveFolderForm->refresh();
     }
