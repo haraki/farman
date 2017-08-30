@@ -564,6 +564,12 @@ void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
     emitOutputConsole(tr("Renamed.\n"));
 
     refresh();
+
+    FolderForm* activeFolderForm = getActiveFolderForm();
+    if(activeFolderForm != Q_NULLPTR)
+    {
+        activeFolderForm->setCursor(newFileName);
+    }
 }
 
 void DoubleFolderPanel::refresh()

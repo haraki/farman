@@ -36,6 +36,8 @@ public:
 
     QList<QFileInfo> getSelectedFileInfoList();
 
+    void setCursor(const QString& fileName);
+
     void onGoToParent();
     void refresh();
 

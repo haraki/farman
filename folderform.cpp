@@ -270,6 +270,18 @@ void FolderForm::onSelect()
     }
 }
 
+void FolderForm::setCursor(const QString& fileName)
+{
+    const QString currentPath = getCurrentDirPath();
+
+    QModelIndex newIndex = m_folderModel->index(QFileInfo(currentPath, fileName).absoluteFilePath());
+    if(newIndex.isValid())
+    {
+        ui->folderView->setCurrentIndex(newIndex);
+        ui->folderView->scrollTo(newIndex);
+    }
+}
+
 void FolderForm::onGoToParent()
 {
     const QModelIndex currentDirIndex = ui->folderView->rootIndex();
