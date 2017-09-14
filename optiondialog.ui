@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OptionDialog</class>
+ <widget class="QDialog" name="OptionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>240</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="sizeAtStartupGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>171</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Size at startup</string>
+   </property>
+   <widget class="QRadioButton" name="sizeDefaultRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Default</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="sizeSameRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Same as last time</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="sizeFixedRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fixed</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="sizeWidthLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>90</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sizeWidthLabel">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>94</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Width:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="sizeHeightLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>120</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sizeHeightLabel">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>122</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Height:</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="positionAtStartupGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>20</y>
+     <width>171</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Position at startup</string>
+   </property>
+   <widget class="QLabel" name="positionYLabel">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>122</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Y:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="positionXLabel">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>94</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>X:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="positionXLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>90</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="positionSameRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Same as last time</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="positionYLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>120</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="positionDefaultRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Default</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="positionFixedRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fixed</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>OptionDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>OptionDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
