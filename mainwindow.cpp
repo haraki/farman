@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initialize()
 {
-    ViewMode viewMode = static_cast<ViewMode>(Settings::getInstance()->value("main/viewMode", static_cast<int>(ViewMode::Double)).toInt());
+    ViewMode viewMode = Settings::getInstance()->getViewMode();
 
     QString path = QDir::currentPath();
     qDebug() << path;
@@ -64,8 +64,10 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if(doubleFolderPanel != Q_NULLPTR)
     {
         ViewMode viewMode = doubleFolderPanel->getViewMode();
-        Settings::getInstance()->setValue("main/viewMode", static_cast<int>(viewMode));
+        Settings::getInstance()->setViewMode(viewMode);
     }
+
+    Settings::getInstance()->flush();
 
     QMainWindow::closeEvent(event);
 }

@@ -11,7 +11,9 @@ enum class ViewMode : int
     Single = 0,
     Double = 1,
 
-    ViewModeNum
+    ViewModeNum,
+
+    Default = ViewMode::Double,
 };
 
 const QDir::Filters DEFAULT_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
@@ -25,9 +27,9 @@ enum class OverwriteMethodType : int
     Skip = 2,
     Rename = 3,
 
-    Default = OverwriteMethodType::Overwrite,
+    OverwriteMethodTypeNum,
 
-    ConflictMethodTypeNum
+    Default = OverwriteMethodType::Overwrite,
 };
 
 }
