@@ -7,6 +7,7 @@
 #include "doublefolderpanel.h"
 #include "sortdialog.h"
 #include "filterdialog.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -35,12 +36,19 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     ui->setupUi(this);
 }
 
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
 void MainWindow::initialize()
 {
+    ViewMode viewMode = static_cast<ViewMode>(Settings::getInstance()->value("main/viewMode", static_cast<int>(ViewMode::Double)).toInt());
+
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ViewMode::Double,
+    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(viewMode,
                                                                  path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
                                                                  path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
                                                                  ui->mainWidget);
@@ -50,9 +58,16 @@ void MainWindow::initialize()
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
 }
 
-MainWindow::~MainWindow()
+void MainWindow::closeEvent(QCloseEvent* event)
 {
-    delete ui;
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        ViewMode viewMode = doubleFolderPanel->getViewMode();
+        Settings::getInstance()->setValue("main/viewMode", static_cast<int>(viewMode));
+    }
+
+    QMainWindow::closeEvent(event);
 }
 
 void MainWindow::onStatusChanged(const QString& statusString)

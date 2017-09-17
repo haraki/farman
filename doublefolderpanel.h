@@ -27,6 +27,8 @@ public:
                                QWidget* parent = Q_NULLPTR);
     ~DoubleFolderPanel();
     void changeViewMode(ViewMode viewMode);
+    ViewMode getViewMode() const;
+
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
 

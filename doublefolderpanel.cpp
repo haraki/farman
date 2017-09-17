@@ -105,11 +105,6 @@ DoubleFolderPanel::~DoubleFolderPanel()
 
 void DoubleFolderPanel::changeViewMode(ViewMode viewMode)
 {
-    if(viewMode == m_viewMode)
-    {
-        return;
-    }
-
     m_viewMode = viewMode;
 
     switch(viewMode)
@@ -137,6 +132,11 @@ void DoubleFolderPanel::changeViewMode(ViewMode viewMode)
     default:
         break;
     }
+}
+
+ViewMode DoubleFolderPanel::getViewMode() const
+{
+    return m_viewMode;
 }
 
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)

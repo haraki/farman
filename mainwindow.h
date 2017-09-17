@@ -31,6 +31,7 @@ private:
     ~MainWindow();
 
     void initialize();
+    void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void on_actionSingleView_triggered();
