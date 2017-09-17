@@ -6,6 +6,7 @@
 #include "folderform.h"
 #include "doublefolderpanel.h"
 #include "settings.h"
+#include "optiondialog.h"
 
 namespace Farman
 {
@@ -166,6 +167,14 @@ void MainWindow::on_actionRename_triggered()
     if(doubleFolderPanel != Q_NULLPTR)
     {
         doubleFolderPanel->onRename();
+    }
+}
+
+void MainWindow::on_actionOption_triggered()
+{
+    OptionDialog dialog(this);
+    if(dialog.exec())
+    {
     }
 }
 

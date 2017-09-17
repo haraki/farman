@@ -58,8 +58,15 @@
     <addaction name="actionMakeDirectory"/>
     <addaction name="actionRename"/>
    </widget>
+   <widget class="QMenu" name="menuOption">
+    <property name="title">
+     <string>Option</string>
+    </property>
+    <addaction name="actionOption"/>
+   </widget>
    <addaction name="viewMenu"/>
    <addaction name="menuOperation"/>
+   <addaction name="menuOption"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="consoleDockWidget">
@@ -166,6 +173,11 @@
    </property>
    <property name="shortcut">
     <string>R</string>
+   </property>
+  </action>
+  <action name="actionOption">
+   <property name="text">
+    <string>Option...</string>
    </property>
   </action>
  </widget>
