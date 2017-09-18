@@ -43,13 +43,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::initialize()
 {
-    ViewMode viewMode = Settings::getInstance()->getViewMode();
-
     QString path = QDir::currentPath();
     qDebug() << path;
 
-    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(viewMode,
-                                                                 path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
+    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
                                                                  path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
                                                                  ui->mainWidget);
 
@@ -60,13 +57,6 @@ void MainWindow::initialize()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        ViewMode viewMode = doubleFolderPanel->getViewMode();
-        Settings::getInstance()->setViewMode(viewMode);
-    }
-
     Settings::getInstance()->flush();
 
     QMainWindow::closeEvent(event);
@@ -94,7 +84,7 @@ void MainWindow::on_actionSingleView_triggered()
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
     {
-        doubleFolderPanel->changeViewMode(ViewMode::Single);
+        doubleFolderPanel->onSetViewMode(ViewMode::Single);
     }
 }
 
@@ -105,7 +95,7 @@ void MainWindow::on_actionDoubleView_triggered()
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
     {
-        doubleFolderPanel->changeViewMode(ViewMode::Double);
+        doubleFolderPanel->onSetViewMode(ViewMode::Double);
     }
 }
 

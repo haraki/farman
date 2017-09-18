@@ -14,19 +14,21 @@
 #include "workingdialog.h"
 #include "renamedialog.h"
 #include "mainwindow.h"
+#include "settings.h"
 
 namespace Farman
 {
 
-DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
-                                     QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
+DoubleFolderPanel::DoubleFolderPanel(QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
                                      QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
                                      QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
-    , m_viewMode(viewMode)
+    , m_viewMode(ViewMode::Default)
 {
     ui->setupUi(this);
+
+    ViewMode viewMode = Settings::getInstance()->getViewMode();
 
     connect(this,
             SIGNAL(statusChanged(const QString)),
@@ -95,48 +97,12 @@ DoubleFolderPanel::DoubleFolderPanel(ViewMode viewMode,
 
     setActiveFolderForm("l_folderForm");
 
-    changeViewMode(viewMode);
+    onSetViewMode(viewMode);
 }
 
 DoubleFolderPanel::~DoubleFolderPanel()
 {
     delete ui;
-}
-
-void DoubleFolderPanel::changeViewMode(ViewMode viewMode)
-{
-    m_viewMode = viewMode;
-
-    switch(viewMode)
-    {
-    case ViewMode::Single:
-        if(getActiveFolderForm()->objectName() == "l_folderForm")
-        {
-            ui->leftPanel->setVisible(true);
-            ui->rightPanel->setVisible(false);
-        }
-        else
-        {
-            ui->leftPanel->setVisible(false);
-            ui->rightPanel->setVisible(true);
-        }
-
-        break;
-
-    case ViewMode::Double:
-        ui->leftPanel->setVisible(true);
-        ui->rightPanel->setVisible(true);
-
-        break;
-
-    default:
-        break;
-    }
-}
-
-ViewMode DoubleFolderPanel::getViewMode() const
-{
-    return m_viewMode;
 }
 
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
@@ -202,6 +168,38 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     }
 
     return ret;
+}
+
+void DoubleFolderPanel::onSetViewMode(ViewMode viewMode)
+{
+    m_viewMode = viewMode;
+    Settings::getInstance()->setViewMode(viewMode);
+
+    switch(viewMode)
+    {
+    case ViewMode::Single:
+        if(getActiveFolderForm()->objectName() == "l_folderForm")
+        {
+            ui->leftPanel->setVisible(true);
+            ui->rightPanel->setVisible(false);
+        }
+        else
+        {
+            ui->leftPanel->setVisible(false);
+            ui->rightPanel->setVisible(true);
+        }
+
+        break;
+
+    case ViewMode::Double:
+        ui->leftPanel->setVisible(true);
+        ui->rightPanel->setVisible(true);
+
+        break;
+
+    default:
+        break;
+    }
 }
 
 void DoubleFolderPanel::onCopy()

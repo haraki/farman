@@ -21,17 +21,15 @@ class DoubleFolderPanel : public QWidget
     Q_OBJECT
 
 public:
-    explicit DoubleFolderPanel(ViewMode viewMode,
-                               QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
+    explicit DoubleFolderPanel(QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
                                QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
                                QWidget* parent = Q_NULLPTR);
     ~DoubleFolderPanel();
-    void changeViewMode(ViewMode viewMode);
-    ViewMode getViewMode() const;
 
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
 
+    void onSetViewMode(ViewMode viewMode);
     void onCopy();
     void onMove();
     void onRemove();
