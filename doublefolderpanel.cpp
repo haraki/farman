@@ -10,6 +10,8 @@
 #include "folderview.h"
 #include "copyworker.h"
 #include "removeworker.h"
+#include "sortdialog.h"
+#include "filterdialog.h"
 #include "overwritedialog.h"
 #include "workingdialog.h"
 #include "renamedialog.h"
@@ -199,6 +201,38 @@ void DoubleFolderPanel::onSetViewMode(ViewMode viewMode)
 
     default:
         break;
+    }
+}
+
+void DoubleFolderPanel::onChangeSortSettings()
+{
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        QDir::SortFlags sortFlags = activeForm->getSortFlags();
+
+        SortDialog dialog(sortFlags, this);
+        if(dialog.exec())
+        {
+            sortFlags = dialog.getSortFlags();
+            activeForm->setSortFlags(sortFlags);
+        }
+    }
+}
+
+void DoubleFolderPanel::onChangeFilterSettings()
+{
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        QDir::Filters filterFlags = activeForm->getFilterFlags();
+
+        FilterDialog dialog(filterFlags, this);
+        if(dialog.exec())
+        {
+            filterFlags = dialog.getFilterFlags();
+            activeForm->setFilterFlags(filterFlags);
+        }
     }
 }
 

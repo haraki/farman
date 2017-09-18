@@ -30,6 +30,8 @@ public:
     FolderForm* getInactiveFolderForm();
 
     void onSetViewMode(ViewMode viewMode);
+    void onChangeSortSettings();
+    void onChangeFilterSettings();
     void onCopy();
     void onMove();
     void onRemove();
