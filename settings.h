@@ -28,8 +28,6 @@ private:
     static Settings* s_instance;
 
     ViewMode m_viewMode = ViewMode::Double;
-    const QString m_viewModeKey = "main/viewMode";
-
 };
 
 }

@@ -25,12 +25,16 @@ Settings::Settings()
 
 void Settings::initialize()
 {
-    m_viewMode = static_cast<ViewMode>(Settings::getInstance()->value(m_viewModeKey, static_cast<int>(ViewMode::Default)).toInt());
+    QString viewModeValue = Settings::getInstance()->value("main/viewMode", "double").toString();
+    m_viewMode = (viewModeValue == "single") ? ViewMode::Single
+                                             : ViewMode::Double;
 }
 
 void Settings::flush()
 {
-    Settings::getInstance()->setValue(m_viewModeKey, static_cast<int>(m_viewMode));
+    QString viewModeValue = (m_viewMode == ViewMode::Single) ? "single"
+                                                             : "double";
+    Settings::getInstance()->setValue("main/viewMode", viewModeValue);
 }
 
 }
