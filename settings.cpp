@@ -34,6 +34,12 @@ void Settings::initialize()
 
     // Right side Sort settings
     m_rightSortSettings = getSortSettings("right");
+
+    // Left side Filter settings
+    m_leftFilterSettings = getFilterSettings("left");
+
+    // Right side Filter settings
+    m_rightFilterSettings = getFilterSettings("right");
 }
 
 void Settings::flush()
@@ -48,6 +54,12 @@ void Settings::flush()
 
     // Right side Sort settings
     setSortSettings(m_rightSortSettings, "right");
+
+    // Left side Filter settings
+    setFilterSettings(m_leftFilterSettings, "left");
+
+    // Right side Filter settings
+    setFilterSettings(m_rightFilterSettings, "right");
 }
 
 QDir::SortFlags Settings::getSortSettings(const QString& prefix)
@@ -98,5 +110,30 @@ void Settings::setSortSettings(QDir::SortFlags sortSettings, const QString& pref
     Settings::getInstance()->setValue("main/" + prefix + "SortCase", sortCaseValue);
 }
 
+QDir::Filters Settings::getFilterSettings(const QString& prefix)
+{
+    QDir::Filters ret = FIX_FILTER_FLAGS;
+
+    QString filterHiddenValue = Settings::getInstance()->value("main/" + prefix + "FilterHidden", "false").toString();
+    ret |= (filterHiddenValue == "true") ? QDir::Filter::Hidden :
+                                           static_cast<QDir::Filters>(0);
+
+    QString filterSystemValue = Settings::getInstance()->value("main/" + prefix + "FilterSystem", "false").toString();
+    ret |= (filterSystemValue == "true") ? QDir::Filter::System :
+                                           static_cast<QDir::Filters>(0);
+
+    return ret;
+}
+
+void Settings::setFilterSettings(QDir::Filters filterSettings, const QString& prefix)
+{
+    QString filterHiddenValue = (filterSettings & QDir::Filter::Hidden) ? "true" :
+                                                                          "false";
+    Settings::getInstance()->setValue("main/" + prefix + "FilterHidden", filterHiddenValue);
+
+    QString filterSystemValue = (filterSettings & QDir::Filter::System) ? "true" :
+                                                                          "false";
+    Settings::getInstance()->setValue("main/" + prefix + "FilterSystem", filterSystemValue);
+}
 
 }
