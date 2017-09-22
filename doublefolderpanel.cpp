@@ -21,9 +21,7 @@
 namespace Farman
 {
 
-DoubleFolderPanel::DoubleFolderPanel(QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
-                                     QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
-                                     QWidget* parent/* = Q_NULLPTR*/)
+DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
     , m_viewMode(ViewMode::Default)
@@ -31,6 +29,14 @@ DoubleFolderPanel::DoubleFolderPanel(QString& l_path, QDir::Filters l_filterFlag
     ui->setupUi(this);
 
     ViewMode viewMode = Settings::getInstance()->getViewMode();
+
+    QString l_path = QDir::currentPath();
+    QString r_path = QDir::currentPath();
+
+    QDir::SortFlags l_sortFlags = Settings::getInstance()->getLeftSortSettings();
+    QDir::SortFlags r_sortFlags = Settings::getInstance()->getRightSortSettings();
+    QDir::Filters l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
+    QDir::Filters r_filterFlags = Settings::getInstance()->getRightFilterSettings();
 
     connect(this,
             SIGNAL(statusChanged(const QString)),

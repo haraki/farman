@@ -41,12 +41,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initialize()
 {
-    QString path = QDir::currentPath();
-    qDebug() << path;
-
-    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
-                                                                 path, DEFAULT_FILTER_FLAGS, DEFAULT_SORT_FLAGS,
-                                                                 ui->mainWidget);
+    DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ui->mainWidget);
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 

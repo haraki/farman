@@ -21,9 +21,7 @@ class DoubleFolderPanel : public QWidget
     Q_OBJECT
 
 public:
-    explicit DoubleFolderPanel(QString& l_path, QDir::Filters l_filterFlags, QDir::SortFlags l_sortFlags,
-                               QString& r_path, QDir::Filters r_filterFlags, QDir::SortFlags r_sortFlags,
-                               QWidget* parent = Q_NULLPTR);
+    explicit DoubleFolderPanel(QWidget* parent = Q_NULLPTR);
     ~DoubleFolderPanel();
 
     FolderForm* getActiveFolderForm();
