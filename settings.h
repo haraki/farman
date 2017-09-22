@@ -20,14 +20,38 @@ public:
     ViewMode getViewMode() { return m_viewMode; }
     void setViewMode(ViewMode viewMode) { m_viewMode = viewMode; }
 
+    QDir::SortFlags getLeftSortSettings() { return m_leftSortSettings; }
+    void setLeftSortSettings(QDir::SortFlags leftSortSettings) { m_leftSortSettings = leftSortSettings; }
+
+    QDir::SortFlags getRightSortSettings() { return m_rightSortSettings; }
+    void setRightSortSettings(QDir::SortFlags rightSortSettings) { m_rightSortSettings = rightSortSettings; }
+
+    QDir::Filters getLeftFilterSettings() { return m_leftFilterSettings; }
+    void setLeftFilterSettings(QDir::Filters leftFilterSettings) { m_leftFilterSettings = leftFilterSettings; }
+
+    QDir::Filters getRightFilterSettings() { return m_rightFilterSettings; }
+    void setRightFilterSettings(QDir::Filters rightFilterSettings) { m_rightFilterSettings = rightFilterSettings; }
+
 private:
     Settings();
 
     void initialize();
 
+    QDir::SortFlags getSortSettings(const QString& prefix);
+    void setSortSettings(QDir::SortFlags sortSettings, const QString& prefix);
+
+    QDir::Filters getFilterSettings(const QString& prefix);
+    void setFilterSettings(QDir::Filters filterSettings, const QString& prefix);
+
     static Settings* s_instance;
 
     ViewMode m_viewMode = ViewMode::Double;
+
+    QDir::SortFlags m_leftSortSettings = DEFAULT_SORT_FLAGS;
+    QDir::SortFlags m_rightSortSettings = DEFAULT_SORT_FLAGS;
+
+    QDir::Filters m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
+    QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
 };
 
 }
