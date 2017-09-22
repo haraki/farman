@@ -222,6 +222,14 @@ void DoubleFolderPanel::onChangeSortSettings()
         {
             sortFlags = dialog.getSortFlags();
             activeForm->setSortFlags(sortFlags);
+            if(activeForm->objectName() == "l_folderForm")
+            {
+                Settings::getInstance()->setLeftSortSettings(sortFlags);
+            }
+            else
+            {
+                Settings::getInstance()->setRightSortSettings(sortFlags);
+            }
         }
     }
 }
@@ -238,6 +246,14 @@ void DoubleFolderPanel::onChangeFilterSettings()
         {
             filterFlags = dialog.getFilterFlags();
             activeForm->setFilterFlags(filterFlags);
+            if(activeForm->objectName() == "l_folderForm")
+            {
+                Settings::getInstance()->setLeftFilterSettings(filterFlags);
+            }
+            else
+            {
+                Settings::getInstance()->setRightFilterSettings(filterFlags);
+            }
         }
     }
 }
