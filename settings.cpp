@@ -1,4 +1,5 @@
 ﻿#include "settings.h"
+#include <QDebug>
 
 namespace Farman
 {
@@ -25,7 +26,22 @@ Settings::Settings()
 
 void Settings::initialize()
 {
-    // ViewMode
+    // Size at startup
+    QString sizeAtStartupTypeValue = Settings::getInstance()->value("main/sizeAtStartupType", "default").toString();
+    m_sizeAtStartupType = (sizeAtStartupTypeValue == "lastTime") ? SizeAtStartup::LastTime :
+                          (sizeAtStartupTypeValue == "fixed") ? SizeAtStartup::Fixed :
+                                                                SizeAtStartup::Default;
+    m_sizeAtStartup = Settings::getInstance()->value("main/sizeAtStartup", QSize(0, 0)).toSize();
+    qDebug() << "sizeatstartup: " << m_sizeAtStartup.width() << ", " << m_sizeAtStartup.height();
+
+    // Position at startup
+    QString positionAtStartupTypeValue = Settings::getInstance()->value("main/positionAtStartupType", "default").toString();
+    m_positionAtStartupType = (positionAtStartupTypeValue == "lastTime") ? PositionAtStartup::LastTime :
+                              (positionAtStartupTypeValue == "fixed") ? PositionAtStartup::Fixed :
+                                                                        PositionAtStartup::Default;
+    m_positionAtStartup = Settings::getInstance()->value("main/positionAtStartup", QPoint(0, 0)).toPoint();
+
+    // View mode
     QString viewModeValue = Settings::getInstance()->value("main/viewMode", "double").toString();
     m_viewMode = (viewModeValue == "single") ? ViewMode::Single : ViewMode::Double;
 
@@ -44,7 +60,21 @@ void Settings::initialize()
 
 void Settings::flush()
 {
-    // ViewMode
+    // Size at startup
+    QString sizeAtStartupTypeValue = (m_sizeAtStartupType == SizeAtStartup::LastTime) ? "lastTime" :
+                                     (m_sizeAtStartupType == SizeAtStartup::Fixed) ? "fixed" :
+                                                                                     "default";
+    Settings::getInstance()->setValue("main/sizeAtStartupType", sizeAtStartupTypeValue);
+    Settings::getInstance()->setValue("main/sizeAtStartup", m_sizeAtStartup);
+
+    // Position at startup
+    QString positionAtStartupTypeValue = (m_positionAtStartupType == PositionAtStartup::LastTime) ? "lastTime" :
+                                         (m_positionAtStartupType == PositionAtStartup::Fixed) ? "fixed" :
+                                                                                                 "default";
+    Settings::getInstance()->setValue("main/positionAtStartupType", positionAtStartupTypeValue);
+    Settings::getInstance()->setValue("main/positionAtStartup", m_positionAtStartup);
+
+    // View mode
     QString viewModeValue = (m_viewMode == ViewMode::Single) ? "single"
                                                              : "double";
     Settings::getInstance()->setValue("main/viewMode", viewModeValue);

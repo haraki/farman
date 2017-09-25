@@ -2,6 +2,8 @@
 #define SETTINGS_H
 
 #include <QSettings>
+#include <QPoint>
+#include <QSize>
 #include "types.h"
 
 namespace Farman
@@ -16,6 +18,18 @@ public:
     static Settings* getInstance();
 
     void flush();
+
+    SizeAtStartup getSizeAtStartupType() { return m_sizeAtStartupType; }
+    void setSizeAtStartupType(SizeAtStartup sizeAtStartupType) { m_sizeAtStartupType = sizeAtStartupType; }
+
+    QSize getSizeAtStartup() { return m_sizeAtStartup; }
+    void setSizeAtStartup(const QSize& sizeAtStartup) { m_sizeAtStartup = sizeAtStartup; }
+
+    PositionAtStartup getPositionAtStartupType() { return m_positionAtStartupType; }
+    void setPositionAtStartupType(PositionAtStartup positionAtStartupType) { m_positionAtStartupType = positionAtStartupType; }
+
+    QPoint getPositionAtStartup() { return m_positionAtStartup; }
+    void setPositionAtStartup(const QPoint& positionAtStartup) { m_positionAtStartup = positionAtStartup; }
 
     ViewMode getViewMode() { return m_viewMode; }
     void setViewMode(ViewMode viewMode) { m_viewMode = viewMode; }
@@ -44,6 +58,12 @@ private:
     void setFilterSettings(QDir::Filters filterSettings, const QString& prefix);
 
     static Settings* s_instance;
+
+    SizeAtStartup m_sizeAtStartupType = SizeAtStartup::Default;
+    QSize m_sizeAtStartup = QSize(0, 0);
+
+    PositionAtStartup m_positionAtStartupType = PositionAtStartup::Default;
+    QPoint m_positionAtStartup = QPoint(0, 0);
 
     ViewMode m_viewMode = ViewMode::Double;
 

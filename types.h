@@ -6,6 +6,20 @@
 namespace Farman
 {
 
+enum class SizeAtStartup : int
+{
+    Default = 0,
+    LastTime = 1,
+    Fixed = 2,
+};
+
+enum class PositionAtStartup : int
+{
+    Default = 0,
+    LastTime = 1,
+    Fixed = 2,
+};
+
 enum class ViewMode : int
 {
     Single = 0,
