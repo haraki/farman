@@ -54,7 +54,7 @@
      <string>Default</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="sizeSameRadioButton">
+   <widget class="QRadioButton" name="sizeLastTimeRadioButton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -175,7 +175,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QRadioButton" name="positionSameRadioButton">
+   <widget class="QRadioButton" name="positionLastTimeRadioButton">
     <property name="geometry">
      <rect>
       <x>10</x>
