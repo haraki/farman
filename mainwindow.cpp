@@ -51,6 +51,18 @@ void MainWindow::initialize()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    SizeAtStartup sizeType = Settings::getInstance()->getSizeAtStartupType();
+    if(sizeType == SizeAtStartup::LastTime)
+    {
+        Settings::getInstance()->setSizeAtStartup(this->size());
+    }
+
+    PositionAtStartup positionType = Settings::getInstance()->getPositionAtStartupType();
+    if(positionType == PositionAtStartup::LastTime)
+    {
+        Settings::getInstance()->setPositionAtStartup(this->pos());
+    }
+
     Settings::getInstance()->flush();
 
     QMainWindow::closeEvent(event);
