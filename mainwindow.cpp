@@ -46,6 +46,20 @@ void MainWindow::initialize()
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
+    SizeAtStartup sizeType = Settings::getInstance()->getSizeAtStartupType();
+    if(sizeType == SizeAtStartup::Fixed || sizeType == SizeAtStartup::LastTime)
+    {
+        QSize size = Settings::getInstance()->getSizeAtStartup();
+        this->resize(size);
+    }
+
+    PositionAtStartup posType = Settings::getInstance()->getPositionAtStartupType();
+    if(posType == PositionAtStartup::Fixed || posType == PositionAtStartup::LastTime)
+    {
+        QPoint pos = Settings::getInstance()->getPositionAtStartup();
+        this->move(pos);
+    }
+
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
 }
 
