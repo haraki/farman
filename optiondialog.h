@@ -31,6 +31,8 @@ private slots:
 
     void on_positionFixedRadioButton_clicked();
 
+    void on_buttonBox_accepted();
+
 private:
     Ui::OptionDialog *ui;
 };

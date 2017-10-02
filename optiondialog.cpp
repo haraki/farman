@@ -27,8 +27,6 @@ OptionDialog::OptionDialog(QWidget *parent) :
         ui->sizeWidthLineEdit->setEnabled(true);
         ui->sizeHeightLabel->setEnabled(true);
         ui->sizeHeightLineEdit->setEnabled(true);
-
-        size = Settings::getInstance()->getSizeAtStartup();
     }
     else
     {
@@ -64,8 +62,6 @@ OptionDialog::OptionDialog(QWidget *parent) :
         ui->positionXLineEdit->setEnabled(true);
         ui->positionYLabel->setEnabled(true);
         ui->positionYLineEdit->setEnabled(true);
-
-        position = Settings::getInstance()->getPositionAtStartup();
     }
     else
     {
@@ -139,6 +135,41 @@ void OptionDialog::on_positionFixedRadioButton_clicked()
     ui->positionXLineEdit->setEnabled(true);
     ui->positionYLabel->setEnabled(true);
     ui->positionYLineEdit->setEnabled(true);
+}
+
+void OptionDialog::on_buttonBox_accepted()
+{
+    if(ui->sizeFixedRadioButton->isChecked())
+    {
+        Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Fixed);
+
+        QSize size = QSize(ui->sizeWidthLineEdit->text().toInt(), ui->sizeHeightLineEdit->text().toInt());
+        Settings::getInstance()->setSizeAtStartup(size);
+    }
+    else if(ui->sizeLastTimeRadioButton->isChecked())
+    {
+        Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::LastTime);
+    }
+    else
+    {
+        Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Default);
+    }
+
+    if(ui->positionFixedRadioButton->isChecked())
+    {
+        Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::Fixed);
+
+        QPoint pos = QPoint(ui->positionXLineEdit->text().toInt(), ui->positionYLineEdit->text().toInt());
+        Settings::getInstance()->setPositionAtStartup(pos);
+    }
+    else if(ui->positionLastTimeRadioButton->isChecked())
+    {
+        Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::LastTime);
+    }
+    else
+    {
+        Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::Default);
+    }
 }
 
 }           // namespace Farman
