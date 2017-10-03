@@ -32,7 +32,6 @@ void Settings::initialize()
                           (sizeAtStartupTypeValue == "fixed") ? SizeAtStartup::Fixed :
                                                                 SizeAtStartup::Default;
     m_sizeAtStartup = Settings::getInstance()->value("main/sizeAtStartup", QSize(0, 0)).toSize();
-    qDebug() << "sizeatstartup: " << m_sizeAtStartup.width() << ", " << m_sizeAtStartup.height();
 
     // Position at startup
     QString positionAtStartupTypeValue = Settings::getInstance()->value("main/positionAtStartupType", "default").toString();
