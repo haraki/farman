@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>521</width>
+    <height>321</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
+     <x>160</x>
+     <y>280</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -34,8 +34,8 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>171</width>
-     <height>161</height>
+     <width>231</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="title">
@@ -83,9 +83,9 @@
    <widget class="QLineEdit" name="sizeWidthLineEdit">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>80</x>
       <y>90</y>
-      <width>61</width>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -93,8 +93,8 @@
    <widget class="QLabel" name="sizeWidthLabel">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>94</y>
+      <x>28</x>
+      <y>92</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -102,13 +102,16 @@
     <property name="text">
      <string>Width:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QLineEdit" name="sizeHeightLineEdit">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>120</y>
-      <width>61</width>
+      <x>180</x>
+      <y>90</y>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -116,8 +119,8 @@
    <widget class="QLabel" name="sizeHeightLabel">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>122</y>
+      <x>128</x>
+      <y>92</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -125,15 +128,18 @@
     <property name="text">
      <string>Height:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QGroupBox" name="positionAtStartupGroupBox">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>270</x>
      <y>20</y>
-     <width>171</width>
-     <height>161</height>
+     <width>231</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="title">
@@ -142,8 +148,8 @@
    <widget class="QLabel" name="positionYLabel">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>122</y>
+      <x>128</x>
+      <y>92</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -151,12 +157,15 @@
     <property name="text">
      <string>Y:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QLabel" name="positionXLabel">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>94</y>
+      <x>48</x>
+      <y>92</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -164,13 +173,16 @@
     <property name="text">
      <string>X:</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+    </property>
    </widget>
    <widget class="QLineEdit" name="positionXLineEdit">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>70</x>
       <y>90</y>
-      <width>61</width>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -191,9 +203,9 @@
    <widget class="QLineEdit" name="positionYLineEdit">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>120</y>
-      <width>61</width>
+      <x>150</x>
+      <y>90</y>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -222,6 +234,156 @@
     </property>
     <property name="text">
      <string>Fixed</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="leftFolderAtStartupGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>231</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Folder at startup(Left)</string>
+   </property>
+   <widget class="QRadioButton" name="leftFolderFixedRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fixed</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="leftFolderLastTimeRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Same as last time</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="leftFolderPathLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>90</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="leftFolderDefaultRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Default</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="leftFolderSelectButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>90</y>
+      <width>26</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="rightFolderAtStartupGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>150</y>
+     <width>231</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Folder at startup(Right)</string>
+   </property>
+   <widget class="QRadioButton" name="rightFolderFixedRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fixed</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rightFolderLastTimeRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Same as last time</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rightFolderPathLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>90</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rightFolderDefaultRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Default</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="rightFolderSelectButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>90</y>
+      <width>26</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
     </property>
    </widget>
   </widget>
