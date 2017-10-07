@@ -6,6 +6,7 @@
 namespace Farman
 {
 
+// 起動時のウィンドウサイズ
 enum class SizeAtStartup : int
 {
     Default = 0,
@@ -13,7 +14,16 @@ enum class SizeAtStartup : int
     Fixed = 2,
 };
 
+// 起動時のウィンドウ位置
 enum class PositionAtStartup : int
+{
+    Default = 0,
+    LastTime = 1,
+    Fixed = 2,
+};
+
+// 起動時のフォルダ位置
+enum class FolderAtStartup : int
 {
     Default = 0,
     LastTime = 1,
