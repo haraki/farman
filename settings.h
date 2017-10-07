@@ -34,6 +34,18 @@ public:
     ViewMode getViewMode() { return m_viewMode; }
     void setViewMode(ViewMode viewMode) { m_viewMode = viewMode; }
 
+    FolderAtStartup getLeftFolderAtStartup() { return m_leftFolderAtStartup; }
+    void setLeftFolderAtStartup(FolderAtStartup leftFolderAtStartup) { m_leftFolderAtStartup = leftFolderAtStartup; }
+
+    QString getLeftFolderPath() { return m_leftFolderPath; }
+    void setLeftFolderPath(const QString& leftFolderPath) { m_leftFolderPath = leftFolderPath; }
+
+    FolderAtStartup getRightFolderAtStartup() { return m_rightFolderAtStartup; }
+    void setRightFolderAtStartup(FolderAtStartup rightFolderAtStartup) { m_rightFolderAtStartup = rightFolderAtStartup; }
+
+    QString getRightFolderPath() { return m_rightFolderPath; }
+    void setRightFolderPath(const QString& rightFolderPath) { m_rightFolderPath = rightFolderPath; }
+
     QDir::SortFlags getLeftSortSettings() { return m_leftSortSettings; }
     void setLeftSortSettings(QDir::SortFlags leftSortSettings) { m_leftSortSettings = leftSortSettings; }
 
@@ -66,6 +78,11 @@ private:
     QPoint m_positionAtStartup = QPoint(0, 0);
 
     ViewMode m_viewMode = ViewMode::Double;
+
+    FolderAtStartup m_leftFolderAtStartup = FolderAtStartup::Default;
+    QString m_leftFolderPath = "";
+    FolderAtStartup m_rightFolderAtStartup = FolderAtStartup::Default;
+    QString m_rightFolderPath = "";
 
     QDir::SortFlags m_leftSortSettings = DEFAULT_SORT_FLAGS;
     QDir::SortFlags m_rightSortSettings = DEFAULT_SORT_FLAGS;

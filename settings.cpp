@@ -44,6 +44,20 @@ void Settings::initialize()
     QString viewModeValue = Settings::getInstance()->value("main/viewMode", "double").toString();
     m_viewMode = (viewModeValue == "single") ? ViewMode::Single : ViewMode::Double;
 
+    // Folder at startup(Left)
+    QString leftFolderAtStartupValue = Settings::getInstance()->value("main/leftFolderAtStartup", "default").toString();
+    m_leftFolderAtStartup = (leftFolderAtStartupValue == "lastTime") ? FolderAtStartup::LastTime :
+                            (leftFolderAtStartupValue == "fixed") ? FolderAtStartup::Fixed :
+                                                                    FolderAtStartup::Default;
+    m_leftFolderPath = Settings::getInstance()->value("main/leftFolderPath", QString("")).toString();
+
+    // Folder at startup(Right)
+    QString rightFolderAtStartupValue = Settings::getInstance()->value("main/rightFolderAtStartup", "default").toString();
+    m_rightFolderAtStartup = (rightFolderAtStartupValue == "lastTime") ? FolderAtStartup::LastTime :
+                             (rightFolderAtStartupValue == "fixed") ? FolderAtStartup::Fixed :
+                                                                      FolderAtStartup::Default;
+    m_rightFolderPath = Settings::getInstance()->value("main/rightFolderPath", QString("")).toString();
+
     // Left side Sort settings
     m_leftSortSettings = getSortSettings("left");
 
@@ -77,6 +91,20 @@ void Settings::flush()
     QString viewModeValue = (m_viewMode == ViewMode::Single) ? "single"
                                                              : "double";
     Settings::getInstance()->setValue("main/viewMode", viewModeValue);
+
+    // Folder at startup(Left)
+    QString leftFolderAtStartupValue = (m_leftFolderAtStartup == FolderAtStartup::LastTime) ? "lastTime" :
+                                       (m_leftFolderAtStartup == FolderAtStartup::Fixed) ? "fixed" :
+                                                                                           "default";
+    Settings::getInstance()->setValue("main/leftFolderAtStartup", leftFolderAtStartupValue);
+    Settings::getInstance()->setValue("main/leftFolderPath", m_leftFolderPath);
+
+    // Folder at startup(Right)
+    QString rightFolderAtStartupValue = (m_rightFolderAtStartup == FolderAtStartup::LastTime) ? "lastTime" :
+                                        (m_rightFolderAtStartup == FolderAtStartup::Fixed) ? "fixed" :
+                                                                                             "default";
+    Settings::getInstance()->setValue("main/rightFolderAtStartup", rightFolderAtStartupValue);
+    Settings::getInstance()->setValue("main/rightFolderPath", m_rightFolderPath);
 
     // Left side Sort settings
     setSortSettings(m_leftSortSettings, "left");
