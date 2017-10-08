@@ -15,7 +15,7 @@ class OptionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OptionDialog(QWidget *parent = 0);
+    explicit OptionDialog(const QSize& mainWindowSize, const QPoint& mainWindowPos, QWidget *parent = Q_NULLPTR);
     ~OptionDialog();
 
 private slots:

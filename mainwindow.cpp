@@ -198,7 +198,7 @@ void MainWindow::on_actionRename_triggered()
 
 void MainWindow::on_actionOption_triggered()
 {
-    OptionDialog dialog(this);
+    OptionDialog dialog(this->size(), this->pos(), this);
     if(dialog.exec())
     {
     }

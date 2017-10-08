@@ -7,17 +7,11 @@
 namespace Farman
 {
 
-OptionDialog::OptionDialog(QWidget *parent) :
+OptionDialog::OptionDialog(const QSize& mainWindowSize, const QPoint& mainWindowPos, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionDialog)
 {
     ui->setupUi(this);
-
-    QSize size = QSize(0, 0);
-    if(parent != Q_NULLPTR)
-    {
-        size = parent->size();
-    }
 
     SizeAtStartup sizeAtStartupType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeAtStartupType == SizeAtStartup::Fixed)
@@ -45,14 +39,8 @@ OptionDialog::OptionDialog(QWidget *parent) :
         ui->sizeHeightLineEdit->setEnabled(false);
     }
 
-    ui->sizeWidthLineEdit->setText(QString::number(size.width()));
-    ui->sizeHeightLineEdit->setText(QString::number(size.height()));
-
-    QPoint position = QPoint(0, 0);
-    if(parent != Q_NULLPTR)
-    {
-        position = parent->pos();
-    }
+    ui->sizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
+    ui->sizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
 
     PositionAtStartup positionAtStartupType = Settings::getInstance()->getPositionAtStartupType();
     if(positionAtStartupType == PositionAtStartup::Fixed)
@@ -80,8 +68,8 @@ OptionDialog::OptionDialog(QWidget *parent) :
         ui->positionYLineEdit->setEnabled(false);
     }
 
-    ui->positionXLineEdit->setText(QString::number(position.x()));
-    ui->positionYLineEdit->setText(QString::number(position.y()));
+    ui->positionXLineEdit->setText(QString::number(mainWindowPos.x()));
+    ui->positionYLineEdit->setText(QString::number(mainWindowPos.y()));
 }
 
 OptionDialog::~OptionDialog()
