@@ -15,7 +15,11 @@ class OptionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OptionDialog(const QSize& mainWindowSize, const QPoint& mainWindowPos, QWidget *parent = Q_NULLPTR);
+    explicit OptionDialog(const QSize& mainWindowSize,
+                          const QPoint& mainWindowPos,
+                          const QString& leftDirPath,
+                          const QString& rightDirPath,
+                          QWidget *parent = Q_NULLPTR);
     ~OptionDialog();
 
 private slots:
@@ -30,6 +34,18 @@ private slots:
     void on_positionLastTimeRadioButton_clicked();
 
     void on_positionFixedRadioButton_clicked();
+
+    void on_leftFolderDefaultRadioButton_clicked();
+
+    void on_leftFolderLastTimeRadioButton_clicked();
+
+    void on_leftFolderFixedRadioButton_clicked();
+
+    void on_rightFolderDefaultRadioButton_clicked();
+
+    void on_rightFolderLastTimeRadioButton_clicked();
+
+    void on_rightFolderFixedRadioButton_clicked();
 
     void on_buttonBox_accepted();
 

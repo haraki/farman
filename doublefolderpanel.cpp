@@ -471,6 +471,16 @@ FolderForm* DoubleFolderPanel::getInactiveFolderForm()
     return inactiveForm;
 }
 
+FolderForm* DoubleFolderPanel::getLeftFolderForm()
+{
+    return findChild<FolderForm*>("l_folderForm");
+}
+
+FolderForm* DoubleFolderPanel::getRightFolderForm()
+{
+    return findChild<FolderForm*>("r_folderForm");
+}
+
 void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dstPath)
 {
     if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)

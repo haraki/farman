@@ -26,6 +26,8 @@ public:
 
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
+    FolderForm* getLeftFolderForm();
+    FolderForm* getRightFolderForm();
 
     void onSetViewMode(ViewMode viewMode);
     void onChangeSortSettings();

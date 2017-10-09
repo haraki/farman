@@ -198,7 +198,26 @@ void MainWindow::on_actionRename_triggered()
 
 void MainWindow::on_actionOption_triggered()
 {
-    OptionDialog dialog(this->size(), this->pos(), this);
+    QString leftDirPath = "";
+    QString rightDirPath = "";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        FolderForm* l_folderForm = doubleFolderPanel->getLeftFolderForm();
+        if(l_folderForm != Q_NULLPTR)
+        {
+            leftDirPath = l_folderForm->getCurrentDirPath();
+        }
+
+        FolderForm* r_folderForm = doubleFolderPanel->getRightFolderForm();
+        if(r_folderForm != Q_NULLPTR)
+        {
+            rightDirPath = r_folderForm->getCurrentDirPath();
+        }
+    }
+
+    OptionDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, this);
     if(dialog.exec())
     {
     }
