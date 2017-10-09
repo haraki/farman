@@ -113,6 +113,33 @@ DoubleFolderPanel::~DoubleFolderPanel()
     delete ui;
 }
 
+void DoubleFolderPanel::closeEvent(QCloseEvent* e)
+{
+    Q_UNUSED(e);
+
+    qDebug() << "DoubleFolderPanel::closeEvent()";
+
+    FolderAtStartup leftfolderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
+    if(leftfolderAtStartup == FolderAtStartup::LastTime)
+    {
+        FolderForm* l_folderForm = findChild<FolderForm*>("l_folderForm");
+        if(l_folderForm != Q_NULLPTR)
+        {
+            Settings::getInstance()->setLeftFolderPath(l_folderForm->getCurrentDirPath());
+        }
+    }
+
+    FolderAtStartup rightFolderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
+    if(rightFolderAtStartup == FolderAtStartup::LastTime)
+    {
+        FolderForm* r_folderForm = findChild<FolderForm*>("r_folderForm");
+        if(r_folderForm != Q_NULLPTR)
+        {
+            Settings::getInstance()->setRightFolderPath(r_folderForm->getCurrentDirPath());
+        }
+    }
+}
+
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 {
     Q_UNUSED(watched);

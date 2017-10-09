@@ -65,6 +65,14 @@ void MainWindow::initialize()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    qDebug() << "MainWindow::closeEvent()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->closeEvent(event);
+    }
+
     SizeAtStartup sizeType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeType == SizeAtStartup::LastTime)
     {

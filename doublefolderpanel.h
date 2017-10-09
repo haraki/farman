@@ -24,6 +24,8 @@ public:
     explicit DoubleFolderPanel(QWidget* parent = Q_NULLPTR);
     ~DoubleFolderPanel();
 
+    void closeEvent(QCloseEvent* e) Q_DECL_OVERRIDE;
+
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
     FolderForm* getLeftFolderForm();
