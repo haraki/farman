@@ -30,8 +30,27 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
 
     ViewMode viewMode = Settings::getInstance()->getViewMode();
 
-    QString l_path = QDir::currentPath();
-    QString r_path = QDir::currentPath();
+    QString l_path = QDir::homePath();
+    FolderAtStartup l_folderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
+    if(l_folderAtStartup == FolderAtStartup::LastTime || l_folderAtStartup == FolderAtStartup::Fixed)
+    {
+        l_path = Settings::getInstance()->getLeftFolderPath();
+    }
+    if(!QDir(l_path).exists())
+    {
+        l_path = QDir::currentPath();
+    }
+
+    QString r_path = QDir::homePath();
+    FolderAtStartup r_folderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
+    if(r_folderAtStartup == FolderAtStartup::LastTime || r_folderAtStartup == FolderAtStartup::Fixed)
+    {
+        r_path = Settings::getInstance()->getRightFolderPath();
+    }
+    if(!QDir(r_path).exists())
+    {
+        r_path = QDir::currentPath();
+    }
 
     QDir::SortFlags l_sortFlags = Settings::getInstance()->getLeftSortSettings();
     QDir::SortFlags r_sortFlags = Settings::getInstance()->getRightSortSettings();
