@@ -24,29 +24,19 @@ public:
 
 private slots:
     void on_sizeDefaultRadioButton_clicked();
-
     void on_sizeLastTimeRadioButton_clicked();
-
     void on_sizeFixedRadioButton_clicked();
-
     void on_positionDefaultRadioButton_clicked();
-
     void on_positionLastTimeRadioButton_clicked();
-
     void on_positionFixedRadioButton_clicked();
-
     void on_leftFolderDefaultRadioButton_clicked();
-
     void on_leftFolderLastTimeRadioButton_clicked();
-
     void on_leftFolderFixedRadioButton_clicked();
-
+    void on_leftFolderSelectButton_clicked();
     void on_rightFolderDefaultRadioButton_clicked();
-
     void on_rightFolderLastTimeRadioButton_clicked();
-
     void on_rightFolderFixedRadioButton_clicked();
-
+    void on_rightFolderSelectButton_clicked();
     void on_buttonBox_accepted();
 
 private:

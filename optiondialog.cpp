@@ -1,8 +1,9 @@
 ﻿#include <QMainWindow>
+#include <QFileDialog>
+#include <QDebug>
 #include "optiondialog.h"
 #include "ui_optiondialog.h"
 #include "settings.h"
-#include <QDebug>
 
 namespace Farman
 {
@@ -208,6 +209,32 @@ void OptionDialog::on_rightFolderFixedRadioButton_clicked()
 {
     ui->rightFolderSelectButton->setEnabled(true);
     ui->rightFolderPathLineEdit->setEnabled(true);
+}
+
+void OptionDialog::on_leftFolderSelectButton_clicked()
+{
+    QString dirPath = QFileDialog::getExistingDirectory(this,
+                                                        tr("Select folder."),
+                                                        ui->leftFolderPathLineEdit->text(),
+                                                        QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
+
+    if(!dirPath.isEmpty())
+    {
+        ui->leftFolderPathLineEdit->setText(dirPath);
+    }
+}
+
+void OptionDialog::on_rightFolderSelectButton_clicked()
+{
+    QString dirPath = QFileDialog::getExistingDirectory(this,
+                                                        tr("Select folder."),
+                                                        ui->rightFolderPathLineEdit->text(),
+                                                        QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
+
+    if(!dirPath.isEmpty())
+    {
+        ui->rightFolderPathLineEdit->setText(dirPath);
+    }
 }
 
 void OptionDialog::on_buttonBox_accepted()
