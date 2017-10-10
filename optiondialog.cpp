@@ -26,6 +26,11 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         ui->sizeWidthLineEdit->setEnabled(true);
         ui->sizeHeightLabel->setEnabled(true);
         ui->sizeHeightLineEdit->setEnabled(true);
+
+        QSize size = Settings::getInstance()->getSizeAtStartup();
+
+        ui->sizeWidthLineEdit->setText(QString::number(size.width()));
+        ui->sizeHeightLineEdit->setText(QString::number(size.height()));
     }
     else
     {
@@ -42,10 +47,10 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         ui->sizeWidthLineEdit->setEnabled(false);
         ui->sizeHeightLabel->setEnabled(false);
         ui->sizeHeightLineEdit->setEnabled(false);
-    }
 
-    ui->sizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
-    ui->sizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
+        ui->sizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
+        ui->sizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
+    }
 
     PositionAtStartup positionAtStartupType = Settings::getInstance()->getPositionAtStartupType();
     if(positionAtStartupType == PositionAtStartup::Fixed)
@@ -55,6 +60,11 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         ui->positionXLineEdit->setEnabled(true);
         ui->positionYLabel->setEnabled(true);
         ui->positionYLineEdit->setEnabled(true);
+
+        QPoint pos = Settings::getInstance()->getPositionAtStartup();
+
+        ui->positionXLineEdit->setText(QString::number(pos.x()));
+        ui->positionYLineEdit->setText(QString::number(pos.y()));
     }
     else
     {
@@ -71,10 +81,10 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         ui->positionXLineEdit->setEnabled(false);
         ui->positionYLabel->setEnabled(false);
         ui->positionYLineEdit->setEnabled(false);
-    }
 
-    ui->positionXLineEdit->setText(QString::number(mainWindowPos.x()));
-    ui->positionYLineEdit->setText(QString::number(mainWindowPos.y()));
+        ui->positionXLineEdit->setText(QString::number(mainWindowPos.x()));
+        ui->positionYLineEdit->setText(QString::number(mainWindowPos.y()));
+    }
 
     FolderAtStartup leftFolderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
     if(leftFolderAtStartup == FolderAtStartup::Fixed)
@@ -82,6 +92,8 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         ui->leftFolderFixedRadioButton->setChecked(true);
         ui->leftFolderSelectButton->setEnabled(true);
         ui->leftFolderPathLineEdit->setEnabled(true);
+
+        ui->leftFolderPathLineEdit->setText(Settings::getInstance()->getLeftFolderPath());
     }
     else
     {
@@ -95,6 +107,8 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         }
         ui->leftFolderSelectButton->setEnabled(false);
         ui->leftFolderPathLineEdit->setEnabled(false);
+
+        ui->leftFolderPathLineEdit->setText(leftDirPath);
     }
 
     FolderAtStartup rightFolderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
@@ -103,6 +117,8 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         ui->rightFolderFixedRadioButton->setChecked(true);
         ui->rightFolderSelectButton->setEnabled(true);
         ui->rightFolderPathLineEdit->setEnabled(true);
+
+        ui->rightFolderPathLineEdit->setText(Settings::getInstance()->getRightFolderPath());
     }
     else
     {
@@ -116,10 +132,9 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
         }
         ui->rightFolderSelectButton->setEnabled(false);
         ui->rightFolderPathLineEdit->setEnabled(false);
-    }
 
-    ui->leftFolderPathLineEdit->setText(leftDirPath);
-    ui->rightFolderPathLineEdit->setText(rightDirPath);
+        ui->rightFolderPathLineEdit->setText(rightDirPath);
+    }
 }
 
 OptionDialog::~OptionDialog()
