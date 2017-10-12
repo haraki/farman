@@ -59,7 +59,16 @@ void FolderView::keyPressEvent(QKeyEvent *e)
 
     if(e->modifiers() & Qt::ShiftModifier && !e->text().isEmpty())
     {
-        keyboardSearch(e->text());
+        QString text = e->text();
+
+        if(e->key() == Qt::Key_Greater)
+        {
+            // SHIFT + '.'キーを押すと '>' となってしまうため、強制的に '.' にする
+            text = ".";
+        }
+
+        keyboardSearch(text);
+
         e->accept();
 
         return;
