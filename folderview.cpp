@@ -43,4 +43,29 @@ void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRi
     emit dataChanged(topLeft, bottomRight);
 }
 
+void FolderView::keyPressEvent(QKeyEvent *e)
+{
+    switch(e->key())
+    {
+    case Qt::Key_Up:
+    case Qt::Key_Down:
+    case Qt::Key_PageUp:
+    case Qt::Key_PageDown:
+        QTableView::keyPressEvent(e);
+        return;
+    default:
+        break;
+    }
+
+    if(e->modifiers() & Qt::ShiftModifier && !e->text().isEmpty())
+    {
+        keyboardSearch(e->text());
+        e->accept();
+
+        return;
+    }
+
+    e->ignore();
+}
+
 }           // namespace Farman
