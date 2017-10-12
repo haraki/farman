@@ -1,4 +1,5 @@
-﻿#include <QDebug>
+﻿#include <QApplication>
+#include <QDebug>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 #include <QHeaderView>
@@ -67,7 +68,13 @@ void FolderView::keyPressEvent(QKeyEvent *e)
             text = ".";
         }
 
+        // keyboradSearch() 内で文字を連結させず、必ず1文字目として検索させるようにするため、一時的にキー入力のインターバル値を0にする
+        int backupInterval = QApplication::keyboardInputInterval();
+        QApplication::setKeyboardInputInterval(0);
+
         keyboardSearch(text);
+
+        QApplication::setKeyboardInputInterval(backupInterval);
 
         e->accept();
 
