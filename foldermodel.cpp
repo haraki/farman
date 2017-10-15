@@ -31,6 +31,16 @@ FolderModel::~FolderModel()
     delete m_selectionModel;
 }
 
+int FolderModel::columnCount(const QModelIndex& parent) const
+{
+    if(parent.column() > 0)
+    {
+        return 0;
+    }
+
+    return 3;
+}
+
 QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 {
     QVariant ret;
@@ -53,7 +63,14 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             ret = fileInfo(modelIndex).fileName();
             break;
         case SectionType::FileSize:
-            ret = fileInfo(modelIndex).size();
+            if(fileInfo(modelIndex).isDir())
+            {
+                ret = QString("<Folder>");
+            }
+            else
+            {
+                ret = fileInfo(modelIndex).size();
+            }
             break;
         case SectionType::FileType:
             ret = iconProvider()->type(fileInfo(modelIndex));
@@ -214,10 +231,10 @@ FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
         return SectionType::FileSize;
     }
     else if(column == 2)
-    {
-        return SectionType::FileType;
-    }
-    else if(column == 3)
+//    {
+//        return SectionType::FileType;
+//    }
+//    else if(column == 3)
     {
         return SectionType::LastModified;
     }
