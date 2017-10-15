@@ -246,18 +246,7 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
 {
     QBrush ret;
 
-    if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
-    {
-        if(isSelected(index))
-        {
-            ret = getBrush(BrushType::ReadOnly_Selected);
-        }
-        else
-        {
-            ret = getBrush(BrushType::ReadOnly);
-        }
-    }
-    else if((fileName(index) != "..") && (fileInfo(index).isHidden()))
+    if((fileName(index) != "..") && (fileInfo(index).isHidden()))
     {
         if(isSelected(index))
         {
@@ -266,6 +255,17 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
         else
         {
             ret = getBrush(BrushType::Hidden);
+        }
+    }
+    else if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
+    {
+        if(isSelected(index))
+        {
+            ret = getBrush(BrushType::ReadOnly_Selected);
+        }
+        else
+        {
+            ret = getBrush(BrushType::ReadOnly);
         }
     }
     else
