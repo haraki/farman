@@ -3,6 +3,7 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QItemSelectionModel>
+#include <QDesktopServices>
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -53,28 +54,39 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
     {
     case QEvent::KeyPress:
     {
-        Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
-
-        qDebug() << "FolderForm::eventFilter : " << key;
-
-        switch(key)
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
+        if(keyEvent != Q_NULLPTR)
         {
-        case Qt::Key_Return:
-            onOpen();
+            Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
 
-            ret = true;
+            qDebug() << "FolderForm::eventFilter : " << key;
 
-            break;
+            switch(key)
+            {
+            case Qt::Key_Return:
+                if(keyEvent->modifiers() & Qt::ShiftModifier)
+                {
+                    onStart();
+                }
+                else
+                {
+                    onOpen();
+                }
 
-        case Qt::Key_Space:
-            onSelect();
+                ret = true;
 
-            ret = true;
+                break;
 
-            break;
+            case Qt::Key_Space:
+                onSelect();
 
-        default:
-            break;
+                ret = true;
+
+                break;
+
+            default:
+                break;
+            }
         }
 
         break;
@@ -235,6 +247,17 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
 
     emitCurrentChanged((newIndex.row() >= 0) ? m_folderModel->fileInfo(newIndex) : QFileInfo(),
                        (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
+}
+
+void FolderForm::onStart()
+{
+    const QModelIndex currentIndex = ui->folderView->currentIndex();
+
+    const QString path = m_folderModel->filePath(currentIndex);
+    if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
+    {
+        qDebug() << "open url error:" << path;
+    }
 }
 
 void FolderForm::onOpen()
