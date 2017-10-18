@@ -318,8 +318,8 @@ void FolderModel::initBrush()
     m_brush[BrushType::Background_Selected] = QPalette().highlight();
     m_brush[BrushType::Normal] = QPalette().text();
     m_brush[BrushType::Normal_Selected] = QPalette().text();
-    m_brush[BrushType::ReadOnly] = QPalette().highlightedText();
-    m_brush[BrushType::ReadOnly_Selected] = QPalette().highlightedText();
+    m_brush[BrushType::ReadOnly] = QPalette().midlight();
+    m_brush[BrushType::ReadOnly_Selected] = QPalette().midlight();
     m_brush[BrushType::Hidden] = QPalette().dark();
     m_brush[BrushType::Hidden_Selected] = QPalette().dark();
 }
