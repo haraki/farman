@@ -32,6 +32,9 @@ public:
     void setSelect(int row, QItemSelectionModel::SelectionFlags selectionFlags, const QModelIndex &parentIndex);
     QModelIndexList getSelectedIndexList();
     void clearSelected();
+#ifdef Q_OS_WIN
+    bool isDrive(const QModelIndex& index) const;
+#endif
 
 private:
     enum class SectionType : int

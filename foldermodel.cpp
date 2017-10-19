@@ -43,7 +43,7 @@ int FolderModel::columnCount(const QModelIndex& parent) const
 
 QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 {
-    QVariant ret;
+    QVariant ret = QVariant();
 
     if(!modelIndex.isValid())
     {
@@ -57,33 +57,52 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
     {
     case Qt::DisplayRole:
     case Qt::EditRole:
+    {
+        QFileInfo fi = fileInfo(modelIndex);
+
         switch(sectionType)
         {
         case SectionType::FileName:
-            ret = fileInfo(modelIndex).fileName();
+#ifdef Q_OS_WIN
+            if(fi.fileName() != ".." && isDrive(modelIndex))
+            {
+                ret = fi.absolutePath();
+            }
+            else
+#endif
+            {
+                ret = fi.fileName();
+            }
             break;
         case SectionType::FileSize:
-            if(fileInfo(modelIndex).isDir())
+#ifdef Q_OS_WIN
+            if(isDrive(modelIndex))
+            {
+                ret = QString("<Drive>");
+            }
+            else
+#endif
+            if(fi.isDir())
             {
                 ret = QString("<Folder>");
             }
             else
             {
-                ret = fileInfo(modelIndex).size();
+                ret = fi.size();
             }
             break;
         case SectionType::FileType:
-            ret = iconProvider()->type(fileInfo(modelIndex));
+            ret = iconProvider()->type(fi);
             break;
         case SectionType::LastModified:
-            ret = fileInfo(modelIndex).lastModified().toString("yyyy-MM-dd HH:mm:ss");
+            ret = fi.lastModified().toString("yyyy-MM-dd HH:mm:ss");
             break;
         default:
             break;
         }
 
         break;
-
+    }
     case Qt::TextAlignmentRole:
         if(sectionType == SectionType::FileSize)
         {
@@ -333,6 +352,22 @@ bool FolderModel::isSelected(const QModelIndex& index) const
 
     return false;
 }
+
+#ifdef Q_OS_WIN
+bool FolderModel::isDrive(const QModelIndex& index) const
+{
+    QFileInfo fi = fileInfo(index);
+    foreach(QFileInfo drive, QDir::drives())
+    {
+        if(drive.absoluteFilePath() == fi.absoluteFilePath())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif
 
 #if 0
 FolderModel::FolderModel(QObject *parent)
