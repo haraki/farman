@@ -69,6 +69,10 @@ void Settings::initialize()
 
     // Right side Filter settings
     m_rightFilterSettings = getFilterSettings("right");
+
+    // Confirm quit
+    QString confirmQuitValue = Settings::getInstance()->value("main/confirmQuit", "true").toString();
+    m_confirmQuit = (confirmQuitValue == "false") ? false : true;
 }
 
 void Settings::flush()
@@ -117,6 +121,9 @@ void Settings::flush()
 
     // Right side Filter settings
     setFilterSettings(m_rightFilterSettings, "right");
+
+    // Confirm at quit
+    Settings::getInstance()->setValue("main/confirmQuit", m_confirmQuit);
 }
 
 QDir::SortFlags Settings::getSortSettings(const QString& prefix)

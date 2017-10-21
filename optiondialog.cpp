@@ -135,6 +135,8 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
 
         ui->rightFolderPathLineEdit->setText(rightDirPath);
     }
+
+    ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 }
 
 OptionDialog::~OptionDialog()
@@ -317,6 +319,8 @@ void OptionDialog::on_buttonBox_accepted()
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
     }
+
+    Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
 }
 
 }           // namespace Farman

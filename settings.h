@@ -58,6 +58,9 @@ public:
     QDir::Filters getRightFilterSettings() { return m_rightFilterSettings; }
     void setRightFilterSettings(QDir::Filters rightFilterSettings) { m_rightFilterSettings = rightFilterSettings; }
 
+    bool getConfirmQuit() { return m_confirmQuit; }
+    void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
+
 private:
     Settings();
 
@@ -89,6 +92,8 @@ private:
 
     QDir::Filters m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
     QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
+
+    bool m_confirmQuit = true;
 };
 
 }

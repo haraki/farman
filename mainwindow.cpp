@@ -68,10 +68,13 @@ void MainWindow::closeEvent(QCloseEvent* event)
 {
     qDebug() << "MainWindow::closeEvent()";
 
-    if(QMessageBox::question(this, tr("Confirm"), tr("quit?")) != QMessageBox::Yes)
+    if(Settings::getInstance()->getConfirmQuit())
     {
-        event->ignore();
-        return;
+        if(QMessageBox::question(this, tr("Confirm"), tr("quit?")) != QMessageBox::Yes)
+        {
+            event->ignore();
+            return;
+        }
     }
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
