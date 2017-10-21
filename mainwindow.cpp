@@ -1,4 +1,5 @@
 ﻿#include <QDebug>
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "folderview.h"
@@ -66,6 +67,12 @@ void MainWindow::initialize()
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     qDebug() << "MainWindow::closeEvent()";
+
+    if(QMessageBox::question(this, tr("Confirm"), tr("quit?")) != QMessageBox::Yes)
+    {
+        event->ignore();
+        return;
+    }
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
@@ -229,6 +236,11 @@ void MainWindow::on_actionOption_triggered()
     if(dialog.exec())
     {
     }
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    close();
 }
 
 }           // namespace Farman

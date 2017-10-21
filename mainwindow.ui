@@ -64,6 +64,13 @@
     </property>
     <addaction name="actionOption"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="viewMenu"/>
    <addaction name="menuOperation"/>
    <addaction name="menuOption"/>
@@ -178,6 +185,14 @@
   <action name="actionOption">
    <property name="text">
     <string>Option...</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit...</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
    </property>
   </action>
  </widget>
