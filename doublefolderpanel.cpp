@@ -169,51 +169,66 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     switch (e->type()) {
     case QEvent::KeyPress:
     {
-        Qt::Key key = static_cast<Qt::Key>(dynamic_cast<QKeyEvent*>(e)->key());
-
-        qDebug() << "DoubleFolderPanel::eventFilter : " << key;
-
-        FolderForm* activeForm = getActiveFolderForm();
-        if(activeForm == Q_NULLPTR)
+        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
+        if(keyEvent != Q_NULLPTR)
         {
-            break;
-        }
+            Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
 
-        switch(key)
-        {
-        case Qt::Key_Left:
-            if(m_viewMode == ViewMode::Single || activeForm->objectName() == "l_folderForm")
+            qDebug() << "DoubleFolderPanel::eventFilter : " << key;
+
+            FolderForm* activeForm = getActiveFolderForm();
+            if(activeForm == Q_NULLPTR)
             {
-                activeForm->onGoToParent();
-            }
-            else
-            {
-                setActiveFolderForm("l_folderForm");
+                break;
             }
 
-            ret = true;
-
-            break;
-
-        case Qt::Key_Right:
-            if(m_viewMode == ViewMode::Double)
+            switch(key)
             {
-                if(activeForm->objectName() == "r_folderForm")
+            case Qt::Key_Return:
+                if(keyEvent->modifiers() & Qt::ShiftModifier)
+                {
+                    // SHIT + Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
+                    onOpenInApp();
+
+                    ret = true;
+                }
+
+                break;
+
+            case Qt::Key_Left:
+                if(m_viewMode == ViewMode::Single || activeForm->objectName() == "l_folderForm")
                 {
                     activeForm->onGoToParent();
                 }
                 else
                 {
-                    setActiveFolderForm("r_folderForm");
+                    setActiveFolderForm("l_folderForm");
                 }
+
+                ret = true;
+
+                break;
+
+            case Qt::Key_Right:
+                if(m_viewMode == ViewMode::Double)
+                {
+                    if(activeForm->objectName() == "r_folderForm")
+                    {
+                        activeForm->onGoToParent();
+                    }
+                    else
+                    {
+                        setActiveFolderForm("r_folderForm");
+                    }
+                }
+
+                ret = true;
+
+                break;
+
+            default:
+                break;
             }
-
-            ret = true;
-
-            break;
-
-        default:
-            break;
         }
 
         break;
