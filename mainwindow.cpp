@@ -115,6 +115,24 @@ void MainWindow::onOutputConsole(const QString& consoleString)
     ui->consolePlainTextEdit->moveCursor(QTextCursor::End);
 }
 
+void MainWindow::on_actionOpenInApp_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenInApp_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onOpenInApp();
+    }
+}
+
+void MainWindow::on_actionQuit_triggered()
+{
+    qDebug() << "MainWindow::on_actionQuit_triggered()";
+
+    close();
+}
+
 void MainWindow::on_actionSingleView_triggered()
 {
     qDebug() << "MainWindow::on_actionSingleView_triggered()";
@@ -239,11 +257,6 @@ void MainWindow::on_actionOption_triggered()
     if(dialog.exec())
     {
     }
-}
-
-void MainWindow::on_actionQuit_triggered()
-{
-    close();
 }
 
 }           // namespace Farman

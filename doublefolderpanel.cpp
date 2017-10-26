@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QDesktopServices>
 #include "doublefolderpanel.h"
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
@@ -222,6 +223,19 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     }
 
     return ret;
+}
+
+void DoubleFolderPanel::onOpenInApp()
+{
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        const QString path = activeForm->getCurrentFileInfo().absoluteFilePath();
+        if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
+        {
+            qDebug() << "open url error:" << path;
+        }
+    }
 }
 
 void DoubleFolderPanel::onSetViewMode(ViewMode viewMode)

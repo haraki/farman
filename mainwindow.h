@@ -34,6 +34,8 @@ private:
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
+    void on_actionOpenInApp_triggered();
+    void on_actionQuit_triggered();
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();
     void on_actionSortSettings_triggered();
@@ -44,7 +46,6 @@ private Q_SLOTS:
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
     void on_actionOption_triggered();
-    void on_actionQuit_triggered();
 
 private:
     static MainWindow* s_instance;

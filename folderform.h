@@ -58,7 +58,6 @@ private slots:
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
-    void onStart();
     void onOpen();
     void onSelect();
 

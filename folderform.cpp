@@ -3,7 +3,6 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QItemSelectionModel>
-#include <QDesktopServices>
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -64,14 +63,7 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
             switch(key)
             {
             case Qt::Key_Return:
-                if(keyEvent->modifiers() & Qt::ShiftModifier)
-                {
-                    onStart();
-                }
-                else
-                {
-                    onOpen();
-                }
+                onOpen();
 
                 ret = true;
 
@@ -247,17 +239,6 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
 
     emitCurrentChanged((newIndex.row() >= 0) ? m_folderModel->fileInfo(newIndex) : QFileInfo(),
                        (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
-}
-
-void FolderForm::onStart()
-{
-    const QModelIndex currentIndex = ui->folderView->currentIndex();
-
-    const QString path = m_folderModel->filePath(currentIndex);
-    if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
-    {
-        qDebug() << "open url error:" << path;
-    }
 }
 
 void FolderForm::onOpen()

@@ -68,6 +68,8 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionOpenInApp"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -193,6 +195,14 @@
    </property>
    <property name="shortcut">
     <string>Esc</string>
+   </property>
+  </action>
+  <action name="actionOpenInApp">
+   <property name="text">
+    <string>Open in Application</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Return</string>
    </property>
   </action>
  </widget>
