@@ -1,6 +1,7 @@
 ﻿#include <QVariant>
 #include <QDebug>
 #include <QDateTime>
+#include <QFont>
 #include <QPalette>
 #include <QItemSelectionModel>
 #include "foldermodel.h"
@@ -14,6 +15,7 @@ FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, 
 {
     m_selectionModel = new QItemSelectionModel(this);
 
+    initFont();
     initBrush();
 }
 
@@ -23,6 +25,7 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
 {
     m_selectionModel = new QItemSelectionModel(this);
 
+    initFont();
     initBrush();
 }
 
@@ -103,8 +106,11 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 
         break;
     }
+    case Qt::FontRole:
+        return m_font;
+
     case Qt::TextAlignmentRole:
-        if(sectionType == SectionType::FileSize)
+        if(sectionType == SectionType::FileSize || sectionType == SectionType::LastModified)
         {
             ret = Qt::AlignRight;
         }
@@ -329,6 +335,15 @@ QBrush FolderModel::getBrush(BrushType brushType) const
     }
 
     return ret;
+}
+
+void FolderModel::initFont()
+{
+#if defined(Q_OS_WIN)
+    m_font = QFont("ＭＳ ゴシック", 13);
+#elif defined(Q_OS_MAC)
+    m_font = QFont("Monaco", 13);
+#endif
 }
 
 void FolderModel::initBrush()

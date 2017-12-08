@@ -6,6 +6,7 @@
 #include <qdir.h>
 #include <QDir>
 #include <QDirModel>
+#include <QFont>
 #include <QPalette>
 #include <QItemSelectionModel>
 
@@ -71,8 +72,10 @@ private:
     QBrush getTextBrush(const QModelIndex& index) const;
     QBrush getBackgroundBrush(const QModelIndex& index) const;
     QBrush getBrush(BrushType brushType) const;
+    void initFont();
     void initBrush();
 
+    QFont m_font;
     QMap<BrushType, QBrush> m_brush;
 
     bool isSelected(const QModelIndex& index) const;
