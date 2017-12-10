@@ -4,6 +4,7 @@
 #include <QSettings>
 #include <QPoint>
 #include <QSize>
+#include <QColor>
 #include "types.h"
 
 namespace Farman
@@ -61,6 +62,9 @@ public:
     bool getConfirmQuit() { return m_confirmQuit; }
     void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
 
+    QColor getColorSetting(const QString& colorSettingType);
+    void setColorSetting(const QString& colorSettingType, const QColor& color);
+
 private:
     Settings();
 
@@ -94,6 +98,32 @@ private:
     QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
 
     bool m_confirmQuit = true;
+
+    QMap<QString, QColor> m_colorSettings =
+    {
+        { "folderView_normal",              "#000000", },
+        { "folderView_normal_selected",     "#000000", },
+        { "folderView_folder",              "#0000ff", },
+        { "folderView_folder_selected",     "#0000ff", },
+        { "folderView_readOnly",            "#00ff00", },
+        { "folderView_readOnly_selected",   "#00ff00", },
+        { "folderView_hidden",              "#888888", },
+        { "folderView_hidden_selected",     "#888888", },
+        { "folderView_system",              "#ff0000", },
+        { "folderView_system_selected",     "#ff0000", },
+
+        { "folderView_background",          "#ffffff", },
+        { "folderView_selected_background", "#b2d7ff", },
+
+        { "folderView_cursor",              "#0000ff", },
+        { "folderView_cursor_inactive",     "#cccccc", },
+
+        { "folderPath_text",                "#000000", },
+        { "folderPath_background",          "#ffffff", },
+
+        { "console_text",                   "#000000", },
+        { "console_background",             "#ffffff", },
+    };
 };
 
 }

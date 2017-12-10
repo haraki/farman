@@ -126,6 +126,24 @@ void Settings::flush()
     Settings::getInstance()->setValue("main/confirmQuit", m_confirmQuit);
 }
 
+QColor Settings::getColorSetting(const QString& colorSettingType)
+{
+    QColor ret;
+
+    QMap<QString, QColor>::const_iterator itr = m_colorSettings.find(colorSettingType);
+    if(itr != m_colorSettings.end())
+    {
+        ret = *itr;
+    }
+
+    return ret;
+}
+
+void Settings::setColorSetting(const QString& colorSettingType, const QColor& color)
+{
+    m_colorSettings[colorSettingType] = color;
+}
+
 QDir::SortFlags Settings::getSortSettings(const QString& prefix)
 {
     QDir::SortFlags ret = FIX_SORT_FLAGS;
