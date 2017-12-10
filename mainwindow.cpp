@@ -47,6 +47,8 @@ void MainWindow::initialize()
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
+    initPalette();
+
     SizeAtStartup sizeType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeType == SizeAtStartup::Fixed || sizeType == SizeAtStartup::LastTime)
     {
@@ -62,6 +64,17 @@ void MainWindow::initialize()
     }
 
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
+}
+
+void MainWindow::initPalette()
+{
+    QPalette pal;
+
+    pal = ui->consolePlainTextEdit->palette();
+    pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("console_text"));
+    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("console_background"));
+    ui->consolePlainTextEdit->setAutoFillBackground(true);
+    ui->consolePlainTextEdit->setPalette(pal);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

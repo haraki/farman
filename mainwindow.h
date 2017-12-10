@@ -48,6 +48,8 @@ private Q_SLOTS:
     void on_actionOption_triggered();
 
 private:
+    void initPalette();
+
     static MainWindow* s_instance;
 
     Ui::MainWindow *ui;

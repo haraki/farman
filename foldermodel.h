@@ -56,15 +56,19 @@ private:
     {
         Unknown = -1,
 
-        Background,
-        Background_Selected,
-
         Normal,
         Normal_Selected,
+        Folder,
+        Folder_Selected,
         ReadOnly,
         ReadOnly_Selected,
         Hidden,
         Hidden_Selected,
+        System,
+        System_Selected,
+
+        Background,
+        Selected_Background,
 
         BrushTypeNum
     };

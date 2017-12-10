@@ -5,8 +5,8 @@
 #include <QDebug>
 #include <QPainter>
 #include <QApplication>
-
 #include "folderview.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -30,9 +30,8 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
         if(parent->currentIndex().row() == index.row())
         {
             // カーソル位置をアンダーラインで表示
-            const QWidget *widget = option.widget;
             painter->save();
-            QPen pen((option.state & QStyle::State_Active) ? widget->palette().highlight() : widget->palette().dark(), 1);
+            QPen pen((option.state & QStyle::State_Active) ? Settings::getInstance()->getColorSetting("folderView_cursor") : Settings::getInstance()->getColorSetting("folderView_cursor_inactive"), 1);
             painter->setPen(pen);
             painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
             painter->restore();

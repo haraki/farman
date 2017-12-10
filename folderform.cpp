@@ -6,6 +6,7 @@
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -16,6 +17,8 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     , m_folderModel(Q_NULLPTR)
 {
     ui->setupUi(this);
+
+    initPalette();
 
     m_folderModel = new FolderModel(this);
     m_folderModel->setReadOnly(true);
@@ -41,6 +44,21 @@ FolderForm::~FolderForm()
 {
     delete m_folderModel;
     delete ui;
+}
+
+void FolderForm::initPalette()
+{
+    QPalette pal;
+
+    pal = ui->folderView->palette();
+    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("folderView_background"));
+    ui->folderView->setPalette(pal);
+
+    pal = ui->folderPathEdit->palette();
+    pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("folderPath_text"));
+    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("folderPath_background"));
+    ui->folderPathEdit->setAutoFillBackground(true);
+    ui->folderPathEdit->setPalette(pal);
 }
 
 bool FolderForm::eventFilter(QObject *watched, QEvent *e)
