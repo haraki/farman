@@ -144,6 +144,24 @@ void Settings::setColorSetting(const QString& colorSettingType, const QColor& co
     m_colorSettings[colorSettingType] = color;
 }
 
+QFont Settings::getFontSetting(const QString& fontSettingType)
+{
+    QFont ret;
+
+    QMap<QString, QFont>::const_iterator itr = m_fontSettings.find(fontSettingType);
+    if(itr != m_fontSettings.end())
+    {
+        ret = *itr;
+    }
+
+    return ret;
+}
+
+void Settings::setFontSetting(const QString& fontSettingType, const QFont& font)
+{
+    m_fontSettings[fontSettingType] = font;
+}
+
 QDir::SortFlags Settings::getSortSettings(const QString& prefix)
 {
     QDir::SortFlags ret = FIX_SORT_FLAGS;

@@ -5,6 +5,8 @@
 #include <QPoint>
 #include <QSize>
 #include <QColor>
+#include <QFont>
+#include <QPair>
 #include "types.h"
 
 namespace Farman
@@ -65,6 +67,9 @@ public:
     QColor getColorSetting(const QString& colorSettingType);
     void setColorSetting(const QString& colorSettingType, const QColor& color);
 
+    QFont getFontSetting(const QString& fontSettingType);
+    void setFontSetting(const QString& fontSettingType, const QFont& font);
+
 private:
     Settings();
 
@@ -123,6 +128,24 @@ private:
 
         { "console_text",                   "#000000", },
         { "console_background",             "#ffffff", },
+    };
+
+    static const QFont getDefaultFixedFont()
+    {
+#if defined(Q_OS_WIN)
+        return QFont("ＭＳ ゴシック", 12);
+#elif defined(Q_OS_MAC)
+        return QFont("Monaco", 12);
+#else
+        return QFont();
+#endif
+    }
+
+    QMap<QString, QFont> m_fontSettings =
+    {
+        { "folderView", getDefaultFixedFont(), },
+        { "folderPath", getDefaultFixedFont(), },
+        { "console",    getDefaultFixedFont(), },
     };
 };
 
