@@ -48,6 +48,7 @@ private Q_SLOTS:
     void on_actionOption_triggered();
 
 private:
+    void initFont();
     void initPalette();
 
     static MainWindow* s_instance;

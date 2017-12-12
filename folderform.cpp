@@ -18,6 +18,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
 {
     ui->setupUi(this);
 
+    initFont();
     initPalette();
 
     m_folderModel = new FolderModel(this);
@@ -46,12 +47,18 @@ FolderForm::~FolderForm()
     delete ui;
 }
 
+void FolderForm::initFont()
+{
+    ui->folderPathEdit->setFont(Settings::getInstance()->getFontSetting("folderPath"));
+}
+
 void FolderForm::initPalette()
 {
     QPalette pal;
 
     pal = ui->folderView->palette();
     pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("folderView_background"));
+    ui->folderView->setAutoFillBackground(true);
     ui->folderView->setPalette(pal);
 
     pal = ui->folderPathEdit->palette();

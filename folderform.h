@@ -56,6 +56,7 @@ private slots:
     void emitFocusChanged(bool inFocus);
 
 private:
+    void initFont();
     void initPalette();
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 

@@ -47,6 +47,7 @@ void MainWindow::initialize()
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
+    initFont();
     initPalette();
 
     SizeAtStartup sizeType = Settings::getInstance()->getSizeAtStartupType();
@@ -64,6 +65,11 @@ void MainWindow::initialize()
     }
 
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
+}
+
+void MainWindow::initFont()
+{
+    ui->consolePlainTextEdit->setFont(Settings::getInstance()->getFontSetting("console"));
 }
 
 void MainWindow::initPalette()

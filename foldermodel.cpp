@@ -272,6 +272,8 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
 {
     QBrush ret;
 
+    // TODO: System file(for Win)
+
     if((fileName(index) != "..") && (fileInfo(index).isHidden()))
     {
         if(isSelected(index))
@@ -351,11 +353,8 @@ QBrush FolderModel::getBrush(BrushType brushType) const
 
 void FolderModel::initFont()
 {
-#if defined(Q_OS_WIN)
-    m_font = QFont("ＭＳ ゴシック", 13);
-#elif defined(Q_OS_MAC)
-    m_font = QFont("Monaco", 13);
-#endif
+    m_font = QFont(Settings::getInstance()->getFontSetting("folderView"));
+    qDebug() << m_font.toString();
 }
 
 void FolderModel::initBrush()
