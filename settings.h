@@ -67,8 +67,14 @@ public:
     QColor getColorSetting(const QString& colorSettingType);
     void setColorSetting(const QString& colorSettingType, const QColor& color);
 
+    const QMap<QString, QColor>& getColorSettings() { return m_colorSettings; }
+    void setColorSettings(const QMap<QString, QColor>& settings) { m_colorSettings = settings; }
+
     QFont getFontSetting(const QString& fontSettingType);
     void setFontSetting(const QString& fontSettingType, const QFont& font);
+
+    const QMap<QString, QFont>& getFontSettings() { return m_fontSettings; }
+    void setFontSettings(const QMap<QString, QFont>& settings) { m_fontSettings = settings; }
 
 private:
     Settings();
@@ -104,7 +110,7 @@ private:
 
     bool m_confirmQuit = true;
 
-    QMap<QString, QColor> m_colorSettings =
+    const QMap<QString, QColor> m_defaultColorSettings =
     {
         { "folderView_normal",              "#000000", },
         { "folderView_normal_selected",     "#000000", },
@@ -130,23 +136,27 @@ private:
         { "console_background",             "#ffffff", },
     };
 
+    QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;
+
     static const QFont getDefaultFixedFont()
     {
 #if defined(Q_OS_WIN)
-        return QFont("ＭＳ ゴシック", 12);
+        return QFont("ＭＳ ゴシック", 13);
 #elif defined(Q_OS_MAC)
-        return QFont("Monaco", 12);
+        return QFont("Monaco", 13);
 #else
         return QFont();
 #endif
     }
 
-    QMap<QString, QFont> m_fontSettings =
+    const QMap<QString, QFont> m_defaultFontSettings =
     {
         { "folderView", getDefaultFixedFont(), },
         { "folderPath", getDefaultFixedFont(), },
         { "console",    getDefaultFixedFont(), },
     };
+
+    QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;
 };
 
 }

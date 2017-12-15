@@ -73,6 +73,35 @@ void Settings::initialize()
     // Confirm quit
     QString confirmQuitValue = Settings::getInstance()->value("main/confirmQuit", "true").toString();
     m_confirmQuit = (confirmQuitValue == "false") ? false : true;
+
+    // Color settings
+    for(auto colorSettingKey : m_colorSettings.keys())
+    {
+        QString colorSettingString = Settings::getInstance()->value("main/color/" + colorSettingKey).toString();
+        if(colorSettingString.length() > 0 && QColor::isValidColor(colorSettingString))
+        {
+            m_colorSettings[colorSettingKey] = QColor(colorSettingString);
+        }
+        else
+        {
+            m_colorSettings[colorSettingKey] = m_defaultColorSettings[colorSettingKey];
+        }
+    }
+
+    // Font settings
+    for(auto fontSettingKey : m_fontSettings.keys())
+    {
+        QString fontSettingString = Settings::getInstance()->value("main/font/" + fontSettingKey).toString();
+        QFont fontSettingValue = QFont();
+        if(fontSettingString.length() > 0 && fontSettingValue.fromString(fontSettingString))
+        {
+            m_fontSettings[fontSettingKey] = fontSettingValue;
+        }
+        else
+        {
+            m_fontSettings[fontSettingKey] = m_defaultFontSettings[fontSettingKey];
+        }
+    }
 }
 
 void Settings::flush()
@@ -124,6 +153,20 @@ void Settings::flush()
 
     // Confirm at quit
     Settings::getInstance()->setValue("main/confirmQuit", m_confirmQuit);
+
+    // Color settings
+    for(auto colorSettingKey : m_colorSettings.keys())
+    {
+        const QColor& colorSettingValue = m_colorSettings[colorSettingKey];
+        Settings::getInstance()->setValue("main/color/" + colorSettingKey, colorSettingValue.name());
+    }
+
+    // Font settings
+    for(auto fontSettingKey : m_fontSettings.keys())
+    {
+        const QFont& fontSettingValue = m_fontSettings[fontSettingKey];
+        Settings::getInstance()->setValue("main/font/" + fontSettingKey, fontSettingValue.toString());
+    }
 }
 
 QColor Settings::getColorSetting(const QString& colorSettingType)
