@@ -141,7 +141,7 @@ private:
     static const QFont getDefaultFixedFont()
     {
 #if defined(Q_OS_WIN)
-        return QFont("ＭＳ ゴシック", 13);
+        return QFont("Terminal", 14);
 #elif defined(Q_OS_MAC)
         return QFont("Monaco", 13);
 #else
