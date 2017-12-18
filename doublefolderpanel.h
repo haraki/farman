@@ -26,6 +26,10 @@ public:
 
     void closeEvent(QCloseEvent* e) Q_DECL_OVERRIDE;
 
+    void updateSettings();
+
+    void refresh();
+
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
     FolderForm* getLeftFolderForm();
@@ -69,8 +73,6 @@ private:
     void removeFile(const QStringList& paths);
     void makeDirectory(const QString& path);
     void renameFile(const QString& path, const QString& name);
-
-    void refresh();
 
     void emitOutputConsole(const QString& consoleString);
 

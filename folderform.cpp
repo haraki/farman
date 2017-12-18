@@ -18,9 +18,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
 {
     ui->setupUi(this);
 
-    initFont();
-    initPalette();
-
     m_folderModel = new FolderModel(this);
     m_folderModel->setReadOnly(true);
     m_folderModel->setFilter(filterFlags);
@@ -28,6 +25,8 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     ui->folderView->setModel(m_folderModel);
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
+
+    updateSettings();
 
     connect(m_folderModel->getSelectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
@@ -45,6 +44,14 @@ FolderForm::~FolderForm()
 {
     delete m_folderModel;
     delete ui;
+}
+
+void FolderForm::updateSettings()
+{
+    initFont();
+    initPalette();
+
+    m_folderModel->updateSettings();
 }
 
 void FolderForm::initFont()

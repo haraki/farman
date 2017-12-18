@@ -15,9 +15,6 @@ FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, 
     , m_selectionModel(Q_NULLPTR)
 {
     m_selectionModel = new QItemSelectionModel(this);
-
-    initFont();
-    initBrush();
 }
 
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
@@ -25,14 +22,17 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
     , m_selectionModel(Q_NULLPTR)
 {
     m_selectionModel = new QItemSelectionModel(this);
-
-    initFont();
-    initBrush();
 }
 
 FolderModel::~FolderModel()
 {
     delete m_selectionModel;
+}
+
+void FolderModel::updateSettings()
+{
+    initFont();
+    initBrush();
 }
 
 int FolderModel::columnCount(const QModelIndex& parent) const
@@ -354,7 +354,6 @@ QBrush FolderModel::getBrush(BrushType brushType) const
 void FolderModel::initFont()
 {
     m_font = QFont(Settings::getInstance()->getFontSetting("folderView"));
-    qDebug() << m_font.toString();
 }
 
 void FolderModel::initBrush()

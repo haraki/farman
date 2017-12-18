@@ -273,8 +273,10 @@ void MainWindow::on_actionOption_triggered()
     }
 
     OptionDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, this);
-    if(dialog.exec())
+    if(dialog.exec() == QDialog::Accepted)
     {
+        doubleFolderPanel->updateSettings();
+        doubleFolderPanel->refresh();
     }
 }
 

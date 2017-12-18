@@ -23,6 +23,8 @@ public:
     explicit FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent = Q_NULLPTR);
     ~FolderForm();
 
+    void updateSettings();
+
     void setFilterFlags(QDir::Filters filterFlags);
     void setSortFlags(QDir::SortFlags sortFlags);
     void setPath(const QString& dirPath, const QString& beforePath = QString());

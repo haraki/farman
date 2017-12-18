@@ -25,6 +25,7 @@ public:
     explicit FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent = Q_NULLPTR);
     explicit FolderModel(QObject *parent = Q_NULLPTR);
     ~FolderModel();
+    void updateSettings();
     int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;

@@ -160,6 +160,21 @@ void DoubleFolderPanel::closeEvent(QCloseEvent* e)
     }
 }
 
+void DoubleFolderPanel::updateSettings()
+{
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        activeForm->updateSettings();
+    }
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    if(inactiveForm != Q_NULLPTR)
+    {
+        inactiveForm->updateSettings();
+    }
+}
+
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 {
     Q_UNUSED(watched);
