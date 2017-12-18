@@ -1,5 +1,6 @@
 ﻿#include <QMainWindow>
 #include <QFileDialog>
+#include <QColorDialog>
 #include <QFontDialog>
 #include <QDebug>
 #include "optiondialog.h"
@@ -138,6 +139,11 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
     }
 
     ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
+
+    m_fontSettings = Settings::getInstance()->getFontSettings();
+    m_colorSettings = Settings::getInstance()->getColorSettings();
+
+    setFontAndColorFolderViewOption();
 }
 
 OptionDialog::~OptionDialog()
@@ -257,20 +263,162 @@ void OptionDialog::on_rightFolderSelectButton_clicked()
 
 void OptionDialog::on_fontAndColorFolderViewChooseFontPushButton_clicked()
 {
-    //QFont newFont = chooseFont(oldFont);
+    QFont newFont = QFont();
 
+    if(showChooseFontDialog(m_fontSettings["folderView"], newFont))
+    {
+        m_fontSettings["folderView"] = newFont;
+
+        setFontAndColorFolderViewOption();
+    }
 }
 
-QFont OptionDialog::chooseFont(const QFont& oldFont)
+void OptionDialog::on_fontAndColorFolderViewChooseNormalColorPushButton_clicked()
+{
+    chooseColor("folderView_normal", "folderView_background", ui->fontAndColorFolderViewNormalLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseNormalSelectedColorPushButton_clicked()
+{
+    chooseColor("folderView_normal_selected", "folderView_selected_background", ui->fontAndColorFolderViewNormalSelectedLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseFolderColorPushButton_clicked()
+{
+    chooseColor("folderView_folder", "folderView_background", ui->fontAndColorFolderViewFolderLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseFolderSelectedColorPushButton_clicked()
+{
+    chooseColor("folderView_folder_selected", "folderView_selected_background", ui->fontAndColorFolderViewFolderSelectedLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseReadOnlyColorPushButton_clicked()
+{
+    chooseColor("folderView_readOnly", "folderView_background", ui->fontAndColorFolderViewReadOnlyLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseReadOnlySelectedColorPushButton_clicked()
+{
+    chooseColor("folderView_readOnly_selected", "folderView_selected_background", ui->fontAndColorFolderViewReadOnlySelectedLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseHiddenColorPushButton_clicked()
+{
+    chooseColor("folderView_hidden", "folderView_background", ui->fontAndColorFolderViewHiddenLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseHiddenSelectedColorPushButton_clicked()
+{
+    chooseColor("folderView_hidden_selected", "folderView_selected_background", ui->fontAndColorFolderViewHiddenSelectedLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseSystemColorPushButton_clicked()
+{
+    chooseColor("folderView_system", "folderView_background", ui->fontAndColorFolderViewSystemLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseSystemSelectedColorPushButton_clicked()
+{
+    chooseColor("folderView_system_selected", "folderView_selected_background", ui->fontAndColorFolderViewSystemSelectedLineEdit);
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderView_background"], newColor))
+    {
+        m_colorSettings["folderView_background"] = newColor;
+
+        setFontColorSample("folderView_normal",   "folderView_background", ui->fontAndColorFolderViewNormalLineEdit);
+        setFontColorSample("folderView_folder",   "folderView_background", ui->fontAndColorFolderViewFolderLineEdit);
+        setFontColorSample("folderView_readOnly", "folderView_background", ui->fontAndColorFolderViewReadOnlyLineEdit);
+        setFontColorSample("folderView_hidden",   "folderView_background", ui->fontAndColorFolderViewHiddenLineEdit);
+        setFontColorSample("folderView_system",   "folderView_background", ui->fontAndColorFolderViewSystemLineEdit);
+    }
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseSelectedBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderView_selected_background"], newColor))
+    {
+        m_colorSettings["folderView_selected_background"] = newColor;
+
+        setFontColorSample("folderView_normal_selected",   "folderView_selected_background", ui->fontAndColorFolderViewNormalSelectedLineEdit);
+        setFontColorSample("folderView_folder_selected",   "folderView_selected_background", ui->fontAndColorFolderViewFolderSelectedLineEdit);
+        setFontColorSample("folderView_readOnly_selected", "folderView_selected_background", ui->fontAndColorFolderViewReadOnlySelectedLineEdit);
+        setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->fontAndColorFolderViewHiddenSelectedLineEdit);
+        setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->fontAndColorFolderViewSystemSelectedLineEdit);
+    }
+}
+
+void OptionDialog::setFontAndColorFolderViewOption()
+{
+    QFont font = m_fontSettings["folderView"];
+
+    ui->fontAndColorFolderViewFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+
+    ui->fontAndColorFolderViewFontLabel->setFont(font);
+
+    ui->fontAndColorFolderViewNormalLineEdit->setFont(font);
+    ui->fontAndColorFolderViewNormalSelectedLineEdit->setFont(font);
+    ui->fontAndColorFolderViewFolderLineEdit->setFont(font);
+    ui->fontAndColorFolderViewFolderSelectedLineEdit->setFont(font);
+    ui->fontAndColorFolderViewReadOnlyLineEdit->setFont(font);
+    ui->fontAndColorFolderViewReadOnlySelectedLineEdit->setFont(font);
+    ui->fontAndColorFolderViewHiddenLineEdit->setFont(font);
+    ui->fontAndColorFolderViewHiddenSelectedLineEdit->setFont(font);
+    ui->fontAndColorFolderViewSystemLineEdit->setFont(font);
+    ui->fontAndColorFolderViewSystemSelectedLineEdit->setFont(font);
+
+    setFontColorSample("folderView_normal",            "folderView_background",          ui->fontAndColorFolderViewNormalLineEdit);
+    setFontColorSample("folderView_normal_selected",   "folderView_selected_background", ui->fontAndColorFolderViewNormalSelectedLineEdit);
+    setFontColorSample("folderView_folder",            "folderView_background",          ui->fontAndColorFolderViewFolderLineEdit);
+    setFontColorSample("folderView_folder_selected",   "folderView_selected_background", ui->fontAndColorFolderViewFolderSelectedLineEdit);
+    setFontColorSample("folderView_readOnly",          "folderView_background",          ui->fontAndColorFolderViewReadOnlyLineEdit);
+    setFontColorSample("folderView_readOnly_selected", "folderView_selected_background", ui->fontAndColorFolderViewReadOnlySelectedLineEdit);
+    setFontColorSample("folderView_hidden",            "folderView_background",          ui->fontAndColorFolderViewHiddenLineEdit);
+    setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->fontAndColorFolderViewHiddenSelectedLineEdit);
+    setFontColorSample("folderView_system",            "folderView_background",          ui->fontAndColorFolderViewSystemLineEdit);
+    setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->fontAndColorFolderViewSystemSelectedLineEdit);
+}
+
+void OptionDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
+{
+    QPalette pal = widget->palette();
+    pal.setColor(QPalette::Text, m_colorSettings[colorSettingType]);
+    pal.setColor(QPalette::Base, m_colorSettings[bgSettingType]);
+    widget->setPalette(pal);
+}
+
+void OptionDialog::chooseColor(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings[colorSettingType], newColor))
+    {
+        m_colorSettings[colorSettingType] = newColor;
+
+        setFontColorSample(colorSettingType, bgSettingType, widget);
+    }
+}
+
+bool OptionDialog::showChooseColorDialog(const QColor& oldColor, QColor& newColor)
+{
+    newColor = QColorDialog::getColor(oldColor, this, tr("Choose color"));
+
+    return newColor.isValid();
+}
+
+bool OptionDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFont)
 {
     bool ok = false;
-    QFont newFont = QFontDialog::getFont(&ok, oldFont, this, tr("Choose font"));
-    if(ok)
-    {
-        return oldFont;
-    }
+    newFont = QFontDialog::getFont(&ok, oldFont, this, tr("Choose font"));
 
-    return newFont;
+    return ok;
 }
 
 void OptionDialog::on_buttonBox_accepted()
@@ -340,6 +488,9 @@ void OptionDialog::on_buttonBox_accepted()
     }
 
     Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
+
+    Settings::getInstance()->setFontSettings(m_fontSettings);
+    Settings::getInstance()->setColorSettings(m_colorSettings);
 }
 
 }           // namespace Farman

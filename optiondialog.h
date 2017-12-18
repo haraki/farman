@@ -2,7 +2,10 @@
 #define OPTIONDIALOG_H
 
 #include <QDialog>
+#include <QLineEdit>
+#include <QMap>
 #include <QFont>
+#include <QColor>
 
 namespace Ui {
 class OptionDialog;
@@ -41,10 +44,36 @@ private slots:
 
     void on_fontAndColorFolderViewChooseFontPushButton_clicked();
 
+    void on_fontAndColorFolderViewChooseNormalColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseNormalSelectedColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseFolderColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseFolderSelectedColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseReadOnlyColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseReadOnlySelectedColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseHiddenColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseHiddenSelectedColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseSystemColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseSystemSelectedColorPushButton_clicked();
+
+    void on_fontAndColorFolderViewChooseBGColorPushButton_clicked();
+    void on_fontAndColorFolderViewChooseSelectedBGColorPushButton_clicked();
+
     void on_buttonBox_accepted();
 
 private:
-    QFont chooseFont(const QFont& oldFont);
+    void setFontAndColorFolderViewOption();
+    void setFontAndColorFolderPathOption();
+    void setFontAndColorConsoleOption();
+
+    void setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget);
+
+    void chooseColor(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget);
+
+    bool showChooseColorDialog(const QColor& oldColor, QColor& newColor);
+    bool showChooseFontDialog(const QFont& oldFont, QFont& newFont);
+
+    QMap<QString, QFont> m_fontSettings;
+    QMap<QString, QColor> m_colorSettings;
 
     Ui::OptionDialog *ui;
 };
