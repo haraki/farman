@@ -2,6 +2,7 @@
 #define OPTIONDIALOG_H
 
 #include <QDialog>
+#include <QFont>
 
 namespace Ui {
 class OptionDialog;
@@ -37,9 +38,14 @@ private slots:
     void on_rightFolderLastTimeRadioButton_clicked();
     void on_rightFolderFixedRadioButton_clicked();
     void on_rightFolderSelectButton_clicked();
+
+    void on_fontAndColorFolderViewChooseFontPushButton_clicked();
+
     void on_buttonBox_accepted();
 
 private:
+    QFont chooseFont(const QFont& oldFont);
+
     Ui::OptionDialog *ui;
 };
 

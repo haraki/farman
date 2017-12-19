@@ -1,5 +1,6 @@
 ﻿#include <QMainWindow>
 #include <QFileDialog>
+#include <QFontDialog>
 #include <QDebug>
 #include "optiondialog.h"
 #include "ui_optiondialog.h"
@@ -252,6 +253,24 @@ void OptionDialog::on_rightFolderSelectButton_clicked()
     {
         ui->rightFolderPathLineEdit->setText(dirPath);
     }
+}
+
+void OptionDialog::on_fontAndColorFolderViewChooseFontPushButton_clicked()
+{
+    //QFont newFont = chooseFont(oldFont);
+
+}
+
+QFont OptionDialog::chooseFont(const QFont& oldFont)
+{
+    bool ok = false;
+    QFont newFont = QFontDialog::getFont(&ok, oldFont, this, tr("Choose font"));
+    if(ok)
+    {
+        return oldFont;
+    }
+
+    return newFont;
 }
 
 void OptionDialog::on_buttonBox_accepted()
