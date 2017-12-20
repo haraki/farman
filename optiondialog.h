@@ -42,28 +42,28 @@ private slots:
     void on_rightFolderFixedRadioButton_clicked();
     void on_rightFolderSelectButton_clicked();
 
-    void on_fontAndColorFolderViewChooseFontPushButton_clicked();
+    void on_appearanceFolderViewChooseFontPushButton_clicked();
 
-    void on_fontAndColorFolderViewChooseNormalColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseNormalSelectedColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseFolderColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseFolderSelectedColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseReadOnlyColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseReadOnlySelectedColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseHiddenColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseHiddenSelectedColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseSystemColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseSystemSelectedColorPushButton_clicked();
+    void on_appearanceFolderViewChooseNormalColorPushButton_clicked();
+    void on_appearanceFolderViewChooseNormalSelectedColorPushButton_clicked();
+    void on_appearanceFolderViewChooseFolderColorPushButton_clicked();
+    void on_appearanceFolderViewChooseFolderSelectedColorPushButton_clicked();
+    void on_appearanceFolderViewChooseReadOnlyColorPushButton_clicked();
+    void on_appearanceFolderViewChooseReadOnlySelectedColorPushButton_clicked();
+    void on_appearanceFolderViewChooseHiddenColorPushButton_clicked();
+    void on_appearanceFolderViewChooseHiddenSelectedColorPushButton_clicked();
+    void on_appearanceFolderViewChooseSystemColorPushButton_clicked();
+    void on_appearanceFolderViewChooseSystemSelectedColorPushButton_clicked();
 
-    void on_fontAndColorFolderViewChooseBGColorPushButton_clicked();
-    void on_fontAndColorFolderViewChooseSelectedBGColorPushButton_clicked();
+    void on_appearanceFolderViewChooseBGColorPushButton_clicked();
+    void on_appearanceFolderViewChooseSelectedBGColorPushButton_clicked();
 
     void on_buttonBox_accepted();
 
 private:
-    void setFontAndColorFolderViewOption();
-    void setFontAndColorFolderPathOption();
-    void setFontAndColorConsoleOption();
+    void setAppearanceFolderViewOption();
+    void setAppearanceFolderPathOption();
+    void setAppearanceConsoleOption();
 
     void setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget);
 
