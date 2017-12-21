@@ -377,537 +377,778 @@
          <property name="title">
           <string>Folder View</string>
          </property>
-         <widget class="QLineEdit" name="appearanceFolderViewSystemSelectedLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>184</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewFontLabel">
-          <property name="geometry">
-           <rect>
-            <x>130</x>
-            <y>37</y>
-            <width>311</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>TextLabel</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewFolderSelectedLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>94</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewReadOnlyLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
-            <y>124</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseHiddenSelectedColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>380</x>
-            <y>150</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewReadOnlySelectedLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>124</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlyColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>120</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseNormalSelectedColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>380</x>
-            <y>60</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseFolderSelectedColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>380</x>
-            <y>90</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseNormalColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>60</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewSystemLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
-            <y>184</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseBGColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>90</x>
-            <y>214</y>
-            <width>151</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>BG Color</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewReadOnlyLabel">
+         <widget class="QGroupBox" name="appearanceFolderViewFontGroupBox">
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>126</y>
-            <width>81</width>
-            <height>16</height>
+            <y>20</y>
+            <width>531</width>
+            <height>271</height>
            </rect>
           </property>
-          <property name="text">
-           <string>Read only :</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseSelectedBGColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>320</x>
-            <y>214</y>
-            <width>151</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Selected BG Color</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlySelectedColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>380</x>
-            <y>120</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewNormalSelectedLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>64</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseSystemSelectedColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>380</x>
-            <y>180</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewNormalSelectedLabel">
-          <property name="geometry">
-           <rect>
-            <x>300</x>
-            <y>66</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>(Selected)</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewFolderLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
-            <y>94</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewFolderLabel">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>96</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Folder :</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewSystemLabel">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>186</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>System :</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseSystemColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>180</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewReadOnlySelectedLabel">
-          <property name="geometry">
-           <rect>
-            <x>300</x>
-            <y>126</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>(Selected)</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewHiddenSelectedLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>154</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewNormalLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
-            <y>64</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewSystemSelectedLabel">
-          <property name="geometry">
-           <rect>
-            <x>300</x>
-            <y>186</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>(Selected)</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewFolderSelectedLabel">
-          <property name="geometry">
-           <rect>
-            <x>300</x>
-            <y>96</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>(Selected)</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseFontPushButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>113</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
+          <property name="title">
            <string>Font</string>
           </property>
+          <widget class="QLineEdit" name="appearanceFolderViewNormalSelectedLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>70</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseNormalSelectedColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>66</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewFolderLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>100</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewNormalLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>72</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Normal :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewHiddenSelectedLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>162</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Selected)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewReadOnlySelectedLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>132</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Selected)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewFolderSelectedLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>102</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Selected)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewSystemSelectedLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>190</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewFolderLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>102</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Folder :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewHiddenLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>160</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlySelectedColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>126</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewSystemSelectedLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>192</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Selected)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewReadOnlySelectedLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>130</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewNormalSelectedLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>72</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Selected)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewSystemLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>190</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseHiddenSelectedColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>156</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewHiddenSelectedLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>160</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseNormalColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>66</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlyColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>126</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewReadOnlyLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>132</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Read only :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseFolderSelectedColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>96</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewReadOnlyLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>130</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseFolderColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>96</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewNormalLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>70</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseSystemSelectedColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>186</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewHiddenLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>162</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Hidden :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewSystemLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>192</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>System :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseSystemColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>186</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewFolderSelectedLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>100</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string>Sample</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseHiddenColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>156</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseFontPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>30</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewFontLabel">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>37</y>
+             <width>341</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseBGColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>226</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewBGColorLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>232</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Background :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseSelectedBGColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>226</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewBGSelectedColorLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>232</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Selected)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewFontLabel_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>36</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Font :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
          </widget>
-         <widget class="QLabel" name="appearanceFolderViewHiddenSelectedLabel">
-          <property name="geometry">
-           <rect>
-            <x>300</x>
-            <y>156</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>(Selected)</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewHiddenLabel">
+         <widget class="QGroupBox" name="appearanceFolderViewCursorGroupBox">
           <property name="geometry">
            <rect>
             <x>20</x>
-            <y>156</y>
-            <width>81</width>
-            <height>16</height>
+            <y>290</y>
+            <width>531</width>
+            <height>101</height>
            </rect>
           </property>
-          <property name="text">
-           <string>Hidden :</string>
+          <property name="title">
+           <string>Cursor</string>
           </property>
-         </widget>
-         <widget class="QLineEdit" name="appearanceFolderViewHiddenLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>210</x>
-            <y>154</y>
-            <width>71</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="text">
-           <string>Sample</string>
-          </property>
-          <property name="frame">
-           <bool>false</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-         <widget class="QLabel" name="appearanceFolderViewNormalLabel">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>66</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Normal :</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseFolderColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>90</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="appearanceFolderViewChooseHiddenColorPushButton">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>150</y>
-            <width>101</width>
-            <height>32</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Font Color</string>
-          </property>
+          <widget class="QLabel" name="appearanceFolderViewCursorWidthLabel">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>64</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Width :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseCursorColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>90</x>
+             <y>28</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="appearanceFolderViewChooseCursorInactiveColorPushButton">
+           <property name="geometry">
+            <rect>
+             <x>350</x>
+             <y>28</y>
+             <width>81</width>
+             <height>32</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Choose</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel">
+           <property name="geometry">
+            <rect>
+             <x>270</x>
+             <y>34</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>(Inactive)</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>34</y>
+             <width>81</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Color :</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewCursorLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>180</x>
+             <y>32</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="appearanceFolderViewCursorInactiveLineEdit">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>32</y>
+             <width>71</width>
+             <height>21</height>
+            </rect>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QSpinBox" name="appearanceFolderViewCursorWidthSpinBox">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>60</y>
+             <width>71</width>
+             <height>24</height>
+            </rect>
+           </property>
+           <property name="suffix">
+            <string> px</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10</number>
+           </property>
+          </widget>
          </widget>
         </widget>
        </item>
