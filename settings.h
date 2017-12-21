@@ -76,6 +76,9 @@ public:
     const QMap<QString, QFont>& getFontSettings() { return m_fontSettings; }
     void setFontSettings(const QMap<QString, QFont>& settings) { m_fontSettings = settings; }
 
+    int getCursorWidth() { return m_cursorWidth; }
+    void setCursorWidth(int cursorWidth) { m_cursorWidth = cursorWidth; }
+
 private:
     Settings();
 
@@ -157,6 +160,8 @@ private:
     };
 
     QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;
+
+    int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
 };
 
 }

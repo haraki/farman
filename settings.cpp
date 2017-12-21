@@ -102,6 +102,9 @@ void Settings::initialize()
             m_fontSettings[fontSettingKey] = m_defaultFontSettings[fontSettingKey];
         }
     }
+
+    // Cursor width
+    m_cursorWidth = Settings::getInstance()->value("main/cursorWidth", QString("%1").arg(DEFAULT_CURSOR_WIDTH)).toInt();
 }
 
 void Settings::flush()
@@ -167,6 +170,9 @@ void Settings::flush()
         const QFont& fontSettingValue = m_fontSettings[fontSettingKey];
         Settings::getInstance()->setValue("main/font/" + fontSettingKey, fontSettingValue.toString());
     }
+
+    // Cursor width
+    Settings::getInstance()->setValue("main/cursorWidth", m_cursorWidth);
 }
 
 QColor Settings::getColorSetting(const QString& colorSettingType)
