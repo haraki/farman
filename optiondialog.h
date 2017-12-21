@@ -58,6 +58,9 @@ private slots:
     void on_appearanceFolderViewChooseBGColorPushButton_clicked();
     void on_appearanceFolderViewChooseSelectedBGColorPushButton_clicked();
 
+    void on_appearanceFolderViewChooseCursorColorPushButton_clicked();
+    void on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked();
+
     void on_buttonBox_accepted();
 
 private:

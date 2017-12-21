@@ -143,6 +143,8 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
     m_fontSettings = Settings::getInstance()->getFontSettings();
     m_colorSettings = Settings::getInstance()->getColorSettings();
 
+    ui->appearanceFolderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
+
     setAppearanceFolderViewOption();
 }
 
@@ -355,6 +357,30 @@ void OptionDialog::on_appearanceFolderViewChooseSelectedBGColorPushButton_clicke
     }
 }
 
+void OptionDialog::on_appearanceFolderViewChooseCursorColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderView_cursor"], newColor))
+    {
+        m_colorSettings["folderView_cursor"] = newColor;
+
+        setFontColorSample("folderView_cursor", "folderView_cursor", ui->appearanceFolderViewCursorLineEdit);
+    }
+}
+
+void OptionDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderView_cursor_inactive"], newColor))
+    {
+        m_colorSettings["folderView_cursor_inactive"] = newColor;
+
+        setFontColorSample("folderView_cursor_inactive", "folderView_cursor_inactive", ui->appearanceFolderViewCursorInactiveLineEdit);
+    }
+}
+
 void OptionDialog::setAppearanceFolderViewOption()
 {
     QFont font = m_fontSettings["folderView"];
@@ -384,6 +410,8 @@ void OptionDialog::setAppearanceFolderViewOption()
     setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->appearanceFolderViewHiddenSelectedLineEdit);
     setFontColorSample("folderView_system",            "folderView_background",          ui->appearanceFolderViewSystemLineEdit);
     setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->appearanceFolderViewSystemSelectedLineEdit);
+    setFontColorSample("folderView_cursor",            "folderView_cursor",              ui->appearanceFolderViewCursorLineEdit);
+    setFontColorSample("folderView_cursor_inactive",   "folderView_cursor_inactive",     ui->appearanceFolderViewCursorInactiveLineEdit);
 }
 
 void OptionDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
@@ -491,6 +519,8 @@ void OptionDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setFontSettings(m_fontSettings);
     Settings::getInstance()->setColorSettings(m_colorSettings);
+
+    Settings::getInstance()->setCursorWidth(ui->appearanceFolderViewCursorWidthSpinBox->value());
 }
 
 }           // namespace Farman
