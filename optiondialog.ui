@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>663</width>
-    <height>547</height>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,178 +17,96 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="folderViewTab">
       <attribute name="title">
        <string>Folder View</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="sizeAtStartupGroupBox">
+      <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+       <property name="spacing">
+        <number>-1</number>
+       </property>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="positionAtStartupGroupBox">
          <property name="title">
-          <string>Size at startup</string>
+          <string>Position at startup</string>
          </property>
-         <widget class="QRadioButton" name="sizeDefaultRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="spacing">
+           <number>8</number>
           </property>
-          <property name="text">
-           <string>Default</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="sizeLastTimeRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>141</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Same as last time</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="sizeFixedRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Fixed</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="sizeWidthLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>80</x>
-            <y>90</y>
-            <width>41</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="sizeWidthLabel">
-          <property name="geometry">
-           <rect>
-            <x>28</x>
-            <y>92</y>
-            <width>51</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Width:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="sizeHeightLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>180</x>
-            <y>90</y>
-            <width>41</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="sizeHeightLabel">
-          <property name="geometry">
-           <rect>
-            <x>128</x>
-            <y>92</y>
-            <width>51</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Height:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="leftFolderAtStartupGroupBox">
-         <property name="title">
-          <string>Folder at startup(Left)</string>
-         </property>
-         <widget class="QRadioButton" name="leftFolderFixedRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Fixed</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="leftFolderLastTimeRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>141</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Same as last time</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="leftFolderPathLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>90</y>
-            <width>161</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="leftFolderDefaultRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Default</string>
-          </property>
-         </widget>
-         <widget class="QToolButton" name="leftFolderSelectButton">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>90</y>
-            <width>26</width>
-            <height>22</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
+          <item>
+           <widget class="QRadioButton" name="positionDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="positionLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="positionFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="positionAtStartupHorizontalLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="positionXLabel">
+              <property name="text">
+               <string>X:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="positionXLineEdit"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="positionYLabel">
+              <property name="text">
+               <string>Y:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="positionYLineEdit"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </item>
        <item row="1" column="1">
@@ -196,166 +114,213 @@
          <property name="title">
           <string>Folder at startup(Right)</string>
          </property>
-         <widget class="QRadioButton" name="rightFolderFixedRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="spacing">
+           <number>8</number>
           </property>
-          <property name="text">
-           <string>Fixed</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rightFolderLastTimeRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>141</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Same as last time</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="rightFolderPathLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>90</y>
-            <width>161</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rightFolderDefaultRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Default</string>
-          </property>
-         </widget>
-         <widget class="QToolButton" name="rightFolderSelectButton">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>90</y>
-            <width>26</width>
-            <height>22</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
+          <item>
+           <widget class="QRadioButton" name="rightFolderDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rightFolderLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rightFolderFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="folderAtStartupRightHorizontalLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="rightFolderSelectButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="rightFolderPathLineEdit"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="positionAtStartupGroupBox">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="leftFolderAtStartupGroupBox">
          <property name="title">
-          <string>Position at startup</string>
+          <string>Folder at startup(Left)</string>
          </property>
-         <widget class="QLabel" name="positionYLabel">
-          <property name="geometry">
-           <rect>
-            <x>128</x>
-            <y>92</y>
-            <width>21</width>
-            <height>16</height>
-           </rect>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>8</number>
           </property>
-          <property name="text">
-           <string>Y:</string>
+          <item>
+           <widget class="QRadioButton" name="leftFolderDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="leftFolderLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="leftFolderFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="folderAtStartupLeftHorizontalLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="leftFolderSelectButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="leftFolderPathLineEdit"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="sizeAtStartupGroupBox">
+         <property name="title">
+          <string>Size at startup</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>8</number>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="positionXLabel">
-          <property name="geometry">
-           <rect>
-            <x>48</x>
-            <y>92</y>
-            <width>21</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>X:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="positionXLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>90</y>
-            <width>41</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="positionLastTimeRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>50</y>
-            <width>141</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Same as last time</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="positionYLineEdit">
-          <property name="geometry">
-           <rect>
-            <x>150</x>
-            <y>90</y>
-            <width>41</width>
-            <height>21</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="positionDefaultRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Default</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="positionFixedRadioButton">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>100</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Fixed</string>
-          </property>
-         </widget>
+          <item>
+           <widget class="QRadioButton" name="sizeDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="sizeLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="sizeFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="sizeAtStartupHorizontalLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="sizeWidthLabel">
+              <property name="text">
+               <string>Width:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="sizeWidthLineEdit"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="sizeHeightLabel">
+              <property name="text">
+               <string>Height:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="sizeHeightLineEdit"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </item>
        <item row="2" column="0">
@@ -364,6 +329,19 @@
           <string>Confirm quit</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="0">
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -377,780 +355,529 @@
          <property name="title">
           <string>Folder View</string>
          </property>
-         <widget class="QGroupBox" name="appearanceFolderViewFontGroupBox">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>20</y>
-            <width>531</width>
-            <height>271</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>Font</string>
-          </property>
-          <widget class="QLineEdit" name="appearanceFolderViewNormalSelectedLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>440</x>
-             <y>70</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseNormalSelectedColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>66</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewFolderLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>100</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewNormalLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>72</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Normal :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewHiddenSelectedLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>162</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Selected)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewReadOnlySelectedLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>132</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Selected)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewFolderSelectedLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>102</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Selected)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewSystemSelectedLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>440</x>
-             <y>190</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewFolderLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>102</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Folder :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewHiddenLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>160</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlySelectedColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>126</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewSystemSelectedLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>192</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Selected)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewReadOnlySelectedLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>440</x>
-             <y>130</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewNormalSelectedLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>72</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Selected)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewSystemLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>190</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseHiddenSelectedColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>156</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewHiddenSelectedLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>440</x>
-             <y>160</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseNormalColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>66</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlyColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>126</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewReadOnlyLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>132</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Read only :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseFolderSelectedColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>96</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewReadOnlyLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>130</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseFolderColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>96</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewNormalLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>70</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseSystemSelectedColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>186</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewHiddenLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>162</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Hidden :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewSystemLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>192</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>System :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseSystemColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>186</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewFolderSelectedLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>440</x>
-             <y>100</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string>Sample</string>
-           </property>
-           <property name="frame">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseHiddenColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>156</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseFontPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>30</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewFontLabel">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>37</y>
-             <width>341</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseBGColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>226</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewBGColorLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>232</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Background :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseSelectedBGColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>226</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewBGSelectedColorLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>232</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Selected)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewFontLabel_2">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>36</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Font :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QGroupBox" name="appearanceFolderViewCursorGroupBox">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>290</y>
-            <width>531</width>
-            <height>101</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>Cursor</string>
-          </property>
-          <widget class="QLabel" name="appearanceFolderViewCursorWidthLabel">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>64</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Width :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseCursorColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>90</x>
-             <y>28</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QPushButton" name="appearanceFolderViewChooseCursorInactiveColorPushButton">
-           <property name="geometry">
-            <rect>
-             <x>350</x>
-             <y>28</y>
-             <width>81</width>
-             <height>32</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Choose</string>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel">
-           <property name="geometry">
-            <rect>
-             <x>270</x>
-             <y>34</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>(Inactive)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel_2">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>34</y>
-             <width>81</width>
-             <height>16</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Color :</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewCursorLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>180</x>
-             <y>32</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="frame">
-            <bool>true</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QLineEdit" name="appearanceFolderViewCursorInactiveLineEdit">
-           <property name="geometry">
-            <rect>
-             <x>440</x>
-             <y>32</y>
-             <width>71</width>
-             <height>21</height>
-            </rect>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="frame">
-            <bool>true</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QSpinBox" name="appearanceFolderViewCursorWidthSpinBox">
-           <property name="geometry">
-            <rect>
-             <x>100</x>
-             <y>60</y>
-             <width>71</width>
-             <height>24</height>
-            </rect>
-           </property>
-           <property name="suffix">
-            <string> px</string>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>10</number>
-           </property>
-          </widget>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QGroupBox" name="appearanceFolderViewFontGroupBox">
+            <property name="title">
+             <string>Font</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <property name="leftMargin">
+              <number>12</number>
+             </property>
+             <property name="topMargin">
+              <number>12</number>
+             </property>
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <item row="4" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseHiddenColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QPushButton" name="appearanceFolderViewChooseFolderSelectedColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlyColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="3">
+              <widget class="QLabel" name="appearanceFolderViewBGSelectedColorLabel">
+               <property name="text">
+                <string>(Selected)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="appearanceFolderViewBGColorLabel">
+               <property name="text">
+                <string>Background :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="5">
+              <widget class="QLineEdit" name="appearanceFolderViewReadOnlySelectedLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="appearanceFolderViewFolderLabel">
+               <property name="text">
+                <string>Folder :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLabel" name="appearanceFolderViewNormalSelectedLabel">
+               <property name="text">
+                <string>(Selected)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="4">
+              <widget class="QPushButton" name="appearanceFolderViewChooseSystemSelectedColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="appearanceFolderViewSystemLabel">
+               <property name="text">
+                <string>System :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLabel" name="appearanceFolderViewFolderSelectedLabel">
+               <property name="text">
+                <string>(Selected)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseSystemColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLineEdit" name="appearanceFolderViewFolderLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="appearanceFolderViewReadOnlyLabel">
+               <property name="text">
+                <string>Read only :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseFolderColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="4">
+              <widget class="QPushButton" name="appearanceFolderViewChooseHiddenSelectedColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3">
+              <widget class="QLabel" name="appearanceFolderViewHiddenSelectedLabel">
+               <property name="text">
+                <string>(Selected)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseFontPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="4">
+              <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlySelectedColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseNormalColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="appearanceFolderViewHiddenLabel">
+               <property name="text">
+                <string>Hidden :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="5">
+              <widget class="QLineEdit" name="appearanceFolderViewFolderSelectedLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="5">
+              <widget class="QLineEdit" name="appearanceFolderViewSystemSelectedLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="3">
+              <widget class="QLabel" name="appearanceFolderViewSystemSelectedLabel">
+               <property name="text">
+                <string>(Selected)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLineEdit" name="appearanceFolderViewHiddenLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QPushButton" name="appearanceFolderViewChooseNormalSelectedColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="appearanceFolderViewNormalLabel">
+               <property name="text">
+                <string>Normal :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLabel" name="appearanceFolderViewReadOnlySelectedLabel">
+               <property name="text">
+                <string>(Selected)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="4">
+              <widget class="QPushButton" name="appearanceFolderViewChooseSelectedBGColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="5">
+              <widget class="QLineEdit" name="appearanceFolderViewNormalSelectedLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QPushButton" name="appearanceFolderViewChooseBGColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLineEdit" name="appearanceFolderViewReadOnlyLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="5">
+              <widget class="QLineEdit" name="appearanceFolderViewHiddenSelectedLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLineEdit" name="appearanceFolderViewSystemLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="appearanceFolderViewFontLabel_2">
+               <property name="text">
+                <string>Font :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLineEdit" name="appearanceFolderViewNormalLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string>Sample</string>
+               </property>
+               <property name="frame">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" colspan="4">
+              <widget class="QLabel" name="appearanceFolderViewFontLabel">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="appearanceFolderViewCursorGroupBox">
+            <property name="title">
+             <string>Cursor</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <item row="0" column="2">
+              <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel_2">
+               <property name="text">
+                <string>Color :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="6">
+              <widget class="QPushButton" name="appearanceFolderViewChooseCursorInactiveColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QPushButton" name="appearanceFolderViewChooseCursorColorPushButton">
+               <property name="text">
+                <string>Choose</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QLineEdit" name="appearanceFolderViewCursorLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="appearanceFolderViewCursorWidthLabel">
+               <property name="text">
+                <string>Width :</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="5">
+              <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel">
+               <property name="text">
+                <string>(Inactive)</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="7">
+              <widget class="QLineEdit" name="appearanceFolderViewCursorInactiveLineEdit">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSpinBox" name="appearanceFolderViewCursorWidthSpinBox">
+               <property name="suffix">
+                <string> px</string>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1183,12 +910,10 @@
   <tabstop>leftFolderDefaultRadioButton</tabstop>
   <tabstop>leftFolderLastTimeRadioButton</tabstop>
   <tabstop>leftFolderFixedRadioButton</tabstop>
-  <tabstop>leftFolderSelectButton</tabstop>
   <tabstop>leftFolderPathLineEdit</tabstop>
   <tabstop>rightFolderDefaultRadioButton</tabstop>
   <tabstop>rightFolderLastTimeRadioButton</tabstop>
   <tabstop>rightFolderFixedRadioButton</tabstop>
-  <tabstop>rightFolderSelectButton</tabstop>
   <tabstop>rightFolderPathLineEdit</tabstop>
   <tabstop>confirmQuitCheckBox</tabstop>
   <tabstop>appearanceFolderViewChooseFontPushButton</tabstop>
@@ -1206,7 +931,6 @@
   <tabstop>appearanceFolderViewChooseSelectedBGColorPushButton</tabstop>
   <tabstop>appearanceFolderViewChooseCursorColorPushButton</tabstop>
   <tabstop>appearanceFolderViewChooseCursorInactiveColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewCursorWidthSpinBox</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -1217,8 +941,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>254</x>
+     <y>542</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -1233,8 +957,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>322</x>
+     <y>542</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
