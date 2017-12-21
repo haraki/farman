@@ -31,7 +31,10 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
         {
             // カーソル位置をアンダーラインで表示
             painter->save();
-            QPen pen((option.state & QStyle::State_Active) ? Settings::getInstance()->getColorSetting("folderView_cursor") : Settings::getInstance()->getColorSetting("folderView_cursor_inactive"), 1);
+            QColor color = (option.state & QStyle::State_Active) ?
+                               Settings::getInstance()->getColorSetting("folderView_cursor") : Settings::getInstance()->getColorSetting("folderView_cursor_inactive");
+            int width = Settings::getInstance()->getCursorWidth();
+            QPen pen(color, static_cast<qreal>(width));
             painter->setPen(pen);
             painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
             painter->restore();
