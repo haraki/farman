@@ -1168,6 +1168,46 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>sizeDefaultRadioButton</tabstop>
+  <tabstop>sizeLastTimeRadioButton</tabstop>
+  <tabstop>sizeFixedRadioButton</tabstop>
+  <tabstop>sizeWidthLineEdit</tabstop>
+  <tabstop>sizeHeightLineEdit</tabstop>
+  <tabstop>positionDefaultRadioButton</tabstop>
+  <tabstop>positionLastTimeRadioButton</tabstop>
+  <tabstop>positionFixedRadioButton</tabstop>
+  <tabstop>positionXLineEdit</tabstop>
+  <tabstop>positionYLineEdit</tabstop>
+  <tabstop>leftFolderDefaultRadioButton</tabstop>
+  <tabstop>leftFolderLastTimeRadioButton</tabstop>
+  <tabstop>leftFolderFixedRadioButton</tabstop>
+  <tabstop>leftFolderSelectButton</tabstop>
+  <tabstop>leftFolderPathLineEdit</tabstop>
+  <tabstop>rightFolderDefaultRadioButton</tabstop>
+  <tabstop>rightFolderLastTimeRadioButton</tabstop>
+  <tabstop>rightFolderFixedRadioButton</tabstop>
+  <tabstop>rightFolderSelectButton</tabstop>
+  <tabstop>rightFolderPathLineEdit</tabstop>
+  <tabstop>confirmQuitCheckBox</tabstop>
+  <tabstop>appearanceFolderViewChooseFontPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseNormalColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseNormalSelectedColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseFolderColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseFolderSelectedColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseReadOnlyColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseReadOnlySelectedColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseHiddenColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseHiddenSelectedColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseSystemColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseSystemSelectedColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseBGColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseSelectedBGColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseCursorColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewChooseCursorInactiveColorPushButton</tabstop>
+  <tabstop>appearanceFolderViewCursorWidthSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
