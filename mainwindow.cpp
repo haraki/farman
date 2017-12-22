@@ -47,9 +47,6 @@ void MainWindow::initialize()
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
-    initFont();
-    initPalette();
-
     SizeAtStartup sizeType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeType == SizeAtStartup::Fixed || sizeType == SizeAtStartup::LastTime)
     {
@@ -63,6 +60,8 @@ void MainWindow::initialize()
         QPoint pos = Settings::getInstance()->getPositionAtStartup();
         this->move(pos);
     }
+
+    updateSettings();
 
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
 }
@@ -274,6 +273,18 @@ void MainWindow::on_actionOption_triggered()
 
     OptionDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, this);
     if(dialog.exec() == QDialog::Accepted)
+    {
+        updateSettings();
+    }
+}
+
+void MainWindow::updateSettings()
+{
+    initFont();
+    initPalette();
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
     {
         doubleFolderPanel->updateSettings();
         doubleFolderPanel->refresh();

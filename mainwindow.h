@@ -33,6 +33,11 @@ private:
     void initialize();
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
+    void initFont();
+    void initPalette();
+
+    void updateSettings();
+
 private Q_SLOTS:
     void on_actionOpenInApp_triggered();
     void on_actionQuit_triggered();
@@ -48,9 +53,6 @@ private Q_SLOTS:
     void on_actionOption_triggered();
 
 private:
-    void initFont();
-    void initPalette();
-
     static MainWindow* s_instance;
 
     Ui::MainWindow *ui;
