@@ -61,12 +61,18 @@ private slots:
     void on_appearanceFolderViewChooseCursorColorPushButton_clicked();
     void on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked();
 
+    void on_appearanceFolderPathChooseFontPushButton_clicked();
+    void on_appearanceFolderPathChooseColorPushButton_clicked();
+    void on_appearanceFolderPathChooseBGColorPushButton_clicked();
+
+    void on_appearanceConsoleChooseFontPushButton_clicked();
+    void on_appearanceConsoleChooseColorPushButton_clicked();
+    void on_appearanceConsoleChooseBGColorPushButton_clicked();
+
     void on_buttonBox_accepted();
 
 private:
-    void setAppearanceFolderViewOption();
-    void setAppearanceFolderPathOption();
-    void setAppearanceConsoleOption();
+    void setAppearanceFontAndColorOption();
 
     void setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget);
 

@@ -145,7 +145,7 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
 
     ui->appearanceFolderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
 
-    setAppearanceFolderViewOption();
+    setAppearanceFontAndColorOption();
 }
 
 OptionDialog::~OptionDialog()
@@ -271,7 +271,7 @@ void OptionDialog::on_appearanceFolderViewChooseFontPushButton_clicked()
     {
         m_fontSettings["folderView"] = newFont;
 
-        setAppearanceFolderViewOption();
+        setAppearanceFontAndColorOption();
     }
 }
 
@@ -381,12 +381,73 @@ void OptionDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButton_cl
     }
 }
 
-void OptionDialog::setAppearanceFolderViewOption()
+void OptionDialog::on_appearanceFolderPathChooseFontPushButton_clicked()
 {
-    QFont font = m_fontSettings["folderView"];
+    QFont newFont = QFont();
+
+    if(showChooseFontDialog(m_fontSettings["folderPath"], newFont))
+    {
+        m_fontSettings["folderPath"] = newFont;
+
+        setAppearanceFontAndColorOption();
+    }
+}
+
+void OptionDialog::on_appearanceFolderPathChooseColorPushButton_clicked()
+{
+    chooseColor("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
+}
+
+void OptionDialog::on_appearanceFolderPathChooseBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderPath_background"], newColor))
+    {
+        m_colorSettings["folderPath_background"] = newColor;
+
+        setFontColorSample("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
+    }
+}
+
+void OptionDialog::on_appearanceConsoleChooseFontPushButton_clicked()
+{
+    QFont newFont = QFont();
+
+    if(showChooseFontDialog(m_fontSettings["console"], newFont))
+    {
+        m_fontSettings["console"] = newFont;
+
+        setAppearanceFontAndColorOption();
+    }
+}
+
+void OptionDialog::on_appearanceConsoleChooseColorPushButton_clicked()
+{
+    chooseColor("console_text", "console_background", ui->appearanceConsoleLineEdit);
+}
+
+void OptionDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["console_background"], newColor))
+    {
+        m_colorSettings["console_background"] = newColor;
+
+        setFontColorSample("console_text", "console_background", ui->appearanceConsoleLineEdit);
+    }
+}
+
+void OptionDialog::setAppearanceFontAndColorOption()
+{
+    QFont font;
+
+    // Folder View
+
+    font = m_fontSettings["folderView"];
 
     ui->appearanceFolderViewFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
-
     ui->appearanceFolderViewFontLabel->setFont(font);
 
     ui->appearanceFolderViewNormalLineEdit->setFont(font);
@@ -412,6 +473,28 @@ void OptionDialog::setAppearanceFolderViewOption()
     setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->appearanceFolderViewSystemSelectedLineEdit);
     setFontColorSample("folderView_cursor",            "folderView_cursor",              ui->appearanceFolderViewCursorLineEdit);
     setFontColorSample("folderView_cursor_inactive",   "folderView_cursor_inactive",     ui->appearanceFolderViewCursorInactiveLineEdit);
+
+    // Folder Path
+
+    font = m_fontSettings["folderPath"];
+
+    ui->appearanceFolderPathFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->appearanceFolderPathFontLabel->setFont(font);
+
+    ui->appearanceFolderPathLineEdit->setFont(font);
+
+    setFontColorSample("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
+
+    // Console
+
+    font = m_fontSettings["console"];
+
+    ui->appearanceConsoleFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->appearanceConsoleFontLabel->setFont(font);
+
+    ui->appearanceConsoleLineEdit->setFont(font);
+
+    setFontColorSample("console_text", "console_background", ui->appearanceConsoleLineEdit);
 }
 
 void OptionDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
