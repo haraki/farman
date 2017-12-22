@@ -23,122 +23,122 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
     SizeAtStartup sizeAtStartupType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeAtStartupType == SizeAtStartup::Fixed)
     {
-        ui->sizeFixedRadioButton->setChecked(true);
-        ui->sizeWidthLabel->setEnabled(true);
-        ui->sizeWidthLineEdit->setEnabled(true);
-        ui->sizeHeightLabel->setEnabled(true);
-        ui->sizeHeightLineEdit->setEnabled(true);
+        ui->generalSizeFixedRadioButton->setChecked(true);
+        ui->generalSizeWidthLabel->setEnabled(true);
+        ui->generalSizeWidthLineEdit->setEnabled(true);
+        ui->generalSizeHeightLabel->setEnabled(true);
+        ui->generalSizeHeightLineEdit->setEnabled(true);
 
         QSize size = Settings::getInstance()->getSizeAtStartup();
 
-        ui->sizeWidthLineEdit->setText(QString::number(size.width()));
-        ui->sizeHeightLineEdit->setText(QString::number(size.height()));
+        ui->generalSizeWidthLineEdit->setText(QString::number(size.width()));
+        ui->generalSizeHeightLineEdit->setText(QString::number(size.height()));
     }
     else
     {
         if(sizeAtStartupType == SizeAtStartup::LastTime)
         {
-            ui->sizeLastTimeRadioButton->setChecked(true);
+            ui->generalSizeLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->sizeDefaultRadioButton->setChecked(true);
+            ui->generalSizeDefaultRadioButton->setChecked(true);
         }
 
-        ui->sizeWidthLabel->setEnabled(false);
-        ui->sizeWidthLineEdit->setEnabled(false);
-        ui->sizeHeightLabel->setEnabled(false);
-        ui->sizeHeightLineEdit->setEnabled(false);
+        ui->generalSizeWidthLabel->setEnabled(false);
+        ui->generalSizeWidthLineEdit->setEnabled(false);
+        ui->generalSizeHeightLabel->setEnabled(false);
+        ui->generalSizeHeightLineEdit->setEnabled(false);
 
-        ui->sizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
-        ui->sizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
+        ui->generalSizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
+        ui->generalSizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
     }
 
     PositionAtStartup positionAtStartupType = Settings::getInstance()->getPositionAtStartupType();
     if(positionAtStartupType == PositionAtStartup::Fixed)
     {
-        ui->positionFixedRadioButton->setChecked(true);
-        ui->positionXLabel->setEnabled(true);
-        ui->positionXLineEdit->setEnabled(true);
-        ui->positionYLabel->setEnabled(true);
-        ui->positionYLineEdit->setEnabled(true);
+        ui->generalPositionFixedRadioButton->setChecked(true);
+        ui->generalPositionXLabel->setEnabled(true);
+        ui->generalPositionXLineEdit->setEnabled(true);
+        ui->generalPositionYLabel->setEnabled(true);
+        ui->generalPositionYLineEdit->setEnabled(true);
 
         QPoint pos = Settings::getInstance()->getPositionAtStartup();
 
-        ui->positionXLineEdit->setText(QString::number(pos.x()));
-        ui->positionYLineEdit->setText(QString::number(pos.y()));
+        ui->generalPositionXLineEdit->setText(QString::number(pos.x()));
+        ui->generalPositionYLineEdit->setText(QString::number(pos.y()));
     }
     else
     {
         if(positionAtStartupType == PositionAtStartup::LastTime)
         {
-            ui->positionLastTimeRadioButton->setChecked(true);
+            ui->generalPositionLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->positionDefaultRadioButton->setChecked(true);
+            ui->generalPositionDefaultRadioButton->setChecked(true);
         }
 
-        ui->positionXLabel->setEnabled(false);
-        ui->positionXLineEdit->setEnabled(false);
-        ui->positionYLabel->setEnabled(false);
-        ui->positionYLineEdit->setEnabled(false);
+        ui->generalPositionXLabel->setEnabled(false);
+        ui->generalPositionXLineEdit->setEnabled(false);
+        ui->generalPositionYLabel->setEnabled(false);
+        ui->generalPositionYLineEdit->setEnabled(false);
 
-        ui->positionXLineEdit->setText(QString::number(mainWindowPos.x()));
-        ui->positionYLineEdit->setText(QString::number(mainWindowPos.y()));
+        ui->generalPositionXLineEdit->setText(QString::number(mainWindowPos.x()));
+        ui->generalPositionYLineEdit->setText(QString::number(mainWindowPos.y()));
     }
 
     FolderAtStartup leftFolderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
     if(leftFolderAtStartup == FolderAtStartup::Fixed)
     {
-        ui->leftFolderFixedRadioButton->setChecked(true);
-        ui->leftFolderSelectButton->setEnabled(true);
-        ui->leftFolderPathLineEdit->setEnabled(true);
+        ui->generalLeftFolderFixedRadioButton->setChecked(true);
+        ui->generalLeftFolderSelectButton->setEnabled(true);
+        ui->generalLeftFolderPathLineEdit->setEnabled(true);
 
-        ui->leftFolderPathLineEdit->setText(Settings::getInstance()->getLeftFolderPath());
+        ui->generalLeftFolderPathLineEdit->setText(Settings::getInstance()->getLeftFolderPath());
     }
     else
     {
         if(leftFolderAtStartup == FolderAtStartup::LastTime)
         {
-            ui->leftFolderLastTimeRadioButton->setChecked(true);
+            ui->generalLeftFolderLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->leftFolderDefaultRadioButton->setChecked(true);
+            ui->generalLeftFolderDefaultRadioButton->setChecked(true);
         }
-        ui->leftFolderSelectButton->setEnabled(false);
-        ui->leftFolderPathLineEdit->setEnabled(false);
+        ui->generalLeftFolderSelectButton->setEnabled(false);
+        ui->generalLeftFolderPathLineEdit->setEnabled(false);
 
-        ui->leftFolderPathLineEdit->setText(leftDirPath);
+        ui->generalLeftFolderPathLineEdit->setText(leftDirPath);
     }
 
     FolderAtStartup rightFolderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
     if(rightFolderAtStartup == FolderAtStartup::Fixed)
     {
-        ui->rightFolderFixedRadioButton->setChecked(true);
-        ui->rightFolderSelectButton->setEnabled(true);
-        ui->rightFolderPathLineEdit->setEnabled(true);
+        ui->generalRightFolderFixedRadioButton->setChecked(true);
+        ui->generalRightFolderSelectButton->setEnabled(true);
+        ui->generalRightFolderPathLineEdit->setEnabled(true);
 
-        ui->rightFolderPathLineEdit->setText(Settings::getInstance()->getRightFolderPath());
+        ui->generalRightFolderPathLineEdit->setText(Settings::getInstance()->getRightFolderPath());
     }
     else
     {
         if(rightFolderAtStartup == FolderAtStartup::LastTime)
         {
-            ui->rightFolderLastTimeRadioButton->setChecked(true);
+            ui->generalRightFolderLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->rightFolderDefaultRadioButton->setChecked(true);
+            ui->generalRightFolderDefaultRadioButton->setChecked(true);
         }
-        ui->rightFolderSelectButton->setEnabled(false);
-        ui->rightFolderPathLineEdit->setEnabled(false);
+        ui->generalRightFolderSelectButton->setEnabled(false);
+        ui->generalRightFolderPathLineEdit->setEnabled(false);
 
-        ui->rightFolderPathLineEdit->setText(rightDirPath);
+        ui->generalRightFolderPathLineEdit->setText(rightDirPath);
     }
 
-    ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
+    ui->generalConfirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
     m_fontSettings = Settings::getInstance()->getFontSettings();
     m_colorSettings = Settings::getInstance()->getColorSettings();
@@ -153,113 +153,113 @@ OptionDialog::~OptionDialog()
     delete ui;
 }
 
-void OptionDialog::on_sizeDefaultRadioButton_clicked()
+void OptionDialog::on_generalSizeDefaultRadioButton_clicked()
 {
-    ui->sizeWidthLabel->setEnabled(false);
-    ui->sizeWidthLineEdit->setEnabled(false);
-    ui->sizeHeightLabel->setEnabled(false);
-    ui->sizeHeightLineEdit->setEnabled(false);
+    ui->generalSizeWidthLabel->setEnabled(false);
+    ui->generalSizeWidthLineEdit->setEnabled(false);
+    ui->generalSizeHeightLabel->setEnabled(false);
+    ui->generalSizeHeightLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_sizeLastTimeRadioButton_clicked()
+void OptionDialog::on_generalSizeLastTimeRadioButton_clicked()
 {
-    ui->sizeWidthLabel->setEnabled(false);
-    ui->sizeWidthLineEdit->setEnabled(false);
-    ui->sizeHeightLabel->setEnabled(false);
-    ui->sizeHeightLineEdit->setEnabled(false);
+    ui->generalSizeWidthLabel->setEnabled(false);
+    ui->generalSizeWidthLineEdit->setEnabled(false);
+    ui->generalSizeHeightLabel->setEnabled(false);
+    ui->generalSizeHeightLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_sizeFixedRadioButton_clicked()
+void OptionDialog::on_generalSizeFixedRadioButton_clicked()
 {
-    ui->sizeWidthLabel->setEnabled(true);
-    ui->sizeWidthLineEdit->setEnabled(true);
-    ui->sizeHeightLabel->setEnabled(true);
-    ui->sizeHeightLineEdit->setEnabled(true);
+    ui->generalSizeWidthLabel->setEnabled(true);
+    ui->generalSizeWidthLineEdit->setEnabled(true);
+    ui->generalSizeHeightLabel->setEnabled(true);
+    ui->generalSizeHeightLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_positionDefaultRadioButton_clicked()
+void OptionDialog::on_generalPositionDefaultRadioButton_clicked()
 {
-    ui->positionXLabel->setEnabled(false);
-    ui->positionXLineEdit->setEnabled(false);
-    ui->positionYLabel->setEnabled(false);
-    ui->positionYLineEdit->setEnabled(false);
+    ui->generalPositionXLabel->setEnabled(false);
+    ui->generalPositionXLineEdit->setEnabled(false);
+    ui->generalPositionYLabel->setEnabled(false);
+    ui->generalPositionYLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_positionLastTimeRadioButton_clicked()
+void OptionDialog::on_generalPositionLastTimeRadioButton_clicked()
 {
-    ui->positionXLabel->setEnabled(false);
-    ui->positionXLineEdit->setEnabled(false);
-    ui->positionYLabel->setEnabled(false);
-    ui->positionYLineEdit->setEnabled(false);
+    ui->generalPositionXLabel->setEnabled(false);
+    ui->generalPositionXLineEdit->setEnabled(false);
+    ui->generalPositionYLabel->setEnabled(false);
+    ui->generalPositionYLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_positionFixedRadioButton_clicked()
+void OptionDialog::on_generalPositionFixedRadioButton_clicked()
 {
-    ui->positionXLabel->setEnabled(true);
-    ui->positionXLineEdit->setEnabled(true);
-    ui->positionYLabel->setEnabled(true);
-    ui->positionYLineEdit->setEnabled(true);
+    ui->generalPositionXLabel->setEnabled(true);
+    ui->generalPositionXLineEdit->setEnabled(true);
+    ui->generalPositionYLabel->setEnabled(true);
+    ui->generalPositionYLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_leftFolderDefaultRadioButton_clicked()
+void OptionDialog::on_generalLeftFolderDefaultRadioButton_clicked()
 {
-    ui->leftFolderSelectButton->setEnabled(false);
-    ui->leftFolderPathLineEdit->setEnabled(false);
+    ui->generalLeftFolderSelectButton->setEnabled(false);
+    ui->generalLeftFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_leftFolderLastTimeRadioButton_clicked()
+void OptionDialog::on_generalLeftFolderLastTimeRadioButton_clicked()
 {
-    ui->leftFolderSelectButton->setEnabled(false);
-    ui->leftFolderPathLineEdit->setEnabled(false);
+    ui->generalLeftFolderSelectButton->setEnabled(false);
+    ui->generalLeftFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_leftFolderFixedRadioButton_clicked()
+void OptionDialog::on_generalLeftFolderFixedRadioButton_clicked()
 {
-    ui->leftFolderSelectButton->setEnabled(true);
-    ui->leftFolderPathLineEdit->setEnabled(true);
+    ui->generalLeftFolderSelectButton->setEnabled(true);
+    ui->generalLeftFolderPathLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_rightFolderDefaultRadioButton_clicked()
+void OptionDialog::on_generalRightFolderDefaultRadioButton_clicked()
 {
-    ui->rightFolderSelectButton->setEnabled(false);
-    ui->rightFolderPathLineEdit->setEnabled(false);
+    ui->generalRightFolderSelectButton->setEnabled(false);
+    ui->generalRightFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_rightFolderLastTimeRadioButton_clicked()
+void OptionDialog::on_generalRightFolderLastTimeRadioButton_clicked()
 {
-    ui->rightFolderSelectButton->setEnabled(false);
-    ui->rightFolderPathLineEdit->setEnabled(false);
+    ui->generalRightFolderSelectButton->setEnabled(false);
+    ui->generalRightFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_rightFolderFixedRadioButton_clicked()
+void OptionDialog::on_generalRightFolderFixedRadioButton_clicked()
 {
-    ui->rightFolderSelectButton->setEnabled(true);
-    ui->rightFolderPathLineEdit->setEnabled(true);
+    ui->generalRightFolderSelectButton->setEnabled(true);
+    ui->generalRightFolderPathLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_leftFolderSelectButton_clicked()
+void OptionDialog::on_generalLeftFolderSelectButton_clicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
-                                                        ui->leftFolderPathLineEdit->text(),
+                                                        ui->generalLeftFolderPathLineEdit->text(),
                                                         QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
     if(!dirPath.isEmpty())
     {
-        ui->leftFolderPathLineEdit->setText(dirPath);
+        ui->generalLeftFolderPathLineEdit->setText(dirPath);
     }
 }
 
-void OptionDialog::on_rightFolderSelectButton_clicked()
+void OptionDialog::on_generalRightFolderSelectButton_clicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
-                                                        ui->rightFolderPathLineEdit->text(),
+                                                        ui->generalRightFolderPathLineEdit->text(),
                                                         QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
     if(!dirPath.isEmpty())
     {
-        ui->rightFolderPathLineEdit->setText(dirPath);
+        ui->generalRightFolderPathLineEdit->setText(dirPath);
     }
 }
 
@@ -451,14 +451,14 @@ bool OptionDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFont)
 
 void OptionDialog::on_buttonBox_accepted()
 {
-    if(ui->sizeFixedRadioButton->isChecked())
+    if(ui->generalSizeFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Fixed);
 
-        QSize size = QSize(ui->sizeWidthLineEdit->text().toInt(), ui->sizeHeightLineEdit->text().toInt());
+        QSize size = QSize(ui->generalSizeWidthLineEdit->text().toInt(), ui->generalSizeHeightLineEdit->text().toInt());
         Settings::getInstance()->setSizeAtStartup(size);
     }
-    else if(ui->sizeLastTimeRadioButton->isChecked())
+    else if(ui->generalSizeLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::LastTime);
     }
@@ -467,14 +467,14 @@ void OptionDialog::on_buttonBox_accepted()
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Default);
     }
 
-    if(ui->positionFixedRadioButton->isChecked())
+    if(ui->generalPositionFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::Fixed);
 
-        QPoint pos = QPoint(ui->positionXLineEdit->text().toInt(), ui->positionYLineEdit->text().toInt());
+        QPoint pos = QPoint(ui->generalPositionXLineEdit->text().toInt(), ui->generalPositionYLineEdit->text().toInt());
         Settings::getInstance()->setPositionAtStartup(pos);
     }
-    else if(ui->positionLastTimeRadioButton->isChecked())
+    else if(ui->generalPositionLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::LastTime);
     }
@@ -483,14 +483,14 @@ void OptionDialog::on_buttonBox_accepted()
         Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::Default);
     }
 
-    if(ui->leftFolderFixedRadioButton->isChecked())
+    if(ui->generalLeftFolderFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::Fixed);
 
-        QString dirPath = ui->leftFolderPathLineEdit->text();
+        QString dirPath = ui->generalLeftFolderPathLineEdit->text();
         Settings::getInstance()->setLeftFolderPath(dirPath);
     }
-    else if(ui->leftFolderLastTimeRadioButton->isChecked())
+    else if(ui->generalLeftFolderLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::LastTime);
     }
@@ -499,14 +499,14 @@ void OptionDialog::on_buttonBox_accepted()
         Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::Default);
     }
 
-    if(ui->rightFolderFixedRadioButton->isChecked())
+    if(ui->generalRightFolderFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Fixed);
 
-        QString dirPath = ui->rightFolderPathLineEdit->text();
+        QString dirPath = ui->generalRightFolderPathLineEdit->text();
         Settings::getInstance()->setRightFolderPath(dirPath);
     }
-    else if(ui->rightFolderLastTimeRadioButton->isChecked())
+    else if(ui->generalRightFolderLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::LastTime);
     }
@@ -515,7 +515,7 @@ void OptionDialog::on_buttonBox_accepted()
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
     }
 
-    Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
+    Settings::getInstance()->setConfirmQuit(ui->generalConfirmQuitCheckBox->isChecked());
 
     Settings::getInstance()->setFontSettings(m_fontSettings);
     Settings::getInstance()->setColorSettings(m_colorSettings);

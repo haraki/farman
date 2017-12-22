@@ -27,20 +27,20 @@ public:
     ~OptionDialog();
 
 private slots:
-    void on_sizeDefaultRadioButton_clicked();
-    void on_sizeLastTimeRadioButton_clicked();
-    void on_sizeFixedRadioButton_clicked();
-    void on_positionDefaultRadioButton_clicked();
-    void on_positionLastTimeRadioButton_clicked();
-    void on_positionFixedRadioButton_clicked();
-    void on_leftFolderDefaultRadioButton_clicked();
-    void on_leftFolderLastTimeRadioButton_clicked();
-    void on_leftFolderFixedRadioButton_clicked();
-    void on_leftFolderSelectButton_clicked();
-    void on_rightFolderDefaultRadioButton_clicked();
-    void on_rightFolderLastTimeRadioButton_clicked();
-    void on_rightFolderFixedRadioButton_clicked();
-    void on_rightFolderSelectButton_clicked();
+    void on_generalSizeDefaultRadioButton_clicked();
+    void on_generalSizeLastTimeRadioButton_clicked();
+    void on_generalSizeFixedRadioButton_clicked();
+    void on_generalPositionDefaultRadioButton_clicked();
+    void on_generalPositionLastTimeRadioButton_clicked();
+    void on_generalPositionFixedRadioButton_clicked();
+    void on_generalLeftFolderDefaultRadioButton_clicked();
+    void on_generalLeftFolderLastTimeRadioButton_clicked();
+    void on_generalLeftFolderFixedRadioButton_clicked();
+    void on_generalLeftFolderSelectButton_clicked();
+    void on_generalRightFolderDefaultRadioButton_clicked();
+    void on_generalRightFolderLastTimeRadioButton_clicked();
+    void on_generalRightFolderFixedRadioButton_clicked();
+    void on_generalRightFolderSelectButton_clicked();
 
     void on_appearanceFolderViewChooseFontPushButton_clicked();
 
