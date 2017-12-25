@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     removeworker.cpp \
     renamedialog.cpp \
     settings.cpp \
-    optiondialog.cpp
+    optiondialog.cpp \
+    fileoperationdialog.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     removeworker.h \
     renamedialog.h \
     settings.h \
-    optiondialog.h
+    optiondialog.h \
+    fileoperationdialog.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
@@ -58,4 +60,5 @@ FORMS    += mainwindow.ui \
     workingdialog.ui \
     overwritedialog.ui \
     renamedialog.ui \
-    optiondialog.ui
+    optiondialog.ui \
+    fileoperationdialog.ui
