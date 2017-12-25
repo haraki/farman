@@ -376,7 +376,6 @@ void DoubleFolderPanel::onCopy()
                                selectedFileInfoList,
                                inactiveForm->getCurrentDirPath(),
                                this->parentWidget());
-
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
@@ -397,27 +396,41 @@ void DoubleFolderPanel::onMove()
     qDebug() << "DoubleFolderPanel::onMove()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
-        if(selectedFileInfoList.size() > 0)
-        {
-            FolderForm* inactiveForm = getInactiveFolderForm();
-            if(inactiveForm != Q_NULLPTR)
-            {
-                QStringList srcPaths;
-
-                for(QFileInfo fileInfo : selectedFileInfoList)
-                {
-                    srcPaths.push_back(fileInfo.absoluteFilePath());
-
-                    qDebug() << fileInfo.absoluteFilePath();
-                }
-
-                moveFile(srcPaths, inactiveForm->getCurrentDirPath());
-            }
-        }
+        return;
     }
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    if(inactiveForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
+    if(selectedFileInfoList.size() == 0)
+    {
+        return;
+    }
+
+    FileOperationDialog dialog(FileOperationDialog::OperationType::Move,
+                               activeForm->getCurrentDirPath(),
+                               selectedFileInfoList,
+                               inactiveForm->getCurrentDirPath(),
+                               this->parentWidget());
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    QString dstDirPath = dialog.getDstDirPath();
+    QStringList srcPaths;
+    for(QFileInfo fileInfo : selectedFileInfoList)
+    {
+        srcPaths.push_back(fileInfo.absoluteFilePath());
+    }
+
+    moveFile(srcPaths, dstDirPath);
 }
 
 void DoubleFolderPanel::onRemove()
@@ -613,30 +626,25 @@ void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dst
 
 void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dstPath)
 {
-    if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("move?")) == QMessageBox::Yes)
+    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true);
+
+    connect(copyWorker,
+            SIGNAL(finished(int)),
+            this,
+            SLOT(onMoveFileFinished(int)));
+    connect(copyWorker,
+            SIGNAL(error(QString)),
+            this,
+            SLOT(onMoveFileError(QString)));
+    connect(copyWorker,
+            SIGNAL(confirmOverwrite(QString,QString,int)),
+            this,
+            SLOT(onConfirmOverwrite(QString,QString,int)));
+
+    WorkingDialog dialog(copyWorker, this);
+    if(dialog.exec())
     {
-        CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true);
 
-        connect(copyWorker,
-                SIGNAL(finished(int)),
-                this,
-                SLOT(onMoveFileFinished(int)));
-        connect(copyWorker,
-                SIGNAL(error(QString)),
-                this,
-                SLOT(onMoveFileError(QString)));
-        connect(copyWorker,
-                SIGNAL(confirmOverwrite(QString,QString,int)),
-                this,
-                SLOT(onConfirmOverwrite(QString,QString,int)));
-
-        WorkingDialog dialog(copyWorker, this);
-        if(dialog.exec())
-        {
-
-        }
-
-        return;
     }
 }
 
