@@ -18,6 +18,7 @@
 #include "renamedialog.h"
 #include "mainwindow.h"
 #include "settings.h"
+#include "fileoperationdialog.h"
 
 namespace Farman
 {
@@ -353,27 +354,42 @@ void DoubleFolderPanel::onCopy()
     qDebug() << "DoubleFolderPanel::onCopy()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
-        if(selectedFileInfoList.size() > 0)
-        {
-            FolderForm* inactiveForm = getInactiveFolderForm();
-            if(inactiveForm != Q_NULLPTR)
-            {
-                QStringList srcPaths;
-
-                for(QFileInfo fileInfo : selectedFileInfoList)
-                {
-                    srcPaths.push_back(fileInfo.absoluteFilePath());
-
-                    qDebug() << fileInfo.absoluteFilePath();
-                }
-
-                copyFile(srcPaths, inactiveForm->getCurrentDirPath());
-            }
-        }
+        return;
     }
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    if(inactiveForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
+    if(selectedFileInfoList.size() == 0)
+    {
+        return;
+    }
+
+    FileOperationDialog dialog(FileOperationDialog::OperationType::Copy,
+                               activeForm->getCurrentDirPath(),
+                               selectedFileInfoList,
+                               inactiveForm->getCurrentDirPath(),
+                               this->parentWidget());
+
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    QString dstDirPath = dialog.getDstDirPath();
+    QStringList srcPaths;
+    for(QFileInfo fileInfo : selectedFileInfoList)
+    {
+        srcPaths.push_back(fileInfo.absoluteFilePath());
+    }
+
+    copyFile(srcPaths, dstDirPath);
 }
 
 void DoubleFolderPanel::onMove()
@@ -571,32 +587,27 @@ FolderForm* DoubleFolderPanel::getRightFolderForm()
     return findChild<FolderForm*>("r_folderForm");
 }
 
-void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dstPath)
+void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
 {
-    if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("copy?")) == QMessageBox::Yes)
+    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstDirPath, false);
+
+    connect(copyWorker,
+            SIGNAL(finished(int)),
+            this,
+            SLOT(onCopyFileFinished(int)));
+    connect(copyWorker,
+            SIGNAL(error(QString)),
+            this,
+            SLOT(onCopyFileError(QString)));
+    connect(copyWorker,
+            SIGNAL(confirmOverwrite(QString,QString,int)),
+            this,
+            SLOT(onConfirmOverwrite(QString,QString,int)));
+
+    WorkingDialog dialog(copyWorker, this);
+    if(dialog.exec())
     {
-        CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, false);
 
-        connect(copyWorker,
-                SIGNAL(finished(int)),
-                this,
-                SLOT(onCopyFileFinished(int)));
-        connect(copyWorker,
-                SIGNAL(error(QString)),
-                this,
-                SLOT(onCopyFileError(QString)));
-        connect(copyWorker,
-                SIGNAL(confirmOverwrite(QString,QString,int)),
-                this,
-                SLOT(onConfirmOverwrite(QString,QString,int)));
-
-        WorkingDialog dialog(copyWorker, this);
-        if(dialog.exec())
-        {
-
-        }
-
-        return;
     }
 }
 
