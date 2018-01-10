@@ -20,6 +20,7 @@ public:
     {
         Copy,
         Move,
+        Remove,
 
         OperationTypeNum,
     };

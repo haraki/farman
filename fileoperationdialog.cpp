@@ -16,7 +16,7 @@ FileOperationDialog::FileOperationDialog(OperationType type,
 {
     ui->setupUi(this);
 
-    this->setWindowTitle((type == OperationType::Copy) ? tr("Copy file(s)") : (type == OperationType::Move) ? tr("Move file(s)") : tr("Remove file(s)"));
+    this->setWindowTitle((type == OperationType::Copy) ? tr("Copy file(s)") : (type == OperationType::Move) ? tr("Move file(s)") : tr("Delete file(s)"));
 
     ui->srcFolderPathLabel->setText(srcDirPath);
 
@@ -36,7 +36,20 @@ FileOperationDialog::FileOperationDialog(OperationType type,
     }
     ui->srcFileNamesListView->setModel(model);
 
-    ui->dstFolderPathEdit->setText(dstDirPath);
+    if(type == OperationType::Remove)
+    {
+        ui->dstLabel->setVisible(false);
+        ui->dstFolderPathEdit->setVisible(false);
+        ui->dstFolderPathSelectButton->setVisible(false);
+    }
+    else
+    {
+        ui->dstLabel->setVisible(true);
+        ui->dstFolderPathEdit->setVisible(true);
+        ui->dstFolderPathSelectButton->setVisible(true);
+
+        ui->dstFolderPathEdit->setText(dstDirPath);
+    }
 }
 
 FileOperationDialog::~FileOperationDialog()
