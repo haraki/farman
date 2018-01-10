@@ -438,23 +438,34 @@ void DoubleFolderPanel::onRemove()
     qDebug() << "DoubleFolderPanel::onRemove()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
-        if(selectedFileInfoList.size() > 0)
-        {
-            QStringList paths;
-
-            for(QFileInfo fileInfo : selectedFileInfoList)
-            {
-                paths.push_back(fileInfo.absoluteFilePath());
-
-                qDebug() << fileInfo.absoluteFilePath();
-            }
-
-            removeFile(paths);
-        }
+        return;
     }
+
+    QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
+    if(selectedFileInfoList.size() == 0)
+    {
+        return;
+    }
+
+    FileOperationDialog dialog(FileOperationDialog::OperationType::Remove,
+                               activeForm->getCurrentDirPath(),
+                               selectedFileInfoList,
+                               "",
+                               this->parentWidget());
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    QStringList paths;
+    for(QFileInfo fileInfo : selectedFileInfoList)
+    {
+        paths.push_back(fileInfo.absoluteFilePath());
+    }
+
+    removeFile(paths);
 }
 
 void DoubleFolderPanel::onMakeDirectory()
@@ -650,26 +661,21 @@ void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dst
 
 void DoubleFolderPanel::removeFile(const QStringList& paths)
 {
-    if(QMessageBox::question(this->parentWidget(), tr("Confirm"), tr("remove?")) == QMessageBox::Yes)
+    Worker* worker = new RemoveWorker(paths);
+
+    connect(worker,
+            SIGNAL(finished(int)),
+            this,
+            SLOT(onRemoveFileFinished(int)));
+    connect(worker,
+            SIGNAL(error(QString)),
+            this,
+            SLOT(onRemoveFileError(QString)));
+
+    WorkingDialog dialog(worker, this);
+    if(dialog.exec())
     {
-        Worker* worker = new RemoveWorker(paths);
 
-        connect(worker,
-                SIGNAL(finished(int)),
-                this,
-                SLOT(onRemoveFileFinished(int)));
-        connect(worker,
-                SIGNAL(error(QString)),
-                this,
-                SLOT(onRemoveFileError(QString)));
-
-        WorkingDialog dialog(worker, this);
-        if(dialog.exec())
-        {
-
-        }
-
-        return;
     }
 }
 
