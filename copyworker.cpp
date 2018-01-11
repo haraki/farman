@@ -71,6 +71,15 @@ void CopyWorker::run()
         emitProcess(QString(preStr).arg(progress + 1));
 
         int ret = copyExec(itr.key(), itr.value());
+        if(isAborted())
+        {
+            //emitOutputConsole(tr("Aborted.\n"));          // copyExec() 内部でコンソール出力しているので、ここではコンソール出力しない
+            emitProcess(QString(abortStr).arg(progress + 1));
+            emitFinished(static_cast<int>(Result::Abort));
+
+            return;
+        }
+
         if(isError(ret))
         {
             qDebug() << "copyExec() : ret =" << QString("%1").arg(ret, 0, 16);
@@ -138,6 +147,10 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
         for(auto srcChildFileInfo : srcChildFileInfoList)
         {
             int ret = makeList(srcChildFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), copyList, removeDirList);
+            if(isAborted())
+            {
+                return static_cast<int>(Result::Abort);
+            }
             if(isError(ret))
             {
                 return ret;
