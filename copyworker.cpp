@@ -34,7 +34,11 @@ void CopyWorker::run()
 {
     qDebug() << "start CopyWorker::run()";
 
-    emitProcess((m_moveMode) ? tr("Preparing move...") : tr("Preparing copy..."));
+    QString prepareStr = (m_moveMode) ? tr("Preparing move...") : tr("Preparing copy...");
+    QString prepareAbortStr = (m_moveMode) ? tr("Preparing move...aborted.") : tr("Preparing copy...aborted.");
+    QString prepareFailedStr = (m_moveMode) ? tr("Preparing move...failed.") : tr("Preparing copy...failed.");
+
+    emitProcess(prepareStr);
 
     QMap<QString, QString> copyList;
     QList<QString> removeDirList;
@@ -45,6 +49,7 @@ void CopyWorker::run()
         if(isAborted())
         {
             emitOutputConsole(tr("Aborted.\n"));
+            emitProcess(prepareAbortStr);
             emitFinished(static_cast<int>(Result::Abort));
 
             return;
@@ -54,6 +59,7 @@ void CopyWorker::run()
         if(isError(ret))
         {
             qDebug() << "makeList() : ret =" << QString("%1").arg(ret, 0, 16);
+            emitProcess(prepareFailedStr);
             emitFinished(ret);
 
             return;
@@ -63,7 +69,9 @@ void CopyWorker::run()
     emitStart(0, copyList.size());
 
     QString preStr = (m_moveMode) ? tr("%1 file(s) move...") : tr("%1 file(s) copy...");
-    QString postStr = (m_moveMode) ? tr("%1 file(s) move...done") : tr("%1 file(s) copy...done");
+    QString postStr = (m_moveMode) ? tr("%1 file(s) move...done.") : tr("%1 file(s) copy...done.");
+    QString abortStr = (m_moveMode) ? tr("%1 file(s) move...aborted.") : tr("%1 file(s) copy...aborted.");
+    QString failedStr = (m_moveMode) ? tr("%1 file(s) move...failed.") : tr("%1 file(s) copy...failed.");
 
     int progress = 0;
     for(QMap<QString, QString>::const_iterator itr = copyList.cbegin();itr != copyList.cend();itr++)
@@ -83,6 +91,7 @@ void CopyWorker::run()
         if(isError(ret))
         {
             qDebug() << "copyExec() : ret =" << QString("%1").arg(ret, 0, 16);
+            emitProcess(QString(failedStr).arg(progress + 1));
             emitFinished(ret);
 
             return;
@@ -105,6 +114,7 @@ void CopyWorker::run()
             {
                 // 移動元のディレクトリ削除失敗
                 qDebug() << "remove dir error :" << dirPath;
+                emitProcess(QString(tr("remove %1 folder failed.")).arg(dirPath));
                 emitFinished(static_cast<int>(Result::ErrorRemoveDir));
 
                 return;

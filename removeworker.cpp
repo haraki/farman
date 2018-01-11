@@ -35,6 +35,7 @@ void RemoveWorker::run()
         if(isAborted())
         {
             emitOutputConsole(tr("Aborted.\n"));
+            emitProcess(QString(tr("%1 file(s) remove...aborted.")).arg(progress + 1));
             emitFinished(static_cast<int>(Result::Abort));
 
             return;
@@ -50,6 +51,7 @@ void RemoveWorker::run()
                 // ディレクトリ削除失敗
                 emitOutputConsole(tr("Failed remove directory.\n"));
                 qDebug() << "remove dir error  :" << path;
+                emitProcess(QString(tr("%1 file(s) remove...failed.")).arg(progress + 1));
                 emitFinished(static_cast<int>(Result::ErrorRemoveDir));
 
                 return;
@@ -67,6 +69,7 @@ void RemoveWorker::run()
                 // ファイル削除失敗
                 emitOutputConsole(QString("Failed remove file"));
                 qDebug() << "remove file error :" << path;
+                emitProcess(QString(tr("%1 file(s) remove...failed.")).arg(progress + 1));
                 emitFinished(static_cast<int>(Result::ErrorRemoveFile));
 
                 return;
