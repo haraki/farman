@@ -50,6 +50,7 @@ private Q_SLOTS:
     void on_actionRemove_triggered();
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
+    void on_actionAttributes_triggered();
     void on_actionOption_triggered();
 
 private:

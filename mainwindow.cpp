@@ -250,8 +250,21 @@ void MainWindow::on_actionRename_triggered()
     }
 }
 
+void MainWindow::on_actionAttributes_triggered()
+{
+    qDebug() << "MainWindow::on_actionAttributes_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onAttributes();
+    }
+}
+
 void MainWindow::on_actionOption_triggered()
 {
+    qDebug() << "MainWindow::on_actionOption_triggered()";
+
     QString leftDirPath = "";
     QString rightDirPath = "";
 

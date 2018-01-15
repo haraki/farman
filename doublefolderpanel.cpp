@@ -19,6 +19,7 @@
 #include "mainwindow.h"
 #include "settings.h"
 #include "fileoperationdialog.h"
+#include "fileattributesdialog.h"
 
 namespace Farman
 {
@@ -493,6 +494,20 @@ void DoubleFolderPanel::onRename()
     }
 }
 
+void DoubleFolderPanel::onAttributes()
+{
+    qDebug() << "DoubleFolderPanel::onAttributes()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm != Q_NULLPTR)
+    {
+        if(activeForm->getCurrentFileName() != "..")
+        {
+            changeFileAttributes(activeForm->getCurrentFileInfo());
+        }
+    }
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
@@ -747,6 +762,17 @@ void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
     if(activeFolderForm != Q_NULLPTR)
     {
         activeFolderForm->setCursor(newFileName);
+    }
+}
+
+void DoubleFolderPanel::changeFileAttributes(const QFileInfo& fileInfo)
+{
+    QFile file(fileInfo.absoluteFilePath());
+
+    FileAttributesDialog dialog(fileInfo.fileName(), fileInfo.owner(), fileInfo.group(), file.permissions(), fileInfo.created(), fileInfo.lastModified());
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
     }
 }
 

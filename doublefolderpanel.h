@@ -4,6 +4,7 @@
 #include <qdir.h>
 #include <QWidget>
 #include <QModelIndexList>
+#include <QDateTime>
 #include "types.h"
 
 namespace Ui
@@ -44,6 +45,7 @@ public:
     void onRemove();
     void onMakeDirectory();
     void onRename();
+    void onAttributes();
 
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
@@ -73,6 +75,7 @@ private:
     void removeFile(const QStringList& paths);
     void makeDirectory(const QString& path);
     void renameFile(const QString& path, const QString& name);
+    void changeFileAttributes(const QFileInfo& fileInfo);
 
     void emitOutputConsole(const QString& consoleString);
 

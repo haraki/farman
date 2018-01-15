@@ -57,6 +57,7 @@
     <addaction name="actionRemove"/>
     <addaction name="actionMakeDirectory"/>
     <addaction name="actionRename"/>
+    <addaction name="actionAttributes"/>
    </widget>
    <widget class="QMenu" name="menuOption">
     <property name="title">
@@ -203,6 +204,14 @@
    </property>
    <property name="shortcut">
     <string>Shift+Return</string>
+   </property>
+  </action>
+  <action name="actionAttributes">
+   <property name="text">
+    <string>Attributes...</string>
+   </property>
+   <property name="shortcut">
+    <string>A</string>
    </property>
   </action>
  </widget>
