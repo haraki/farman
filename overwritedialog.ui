@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>413</width>
-    <height>380</height>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,6 +24,18 @@
      </property>
      <property name="text">
       <string>A file with the same name exists.</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="srcLabel">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Source : </string>
      </property>
     </widget>
    </item>
@@ -48,19 +60,41 @@
      <item>
       <widget class="QLabel" name="srcFilePathLabel">
        <property name="text">
-        <string>Src:</string>
+        <string>Source file path</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="srcInfoLabel">
+    <widget class="QLabel" name="srcSizeLabel">
      <property name="text">
-      <string>Size &amp; Last modified</string>
+      <string>Size</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="srcLastModifiedLabel">
+     <property name="text">
+      <string>Last modified</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="dstLabel">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Destination : </string>
      </property>
     </widget>
    </item>
@@ -85,16 +119,26 @@
      <item>
       <widget class="QLabel" name="dstFilePathLabel">
        <property name="text">
-        <string>Dst:</string>
+        <string>Destination file path</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="dstInfoLabel">
+    <widget class="QLabel" name="dstSizeLabel">
      <property name="text">
-      <string>Size &amp; Last modified</string>
+      <string>Size</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="dstLastModifiedLabel">
+     <property name="text">
+      <string>Last modified</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -128,67 +172,63 @@
      <property name="title">
       <string>method</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QRadioButton" name="methodOverwriteRadioButton">
-        <property name="text">
-         <string>Overwrite</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="methodOverwriteIfNewerRadioButton">
-        <property name="text">
-         <string>Overwrite if newer</string>
-        </property>
-       </widget>
-      </item>
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0" colspan="2">
        <widget class="QRadioButton" name="methodSkipRadioButton">
         <property name="text">
          <string>Skip</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="renameLineEdit">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="methodOverwriteRadioButton">
+        <property name="text">
+         <string>Overwrite</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
        <widget class="QRadioButton" name="methodRenameRadioButton">
         <property name="text">
          <string>Rename</string>
         </property>
        </widget>
       </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>8</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="renameLineEdit">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
+      <item row="4" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>8</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QRadioButton" name="methodOverwriteIfNewerRadioButton">
+        <property name="text">
+         <string>Overwrite if newer</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="keeySetting">
+    <widget class="QCheckBox" name="keepSetting">
      <property name="text">
       <string>Keep setting.</string>
      </property>

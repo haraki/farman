@@ -23,31 +23,33 @@ OverwriteDialog::OverwriteDialog(const QString& srcFilePath,
 
     m_renameFileName = dstFileInfo.fileName();
 
-    ui->srcFilePathLabel->setText(QString("Src: ") + srcFileInfo.absoluteFilePath());
-    ui->srcInfoLabel->setText(QString("Size: ") + QString("%1").arg(srcFileInfo.size()) + QString(" Byte(s), Last modified: ") + srcFileInfo.lastModified().toString());
-    ui->dstFilePathLabel->setText(QString("Dst: ") + dstFileInfo.absoluteFilePath());
-    ui->dstInfoLabel->setText(QString("Size: ") + QString("%1").arg(dstFileInfo.size()) + QString(" Byte(s), Last modified: ") + dstFileInfo.lastModified().toString());
+    ui->srcFilePathLabel->setText(srcFileInfo.absoluteFilePath());
+    ui->srcSizeLabel->setText(QString(tr("Size : %1 Byte(s)")).arg(srcFileInfo.size()));
+    ui->srcLastModifiedLabel->setText(QString(tr("Last modified : %1")).arg(srcFileInfo.lastModified().toString(Qt::DefaultLocaleLongDate)));
+    ui->dstFilePathLabel->setText(dstFileInfo.absoluteFilePath());
+    ui->dstSizeLabel->setText(QString(tr("Size : %1 Byte(s)")).arg(dstFileInfo.size()));
+    ui->dstLastModifiedLabel->setText(QString(tr("Last modified : %1")).arg(dstFileInfo.lastModified().toString(Qt::DefaultLocaleLongDate)));
 
     switch(methodType)
     {
     case OverwriteMethodType::Overwrite:
         ui->methodOverwriteRadioButton->setChecked(true);
-        ui->keeySetting->setEnabled(true);
+        ui->keepSetting->setEnabled(true);
         ui->renameLineEdit->setEnabled(false);
         break;
     case OverwriteMethodType::OverwriteIfNewer:
         ui->methodOverwriteIfNewerRadioButton->setChecked(true);
-        ui->keeySetting->setEnabled(true);
+        ui->keepSetting->setEnabled(true);
         ui->renameLineEdit->setEnabled(false);
         break;
     case OverwriteMethodType::Skip:
         ui->methodSkipRadioButton->setChecked(true);
-        ui->keeySetting->setEnabled(true);
+        ui->keepSetting->setEnabled(true);
         ui->renameLineEdit->setEnabled(false);
         break;
     case OverwriteMethodType::Rename:
         ui->methodRenameRadioButton->setChecked(true);
-        ui->keeySetting->setEnabled(false);
+        ui->keepSetting->setEnabled(false);
         ui->renameLineEdit->setEnabled(true);
         break;
     default:
@@ -103,7 +105,7 @@ void OverwriteDialog::accept()
         m_renameFileName = ui->renameLineEdit->text();
     }
 
-    m_keepSetting = (ui->keeySetting->isEnabled() && ui->keeySetting->isChecked());
+    m_keepSetting = (ui->keepSetting->isEnabled() && ui->keepSetting->isChecked());
 
     QDialog::accept();
 }
@@ -111,25 +113,25 @@ void OverwriteDialog::accept()
 void OverwriteDialog::on_methodOverwriteRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(false);
-    ui->keeySetting->setEnabled(true);
+    ui->keepSetting->setEnabled(true);
 }
 
 void OverwriteDialog::on_methodOverwriteIfNewerRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(false);
-    ui->keeySetting->setEnabled(true);
+    ui->keepSetting->setEnabled(true);
 }
 
 void OverwriteDialog::on_methodSkipRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(false);
-    ui->keeySetting->setEnabled(true);
+    ui->keepSetting->setEnabled(true);
 }
 
 void OverwriteDialog::on_methodRenameRadioButton_clicked()
 {
     ui->renameLineEdit->setEnabled(true);
-    ui->keeySetting->setEnabled(false);
+    ui->keepSetting->setEnabled(false);
 }
 
 }           // namespace Farman
