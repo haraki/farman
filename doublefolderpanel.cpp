@@ -741,7 +741,7 @@ void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
         return;
     }
 
-    QString newFileName = dialog.getNewFileName();
+    QString newFileName = dialog.getNewName();
     if(newFileName.isEmpty() || name == newFileName)
     {
         return;

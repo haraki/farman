@@ -4,16 +4,17 @@
 namespace Farman
 {
 
-RenameDialog::RenameDialog(const QString& currentFileName, QWidget *parent) :
+RenameDialog::RenameDialog(const QString& currentName, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::RenameDialog)
+    ui(new Ui::RenameDialog),
+    m_newName(currentName)
 {
     ui->setupUi(this);
 
-    ui->currentFileNameFileNameLabel->setText(currentFileName);
-    ui->newFileNameLineEdit->setText(currentFileName);
+    ui->currentNameLabel->setText(currentName);
+    ui->newNameLineEdit->setText(currentName);
 
-    ui->newFileNameLineEdit->setFocus();
+    ui->newNameLineEdit->setFocus();
 }
 
 RenameDialog::~RenameDialog()
@@ -21,14 +22,14 @@ RenameDialog::~RenameDialog()
     delete ui;
 }
 
-QString RenameDialog::getNewFileName() const
+QString RenameDialog::getNewName() const
 {
-    return m_newFileName;
+    return m_newName;
 }
 
 void RenameDialog::accept()
 {
-    m_newFileName = ui->newFileNameLineEdit->text();
+    m_newName = ui->newNameLineEdit->text();
 
     QDialog::accept();
 }

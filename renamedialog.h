@@ -15,17 +15,17 @@ class RenameDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RenameDialog(const QString& currentFileName, QWidget *parent = Q_NULLPTR);
+    explicit RenameDialog(const QString& currentName, QWidget *parent = Q_NULLPTR);
     ~RenameDialog();
 
-    QString getNewFileName() const;
+    QString getNewName() const;
 
 private:
     void accept() Q_DECL_OVERRIDE;
 
     Ui::RenameDialog *ui;
 
-    QString m_newFileName;
+    QString m_newName;
 };
 
 }           // namespace Falman
