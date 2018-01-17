@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QMAKE_MAC_SDK = macosx10.12
+QMAKE_MAC_SDK = macosx10.13
 
 TARGET = FileManager
 TEMPLATE = app
