@@ -1,5 +1,5 @@
-﻿#ifndef OPTIONDIALOG_H
-#define OPTIONDIALOG_H
+﻿#ifndef PREFERENCESDIALOG_H
+#define PREFERENCESDIALOG_H
 
 #include <QDialog>
 #include <QLineEdit>
@@ -8,23 +8,23 @@
 #include <QColor>
 
 namespace Ui {
-class OptionDialog;
+class PreferencesDialog;
 }
 
 namespace Farman
 {
 
-class OptionDialog : public QDialog
+class PreferencesDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit OptionDialog(const QSize& mainWindowSize,
-                          const QPoint& mainWindowPos,
-                          const QString& leftDirPath,
-                          const QString& rightDirPath,
-                          QWidget *parent = Q_NULLPTR);
-    ~OptionDialog();
+    explicit PreferencesDialog(const QSize& mainWindowSize,
+                               const QPoint& mainWindowPos,
+                               const QString& leftDirPath,
+                               const QString& rightDirPath,
+                               QWidget *parent = Q_NULLPTR);
+    ~PreferencesDialog();
 
 private slots:
     void on_generalSizeDefaultRadioButton_clicked();
@@ -84,9 +84,9 @@ private:
     QMap<QString, QFont> m_fontSettings;
     QMap<QString, QColor> m_colorSettings;
 
-    Ui::OptionDialog *ui;
+    Ui::PreferencesDialog *ui;
 };
 
 }           // namespace Farman
 
-#endif // OPTIONDIALOG_H
+#endif // PREFERENCESDIALOG_H

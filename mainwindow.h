@@ -40,6 +40,7 @@ private:
 
 private Q_SLOTS:
     void on_actionOpenInApp_triggered();
+    void on_actionPreferences_triggered();
     void on_actionQuit_triggered();
     void on_actionSingleView_triggered();
     void on_actionDoubleView_triggered();
@@ -51,7 +52,6 @@ private Q_SLOTS:
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
     void on_actionAttributes_triggered();
-    void on_actionOption_triggered();
 
 private:
     static MainWindow* s_instance;

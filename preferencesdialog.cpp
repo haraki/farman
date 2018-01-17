@@ -3,20 +3,20 @@
 #include <QColorDialog>
 #include <QFontDialog>
 #include <QDebug>
-#include "optiondialog.h"
-#include "ui_optiondialog.h"
+#include "preferencesdialog.h"
+#include "ui_preferencesdialog.h"
 #include "settings.h"
 
 namespace Farman
 {
 
-OptionDialog::OptionDialog(const QSize& mainWindowSize,
-                           const QPoint& mainWindowPos,
-                           const QString& leftDirPath,
-                           const QString& rightDirPath,
-                           QWidget *parent/* = Q_NULLPTR */) :
+PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
+                                     const QPoint& mainWindowPos,
+                                     const QString& leftDirPath,
+                                     const QString& rightDirPath,
+                                     QWidget *parent/* = Q_NULLPTR */) :
     QDialog(parent),
-    ui(new Ui::OptionDialog)
+    ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
 
@@ -148,12 +148,12 @@ OptionDialog::OptionDialog(const QSize& mainWindowSize,
     setAppearanceFontAndColorOption();
 }
 
-OptionDialog::~OptionDialog()
+PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
 }
 
-void OptionDialog::on_generalSizeDefaultRadioButton_clicked()
+void PreferencesDialog::on_generalSizeDefaultRadioButton_clicked()
 {
     ui->generalSizeWidthLabel->setEnabled(false);
     ui->generalSizeWidthLineEdit->setEnabled(false);
@@ -161,7 +161,7 @@ void OptionDialog::on_generalSizeDefaultRadioButton_clicked()
     ui->generalSizeHeightLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalSizeLastTimeRadioButton_clicked()
+void PreferencesDialog::on_generalSizeLastTimeRadioButton_clicked()
 {
     ui->generalSizeWidthLabel->setEnabled(false);
     ui->generalSizeWidthLineEdit->setEnabled(false);
@@ -169,7 +169,7 @@ void OptionDialog::on_generalSizeLastTimeRadioButton_clicked()
     ui->generalSizeHeightLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalSizeFixedRadioButton_clicked()
+void PreferencesDialog::on_generalSizeFixedRadioButton_clicked()
 {
     ui->generalSizeWidthLabel->setEnabled(true);
     ui->generalSizeWidthLineEdit->setEnabled(true);
@@ -177,7 +177,7 @@ void OptionDialog::on_generalSizeFixedRadioButton_clicked()
     ui->generalSizeHeightLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_generalPositionDefaultRadioButton_clicked()
+void PreferencesDialog::on_generalPositionDefaultRadioButton_clicked()
 {
     ui->generalPositionXLabel->setEnabled(false);
     ui->generalPositionXLineEdit->setEnabled(false);
@@ -185,7 +185,7 @@ void OptionDialog::on_generalPositionDefaultRadioButton_clicked()
     ui->generalPositionYLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalPositionLastTimeRadioButton_clicked()
+void PreferencesDialog::on_generalPositionLastTimeRadioButton_clicked()
 {
     ui->generalPositionXLabel->setEnabled(false);
     ui->generalPositionXLineEdit->setEnabled(false);
@@ -193,7 +193,7 @@ void OptionDialog::on_generalPositionLastTimeRadioButton_clicked()
     ui->generalPositionYLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalPositionFixedRadioButton_clicked()
+void PreferencesDialog::on_generalPositionFixedRadioButton_clicked()
 {
     ui->generalPositionXLabel->setEnabled(true);
     ui->generalPositionXLineEdit->setEnabled(true);
@@ -201,43 +201,43 @@ void OptionDialog::on_generalPositionFixedRadioButton_clicked()
     ui->generalPositionYLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_generalLeftFolderDefaultRadioButton_clicked()
+void PreferencesDialog::on_generalLeftFolderDefaultRadioButton_clicked()
 {
     ui->generalLeftFolderSelectButton->setEnabled(false);
     ui->generalLeftFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalLeftFolderLastTimeRadioButton_clicked()
+void PreferencesDialog::on_generalLeftFolderLastTimeRadioButton_clicked()
 {
     ui->generalLeftFolderSelectButton->setEnabled(false);
     ui->generalLeftFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalLeftFolderFixedRadioButton_clicked()
+void PreferencesDialog::on_generalLeftFolderFixedRadioButton_clicked()
 {
     ui->generalLeftFolderSelectButton->setEnabled(true);
     ui->generalLeftFolderPathLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_generalRightFolderDefaultRadioButton_clicked()
+void PreferencesDialog::on_generalRightFolderDefaultRadioButton_clicked()
 {
     ui->generalRightFolderSelectButton->setEnabled(false);
     ui->generalRightFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalRightFolderLastTimeRadioButton_clicked()
+void PreferencesDialog::on_generalRightFolderLastTimeRadioButton_clicked()
 {
     ui->generalRightFolderSelectButton->setEnabled(false);
     ui->generalRightFolderPathLineEdit->setEnabled(false);
 }
 
-void OptionDialog::on_generalRightFolderFixedRadioButton_clicked()
+void PreferencesDialog::on_generalRightFolderFixedRadioButton_clicked()
 {
     ui->generalRightFolderSelectButton->setEnabled(true);
     ui->generalRightFolderPathLineEdit->setEnabled(true);
 }
 
-void OptionDialog::on_generalLeftFolderSelectButton_clicked()
+void PreferencesDialog::on_generalLeftFolderSelectButton_clicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
@@ -250,7 +250,7 @@ void OptionDialog::on_generalLeftFolderSelectButton_clicked()
     }
 }
 
-void OptionDialog::on_generalRightFolderSelectButton_clicked()
+void PreferencesDialog::on_generalRightFolderSelectButton_clicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
@@ -263,7 +263,7 @@ void OptionDialog::on_generalRightFolderSelectButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceFolderViewChooseFontPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
@@ -275,57 +275,57 @@ void OptionDialog::on_appearanceFolderViewChooseFontPushButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceFolderViewChooseNormalColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseNormalColorPushButton_clicked()
 {
     chooseColor("folderView_normal", "folderView_background", ui->appearanceFolderViewNormalLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseNormalSelectedColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseNormalSelectedColorPushButton_clicked()
 {
     chooseColor("folderView_normal_selected", "folderView_selected_background", ui->appearanceFolderViewNormalSelectedLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseFolderColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseFolderColorPushButton_clicked()
 {
     chooseColor("folderView_folder", "folderView_background", ui->appearanceFolderViewFolderLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseFolderSelectedColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseFolderSelectedColorPushButton_clicked()
 {
     chooseColor("folderView_folder_selected", "folderView_selected_background", ui->appearanceFolderViewFolderSelectedLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseReadOnlyColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseReadOnlyColorPushButton_clicked()
 {
     chooseColor("folderView_readOnly", "folderView_background", ui->appearanceFolderViewReadOnlyLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseReadOnlySelectedColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseReadOnlySelectedColorPushButton_clicked()
 {
     chooseColor("folderView_readOnly_selected", "folderView_selected_background", ui->appearanceFolderViewReadOnlySelectedLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseHiddenColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseHiddenColorPushButton_clicked()
 {
     chooseColor("folderView_hidden", "folderView_background", ui->appearanceFolderViewHiddenLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseHiddenSelectedColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseHiddenSelectedColorPushButton_clicked()
 {
     chooseColor("folderView_hidden_selected", "folderView_selected_background", ui->appearanceFolderViewHiddenSelectedLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseSystemColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseSystemColorPushButton_clicked()
 {
     chooseColor("folderView_system", "folderView_background", ui->appearanceFolderViewSystemLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseSystemSelectedColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseSystemSelectedColorPushButton_clicked()
 {
     chooseColor("folderView_system_selected", "folderView_selected_background", ui->appearanceFolderViewSystemSelectedLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderViewChooseBGColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -341,7 +341,7 @@ void OptionDialog::on_appearanceFolderViewChooseBGColorPushButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceFolderViewChooseSelectedBGColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseSelectedBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -357,7 +357,7 @@ void OptionDialog::on_appearanceFolderViewChooseSelectedBGColorPushButton_clicke
     }
 }
 
-void OptionDialog::on_appearanceFolderViewChooseCursorColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseCursorColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -369,7 +369,7 @@ void OptionDialog::on_appearanceFolderViewChooseCursorColorPushButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -381,7 +381,7 @@ void OptionDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButton_cl
     }
 }
 
-void OptionDialog::on_appearanceFolderPathChooseFontPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderPathChooseFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
@@ -393,12 +393,12 @@ void OptionDialog::on_appearanceFolderPathChooseFontPushButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceFolderPathChooseColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderPathChooseColorPushButton_clicked()
 {
     chooseColor("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
 }
 
-void OptionDialog::on_appearanceFolderPathChooseBGColorPushButton_clicked()
+void PreferencesDialog::on_appearanceFolderPathChooseBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -410,7 +410,7 @@ void OptionDialog::on_appearanceFolderPathChooseBGColorPushButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceConsoleChooseFontPushButton_clicked()
+void PreferencesDialog::on_appearanceConsoleChooseFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
@@ -422,12 +422,12 @@ void OptionDialog::on_appearanceConsoleChooseFontPushButton_clicked()
     }
 }
 
-void OptionDialog::on_appearanceConsoleChooseColorPushButton_clicked()
+void PreferencesDialog::on_appearanceConsoleChooseColorPushButton_clicked()
 {
     chooseColor("console_text", "console_background", ui->appearanceConsoleLineEdit);
 }
 
-void OptionDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
+void PreferencesDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -439,7 +439,7 @@ void OptionDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
     }
 }
 
-void OptionDialog::setAppearanceFontAndColorOption()
+void PreferencesDialog::setAppearanceFontAndColorOption()
 {
     QFont font;
 
@@ -497,7 +497,7 @@ void OptionDialog::setAppearanceFontAndColorOption()
     setFontColorSample("console_text", "console_background", ui->appearanceConsoleLineEdit);
 }
 
-void OptionDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
+void PreferencesDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
 {
     QPalette pal = widget->palette();
     pal.setColor(QPalette::Text, m_colorSettings[colorSettingType]);
@@ -505,7 +505,7 @@ void OptionDialog::setFontColorSample(const QString& colorSettingType, const QSt
     widget->setPalette(pal);
 }
 
-void OptionDialog::chooseColor(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
+void PreferencesDialog::chooseColor(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
 {
     QColor newColor = QColor();
 
@@ -517,14 +517,14 @@ void OptionDialog::chooseColor(const QString& colorSettingType, const QString& b
     }
 }
 
-bool OptionDialog::showChooseColorDialog(const QColor& oldColor, QColor& newColor)
+bool PreferencesDialog::showChooseColorDialog(const QColor& oldColor, QColor& newColor)
 {
     newColor = QColorDialog::getColor(oldColor, this, tr("Choose color"));
 
     return newColor.isValid();
 }
 
-bool OptionDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFont)
+bool PreferencesDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFont)
 {
     bool ok = false;
     newFont = QFontDialog::getFont(&ok, oldFont, this, tr("Choose font"));
@@ -532,7 +532,7 @@ bool OptionDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFont)
     return ok;
 }
 
-void OptionDialog::on_buttonBox_accepted()
+void PreferencesDialog::on_buttonBox_accepted()
 {
     if(ui->generalSizeFixedRadioButton->isChecked())
     {

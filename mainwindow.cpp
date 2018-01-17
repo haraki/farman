@@ -7,7 +7,7 @@
 #include "folderform.h"
 #include "doublefolderpanel.h"
 #include "settings.h"
-#include "optiondialog.h"
+#include "preferencesdialog.h"
 
 namespace Farman
 {
@@ -144,6 +144,36 @@ void MainWindow::on_actionOpenInApp_triggered()
     }
 }
 
+void MainWindow::on_actionPreferences_triggered()
+{
+    qDebug() << "MainWindow::on_actionPreferences_triggered()";
+
+    QString leftDirPath = "";
+    QString rightDirPath = "";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        FolderForm* l_folderForm = doubleFolderPanel->getLeftFolderForm();
+        if(l_folderForm != Q_NULLPTR)
+        {
+            leftDirPath = l_folderForm->getCurrentDirPath();
+        }
+
+        FolderForm* r_folderForm = doubleFolderPanel->getRightFolderForm();
+        if(r_folderForm != Q_NULLPTR)
+        {
+            rightDirPath = r_folderForm->getCurrentDirPath();
+        }
+    }
+
+    PreferencesDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, this);
+    if(dialog.exec() == QDialog::Accepted)
+    {
+        updateSettings();
+    }
+}
+
 void MainWindow::on_actionQuit_triggered()
 {
     qDebug() << "MainWindow::on_actionQuit_triggered()";
@@ -258,36 +288,6 @@ void MainWindow::on_actionAttributes_triggered()
     if(doubleFolderPanel != Q_NULLPTR)
     {
         doubleFolderPanel->onAttributes();
-    }
-}
-
-void MainWindow::on_actionOption_triggered()
-{
-    qDebug() << "MainWindow::on_actionOption_triggered()";
-
-    QString leftDirPath = "";
-    QString rightDirPath = "";
-
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        FolderForm* l_folderForm = doubleFolderPanel->getLeftFolderForm();
-        if(l_folderForm != Q_NULLPTR)
-        {
-            leftDirPath = l_folderForm->getCurrentDirPath();
-        }
-
-        FolderForm* r_folderForm = doubleFolderPanel->getRightFolderForm();
-        if(r_folderForm != Q_NULLPTR)
-        {
-            rightDirPath = r_folderForm->getCurrentDirPath();
-        }
-    }
-
-    OptionDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, this);
-    if(dialog.exec() == QDialog::Accepted)
-    {
-        updateSettings();
     }
 }
 
