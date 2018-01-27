@@ -40,7 +40,8 @@ public:
 
     void setCursor(const QString& fileName);
 
-    void onGoToParent();
+    void onGoToChildDir();
+    void onGoToParentDir();
     void refresh();
 
 Q_SIGNALS:
@@ -48,7 +49,6 @@ Q_SIGNALS:
     void focusChanged(bool inFocus);
 
 protected slots:
-    void onOpen(const QModelIndex& index);
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
 
 private slots:
@@ -62,7 +62,6 @@ private:
     void initPalette();
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
-    void onOpen();
     void onSelect();
 
     int getTotalColumnWidth(int withOutColumn = -1);

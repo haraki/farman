@@ -4,7 +4,6 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QInputDialog>
-#include <QDesktopServices>
 #include "doublefolderpanel.h"
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
@@ -202,20 +201,24 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
             switch(key)
             {
             case Qt::Key_Return:
+                // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
                 if(keyEvent->modifiers() & Qt::ShiftModifier)
                 {
-                    // SHIT + Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
-                    onOpenInApp();
-
-                    ret = true;
+                    MainWindow::getInstance()->onOpenInApp();
                 }
+                else
+                {
+                    MainWindow::getInstance()->onOpen();
+                }
+
+                ret = true;
 
                 break;
 
             case Qt::Key_Left:
                 if(m_viewMode == ViewMode::Single || activeForm->objectName() == "l_folderForm")
                 {
-                    activeForm->onGoToParent();
+                    activeForm->onGoToParentDir();
                 }
                 else
                 {
@@ -231,7 +234,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
                 {
                     if(activeForm->objectName() == "r_folderForm")
                     {
-                        activeForm->onGoToParent();
+                        activeForm->onGoToParentDir();
                     }
                     else
                     {
@@ -255,19 +258,6 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     }
 
     return ret;
-}
-
-void DoubleFolderPanel::onOpenInApp()
-{
-    FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
-    {
-        const QString path = activeForm->getCurrentFileInfo().absoluteFilePath();
-        if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
-        {
-            qDebug() << "open url error:" << path;
-        }
-    }
 }
 
 void DoubleFolderPanel::onSetViewMode(ViewMode viewMode)

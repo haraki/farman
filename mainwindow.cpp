@@ -1,5 +1,6 @@
 ﻿#include <QDebug>
 #include <QMessageBox>
+#include <QDesktopServices>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "folderview.h"
@@ -118,6 +119,56 @@ void MainWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
 }
 
+void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
+{
+    Q_UNUSED(index);
+
+    qDebug() << "MainWindow::onOpen()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    if(activeFolderForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    QFileInfo fileInfo = activeFolderForm->getCurrentFileInfo();
+    if(fileInfo.isDir())
+    {
+        activeFolderForm->onGoToChildDir();
+
+        return;
+    }
+}
+
+void MainWindow::onOpenInApp()
+{
+    qDebug() << "MainWindow::onOpenInApp()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    if(activeFolderForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    const QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
+    if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
+    {
+        qDebug() << "open url error:" << path;
+    }
+}
+
 void MainWindow::onStatusChanged(const QString& statusString)
 {
     qDebug() << "MainWindow::onStatusChanged : " << statusString;
@@ -133,15 +184,18 @@ void MainWindow::onOutputConsole(const QString& consoleString)
     ui->consolePlainTextEdit->moveCursor(QTextCursor::End);
 }
 
+void MainWindow::on_actionOpen_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpen_triggered()";
+
+    onOpen();
+}
+
 void MainWindow::on_actionOpenInApp_triggered()
 {
     qDebug() << "MainWindow::on_actionOpenInApp_triggered()";
 
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onOpenInApp();
-    }
+    onOpenInApp();
 }
 
 void MainWindow::on_actionPreferences_triggered()
@@ -203,7 +257,7 @@ void MainWindow::on_actionDoubleView_triggered()
     }
 }
 
-void Farman::MainWindow::on_actionSortSettings_triggered()
+void MainWindow::on_actionSortSettings_triggered()
 {
     qDebug() << "MainWindow::on_actionSortSetting_triggered()";
 

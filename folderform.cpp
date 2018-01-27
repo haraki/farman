@@ -3,6 +3,7 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QItemSelectionModel>
+#include "mainwindow.h"
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -32,7 +33,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
     connect(ui->folderView,
             SIGNAL(doubleClicked(const QModelIndex&)),
-            this,
+            MainWindow::getInstance(),
             SLOT(onOpen(const QModelIndex&)));
 
     ui->folderView->installEventFilter(this);
@@ -92,13 +93,6 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
             switch(key)
             {
-            case Qt::Key_Return:
-                onOpen();
-
-                ret = true;
-
-                break;
-
             case Qt::Key_Space:
                 onSelect();
 
@@ -241,13 +235,6 @@ QList<QFileInfo> FolderForm::getSelectedFileInfoList()
     return selectedFileInfoList;
 }
 
-void FolderForm::onOpen(const QModelIndex& index)
-{
-    Q_UNUSED(index);
-
-    onOpen();
-}
-
 void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex)
 {
     qDebug() << "FolderForm::onCurrentChanged : old : " << oldIndex.row() << " new : " << newIndex.row();
@@ -269,22 +256,6 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
 
     emitCurrentChanged((newIndex.row() >= 0) ? m_folderModel->fileInfo(newIndex) : QFileInfo(),
                        (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
-}
-
-void FolderForm::onOpen()
-{
-    const QModelIndex currentIndex = ui->folderView->currentIndex();
-
-    if(m_folderModel->isDir(currentIndex))
-    {
-        const QString newPath = m_folderModel->filePath(currentIndex);
-
-        qDebug() << "================== onOpen() : " << currentIndex << " -> " << newPath;
-
-        const QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
-
-        setPath(newPath, beforePath);
-    }
 }
 
 void FolderForm::onSelect()
@@ -316,7 +287,23 @@ void FolderForm::setCursor(const QString& fileName)
     }
 }
 
-void FolderForm::onGoToParent()
+void FolderForm::onGoToChildDir()
+{
+    const QModelIndex currentIndex = ui->folderView->currentIndex();
+
+    if(m_folderModel->isDir(currentIndex))
+    {
+        const QString newPath = m_folderModel->filePath(currentIndex);
+
+        qDebug() << "================== onGoToChildDir() : " << currentIndex << " -> " << newPath;
+
+        const QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
+
+        setPath(newPath, beforePath);
+    }
+}
+
+void FolderForm::onGoToParentDir()
 {
     const QModelIndex currentDirIndex = ui->folderView->rootIndex();
     const QString currentPath = m_folderModel->filePath(currentDirIndex);
@@ -329,7 +316,7 @@ void FolderForm::onGoToParent()
     {
         const QString newPath = m_folderModel->filePath(currentDirIndex.parent());
 
-        qDebug() << "================== onGoToParent() : " << newPath;
+        qDebug() << "================== onGoToParentDir() : " << newPath;
 
         setPath(newPath, currentPath);
     }

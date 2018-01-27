@@ -36,7 +36,6 @@ public:
     FolderForm* getLeftFolderForm();
     FolderForm* getRightFolderForm();
 
-    void onOpenInApp();
     void onSetViewMode(ViewMode viewMode);
     void onChangeSortSettings();
     void onChangeFilterSettings();

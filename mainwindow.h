@@ -23,6 +23,8 @@ public:
     static MainWindow* getInstance();
 
 public Q_SLOTS:
+    void onOpen(const QModelIndex& index = QModelIndex());
+    void onOpenInApp();
     void onStatusChanged(const QString& statusString);
     void onOutputConsole(const QString& consoleString);
 
@@ -39,6 +41,7 @@ private:
     void updateSettings();
 
 private Q_SLOTS:
+    void on_actionOpen_triggered();
     void on_actionOpenInApp_triggered();
     void on_actionPreferences_triggered();
     void on_actionQuit_triggered();
