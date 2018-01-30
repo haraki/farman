@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QFile>
 #include "removeworker.h"
+#include "workerresult.h"
 #include "mainwindow.h"
 
 namespace Farman
@@ -36,7 +37,7 @@ void RemoveWorker::run()
         {
             emitOutputConsole(tr("Aborted.\n"));
             emitProcess(QString(tr("%1 file(s) remove...aborted.")).arg(progress + 1));
-            emitFinished(static_cast<int>(Result::Abort));
+            emitFinished(static_cast<int>(WorkerResult::Abort));
 
             return;
         }
@@ -52,7 +53,7 @@ void RemoveWorker::run()
                 emitOutputConsole(tr("Failed remove directory.\n"));
                 qDebug() << "remove dir error  :" << path;
                 emitProcess(QString(tr("%1 file(s) remove...failed.")).arg(progress + 1));
-                emitFinished(static_cast<int>(Result::ErrorRemoveDir));
+                emitFinished(static_cast<int>(WorkerResult::ErrorRemoveDir));
 
                 return;
             }
@@ -70,7 +71,7 @@ void RemoveWorker::run()
                 emitOutputConsole(QString("Failed remove file"));
                 qDebug() << "remove file error :" << path;
                 emitProcess(QString(tr("%1 file(s) remove...failed.")).arg(progress + 1));
-                emitFinished(static_cast<int>(Result::ErrorRemoveFile));
+                emitFinished(static_cast<int>(WorkerResult::ErrorRemoveFile));
 
                 return;
             }
@@ -86,7 +87,7 @@ void RemoveWorker::run()
 
     qDebug() << "finish RemoveWorker::run()";
 
-    emitFinished(static_cast<int>(Result::Success));
+    emitFinished(static_cast<int>(WorkerResult::Success));
 }
 
 }           // namespace Farman

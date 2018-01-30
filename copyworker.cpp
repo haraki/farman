@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QMutex>
 #include "copyworker.h"
+#include "workerresult.h"
 #include "mainwindow.h"
 
 namespace Farman
@@ -50,7 +51,7 @@ void CopyWorker::run()
         {
             emitOutputConsole(tr("Aborted.\n"));
             emitProcess(prepareAbortStr);
-            emitFinished(static_cast<int>(Result::Abort));
+            emitFinished(static_cast<int>(WorkerResult::Abort));
 
             return;
         }
@@ -83,7 +84,7 @@ void CopyWorker::run()
         {
             //emitOutputConsole(tr("Aborted.\n"));          // copyExec() 内部でコンソール出力しているので、ここではコンソール出力しない
             emitProcess(QString(abortStr).arg(progress + 1));
-            emitFinished(static_cast<int>(Result::Abort));
+            emitFinished(static_cast<int>(WorkerResult::Abort));
 
             return;
         }
@@ -115,7 +116,7 @@ void CopyWorker::run()
                 // 移動元のディレクトリ削除失敗
                 qDebug() << "remove dir error :" << dirPath;
                 emitProcess(QString(tr("remove %1 folder failed.")).arg(dirPath));
-                emitFinished(static_cast<int>(Result::ErrorRemoveDir));
+                emitFinished(static_cast<int>(WorkerResult::ErrorRemoveDir));
 
                 return;
             }
@@ -124,7 +125,7 @@ void CopyWorker::run()
 
     qDebug() << "finish CopyWorker::run()";
 
-    emitFinished(static_cast<int>(Result::Success));
+    emitFinished(static_cast<int>(WorkerResult::Success));
 }
 
 int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap<QString, QString>& copyList, QList<QString>& removeDirList)
@@ -132,7 +133,7 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
     if(isAborted())
     {
         emitOutputConsole(tr("Aborted.\n"));
-        return static_cast<int>(Result::Abort);
+        return static_cast<int>(WorkerResult::Abort);
     }
 
     QFileInfo srcFileInfo(srcPath);
@@ -159,7 +160,7 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
             int ret = makeList(srcChildFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), copyList, removeDirList);
             if(isAborted())
             {
-                return static_cast<int>(Result::Abort);
+                return static_cast<int>(WorkerResult::Abort);
             }
             if(isError(ret))
             {
@@ -174,7 +175,7 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
         }
     }
 
-    return static_cast<int>(Result::Success);
+    return static_cast<int>(WorkerResult::Success);
 }
 
 int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
@@ -182,7 +183,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
     if(isAborted())
     {
         emitOutputConsole(tr("Aborted.\n"));
-        return static_cast<int>(Result::Abort);
+        return static_cast<int>(WorkerResult::Abort);
     }
 
     QFileInfo srcFileInfo(srcPath);
@@ -206,7 +207,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             {
                 // ディレクトリ作成失敗
                 emitOutputConsole(tr("Failed make directory.\n"));
-                return static_cast<int>(Result::ErrorMakeDir);
+                return static_cast<int>(WorkerResult::ErrorMakeDir);
             }
 
             emitOutputConsole(tr("Made directory.\n"));
@@ -227,7 +228,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
                 {
                     // 中断
                     emitOutputConsole(tr("Aborted.\n"));
-                    return static_cast<int>(Result::Abort);
+                    return static_cast<int>(WorkerResult::Abort);
                 }
             }
 
@@ -236,7 +237,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
                 if(!QFile::remove(dstFileInfo.absoluteFilePath()))
                 {
                     emitOutputConsole((m_moveMode) ? tr("Failed move.\n") : tr("Failed copy.\n"));
-                    return static_cast<int>(Result::ErrorRemoveFile);
+                    return static_cast<int>(WorkerResult::ErrorRemoveFile);
                 }
 
                 break;
@@ -246,13 +247,13 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
                 if(srcFileInfo.lastModified() <= dstFileInfo.lastModified())
                 {
                     emitOutputConsole(tr("Skipped.\n"));
-                    return static_cast<int>(Result::Skip);
+                    return static_cast<int>(WorkerResult::Skip);
                 }
 
                 if(!QFile::remove(dstFileInfo.absoluteFilePath()))
                 {
                     emitOutputConsole((m_moveMode) ? tr("Failed move.\n") : tr("Failed copy.\n"));
-                    return static_cast<int>(Result::ErrorRemoveFile);
+                    return static_cast<int>(WorkerResult::ErrorRemoveFile);
                 }
 
                 break;
@@ -260,7 +261,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             else if(m_methodType == OverwriteMethodType::Skip)
             {
                 emitOutputConsole(tr("Skipped.\n"));
-                return static_cast<int>(Result::Skip);
+                return static_cast<int>(WorkerResult::Skip);
             }
             else if(m_methodType == OverwriteMethodType::Rename)
             {
@@ -270,7 +271,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             {
                 // ここにくることはありえないはず
                 emitOutputConsole(tr("Fatal error.\n"));
-                return static_cast<int>(Result::ErrorFatal);
+                return static_cast<int>(WorkerResult::ErrorFatal);
             }
         }
 
@@ -278,7 +279,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
         {
             // コピー失敗
             emitOutputConsole((m_moveMode) ? tr("Failed move.\n") : tr("Failed copy.\n"));
-            return static_cast<int>(Result::ErrorCopyFile);
+            return static_cast<int>(WorkerResult::ErrorCopyFile);
         }
 
         if(m_moveMode)
@@ -289,14 +290,14 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             {
                 // 移動元のファイル削除失敗
                 emitOutputConsole(tr("Failed move.\n"));
-                return static_cast<int>(Result::ErrorRemoveFile);
+                return static_cast<int>(WorkerResult::ErrorRemoveFile);
             }
         }
 
         emitOutputConsole((m_moveMode) ? tr("Moved\n") : tr("Copied\n"));
     }
 
-    return static_cast<int>(Result::Success);
+    return static_cast<int>(WorkerResult::Success);
 }
 
 bool CopyWorker::showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)

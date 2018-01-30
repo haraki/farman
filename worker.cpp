@@ -1,6 +1,7 @@
 ﻿#include <QThread>
 #include <QAtomicInt>
 #include "worker.h"
+#include "workerresult.h"
 
 namespace Farman
 {
@@ -35,7 +36,7 @@ bool Worker::isAborted()
 
 bool Worker::isError(int result)
 {
-    return (static_cast<int>(result) & static_cast<int>(Result::ErrorMask));
+    return (static_cast<int>(result) & static_cast<int>(WorkerResult::ErrorMask));
 }
 
 void Worker::emitStart(int min, int max)

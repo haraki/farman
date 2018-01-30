@@ -14,23 +14,6 @@ class Worker : public QObject
 {
     Q_OBJECT
 public:
-    enum class Result : int
-    {
-        Success = 0,                        // 成功
-        Abort = 1,                          // 中断
-        Skip = 2,                           // スキップ
-
-        ErrorMask = static_cast<int>(0x80000000),   // エラー
-
-        ErrorUnknown    = ErrorMask | 1,        // 不明なエラー
-        ErrorMakeDir    = ErrorMask | 2,        // ディレクトリ作成失敗
-        ErrorCopyFile   = ErrorMask | 3,        // ファイルコピー失敗
-        ErrorRemoveDir  = ErrorMask | 4,        // ディレクトリ削除失敗
-        ErrorRemoveFile = ErrorMask | 5,        // ファイル削除失敗
-
-        ErrorFatal = ErrorMask | 0xFFFF,        // 異常なエラー
-    };
-
     explicit Worker(QObject *parent = 0);
     virtual ~Worker() = default;
     void exec();

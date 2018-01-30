@@ -52,7 +52,8 @@ HEADERS  += mainwindow.h \
     settings.h \
     fileoperationdialog.h \
     fileattributesdialog.h \
-    preferencesdialog.h
+    preferencesdialog.h \
+    workerresult.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
