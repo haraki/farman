@@ -26,8 +26,18 @@ public:
                                   QWidget *parent = Q_NULLPTR);
     ~FileAttributesDialog();
 
+    QFile::Permissions getPermissions() const;
+    QDateTime getCreated() const;
+    QDateTime getLastModified() const;
+
+    void accept();
+
 private:
     Ui::FileAttributesDialog *ui;
+
+    QFile::Permissions m_permissions;
+    QDateTime m_created;
+    QDateTime m_lastModified;
 };
 
 }           // namespace Farman

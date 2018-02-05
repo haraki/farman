@@ -74,7 +74,7 @@ private:
     void removeFile(const QStringList& paths);
     void makeDirectory(const QString& path);
     void renameFile(const QString& path, const QString& name);
-    void changeFileAttributes(const QFileInfo& fileInfo);
+    void showFileAttributes(const QFileInfo& fileInfo);
 
     void emitOutputConsole(const QString& consoleString);
 

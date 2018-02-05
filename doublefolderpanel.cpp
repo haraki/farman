@@ -493,7 +493,7 @@ void DoubleFolderPanel::onAttributes()
     {
         if(activeForm->getCurrentFileName() != "..")
         {
-            changeFileAttributes(activeForm->getCurrentFileInfo());
+            showFileAttributes(activeForm->getCurrentFileInfo());
         }
     }
 }
@@ -755,15 +755,56 @@ void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
     }
 }
 
-void DoubleFolderPanel::changeFileAttributes(const QFileInfo& fileInfo)
+void DoubleFolderPanel::showFileAttributes(const QFileInfo& fileInfo)
 {
     QFile file(fileInfo.absoluteFilePath());
 
     FileAttributesDialog dialog(fileInfo.fileName(), fileInfo.owner(), fileInfo.group(), file.permissions(), fileInfo.created(), fileInfo.lastModified());
+    FileAttributesDialog dialog(fileInfo.fileName(),
+                                fileInfo.owner(),
+                                fileInfo.group(),
+                                file.permissions(),
+                                file.fileTime(QFile::FileBirthTime),
+                                file.fileTime(QFile::FileModificationTime));
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
+
+    if(file.permissions() != dialog.getPermissions())
+    {
+        if(!file.setPermissions(dialog.getPermissions()))
+        {
+            qDebug() << "permission change failed. " << file.errorString();
+        }
+    }
+
+    bool changeCreated      = fileInfo.created() != dialog.getCreated();
+    bool changeLastModified = fileInfo.lastModified() != dialog.getLastModified();
+
+    if(changeCreated || changeLastModified)
+    {
+        if(file.open(QFile::ReadWrite))
+        {
+            if(changeCreated && !file.setFileTime(dialog.getCreated(), QFile::FileBirthTime))
+            {
+                qDebug() << "created time change failed. " << file.errorString();
+            }
+
+            if(changeLastModified && !file.setFileTime(dialog.getLastModified(), QFile::FileModificationTime))
+            {
+                qDebug() << "lastModified time change failed. " << file.errorString();
+            }
+
+            file.close();
+        }
+        else
+        {
+            qDebug() << "file open failed. " << file.errorString();
+        }
+    }
+
+    refresh();
 }
 
 void DoubleFolderPanel::refresh()

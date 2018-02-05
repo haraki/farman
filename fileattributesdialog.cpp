@@ -1,4 +1,5 @@
-﻿#include "fileattributesdialog.h"
+﻿#include <QDebug>
+#include "fileattributesdialog.h"
 #include "ui_fileattributesdialog.h"
 
 namespace Farman
@@ -12,7 +13,10 @@ FileAttributesDialog::FileAttributesDialog(const QString& fileName,
                                            const QDateTime& lastModified,
                                            QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
-    ui(new Ui::FileAttributesDialog)
+    ui(new Ui::FileAttributesDialog),
+    m_permissions(permissions),
+    m_created(created),
+    m_lastModified(lastModified)
 {
     ui->setupUi(this);
 
@@ -20,19 +24,6 @@ FileAttributesDialog::FileAttributesDialog(const QString& fileName,
 
     ui->ownershipUserLabel->setText(userName);
     ui->ownershipGroupLabel->setText(groupName);
-
-    // チェックボックスをマウスクリックできないようにするための措置
-    ui->permissionsOwnerReadCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->permissionsOwnerWriteCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->permissionsOwnerExecuteCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-
-    ui->permissionsGroupReadCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->permissionsGroupWriteCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->permissionsGroupExecuteCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-
-    ui->permissionsOtherReadCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->permissionsOtherWriteCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->permissionsOtherExecuteCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     ui->permissionsOwnerReadCheckBox->setChecked((permissions & QFile::Permission::ReadOwner) == QFile::Permission::ReadOwner);
     ui->permissionsOwnerWriteCheckBox->setChecked((permissions & QFile::Permission::WriteOwner) == QFile::Permission::WriteOwner);
@@ -46,13 +37,79 @@ FileAttributesDialog::FileAttributesDialog(const QString& fileName,
     ui->permissionsOtherWriteCheckBox->setChecked((permissions & QFile::Permission::WriteOther) == QFile::Permission::WriteOther);
     ui->permissionsOtherExecuteCheckBox->setChecked((permissions & QFile::Permission::ExeOther) == QFile::Permission::ExeOther);
 
-    ui->timestampCreatedLabel->setText(created.toString(Qt::DefaultLocaleLongDate));
-    ui->timestampLastModifiedLabel->setText(lastModified.toString(Qt::DefaultLocaleLongDate));
+    ui->timestampCreatedDateTimeEdit->setDateTime(created);
+    ui->timestampLastModifiedDateTimeEdit->setDateTime(lastModified);
 }
 
 FileAttributesDialog::~FileAttributesDialog()
 {
     delete ui;
+}
+
+QFile::Permissions FileAttributesDialog::getPermissions() const
+{
+    return m_permissions;
+}
+
+QDateTime FileAttributesDialog::getCreated() const
+{
+    return m_created;
+}
+
+QDateTime FileAttributesDialog::getLastModified() const
+{
+    return m_lastModified;
+}
+
+void FileAttributesDialog::accept()
+{
+    m_permissions = 0;
+
+    if(ui->permissionsOwnerReadCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::ReadOwner;
+    }
+    if(ui->permissionsOwnerWriteCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::WriteOwner;
+    }
+    if(ui->permissionsOwnerExecuteCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::ExeOwner;
+    }
+
+    if(ui->permissionsGroupReadCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::ReadGroup;
+    }
+    if(ui->permissionsGroupWriteCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::WriteGroup;
+    }
+    if(ui->permissionsGroupExecuteCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::ExeGroup;
+    }
+
+    if(ui->permissionsOtherReadCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::ReadOther;
+    }
+    if(ui->permissionsOtherWriteCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::WriteOther;
+    }
+    if(ui->permissionsOtherExecuteCheckBox->isChecked())
+    {
+        m_permissions |= QFile::Permission::ExeOther;
+    }
+
+    qDebug() << "permissions == " << m_permissions;
+
+    m_created = ui->timestampCreatedDateTimeEdit->dateTime();
+    m_lastModified = ui->timestampLastModifiedDateTimeEdit->dateTime();
+
+    QDialog::accept();
 }
 
 }           // namespace Farman

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>307</width>
-    <height>380</height>
+    <width>320</width>
+    <height>398</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -109,9 +109,6 @@
       </item>
       <item row="1" column="0">
        <widget class="QCheckBox" name="permissionsOwnerReadCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Read</string>
         </property>
@@ -119,9 +116,6 @@
       </item>
       <item row="1" column="1">
        <widget class="QCheckBox" name="permissionsGroupReadCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Read</string>
         </property>
@@ -129,9 +123,6 @@
       </item>
       <item row="1" column="2">
        <widget class="QCheckBox" name="permissionsOtherReadCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Read</string>
         </property>
@@ -139,9 +130,6 @@
       </item>
       <item row="2" column="0">
        <widget class="QCheckBox" name="permissionsOwnerWriteCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Write</string>
         </property>
@@ -149,9 +137,6 @@
       </item>
       <item row="2" column="1">
        <widget class="QCheckBox" name="permissionsGroupWriteCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Write</string>
         </property>
@@ -159,9 +144,6 @@
       </item>
       <item row="2" column="2">
        <widget class="QCheckBox" name="permissionsOtherWriteCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Write</string>
         </property>
@@ -169,9 +151,6 @@
       </item>
       <item row="3" column="0">
        <widget class="QCheckBox" name="permissionsOwnerExecuteCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Execute</string>
         </property>
@@ -179,9 +158,6 @@
       </item>
       <item row="3" column="1">
        <widget class="QCheckBox" name="permissionsGroupExecuteCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Execute</string>
         </property>
@@ -189,9 +165,6 @@
       </item>
       <item row="3" column="2">
        <widget class="QCheckBox" name="permissionsOtherExecuteCheckBox">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Execute</string>
         </property>
@@ -205,18 +178,11 @@
      <property name="title">
       <string>Timestamp</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1">
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1,0">
       <item row="0" column="0">
        <widget class="QLabel" name="timestampCreatedHeadLabel">
         <property name="text">
          <string>Created : </string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="timestampCreatedLabel">
-        <property name="text">
-         <string>Created time</string>
         </property>
        </widget>
       </item>
@@ -227,10 +193,17 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="timestampLastModifiedLabel">
-        <property name="text">
-         <string>Last modified time</string>
+      <item row="0" column="1" colspan="2">
+       <widget class="QDateTimeEdit" name="timestampCreatedDateTimeEdit">
+        <property name="displayFormat">
+         <string>yyyy/MM/dd HH:mm:ss</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QDateTimeEdit" name="timestampLastModifiedDateTimeEdit">
+        <property name="displayFormat">
+         <string>yyyy/MM/dd HH:mm:ss</string>
         </property>
        </widget>
       </item>
@@ -243,7 +216,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
