@@ -176,7 +176,7 @@
    <item>
     <widget class="QGroupBox" name="timestampGroupBox">
      <property name="title">
-      <string>Timestamp</string>
+      <string>Time stamp</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1,0">
       <item row="0" column="0">
