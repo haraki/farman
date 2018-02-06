@@ -759,10 +759,7 @@ void DoubleFolderPanel::showFileAttributes(const QFileInfo& fileInfo)
 {
     QFile file(fileInfo.absoluteFilePath());
 
-    FileAttributesDialog dialog(fileInfo.fileName(), fileInfo.owner(), fileInfo.group(), file.permissions(), fileInfo.created(), fileInfo.lastModified());
-    FileAttributesDialog dialog(fileInfo.fileName(),
-                                fileInfo.owner(),
-                                fileInfo.group(),
+    FileAttributesDialog dialog(fileInfo,
                                 file.permissions(),
                                 file.fileTime(QFile::FileBirthTime),
                                 file.fileTime(QFile::FileModificationTime));

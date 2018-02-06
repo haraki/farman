@@ -9,6 +9,8 @@ namespace Ui {
 class FileAttributesDialog;
 }
 
+class QFileInfo;
+
 namespace Farman
 {
 
@@ -17,9 +19,7 @@ class FileAttributesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FileAttributesDialog(const QString& fileName,
-                                  const QString& userName,
-                                  const QString& groupName,
+    explicit FileAttributesDialog(const QFileInfo& fileInfo,
                                   QFile::Permissions permissions,
                                   const QDateTime& created,
                                   const QDateTime& lastModified,

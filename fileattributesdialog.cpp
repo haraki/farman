@@ -1,13 +1,14 @@
 ﻿#include <QDebug>
+#include <QFileInfo>
+#include <QDir>
+#include <QMimeDatabase>
 #include "fileattributesdialog.h"
 #include "ui_fileattributesdialog.h"
 
 namespace Farman
 {
 
-FileAttributesDialog::FileAttributesDialog(const QString& fileName,
-                                           const QString& userName,
-                                           const QString& groupName,
+FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
                                            QFile::Permissions permissions,
                                            const QDateTime& created,
                                            const QDateTime& lastModified,
@@ -20,10 +21,13 @@ FileAttributesDialog::FileAttributesDialog(const QString& fileName,
 {
     ui->setupUi(this);
 
-    ui->fileNameLabel->setText(fileName);
+    ui->fileNameLabel->setText(fileInfo.fileName());
 
-    ui->ownershipUserLabel->setText(userName);
-    ui->ownershipGroupLabel->setText(groupName);
+    ui->informationFullPathLabel->setText(fileInfo.absoluteFilePath());
+    ui->informationMimeLabel->setText(QMimeDatabase().mimeTypeForFile(fileInfo).name());
+
+    ui->ownershipUserLabel->setText(fileInfo.owner());
+    ui->ownershipGroupLabel->setText(fileInfo.group());
 
     ui->permissionsOwnerReadCheckBox->setChecked((permissions & QFile::Permission::ReadOwner) == QFile::Permission::ReadOwner);
     ui->permissionsOwnerWriteCheckBox->setChecked((permissions & QFile::Permission::WriteOwner) == QFile::Permission::WriteOwner);
