@@ -719,8 +719,6 @@ void DoubleFolderPanel::makeDirectory(const QString& path)
     }
 
     emitOutputConsole(tr("Made directory.\n"));
-
-    refresh();
 }
 
 void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
@@ -745,8 +743,6 @@ void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
 
     emitOutputConsole(QString("%1 >> %2 ... ").arg(name).arg(newFileName));
     emitOutputConsole(tr("Renamed.\n"));
-
-    refresh();
 
     FolderForm* activeFolderForm = getActiveFolderForm();
     if(activeFolderForm != Q_NULLPTR)
@@ -800,8 +796,6 @@ void DoubleFolderPanel::showFileAttributes(const QFileInfo& fileInfo)
             qDebug() << "file open failed. " << file.errorString();
         }
     }
-
-    refresh();
 }
 
 void DoubleFolderPanel::refresh()
@@ -822,43 +816,31 @@ void DoubleFolderPanel::refresh()
 void DoubleFolderPanel::onCopyFileFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onCopyFileFinished : result : " << result;
-
-    refresh();
 }
 
 void DoubleFolderPanel::onCopyFileError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onCopyFileError : err : " << err;
-
-    refresh();
 }
 
 void DoubleFolderPanel::onMoveFileFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onMoveFileFinished : result : " << result;
-
-    refresh();
 }
 
 void DoubleFolderPanel::onMoveFileError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onMoveFileError : err : " << err;
-
-    refresh();
 }
 
 void DoubleFolderPanel::onRemoveFileFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onRemoveFileFinished : result : " << result;
-
-    refresh();
 }
 
 void DoubleFolderPanel::onRemoveFileError(const QString& err)
 {
     qDebug() << "DoubleFolderPanel::onRemoveFileError : err : " << err;
-
-    refresh();
 }
 
 void DoubleFolderPanel::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType)

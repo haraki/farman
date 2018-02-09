@@ -3,6 +3,7 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QItemSelectionModel>
+#include <QFileSystemWatcher>
 #include "mainwindow.h"
 #include "folderform.h"
 #include "ui_folderform.h"
@@ -16,6 +17,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
     : QWidget(parent)
     , ui(new Ui::FolderForm)
     , m_folderModel(Q_NULLPTR)
+    , m_folderWatcher(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -27,10 +29,16 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
 
+    m_folderWatcher = new QFileSystemWatcher(this);
+
     connect(m_folderModel->getSelectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
+    connect(m_folderWatcher,
+            SIGNAL(directoryChanged(const QString&)),
+            this,
+            SLOT(onDirectoryChanged(const QString&)));
     connect(ui->folderView,
             SIGNAL(doubleClicked(const QModelIndex&)),
             MainWindow::getInstance(),
@@ -41,6 +49,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWi
 
 FolderForm::~FolderForm()
 {
+    delete m_folderWatcher;
     delete m_folderModel;
     delete ui;
 }
@@ -147,6 +156,11 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
 {
     if(m_folderModel != Q_NULLPTR)
     {
+        if(!beforePath.isEmpty())
+        {
+            m_folderWatcher->removePath(beforePath);
+        }
+
         QDir dir(dirPath);
         QDir::Filters filterFlags;
 
@@ -189,6 +203,8 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         ui->folderView->scrollTo(newCursorIndex);
 
         ui->folderPathEdit->setText(dirPath);
+
+        m_folderWatcher->addPath(dirPath);
     }
 }
 
@@ -258,6 +274,13 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
                        (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
 }
 
+void FolderForm::onDirectoryChanged(const QString& path)
+{
+    qDebug() << "directory changed." << path;
+
+    refresh();
+}
+
 void FolderForm::onSelect()
 {
     const QModelIndex currentIndex = ui->folderView->currentIndex();
@@ -297,9 +320,9 @@ void FolderForm::onGoToChildDir()
 
         qDebug() << "================== onGoToChildDir() : " << currentIndex << " -> " << newPath;
 
-        const QString beforePath = m_folderModel->filePath(ui->folderView->rootIndex());
+        const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
 
-        setPath(newPath, beforePath);
+        setPath(newPath, currentPath);
     }
 }
 
@@ -353,14 +376,16 @@ int FolderForm::getTotalColumnWidth(int withOutColumn)
 
 void FolderForm::on_folderSelectButton_clicked()
 {
+    const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
+
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
-                                                        m_folderModel->filePath(ui->folderView->rootIndex()),
+                                                        currentPath,
                                                         QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
     if(!dirPath.isEmpty())
     {
-        setPath(dirPath);
+        setPath(dirPath, currentPath);
     }
 }
 

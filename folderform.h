@@ -10,6 +10,7 @@ class FolderForm;
 }
 class QString;
 class QResizeEvent;
+class QFileSystemWatcher;
 
 namespace Farman
 {
@@ -48,10 +49,11 @@ Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void focusChanged(bool inFocus);
 
-protected slots:
+protected Q_SLOTS:
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
+    void onDirectoryChanged(const QString& path);
 
-private slots:
+private Q_SLOTS:
     void on_folderSelectButton_clicked();
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
@@ -70,6 +72,8 @@ private:
     Ui::FolderForm *ui;
 
     FolderModel *m_folderModel;
+
+    QFileSystemWatcher* m_folderWatcher;
 };
 
 }           // namespace Farman
