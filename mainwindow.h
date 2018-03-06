@@ -24,6 +24,7 @@ public:
 
 public Q_SLOTS:
     void onOpen(const QModelIndex& index = QModelIndex());
+    void onCloseViewer(const QString& viewerName);
     void onOpenInApp(const QModelIndex& index = QModelIndex());
     void onStatusChanged(const QString& statusString);
     void onOutputConsole(const QString& consoleString);

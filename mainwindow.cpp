@@ -9,6 +9,7 @@
 #include "doublefolderpanel.h"
 #include "settings.h"
 #include "preferencesdialog.h"
+#include "viewerdispatcher.h"
 
 namespace Farman
 {
@@ -143,6 +144,44 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
         activeFolderForm->onGoToChildDir();
 
         return;
+    }
+
+    QWidget* viewer = ViewerDispatcher::getInstance()->dispatcher(fileInfo.absoluteFilePath(), ui->mainWidget);
+    if(viewer == Q_NULLPTR)
+    {
+        return;
+    }
+
+    ui->mainWidget->layout()->addWidget(viewer);
+    ui->mainWidget->installEventFilter(viewer);
+
+    doubleFolderPanel->setVisible(false);
+}
+
+void MainWindow::onCloseViewer(const QString& viewerObjectName)
+{
+    qDebug() << "MainWindow::onCloseViewer()";
+
+    QWidget* viewer = ui->mainWidget->findChild<QWidget*>(viewerObjectName);
+    if(viewer == Q_NULLPTR)
+    {
+        return;
+    }
+
+    viewer->setVisible(false);
+    ui->mainWidget->layout()->removeWidget(viewer);
+
+    delete viewer;
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
+
+    if(!doubleFolderPanel->isVisible())
+    {
+        doubleFolderPanel->setVisible(true);
     }
 }
 
