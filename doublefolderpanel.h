@@ -31,6 +31,8 @@ public:
 
     void refresh();
 
+    void setVisible(bool visible) Q_DECL_OVERRIDE;
+
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
     FolderForm* getLeftFolderForm();
@@ -85,6 +87,8 @@ private:
     Ui::DoubleFolderPanel *ui;
 
     ViewMode m_viewMode;
+
+    QString m_activeFolderFormName;
 };
 
 }           // namespace Farman

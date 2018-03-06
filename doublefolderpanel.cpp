@@ -27,6 +27,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
     , m_viewMode(ViewMode::Default)
+    , m_activeFolderFormName("l_folderForm")
 {
     ui->setupUi(this);
 
@@ -134,7 +135,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             this,
             SLOT(onRightFocusChanged(bool)));
 
-    setActiveFolderForm("l_folderForm");
+    setActiveFolderForm(m_activeFolderFormName);
 
     onSetViewMode(viewMode);
 }
@@ -589,6 +590,8 @@ void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
         {
             folderView->setFocus();
         }
+
+        m_activeFolderFormName = objectName;
     }
 }
 
@@ -831,6 +834,16 @@ void DoubleFolderPanel::refresh()
     if(inactiveFolderForm != Q_NULLPTR)
     {
         inactiveFolderForm->refresh();
+    }
+}
+
+void DoubleFolderPanel::setVisible(bool visible)
+{
+    QWidget::setVisible(visible);
+
+    if(visible)
+    {
+        setActiveFolderForm(m_activeFolderFormName);
     }
 }
 
