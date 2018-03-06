@@ -33,6 +33,7 @@ SOURCES += main.cpp\
     fileoperationdialog.cpp \
     fileattributesdialog.cpp \
     preferencesdialog.cpp \
+    viewerdispatcher.cpp \
     imageviewer.cpp
 
 HEADERS  += mainwindow.h \
@@ -55,6 +56,7 @@ HEADERS  += mainwindow.h \
     fileattributesdialog.h \
     preferencesdialog.h \
     workerresult.h \
+    viewerdispatcher.h \
     imageviewer.h
 
 FORMS    += mainwindow.ui \
