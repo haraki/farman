@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     settings.cpp \
     fileoperationdialog.cpp \
     fileattributesdialog.cpp \
-    preferencesdialog.cpp
+    preferencesdialog.cpp \
+    imageviewer.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -53,7 +54,8 @@ HEADERS  += mainwindow.h \
     fileoperationdialog.h \
     fileattributesdialog.h \
     preferencesdialog.h \
-    workerresult.h
+    workerresult.h \
+    imageviewer.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
@@ -65,4 +67,5 @@ FORMS    += mainwindow.ui \
     renamedialog.ui \
     fileoperationdialog.ui \
     fileattributesdialog.ui \
-    preferencesdialog.ui
+    preferencesdialog.ui \
+    imageviewer.ui
