@@ -49,6 +49,8 @@ public:
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
     void outputConsole(const QString& consoleString);
+    void openFile(const QModelIndex& index);
+    void openFileInApp(const QModelIndex& index);
 
 protected Q_SLOTS:
     void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
@@ -67,7 +69,6 @@ protected Q_SLOTS:
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
-    void emitStatusChanged(const QString& statusString);
     void setActiveFolderForm(const QString& objectName);
     void copyFile(const QStringList& srcPaths, const QString& dstPath);
     void moveFile(const QStringList& srcPaths, const QString& dstPath);
@@ -76,7 +77,10 @@ private:
     void renameFile(const QString& path, const QString& name);
     void showFileAttributes(const QFileInfo& fileInfo);
 
+    void emitStatusChanged(const QString& statusString);
     void emitOutputConsole(const QString& consoleString);
+    void emitOpenFile(const QModelIndex& index = QModelIndex());
+    void emitOpenFileInApp(const QModelIndex& index = QModelIndex());
 
     Ui::DoubleFolderPanel *ui;
 

@@ -69,6 +69,16 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             MainWindow::getInstance(),
             SLOT(onOutputConsole(const QString)));
 
+    connect(this,
+            SIGNAL(openFile(const QModelIndex)),
+            MainWindow::getInstance(),
+            SLOT(onOpen(const QModelIndex)));
+
+    connect(this,
+            SIGNAL(openFileInApp(const QModelIndex)),
+            MainWindow::getInstance(),
+            SLOT(onOpenInApp(const QModelIndex)));
+
     QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);
     l_vLayout->setObjectName(QStringLiteral("l_vLayout"));
@@ -182,7 +192,8 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 
     bool ret = false;
 
-    switch (e->type()) {
+    switch (e->type())
+    {
     case QEvent::KeyPress:
     {
         QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
@@ -204,11 +215,11 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
                 // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
                 if(keyEvent->modifiers() & Qt::ShiftModifier)
                 {
-                    MainWindow::getInstance()->onOpenInApp();
+                    emitOpenFileInApp();
                 }
                 else
                 {
-                    MainWindow::getInstance()->onOpen();
+                    emitOpenFile();
                 }
 
                 ret = true;
@@ -556,6 +567,16 @@ void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 void DoubleFolderPanel::emitOutputConsole(const QString& consoleString)
 {
     emit outputConsole(consoleString);
+}
+
+void DoubleFolderPanel::emitOpenFile(const QModelIndex& index)
+{
+    emit openFile(index);
+}
+
+void DoubleFolderPanel::emitOpenFileInApp(const QModelIndex& index)
+{
+    emit openFileInApp(index);
 }
 
 void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)

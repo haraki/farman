@@ -146,8 +146,10 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
     }
 }
 
-void MainWindow::onOpenInApp()
+void MainWindow::onOpenInApp(const QModelIndex& index/* = QModelIndex()*/)
 {
+    Q_UNUSED(index);
+
     qDebug() << "MainWindow::onOpenInApp()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
