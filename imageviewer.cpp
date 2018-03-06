@@ -64,11 +64,15 @@ bool ImageViewer::eventFilter(QObject *watched, QEvent *e)
             {
             case Qt::Key_Return:
                 // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
+
+                // TODO:
+                // このタイミングで Viewer のインスタンスが delete される
+                // そのため、以降関数を抜けるまでの間に Viewer のメンバにアクセスしてはならない
+                // 何とかしたいがいい方法が見つからないので、ひとまずこのままとする
+                // MainWindow 側で Key_Return 押下イベントを検知できればよいのだが…
                 emitCloseViewer(objectName());
 
                 ret = true;
-
-                qDebug() << "aaaaaa";
 
                 break;
 
