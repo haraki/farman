@@ -10,6 +10,7 @@
 #include "settings.h"
 #include "preferencesdialog.h"
 #include "viewerdispatcher.h"
+#include "imageviewer.h"
 
 namespace Farman
 {
@@ -156,6 +157,8 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
     ui->mainWidget->installEventFilter(viewer);
 
     doubleFolderPanel->setVisible(false);
+
+    dynamic_cast<ImageViewer*>(viewer)->start();
 }
 
 void MainWindow::onCloseViewer(const QString& viewerObjectName)

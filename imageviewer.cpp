@@ -1,10 +1,13 @@
 ﻿#include <QPixmap>
 #include <QPainter>
-#include <QImageReader>
 #include <QKeyEvent>
+#include <QByteArray>
+#include <QDebug>
+#include <QProgressDialog>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
 #include "mainwindow.h"
+#include "readfileworker.h"
 
 namespace Farman
 {
@@ -13,7 +16,9 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ImageViewer),
     m_filePath(filePath),
-    m_imageReader(Q_NULLPTR)
+    m_buffer(),
+    m_worker(Q_NULLPTR),
+    m_progressDialog(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -28,19 +33,59 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
 
     ui->imageGraphicsView->setScene(&m_scene);
     ui->imageGraphicsView->setFocus();
-
-    m_imageReader = new QImageReader(m_filePath);
-
-    setData();
 }
 
 ImageViewer::~ImageViewer()
 {
     qDebug() << "~ImageViewer()";
 
-    delete m_imageReader;
-
     delete ui;
+
+    delete m_progressDialog;
+}
+
+int ImageViewer::start()
+{
+    m_buffer.clear();
+
+    m_progressDialog = new QProgressDialog(tr("%1 reading").arg(m_filePath), tr("Cancel"), 0, 1, this);
+    if(m_progressDialog == Q_NULLPTR)
+    {
+        return -1;
+    }
+
+    connect(m_progressDialog,
+            SIGNAL(canceled()),
+            this,
+            SLOT(onProgressDialogCanceled()));
+
+    m_worker = new ReadFileWorker(m_filePath, &m_buffer);
+    if(m_worker == Q_NULLPTR)
+    {
+        return -1;
+    }
+
+    connect(m_worker,
+            SIGNAL(start(int,int)),
+            m_progressDialog,
+            SLOT(setRange(int,int)));
+    connect(m_worker,
+            SIGNAL(progress(int)),
+            m_progressDialog,
+            SLOT(setValue(int)));
+    connect(m_worker,
+            SIGNAL(finished(int)),
+            this,
+            SLOT(onReadFileFinished(int)));
+    connect(m_worker,
+            SIGNAL(error(QString)),
+            this,
+            SLOT(onReadFileError(QString)));
+
+    m_progressDialog->show();
+    m_worker->exec();
+
+    return 0;
 }
 
 bool ImageViewer::eventFilter(QObject *watched, QEvent *e)
@@ -98,6 +143,34 @@ void ImageViewer::resizeEvent(QResizeEvent *e)
     {
         autoScale();
     }
+}
+
+void ImageViewer::onReadFileFinished(int result)
+{
+    qDebug() << "ViewerPanel::onReadFileFinished : result : " << result;
+
+    m_worker = Q_NULLPTR;           // deleteLater で自動的にデストラクトされているので、Q_NULLPTR を代入するのみ
+
+    if(result == 0)
+    {
+        setData();
+    }
+    else
+    {
+        closeViewer(objectName());
+    }
+}
+
+void ImageViewer::onReadFileError(const QString& err)
+{
+    qDebug() << "ViewerPanel::onReadFileError : err : " << err;
+}
+
+void ImageViewer::onProgressDialogCanceled()
+{
+    qDebug() << "ImageViewer::onProgressDialogCanceled()";
+
+    m_worker->abort();
 }
 
 void ImageViewer::on_autoScaleCheckBox_stateChanged(int arg1)
@@ -193,9 +266,13 @@ void ImageViewer::makeScaleComboBox(const QString& scaleStr)
     ui->scaleComboBox->setCurrentIndex(index);
 }
 
-void ImageViewer::setData()
+int ImageViewer::setData()
 {
-    QPixmap pixmap = QPixmap::fromImageReader(m_imageReader);
+    QPixmap pixmap = QPixmap();
+    if(!pixmap.loadFromData(m_buffer))
+    {
+        return -1;
+    }
 
     m_scene.addPixmap(pixmap);
 
@@ -216,6 +293,8 @@ void ImageViewer::setData()
             setScale(scale);
         }
     }
+
+    return 0;
 }
 
 void ImageViewer::autoScale()
