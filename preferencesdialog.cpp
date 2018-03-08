@@ -146,6 +146,13 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     ui->appearanceFolderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
 
     setAppearanceFontAndColorOption();
+
+    ui->imageViewerFitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
+
+    ui->imageViewerBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
+    ui->imageViewerBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid) ? 0 : 1);
+
+    setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -439,6 +446,19 @@ void PreferencesDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
+{
+    QColor oldColor = ui->imageViewerBGColorSampleLineEdit->palette().base().color();
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(oldColor, newColor))
+    {
+        m_colorSettings["imageViewer_background"] = newColor;
+
+        setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
+    }
+}
+
 void PreferencesDialog::setAppearanceFontAndColorOption()
 {
     QFont font;
@@ -500,8 +520,14 @@ void PreferencesDialog::setAppearanceFontAndColorOption()
 void PreferencesDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
 {
     QPalette pal = widget->palette();
-    pal.setColor(QPalette::Text, m_colorSettings[colorSettingType]);
-    pal.setColor(QPalette::Base, m_colorSettings[bgSettingType]);
+    if(colorSettingType != "")
+    {
+        pal.setColor(QPalette::Text, m_colorSettings[colorSettingType]);
+    }
+    if(bgSettingType != "")
+    {
+        pal.setColor(QPalette::Base, m_colorSettings[bgSettingType]);
+    }
     widget->setPalette(pal);
 }
 
@@ -604,6 +630,11 @@ void PreferencesDialog::on_buttonBox_accepted()
     Settings::getInstance()->setColorSettings(m_colorSettings);
 
     Settings::getInstance()->setCursorWidth(ui->appearanceFolderViewCursorWidthSpinBox->value());
+
+    Settings::getInstance()->setImageViewerFitInView(ui->imageViewerFitInViewCheckBox->isChecked());
+
+    Settings::getInstance()->setImageViewerBGType((ui->imageViewerBGTypeComboBox->currentIndex() == 0) ? ImageViewerBGType::Solid
+                                                                                                       : ImageViewerBGType::Checkered);
 }
 
 }           // namespace Farman

@@ -69,6 +69,8 @@ private slots:
     void on_appearanceConsoleChooseColorPushButton_clicked();
     void on_appearanceConsoleChooseBGColorPushButton_clicked();
 
+    void on_imageViewerBGColorPushButton_clicked();
+
     void on_buttonBox_accepted();
 
 private:
