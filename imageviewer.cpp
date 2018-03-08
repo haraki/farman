@@ -10,6 +10,7 @@
 #include "ui_imageviewer.h"
 #include "mainwindow.h"
 #include "readfileworker.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -32,7 +33,44 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
 
     makeScaleComboBox("100");
 
-    ui->scaleComboBox->setEnabled(!ui->fitInViewCheckBox->isChecked());
+    ui->fitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
+
+    QBrush bgBrush = ui->imageGraphicsView->backgroundBrush();
+
+    if(Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid)
+    {
+        bgBrush.setStyle(Qt::SolidPattern);
+    }
+    else
+    {
+        bgBrush.setStyle(Qt::TexturePattern);
+
+        const uchar bgBitmapBits[] = {
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+        };
+        QBitmap bgBitmap = QBitmap::fromData({16, 16}, bgBitmapBits);
+
+        bgBrush.setTexture(bgBitmap);
+    }
+
+    bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_background"));
+
+    ui->imageGraphicsView->setBackgroundBrush(bgBrush);
 
     ui->imageGraphicsView->setScene(&m_scene);
     ui->imageGraphicsView->setFocus();
