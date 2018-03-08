@@ -79,6 +79,12 @@ public:
     int getCursorWidth() { return m_cursorWidth; }
     void setCursorWidth(int cursorWidth) { m_cursorWidth = cursorWidth; }
 
+    bool getImageViewerFitInView() { return m_imageViewerFitInView; }
+    void setImageViewerFitInView(bool fitInView) { m_imageViewerFitInView = fitInView; }
+
+    ImageViewerBGType getImageViewerBGType() { return m_imageViewerBGType; }
+    void setImageViewerBGType(ImageViewerBGType bgType) { m_imageViewerBGType = bgType; }
+
 private:
     Settings();
 
@@ -137,6 +143,8 @@ private:
 
         { "console_text",                   "#000000", },
         { "console_background",             "#ffffff", },
+
+        { "imageViewer_background",         "#808080", },
     };
 
     QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;
@@ -162,6 +170,9 @@ private:
     QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;
 
     int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
+
+    bool m_imageViewerFitInView = true;
+    ImageViewerBGType m_imageViewerBGType = ImageViewerBGType::Checkered;
 };
 
 }

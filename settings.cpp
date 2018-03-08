@@ -74,18 +74,23 @@ void Settings::initialize()
     QString confirmQuitValue = Settings::getInstance()->value("main/confirmQuit", "true").toString();
     m_confirmQuit = (confirmQuitValue == "false") ? false : true;
 
-    // Color settings
-    for(auto colorSettingKey : m_colorSettings.keys())
+    auto getColorSettingParam = [](const QString& key, const QColor& defColor)
     {
-        QString colorSettingString = Settings::getInstance()->value("main/color/" + colorSettingKey).toString();
+        QString colorSettingString = Settings::getInstance()->value(key).toString();
         if(colorSettingString.length() > 0 && QColor::isValidColor(colorSettingString))
         {
-            m_colorSettings[colorSettingKey] = QColor(colorSettingString);
+            return QColor(colorSettingString);
         }
         else
         {
-            m_colorSettings[colorSettingKey] = m_defaultColorSettings[colorSettingKey];
+            return defColor;
         }
+    };
+
+    // Color settings
+    for(auto colorSettingKey : m_colorSettings.keys())
+    {
+        m_colorSettings[colorSettingKey] = getColorSettingParam("main/color/" + colorSettingKey, m_defaultColorSettings[colorSettingKey]);
     }
 
     // Font settings
@@ -105,6 +110,14 @@ void Settings::initialize()
 
     // Cursor width
     m_cursorWidth = Settings::getInstance()->value("main/cursorWidth", QString("%1").arg(DEFAULT_CURSOR_WIDTH)).toInt();
+
+    // ImageViewer Fit in view
+    QString imageViewerFitInViewValue = Settings::getInstance()->value("main/imageViewer_fitInView", "true").toString();
+    m_imageViewerFitInView = (imageViewerFitInViewValue == "false") ? false : true;
+
+    // ImageViewer BG type
+    QString imageViewerBGTypeValue = Settings::getInstance()->value("main/imageViewer_bgType", "checkered").toString();
+    m_imageViewerBGType = (imageViewerBGTypeValue == "solid") ? ImageViewerBGType::Solid : ImageViewerBGType::Checkered;
 }
 
 void Settings::flush()
@@ -173,6 +186,14 @@ void Settings::flush()
 
     // Cursor width
     Settings::getInstance()->setValue("main/cursorWidth", m_cursorWidth);
+
+    // ImageViewer Fit in view
+    Settings::getInstance()->setValue("main/imageViewer_fitInView", m_imageViewerFitInView);
+
+    // ImageViewer BG type
+    QString imageViewerBGTypeValue = (m_imageViewerBGType == ImageViewerBGType::Solid) ? "solid"
+                                                                                       : "checkered";
+    Settings::getInstance()->setValue("main/imageViewer_bgType", imageViewerBGTypeValue);
 }
 
 QColor Settings::getColorSetting(const QString& colorSettingType)
