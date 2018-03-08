@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>434</width>
     <height>300</height>
    </rect>
   </property>
@@ -81,9 +81,9 @@
     </widget>
    </item>
    <item row="2" column="5">
-    <widget class="QCheckBox" name="autoScaleCheckBox">
+    <widget class="QCheckBox" name="fitInViewCheckBox">
      <property name="text">
-      <string>Auto</string>
+      <string>Fit in view</string>
      </property>
     </widget>
    </item>

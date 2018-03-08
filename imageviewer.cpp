@@ -29,7 +29,7 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
 
     makeScaleComboBox("100");
 
-    ui->scaleComboBox->setEnabled(!ui->autoScaleCheckBox->isChecked());
+    ui->scaleComboBox->setEnabled(!ui->fitInViewCheckBox->isChecked());
 
     ui->imageGraphicsView->setScene(&m_scene);
     ui->imageGraphicsView->setFocus();
@@ -139,7 +139,7 @@ void ImageViewer::resizeEvent(QResizeEvent *e)
 {
     Q_UNUSED(e);
 
-    if(ui->autoScaleCheckBox->isChecked())
+    if(ui->fitInViewCheckBox->isChecked())
     {
         autoScale();
     }
@@ -173,18 +173,18 @@ void ImageViewer::onProgressDialogCanceled()
     m_worker->abort();
 }
 
-void ImageViewer::on_autoScaleCheckBox_stateChanged(int arg1)
+void ImageViewer::on_fitInViewCheckBox_stateChanged(int arg1)
 {
     Q_UNUSED(arg1);
 
-    ui->scaleComboBox->setEnabled(!ui->autoScaleCheckBox->isChecked());
+    ui->scaleComboBox->setEnabled(!ui->fitInViewCheckBox->isChecked());
 
-    // AutoScale On 時、時々スクロールバーが表示されてしまうので、Off にする
-    Qt::ScrollBarPolicy scrollBarPolicy = (ui->autoScaleCheckBox->isChecked()) ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded;
+    // Fit in view On 時、時々スクロールバーが表示されてしまうので、Off にする
+    Qt::ScrollBarPolicy scrollBarPolicy = (ui->fitInViewCheckBox->isChecked()) ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded;
     ui->imageGraphicsView->setVerticalScrollBarPolicy(scrollBarPolicy);
     ui->imageGraphicsView->setHorizontalScrollBarPolicy(scrollBarPolicy);
 
-    if(ui->autoScaleCheckBox->isChecked())
+    if(ui->fitInViewCheckBox->isChecked())
     {
         autoScale();
     }
@@ -194,7 +194,7 @@ void ImageViewer::on_scaleComboBox_editTextChanged(const QString &arg1)
 {
     qDebug() << "on_scaleComboBox_editTextChanged";
 
-    if(!ui->autoScaleCheckBox->isChecked())
+    if(!ui->fitInViewCheckBox->isChecked())
     {
         bool ok = false;
         float scale = arg1.toFloat(&ok);
@@ -211,7 +211,7 @@ void ImageViewer::on_scaleComboBox_activated(const QString &arg1)
 {
     qDebug() << "on_scaleComboBox_activated";
 
-    if(!ui->autoScaleCheckBox->isChecked())
+    if(!ui->fitInViewCheckBox->isChecked())
     {
         bool ok = false;
         float scale = arg1.toFloat(&ok);
@@ -278,7 +278,7 @@ int ImageViewer::setData()
 
     ui->sizeLabel->setText(QString("%1 x %2").arg(m_scene.sceneRect().width()).arg(m_scene.sceneRect().height()));
 
-    if(ui->autoScaleCheckBox->isChecked())
+    if(ui->fitInViewCheckBox->isChecked())
     {
         autoScale();
     }

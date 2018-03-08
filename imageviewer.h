@@ -37,7 +37,7 @@ private Q_SLOTS:
 
     void onProgressDialogCanceled();
 
-    void on_autoScaleCheckBox_stateChanged(int arg1);
+    void on_fitInViewCheckBox_stateChanged(int arg1);
     void on_scaleComboBox_editTextChanged(const QString &arg1);
     void on_scaleComboBox_activated(const QString &arg1);
 
