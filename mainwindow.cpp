@@ -153,6 +153,9 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
         return;
     }
 
+    // 余計な操作ができないよう、ビュアー時はメニューは無効化
+    ui->menuBar->setEnabled(false);
+
     ui->mainWidget->layout()->addWidget(viewer);
     ui->mainWidget->installEventFilter(viewer);
 
@@ -165,6 +168,8 @@ void MainWindow::onCloseViewer(const QString& viewerObjectName)
 {
     qDebug() << "MainWindow::onCloseViewer()";
 
+    ui->menuBar->setEnabled(true);
+
     QWidget* viewer = ui->mainWidget->findChild<QWidget*>(viewerObjectName);
     if(viewer == Q_NULLPTR)
     {
@@ -173,7 +178,6 @@ void MainWindow::onCloseViewer(const QString& viewerObjectName)
 
     viewer->setVisible(false);
     ui->mainWidget->layout()->removeWidget(viewer);
-
     delete viewer;
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
