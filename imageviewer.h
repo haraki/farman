@@ -59,6 +59,7 @@ private:
     QProgressDialog* m_progressDialog;
 
     QGraphicsScene m_scene;
+    QGraphicsPixmapItem* m_pixmapItem;
 };
 
 }

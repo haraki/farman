@@ -4,6 +4,8 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QProgressDialog>
+#include <QGraphicsPixmapItem>
+#include <QBitmap>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
 #include "mainwindow.h"
@@ -18,7 +20,8 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
     m_filePath(filePath),
     m_buffer(),
     m_worker(Q_NULLPTR),
-    m_progressDialog(Q_NULLPTR)
+    m_progressDialog(Q_NULLPTR),
+    m_pixmapItem(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -274,9 +277,13 @@ int ImageViewer::setData()
         return -1;
     }
 
-    m_scene.addPixmap(pixmap);
+    m_pixmapItem = m_scene.addPixmap(pixmap);
+    if(m_pixmapItem == Q_NULLPTR)
+    {
+        return -1;
+    }
 
-    ui->sizeLabel->setText(QString("%1 x %2").arg(m_scene.sceneRect().width()).arg(m_scene.sceneRect().height()));
+    ui->sizeLabel->setText(QString("%1 x %2").arg(pixmap.width()).arg(pixmap.height()));
 
     if(ui->fitInViewCheckBox->isChecked())
     {
@@ -299,25 +306,37 @@ int ImageViewer::setData()
 
 void ImageViewer::autoScale()
 {
-    QSizeF sceneSize = m_scene.sceneRect().size();
+    if(m_pixmapItem == Q_NULLPTR)
+    {
+        return;
+    }
+
+    // 拡縮率を自動算出
+    QSizeF pixmapSize = m_pixmapItem->boundingRect().size();
     QSize viewSize = ui->imageGraphicsView->size();
 
-    // QGraphicsView::fitInView() だと画像の上下左右に隙間ができるので、自前で算出する
-    float wScale = viewSize.width() / sceneSize.width();
-    float hScale = viewSize.height() / sceneSize.height();
+    float wScale = viewSize.width() / pixmapSize.width();
+    float hScale = viewSize.height() / pixmapSize.height();
     float scale = (wScale <= hScale) ? wScale : hScale;
 
     setScale(scale);
-
-    qDebug() << m_scene.sceneRect() << ", " << ui->imageGraphicsView->size() << ", " << scale;
 
     makeScaleComboBox(QString::number(scale * 100.f, 'f', 1));
 }
 
 void ImageViewer::setScale(float scale)
 {
-    ui->imageGraphicsView->resetMatrix();
-    ui->imageGraphicsView->scale(scale, scale);
+    if(m_pixmapItem == Q_NULLPTR)
+    {
+        return;
+    }
+
+    m_pixmapItem->setScale(scale);
+
+    QRectF sceneRect = m_pixmapItem->boundingRect();
+    sceneRect.setWidth(sceneRect.width() * scale);
+    sceneRect.setHeight(sceneRect.height() * scale);
+    m_scene.setSceneRect(sceneRect);
 }
 
 void ImageViewer::emitCloseViewer(const QString& viewerName)
