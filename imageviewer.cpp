@@ -182,6 +182,8 @@ void ImageViewer::on_fitInViewCheckBox_stateChanged(int arg1)
 {
     Q_UNUSED(arg1);
 
+    Settings::getInstance()->setImageViewerFitInView(ui->fitInViewCheckBox->isChecked());
+
     ui->scaleComboBox->setEnabled(!ui->fitInViewCheckBox->isChecked());
 
     // Fit in view On 時、時々スクロールバーが表示されてしまうので、Off にする
