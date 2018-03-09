@@ -22,7 +22,8 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
     m_buffer(),
     m_worker(Q_NULLPTR),
     m_progressDialog(Q_NULLPTR),
-    m_pixmapItem(Q_NULLPTR)
+    m_pixmapItem(Q_NULLPTR),
+    m_transparentBgRectItem(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -34,43 +35,6 @@ ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
     makeScaleComboBox("100");
 
     ui->fitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
-
-    QBrush bgBrush = ui->imageGraphicsView->backgroundBrush();
-
-    if(Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid)
-    {
-        bgBrush.setStyle(Qt::SolidPattern);
-    }
-    else
-    {
-        bgBrush.setStyle(Qt::TexturePattern);
-
-        const uchar bgBitmapBits[] = {
-            0xFF,0x00,
-            0xFF,0x00,
-            0xFF,0x00,
-            0xFF,0x00,
-            0xFF,0x00,
-            0xFF,0x00,
-            0xFF,0x00,
-            0xFF,0x00,
-            0x00,0xFF,
-            0x00,0xFF,
-            0x00,0xFF,
-            0x00,0xFF,
-            0x00,0xFF,
-            0x00,0xFF,
-            0x00,0xFF,
-            0x00,0xFF,
-        };
-        QBitmap bgBitmap = QBitmap::fromData({16, 16}, bgBitmapBits);
-
-        bgBrush.setTexture(bgBitmap);
-    }
-
-    bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_background"));
-
-    ui->imageGraphicsView->setBackgroundBrush(bgBrush);
 
     ui->imageGraphicsView->setScene(&m_scene);
     ui->imageGraphicsView->setFocus();
@@ -315,6 +279,12 @@ int ImageViewer::setData()
         return -1;
     }
 
+    m_transparentBgRectItem = m_scene.addRect(0, 0, pixmap.width(), pixmap.height(), QPen(QBrush(), 0, Qt::NoPen), createTransparentBGBrush());
+    if(m_transparentBgRectItem == Q_NULLPTR)
+    {
+        return -1;
+    }
+
     m_pixmapItem = m_scene.addPixmap(pixmap);
     if(m_pixmapItem == Q_NULLPTR)
     {
@@ -375,6 +345,48 @@ void ImageViewer::setScale(float scale)
     sceneRect.setWidth(sceneRect.width() * scale);
     sceneRect.setHeight(sceneRect.height() * scale);
     m_scene.setSceneRect(sceneRect);
+
+    m_transparentBgRectItem->setRect(sceneRect);
+}
+
+QBrush ImageViewer::createTransparentBGBrush()
+{
+    QBrush bgBrush = QBrush();
+
+    if(Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid)
+    {
+        bgBrush.setStyle(Qt::SolidPattern);
+    }
+    else
+    {
+        bgBrush.setStyle(Qt::TexturePattern);
+
+        const uchar bgBitmapBits[] = {
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0xFF,0x00,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+            0x00,0xFF,
+        };
+        QBitmap bgBitmap = QBitmap::fromData({16, 16}, bgBitmapBits);
+
+        bgBrush.setTexture(bgBitmap);
+    }
+
+    bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_background"));
+
+    return bgBrush;
 }
 
 void ImageViewer::emitCloseViewer(const QString& viewerName)

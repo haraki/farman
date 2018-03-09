@@ -46,8 +46,9 @@ private:
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
     void makeScaleComboBox(const QString& scaleStr);
     int setData();
-    void setScale(float scale);
     void autoScale();
+    void setScale(float scale);
+    QBrush createTransparentBGBrush();
 
     void emitCloseViewer(const QString& viewerName);
 
@@ -60,6 +61,7 @@ private:
 
     QGraphicsScene m_scene;
     QGraphicsPixmapItem* m_pixmapItem;
+    QGraphicsRectItem* m_transparentBgRectItem;             // PNG等透過部分がある画像の背景
 };
 
 }
