@@ -43,7 +43,7 @@ ViewerDispatcher::~ViewerDispatcher()
     delete m_mimeDb;
 }
 
-QWidget* ViewerDispatcher::dispatcher(const QString& filePath, QWidget* parent/* = Q_NULLPTR*/)
+ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, QWidget* parent/* = Q_NULLPTR*/)
 {
     QMimeType mimeType = m_mimeDb->mimeTypeForFile(filePath);
     QByteArray mimeTypeName = mimeType.name().toUtf8();

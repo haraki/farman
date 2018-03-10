@@ -1,36 +1,22 @@
 ﻿#include <QPixmap>
 #include <QPainter>
-#include <QKeyEvent>
-#include <QByteArray>
 #include <QDebug>
-#include <QProgressDialog>
 #include <QGraphicsPixmapItem>
 #include <QBitmap>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
-#include "mainwindow.h"
-#include "readfileworker.h"
 #include "settings.h"
 
 namespace Farman
 {
 
 ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
-    QWidget(parent),
+    ViewerBase(filePath, parent),
     ui(new Ui::ImageViewer),
-    m_filePath(filePath),
-    m_buffer(),
-    m_worker(Q_NULLPTR),
-    m_progressDialog(Q_NULLPTR),
     m_pixmapItem(Q_NULLPTR),
     m_transparentBgRectItem(Q_NULLPTR)
 {
     ui->setupUi(this);
-
-    connect(this,
-            SIGNAL(closeViewer(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onCloseViewer(const QString)));
 
     makeScaleComboBox("100");
 
@@ -45,99 +31,6 @@ ImageViewer::~ImageViewer()
     qDebug() << "~ImageViewer()";
 
     delete ui;
-
-    delete m_progressDialog;
-}
-
-int ImageViewer::start()
-{
-    m_buffer.clear();
-
-    m_progressDialog = new QProgressDialog(tr("%1 reading").arg(m_filePath), tr("Cancel"), 0, 1, this);
-    if(m_progressDialog == Q_NULLPTR)
-    {
-        return -1;
-    }
-
-    connect(m_progressDialog,
-            SIGNAL(canceled()),
-            this,
-            SLOT(onProgressDialogCanceled()));
-
-    m_worker = new ReadFileWorker(m_filePath, &m_buffer);
-    if(m_worker == Q_NULLPTR)
-    {
-        return -1;
-    }
-
-    connect(m_worker,
-            SIGNAL(start(int,int)),
-            m_progressDialog,
-            SLOT(setRange(int,int)));
-    connect(m_worker,
-            SIGNAL(progress(int)),
-            m_progressDialog,
-            SLOT(setValue(int)));
-    connect(m_worker,
-            SIGNAL(finished(int)),
-            this,
-            SLOT(onReadFileFinished(int)));
-    connect(m_worker,
-            SIGNAL(error(QString)),
-            this,
-            SLOT(onReadFileError(QString)));
-
-    m_progressDialog->show();
-    m_worker->exec();
-
-    return 0;
-}
-
-bool ImageViewer::eventFilter(QObject *watched, QEvent *e)
-{
-    Q_UNUSED(watched);
-
-    bool ret = false;
-
-    switch (e->type())
-    {
-    case QEvent::KeyPress:
-    {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
-        if(keyEvent != Q_NULLPTR)
-        {
-            Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
-
-            qDebug() << "ImageViewer::eventFilter : " << key;
-
-            switch(key)
-            {
-            case Qt::Key_Return:
-                // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
-
-                // TODO:
-                // このタイミングで Viewer のインスタンスが delete される
-                // そのため、以降関数を抜けるまでの間に Viewer のメンバにアクセスしてはならない
-                // 何とかしたいがいい方法が見つからないので、ひとまずこのままとする
-                // MainWindow 側で Key_Return 押下イベントを検知できればよいのだが…
-                emitCloseViewer(objectName());
-
-                ret = true;
-
-                break;
-
-            default:
-                break;
-            }
-        }
-
-        break;
-    }
-    default:
-        break;
-    }
-
-    return ret;
 }
 
 void ImageViewer::resizeEvent(QResizeEvent *e)
@@ -150,36 +43,10 @@ void ImageViewer::resizeEvent(QResizeEvent *e)
     }
 }
 
-void ImageViewer::onReadFileFinished(int result)
-{
-    qDebug() << "ViewerPanel::onReadFileFinished : result : " << result;
-
-    m_worker = Q_NULLPTR;           // deleteLater で自動的にデストラクトされているので、Q_NULLPTR を代入するのみ
-
-    if(result == 0)
-    {
-        setData();
-    }
-    else
-    {
-        closeViewer(objectName());
-    }
-}
-
-void ImageViewer::onReadFileError(const QString& err)
-{
-    qDebug() << "ViewerPanel::onReadFileError : err : " << err;
-}
-
-void ImageViewer::onProgressDialogCanceled()
-{
-    qDebug() << "ImageViewer::onProgressDialogCanceled()";
-
-    m_worker->abort();
-}
-
 void ImageViewer::on_fitInViewCheckBox_stateChanged(int arg1)
 {
+    qDebug() << "on_fitInViewCheckBox_stateChanged";
+
     Q_UNUSED(arg1);
 
     Settings::getInstance()->setImageViewerFitInView(ui->fitInViewCheckBox->isChecked());
@@ -389,11 +256,6 @@ QBrush ImageViewer::createTransparentBGBrush()
     bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_background"));
 
     return bgBrush;
-}
-
-void ImageViewer::emitCloseViewer(const QString& viewerName)
-{
-    emit closeViewer(viewerName);
 }
 
 }

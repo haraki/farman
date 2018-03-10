@@ -147,7 +147,7 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
         return;
     }
 
-    QWidget* viewer = ViewerDispatcher::getInstance()->dispatcher(fileInfo.absoluteFilePath(), ui->mainWidget);
+    ViewerBase* viewer = ViewerDispatcher::getInstance()->dispatcher(fileInfo.absoluteFilePath(), ui->mainWidget);
     if(viewer == Q_NULLPTR)
     {
         return;
@@ -161,7 +161,7 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
 
     doubleFolderPanel->setVisible(false);
 
-    dynamic_cast<ImageViewer*>(viewer)->start();
+    viewer->start();
 }
 
 void MainWindow::onCloseViewer(const QString& viewerObjectName)

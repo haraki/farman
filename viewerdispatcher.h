@@ -8,13 +8,15 @@ class QMimeDatabase;
 namespace Farman
 {
 
+class ViewerBase;
+
 class ViewerDispatcher
 {
 public:
     static void create();
     static ViewerDispatcher* getInstance();
 
-    QWidget* dispatcher(const QString& filePath, QWidget* parent = Q_NULLPTR);
+    ViewerBase* dispatcher(const QString& filePath, QWidget* parent = Q_NULLPTR);
 
 private:
     explicit ViewerDispatcher();
