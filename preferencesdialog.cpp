@@ -152,7 +152,7 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     ui->imageViewerBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
     ui->imageViewerBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid) ? 0 : 1);
 
-    setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
+    setViewerFontAndColorOption();
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -459,6 +459,35 @@ void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_textViewerFontPushButton_clicked()
+{
+    QFont newFont = QFont();
+
+    if(showChooseFontDialog(m_fontSettings["textViewer"], newFont))
+    {
+        m_fontSettings["textViewer"] = newFont;
+
+        setViewerFontAndColorOption();
+    }
+}
+
+void PreferencesDialog::on_textViewerFontColorPushButton_clicked()
+{
+    chooseColor("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
+}
+
+void PreferencesDialog::on_textViewerBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["textViewer_background"], newColor))
+    {
+        m_colorSettings["textViewer_background"] = newColor;
+
+        setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
+    }
+}
+
 void PreferencesDialog::setAppearanceFontAndColorOption()
 {
     QFont font;
@@ -515,6 +544,24 @@ void PreferencesDialog::setAppearanceFontAndColorOption()
     ui->appearanceConsoleLineEdit->setFont(font);
 
     setFontColorSample("console_text", "console_background", ui->appearanceConsoleLineEdit);
+}
+
+void PreferencesDialog::setViewerFontAndColorOption()
+{
+    QFont font;
+
+    // Image viewer
+
+    setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
+
+    // Text viewer
+
+    font = m_fontSettings["textViewer"];
+
+    ui->textViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->textViewerFontLabel->setFont(font);
+
+    setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
 }
 
 void PreferencesDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)

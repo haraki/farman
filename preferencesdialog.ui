@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -917,26 +917,78 @@
        <string>Viewer</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="textViewerGroupBox">
+         <property name="title">
+          <string>Text viewer</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_15">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="textViewerFontPushButton">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="textViewerSampleLineEdit">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="text">
+             <string>Sample</string>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="textViewerFontColorPushButton">
+            <property name="text">
+             <string>Color</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="textViewerBGColorPushButton">
+            <property name="text">
+             <string>BG Color</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="textViewerEncodeComboBox"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="textViewerEncodeLabel">
+            <property name="text">
+             <string>Encode :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="textViewerFontLabel">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QGroupBox" name="imageViewerGroupBox">
          <property name="title">
           <string>Image viewer</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_9">
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="imageViewerFitInViewCheckBox">
-            <property name="text">
-             <string>Fit in view</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="imageViewerBGTypeLabel">
-            <property name="text">
-             <string>BG Type :</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1" colspan="2">
            <widget class="QComboBox" name="imageViewerBGTypeComboBox"/>
           </item>
@@ -963,6 +1015,20 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="imageViewerFitInViewCheckBox">
+            <property name="text">
+             <string>Fit in view</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="imageViewerBGTypeLabel">
+            <property name="text">
+             <string>BG Type :</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -975,19 +1041,6 @@
           <size>
            <width>20</width>
            <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
           </size>
          </property>
         </spacer>

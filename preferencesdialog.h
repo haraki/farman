@@ -71,10 +71,15 @@ private slots:
 
     void on_imageViewerBGColorPushButton_clicked();
 
+    void on_textViewerFontPushButton_clicked();
+    void on_textViewerFontColorPushButton_clicked();
+    void on_textViewerBGColorPushButton_clicked();
+
     void on_buttonBox_accepted();
 
 private:
     void setAppearanceFontAndColorOption();
+    void setViewerFontAndColorOption();
 
     void setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget);
 
