@@ -6,8 +6,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Farman::ViewerDispatcher::create();
     Farman::Settings::create();
+    Farman::ViewerDispatcher::create();
     Farman::MainWindow::create();
 
     return a.exec();

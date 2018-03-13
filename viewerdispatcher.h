@@ -1,6 +1,9 @@
 ﻿#ifndef VIEWERDISPATCHER_H
 #define VIEWERDISPATCHER_H
 
+#include <QMap>
+#include "types.h"
+
 class QWidget;
 class QString;
 class QMimeDatabase;
@@ -16,6 +19,8 @@ public:
     static void create();
     static ViewerDispatcher* getInstance();
 
+    int initialize();
+
     ViewerBase* dispatcher(const QString& filePath, QWidget* parent = Q_NULLPTR);
 
 private:
@@ -25,6 +30,8 @@ private:
     static ViewerDispatcher* s_instance;
 
     QMimeDatabase* m_mimeDb;
+
+    QMap<QString, ViewerType> m_viewerTypeSettings;
 };
 
 }

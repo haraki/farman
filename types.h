@@ -67,6 +67,16 @@ enum class OverwriteMethodType : int
     Default = OverwriteMethodType::Overwrite,
 };
 
+// Viewer 種別
+enum class ViewerType : int
+{
+    Text = 0,
+    Binary = 1,
+    Image = 2,
+
+    ViewerTypeNum,
+};
+
 }
 
 #endif // TYPES_H
