@@ -145,6 +145,9 @@ private:
         { "console_background",             "#ffffff", },
 
         { "imageViewer_background",         "#808080", },
+
+        { "textViewer_text",                "#000000", },
+        { "textViewer_background",          "#ffffff", },
     };
 
     QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;
@@ -165,6 +168,7 @@ private:
         { "folderView", getDefaultFixedFont(), },
         { "folderPath", getDefaultFixedFont(), },
         { "console",    getDefaultFixedFont(), },
+        { "textViewer", getDefaultFixedFont(), },
     };
 
     QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;

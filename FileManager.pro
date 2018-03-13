@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     viewerdispatcher.cpp \
     readfileworker.cpp \
     viewerbase.cpp \
-    imageviewer.cpp
+    imageviewer.cpp \
+    textviewer.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     viewerdispatcher.h \
     readfileworker.h \
     viewerbase.h \
-    imageviewer.h
+    imageviewer.h \
+    textviewer.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
@@ -74,4 +76,5 @@ FORMS    += mainwindow.ui \
     fileoperationdialog.ui \
     fileattributesdialog.ui \
     preferencesdialog.ui \
-    imageviewer.ui
+    imageviewer.ui \
+    textviewer.ui
