@@ -77,6 +77,10 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    void on_textViewerLineNumberFontColorPushButton_clicked();
+
+    void on_textViewerLineNumberBGColorPushButton_clicked();
+
 private:
     void setAppearanceFontAndColorOption();
     void setViewerFontAndColorOption();

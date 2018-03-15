@@ -488,6 +488,23 @@ void PreferencesDialog::on_textViewerBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_textViewerLineNumberFontColorPushButton_clicked()
+{
+    chooseColor("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
+}
+
+void PreferencesDialog::on_textViewerLineNumberBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["textViewer_lineNumber_background"], newColor))
+    {
+        m_colorSettings["textViewer_lineNumber_background"] = newColor;
+
+        setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
+    }
+}
+
 void PreferencesDialog::setAppearanceFontAndColorOption()
 {
     QFont font;
@@ -562,6 +579,7 @@ void PreferencesDialog::setViewerFontAndColorOption()
     ui->textViewerFontLabel->setFont(font);
 
     setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
+    setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
 }
 
 void PreferencesDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
