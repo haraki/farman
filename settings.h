@@ -146,8 +146,10 @@ private:
 
         { "imageViewer_background",         "#808080", },
 
-        { "textViewer_text",                "#000000", },
-        { "textViewer_background",          "#ffffff", },
+        { "textViewer_text",                  "#000000", },
+        { "textViewer_background",            "#ffffff", },
+        { "textViewer_lineNumber_text",       "#000000", },
+        { "textViewer_lineNumber_background", "#808080", },
     };
 
     QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;

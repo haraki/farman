@@ -15,7 +15,7 @@ TextViewer::TextViewer(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
 
     initPalette();
 
-    ui->textPlainTextEdit->setFocus();
+    ui->textPlainTextView->setFocus();
 }
 
 TextViewer::~TextViewer()
@@ -25,23 +25,27 @@ TextViewer::~TextViewer()
 
 void TextViewer::initFont()
 {
-    ui->textPlainTextEdit->setFont(Settings::getInstance()->getFontSetting("textViewer"));
+    ui->textPlainTextView->setFont(Settings::getInstance()->getFontSetting("textViewer"));
 }
 
 void TextViewer::initPalette()
 {
     QPalette pal;
 
-    pal = ui->textPlainTextEdit->palette();
+    pal = ui->textPlainTextView->palette();
     pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("textViewer_text"));
     pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("textViewer_background"));
-    ui->textPlainTextEdit->setAutoFillBackground(true);
-    ui->textPlainTextEdit->setPalette(pal);
+    ui->textPlainTextView->setPalette(pal);
+
+    pal = ui->textPlainTextView->getLineNumberAreaPalette();
+    pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("textViewer_lineNumber_text"));
+    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("textViewer_lineNumber_background"));
+    ui->textPlainTextView->setLineNumberAreaPalette(pal);
 }
 
 int TextViewer::setData()
 {
-    ui->textPlainTextEdit->setPlainText(m_buffer);
+    ui->textPlainTextView->setPlainText(m_buffer);
 
     return 0;
 }

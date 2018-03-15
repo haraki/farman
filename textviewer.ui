@@ -26,8 +26,11 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="QPlainTextEdit" name="textPlainTextEdit">
+   <item row="1" column="0" colspan="6">
+    <widget class="Farman::PlainTextView" name="textPlainTextView">
+     <property name="undoRedoEnabled">
+      <bool>false</bool>
+     </property>
      <property name="readOnly">
       <bool>true</bool>
      </property>
@@ -35,6 +38,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Farman::PlainTextView</class>
+   <extends>QPlainTextEdit</extends>
+   <header>plaintextview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
