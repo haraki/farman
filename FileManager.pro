@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     readfileworker.cpp \
     viewerbase.cpp \
     imageviewer.cpp \
-    textviewer.cpp
+    textviewer.cpp \
+    plaintextview.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -63,7 +64,8 @@ HEADERS  += mainwindow.h \
     readfileworker.h \
     viewerbase.h \
     imageviewer.h \
-    textviewer.h
+    textviewer.h \
+    plaintextview.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
