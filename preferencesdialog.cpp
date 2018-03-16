@@ -152,6 +152,9 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     ui->imageViewerBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
     ui->imageViewerBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid) ? 0 : 1);
 
+    ui->textViewerShowLineNumberCheckBox->setChecked(Settings::getInstance()->getTextViewerShowLineNumber());
+    ui->textViewerWordWrapCheckBox->setChecked(Settings::getInstance()->getTextViewerWordWrap());
+
     setViewerFontAndColorOption();
 }
 
@@ -700,6 +703,9 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setImageViewerBGType((ui->imageViewerBGTypeComboBox->currentIndex() == 0) ? ImageViewerBGType::Solid
                                                                                                        : ImageViewerBGType::Checkered);
+
+    Settings::getInstance()->setTextViewerShowLineNumber(ui->textViewerShowLineNumberCheckBox->isChecked());
+    Settings::getInstance()->setTextViewerWordWrap(ui->textViewerWordWrapCheckBox->isChecked());
 }
 
 }           // namespace Farman

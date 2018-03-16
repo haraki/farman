@@ -118,6 +118,14 @@ void Settings::initialize()
     // ImageViewer BG type
     QString imageViewerBGTypeValue = value("main/imageViewer_bgType", "checkered").toString();
     m_imageViewerBGType = (imageViewerBGTypeValue == "solid") ? ImageViewerBGType::Solid : ImageViewerBGType::Checkered;
+
+    // TextViewer Show line number
+    QString textViewerShowLineNumberValue = value("main/textViewer_showLineNumber", "true").toString();
+    m_textViewerShowLineNumber = (textViewerShowLineNumberValue == "false") ? false : true;
+
+    // TextViewer Word wrap
+    QString textViewerWordWrapValue = value("main/textViewer_wordWrap", "false").toString();
+    m_textViewerWordWrap = (textViewerWordWrapValue == "true") ? true : false;
 }
 
 void Settings::flush()
@@ -194,6 +202,12 @@ void Settings::flush()
     QString imageViewerBGTypeValue = (m_imageViewerBGType == ImageViewerBGType::Solid) ? "solid"
                                                                                        : "checkered";
     setValue("main/imageViewer_bgType", imageViewerBGTypeValue);
+
+    // TextViewer Show line number
+    setValue("main/textViewer_showLineNumber", m_textViewerShowLineNumber);
+
+    // TextViewer Word wrap
+    setValue("main/textViewer_wordWrap", m_textViewerWordWrap);
 }
 
 QColor Settings::getColorSetting(const QString& colorSettingType)

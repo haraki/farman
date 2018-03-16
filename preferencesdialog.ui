@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <attribute name="title">
@@ -930,12 +930,28 @@
          </property>
         </spacer>
        </item>
+       <item row="1" column="1">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="imageViewerGroupBox">
          <property name="title">
           <string>Image viewer</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_9">
+          <property name="spacing">
+           <number>8</number>
+          </property>
           <item row="1" column="1" colspan="2">
            <widget class="QComboBox" name="imageViewerBGTypeComboBox"/>
           </item>
@@ -979,65 +995,51 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="1">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="textViewerGroupBox">
          <property name="title">
           <string>Text viewer</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_8">
+         <layout class="QGridLayout" name="gridLayout_8" columnstretch="0,1,0,0,0,1">
+          <property name="spacing">
+           <number>8</number>
+          </property>
           <item row="0" column="0">
-           <widget class="QLabel" name="textViewerEncodeLabel">
+           <widget class="QPushButton" name="textViewerFontPushButton">
             <property name="text">
-             <string>Encode :</string>
+             <string>Font</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="textViewerEncodeComboBox"/>
-          </item>
-          <item row="0" column="5">
            <widget class="QLabel" name="textViewerFontLabel">
             <property name="text">
              <string>TextLabel</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="textViewerFontColorLabel">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Font Color</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+          <item row="0" column="2" rowspan="8" colspan="2">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="0" column="4">
+           <widget class="QLabel" name="textViewerEncodeLabel">
+            <property name="text">
+             <string>Encode :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" rowspan="2">
            <widget class="QPushButton" name="textViewerFontColorPushButton">
             <property name="text">
              <string>Color</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="1" rowspan="2">
            <widget class="QLineEdit" name="textViewerSampleLineEdit">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
@@ -1053,14 +1055,21 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="3" colspan="2">
+          <item row="3" column="0" rowspan="2">
+           <widget class="QPushButton" name="textViewerBGColorPushButton">
+            <property name="text">
+             <string>BG Color</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
            <widget class="QPushButton" name="textViewerLineNumberFontColorPushButton">
             <property name="text">
              <string>Color</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="5">
+          <item row="6" column="1">
            <widget class="QLineEdit" name="textViewerLineNumberSampleLineEdit">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
@@ -1076,21 +1085,14 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QPushButton" name="textViewerBGColorPushButton">
-            <property name="text">
-             <string>BG Color</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3" colspan="2">
+          <item row="7" column="0">
            <widget class="QPushButton" name="textViewerLineNumberBGColorPushButton">
             <property name="text">
              <string>BG Color</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="3" colspan="3">
+          <item row="5" column="0" colspan="2">
            <widget class="QLabel" name="textViewerLineNumberFontColorLabel">
             <property name="font">
              <font>
@@ -1098,24 +1100,31 @@
              </font>
             </property>
             <property name="text">
-             <string>Line Number Font Color</string>
+             <string>(Line Number)</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="0" column="3" colspan="2">
-           <widget class="QPushButton" name="textViewerFontPushButton">
-            <property name="text">
-             <string>Font</string>
+          <item row="0" column="5">
+           <widget class="QComboBox" name="textViewerEncodeComboBox">
+            <property name="insertPolicy">
+             <enum>QComboBox::NoInsert</enum>
             </property>
            </widget>
           </item>
-          <item row="1" column="2" rowspan="3">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="2" column="4" colspan="2">
+           <widget class="QCheckBox" name="textViewerShowLineNumberCheckBox">
+            <property name="text">
+             <string>Show line number</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4" colspan="2">
+           <widget class="QCheckBox" name="textViewerWordWrapCheckBox">
+            <property name="text">
+             <string>Word wrap</string>
             </property>
            </widget>
           </item>

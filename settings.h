@@ -85,6 +85,12 @@ public:
     ImageViewerBGType getImageViewerBGType() { return m_imageViewerBGType; }
     void setImageViewerBGType(ImageViewerBGType bgType) { m_imageViewerBGType = bgType; }
 
+    bool getTextViewerShowLineNumber() { return m_textViewerShowLineNumber; }
+    void setTextViewerShowLineNumber(bool show) { m_textViewerShowLineNumber = show; }
+
+    bool getTextViewerWordWrap() { return m_textViewerWordWrap; }
+    void setTextViewerWordWrap(bool enabled) { m_textViewerWordWrap = enabled; }
+
 private:
     Settings();
 
@@ -179,6 +185,9 @@ private:
 
     bool m_imageViewerFitInView = true;
     ImageViewerBGType m_imageViewerBGType = ImageViewerBGType::Checkered;
+
+    bool m_textViewerShowLineNumber = true;
+    bool m_textViewerWordWrap = false;
 };
 
 }
