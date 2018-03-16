@@ -32,6 +32,18 @@ void PlainTextView::resizeEvent(QResizeEvent *e)
     m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), getLineNumberAreaWidth(), cr.height()));
 }
 
+bool PlainTextView::getVisibleLineNumberArea()
+{
+    return m_lineNumberArea->isVisible();
+}
+
+void PlainTextView::setVisibleLineNumberArea(bool visible)
+{
+    m_lineNumberArea->setVisible(visible);
+
+    updateLineNumberAreaWidth();
+}
+
 const QPalette& PlainTextView::getLineNumberAreaPalette() const
 {
     return m_lineNumberArea->palette();
@@ -44,6 +56,11 @@ void PlainTextView::setLineNumberAreaPalette(const QPalette& palette)
 
 void PlainTextView::lineNumberAreaPaintEvent(QPaintEvent *e)
 {
+    if(!m_lineNumberArea->isVisible())
+    {
+        return;
+    }
+
     QPainter painter(m_lineNumberArea);
 
     painter.fillRect(e->rect(), m_lineNumberArea->palette().base());
@@ -105,6 +122,11 @@ void PlainTextView::updateLineNumberAreaWidth()
 
 int PlainTextView::getLineNumberAreaWidth()
 {
+    if(!m_lineNumberArea->isVisible())
+    {
+        return 0;
+    }
+
     int digits = getDigitsNumber();
     if(digits < 2)
     {

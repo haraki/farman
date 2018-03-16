@@ -1,5 +1,6 @@
 ﻿#include "textviewer.h"
 #include "ui_textviewer.h"
+#include "plaintextview.h"
 #include "settings.h"
 
 namespace Farman
@@ -11,6 +12,12 @@ TextViewer::TextViewer(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
 {
     ui->setupUi(this);
 
+    ui->showLineNumberCheckBox->setChecked(Settings::getInstance()->getTextViewerShowLineNumber());
+    ui->wordWrapCheckBox->setChecked(Settings::getInstance()->getTextViewerWordWrap());
+
+    ui->textPlainTextView->setVisibleLineNumberArea(ui->showLineNumberCheckBox->isChecked());
+    ui->textPlainTextView->setLineWrapMode(ui->wordWrapCheckBox->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+
     initFont();
 
     initPalette();
@@ -21,6 +28,22 @@ TextViewer::TextViewer(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
 TextViewer::~TextViewer()
 {
     delete ui;
+}
+
+void TextViewer::on_showLineNumberCheckBox_stateChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+
+    Settings::getInstance()->setTextViewerShowLineNumber(ui->showLineNumberCheckBox->isChecked());
+    ui->textPlainTextView->setVisibleLineNumberArea(ui->showLineNumberCheckBox->isChecked());
+}
+
+void TextViewer::on_wordWrapCheckBox_stateChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+
+    Settings::getInstance()->setTextViewerWordWrap(ui->wordWrapCheckBox->isChecked());
+    ui->textPlainTextView->setLineWrapMode(ui->wordWrapCheckBox->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
 }
 
 void TextViewer::initFont()

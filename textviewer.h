@@ -18,6 +18,10 @@ public:
     explicit TextViewer(const QString& filePath, QWidget *parent = Q_NULLPTR);
     ~TextViewer();
 
+private Q_SLOTS:
+    void on_showLineNumberCheckBox_stateChanged(int arg1);
+    void on_wordWrapCheckBox_stateChanged(int arg1);
+
 private:
     void initFont();
     void initPalette();

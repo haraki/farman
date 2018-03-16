@@ -19,6 +19,9 @@ public:
     explicit PlainTextView(QWidget *parent = Q_NULLPTR);
     ~PlainTextView();
 
+    bool getVisibleLineNumberArea();
+    void setVisibleLineNumberArea(bool visible);
+
     const QPalette& getLineNumberAreaPalette() const;
     void setLineNumberAreaPalette(const QPalette& palette);
     void lineNumberAreaPaintEvent(QPaintEvent *e);
