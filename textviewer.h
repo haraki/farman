@@ -19,6 +19,7 @@ public:
     ~TextViewer();
 
 private Q_SLOTS:
+    void on_encodeComboBox_activated(int index);
     void on_showLineNumberCheckBox_stateChanged(int arg1);
     void on_wordWrapCheckBox_stateChanged(int arg1);
 
@@ -28,6 +29,8 @@ private:
     int setData() Q_DECL_OVERRIDE;
 
     Ui::TextViewer *ui;
+
+    QList<QString> m_textViewerEncodeList;
 };
 
 }           // namespace Farman

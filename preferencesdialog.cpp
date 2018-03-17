@@ -149,6 +149,9 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
 
     ui->imageViewerFitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
 
+    m_textViewerEncodeList = Settings::getInstance()->getTextViewerEncodeList();
+    ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
+
     ui->imageViewerBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
     ui->imageViewerBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid) ? 0 : 1);
 
@@ -449,17 +452,20 @@ void PreferencesDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
+void PreferencesDialog::on_textViewerEncodeComboBox_activated(int index)
 {
-    QColor oldColor = ui->imageViewerBGColorSampleLineEdit->palette().base().color();
-    QColor newColor = QColor();
+    qDebug() << "PreferencesDialog::on_textViewerEncodeComboBox_activated(" << index << ")";
 
-    if(showChooseColorDialog(oldColor, newColor))
-    {
-        m_colorSettings["imageViewer_background"] = newColor;
+    // 選択されたエンコードをリストの先頭に移動する
+    QString encode = m_textViewerEncodeList[index];
+    m_textViewerEncodeList.removeAt(index);
+    m_textViewerEncodeList.insert(0, encode);
 
-        setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
-    }
+    ui->textViewerEncodeComboBox->blockSignals(true);
+    ui->textViewerEncodeComboBox->clear();
+    ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
+    ui->textViewerEncodeComboBox->setCurrentIndex(0);
+    ui->textViewerEncodeComboBox->blockSignals(false);
 }
 
 void PreferencesDialog::on_textViewerFontPushButton_clicked()
@@ -505,6 +511,19 @@ void PreferencesDialog::on_textViewerLineNumberBGColorPushButton_clicked()
         m_colorSettings["textViewer_lineNumber_background"] = newColor;
 
         setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
+    }
+}
+
+void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
+{
+    QColor oldColor = ui->imageViewerBGColorSampleLineEdit->palette().base().color();
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(oldColor, newColor))
+    {
+        m_colorSettings["imageViewer_background"] = newColor;
+
+        setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
     }
 }
 
@@ -703,6 +722,8 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setImageViewerBGType((ui->imageViewerBGTypeComboBox->currentIndex() == 0) ? ImageViewerBGType::Solid
                                                                                                        : ImageViewerBGType::Checkered);
+
+    Settings::getInstance()->setTextViewerEncodeList(m_textViewerEncodeList);
 
     Settings::getInstance()->setTextViewerShowLineNumber(ui->textViewerShowLineNumberCheckBox->isChecked());
     Settings::getInstance()->setTextViewerWordWrap(ui->textViewerWordWrapCheckBox->isChecked());

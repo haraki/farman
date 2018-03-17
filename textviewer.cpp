@@ -1,4 +1,6 @@
-﻿#include "textviewer.h"
+﻿#include <QTextCodec>
+#include <QDebug>
+#include "textviewer.h"
 #include "ui_textviewer.h"
 #include "plaintextview.h"
 #include "settings.h"
@@ -11,6 +13,9 @@ TextViewer::TextViewer(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
     ui(new Ui::TextViewer)
 {
     ui->setupUi(this);
+
+    m_textViewerEncodeList = Settings::getInstance()->getTextViewerEncodeList();
+    ui->encodeComboBox->addItems(m_textViewerEncodeList);
 
     ui->showLineNumberCheckBox->setChecked(Settings::getInstance()->getTextViewerShowLineNumber());
     ui->wordWrapCheckBox->setChecked(Settings::getInstance()->getTextViewerWordWrap());
@@ -28,6 +33,26 @@ TextViewer::TextViewer(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
 TextViewer::~TextViewer()
 {
     delete ui;
+}
+
+void TextViewer::on_encodeComboBox_activated(int index)
+{
+    qDebug() << "TextViewer::on_encodeComboBox_activated(" << index << ")";
+
+    // 選択されたエンコードをリストの先頭に移動する
+    QString encode = m_textViewerEncodeList[index];
+    m_textViewerEncodeList.removeAt(index);
+    m_textViewerEncodeList.insert(0, encode);
+
+    ui->encodeComboBox->blockSignals(true);
+    ui->encodeComboBox->clear();
+    ui->encodeComboBox->addItems(m_textViewerEncodeList);
+    ui->encodeComboBox->setCurrentIndex(0);
+    ui->encodeComboBox->blockSignals(false);
+
+    Settings::getInstance()->setTextViewerEncodeList(m_textViewerEncodeList);
+
+    setData();
 }
 
 void TextViewer::on_showLineNumberCheckBox_stateChanged(int arg1)
@@ -68,7 +93,9 @@ void TextViewer::initPalette()
 
 int TextViewer::setData()
 {
-    ui->textPlainTextView->setPlainText(m_buffer);
+    QTextCodec* codec = QTextCodec::codecForName(ui->encodeComboBox->currentText().toUtf8());
+
+    ui->textPlainTextView->setPlainText(codec->toUnicode(m_buffer));
 
     return 0;
 }
