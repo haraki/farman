@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <QSettings>
+#include <QTextCodec>
 #include <QPoint>
 #include <QSize>
 #include <QColor>
@@ -90,6 +91,9 @@ public:
 
     bool getTextViewerWordWrap() { return m_textViewerWordWrap; }
     void setTextViewerWordWrap(bool enabled) { m_textViewerWordWrap = enabled; }
+
+    const QList<QString>& getTextViewerEncodeList() { return m_textViewerEncodeList; }
+    void setTextViewerEncodeList(const QList<QString>& encodeList) { m_textViewerEncodeList = encodeList; }
 
 private:
     Settings();
@@ -188,6 +192,8 @@ private:
 
     bool m_textViewerShowLineNumber = true;
     bool m_textViewerWordWrap = false;
+
+    QList<QString> m_textViewerEncodeList;
 };
 
 }

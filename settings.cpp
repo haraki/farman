@@ -1,5 +1,6 @@
-﻿#include "settings.h"
+﻿#include <QTextCodec>
 #include <QDebug>
+#include "settings.h"
 
 namespace Farman
 {
@@ -126,6 +127,26 @@ void Settings::initialize()
     // TextViewer Word wrap
     QString textViewerWordWrapValue = value("main/textViewer_wordWrap", "false").toString();
     m_textViewerWordWrap = (textViewerWordWrapValue == "true") ? true : false;
+
+    // TextViewer Encode list
+    m_textViewerEncodeList.clear();
+    int size = beginReadArray("main/textViewer_encodeList");
+    if(size > 0)
+    {
+        for(int i = 0;i < size;i++)
+        {
+            setArrayIndex(i);
+            m_textViewerEncodeList.append(value("encode").toString());
+        }
+    }
+    else
+    {
+        for(QByteArray encode : QTextCodec::availableCodecs())
+        {
+            m_textViewerEncodeList.append(QString(encode));
+        }
+    }
+    endArray();
 }
 
 void Settings::flush()
@@ -208,6 +229,15 @@ void Settings::flush()
 
     // TextViewer Word wrap
     setValue("main/textViewer_wordWrap", m_textViewerWordWrap);
+
+    // TextViewer Encode list
+    beginWriteArray("main/textViewer_encodeList");
+    for(int i = 0;i < m_textViewerEncodeList.size();i++)
+    {
+        setArrayIndex(i);
+        setValue("encode", m_textViewerEncodeList[i]);
+    }
+    endArray();
 }
 
 QColor Settings::getColorSetting(const QString& colorSettingType)
