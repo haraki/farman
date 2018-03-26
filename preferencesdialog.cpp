@@ -452,22 +452,6 @@ void PreferencesDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_textViewerEncodeComboBox_activated(int index)
-{
-    qDebug() << "PreferencesDialog::on_textViewerEncodeComboBox_activated(" << index << ")";
-
-    // 選択されたエンコードをリストの先頭に移動する
-    QString encode = m_textViewerEncodeList[index];
-    m_textViewerEncodeList.removeAt(index);
-    m_textViewerEncodeList.insert(0, encode);
-
-    ui->textViewerEncodeComboBox->blockSignals(true);
-    ui->textViewerEncodeComboBox->clear();
-    ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
-    ui->textViewerEncodeComboBox->setCurrentIndex(0);
-    ui->textViewerEncodeComboBox->blockSignals(false);
-}
-
 void PreferencesDialog::on_textViewerFontPushButton_clicked()
 {
     QFont newFont = QFont();
@@ -512,6 +496,85 @@ void PreferencesDialog::on_textViewerLineNumberBGColorPushButton_clicked()
 
         setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
     }
+}
+
+void PreferencesDialog::on_textViewerEncodeComboBox_activated(int index)
+{
+    qDebug() << "PreferencesDialog::on_textViewerEncodeComboBox_activated(" << index << ")";
+
+    // 選択されたエンコードをリストの先頭に移動する
+    QString encode = m_textViewerEncodeList[index];
+    m_textViewerEncodeList.removeAt(index);
+    m_textViewerEncodeList.insert(0, encode);
+
+    ui->textViewerEncodeComboBox->blockSignals(true);
+    ui->textViewerEncodeComboBox->clear();
+    ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
+    ui->textViewerEncodeComboBox->setCurrentIndex(0);
+    ui->textViewerEncodeComboBox->blockSignals(false);
+}
+
+void PreferencesDialog::on_binaryViewerFontPushButton_clicked()
+{
+    QFont newFont = QFont();
+
+    if(showChooseFontDialog(m_fontSettings["binaryViewer"], newFont))
+    {
+        m_fontSettings["binaryViewer"] = newFont;
+
+        setViewerFontAndColorOption();
+    }
+}
+
+void PreferencesDialog::on_binaryViewerFontColorPushButton_clicked()
+{
+    chooseColor("binaryViewer_text", "binaryViewer_background", ui->binaryViewerSampleLineEdit);
+}
+
+void PreferencesDialog::on_binaryViewerBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["binaryViewer_background"], newColor))
+    {
+        m_colorSettings["binaryViewer_background"] = newColor;
+
+        setFontColorSample("binaryViewer_text", "binaryViewer_background", ui->binaryViewerSampleLineEdit);
+    }
+}
+
+void PreferencesDialog::on_binaryViewerAddressFontColorPushButton_clicked()
+{
+    chooseColor("binaryViewer_address_text", "binaryViewer_address_background", ui->binaryViewerAddressSampleLineEdit);
+}
+
+void PreferencesDialog::on_binaryViewerAddressBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["binaryViewer_address_background"], newColor))
+    {
+        m_colorSettings["binaryViewer_address_background"] = newColor;
+
+        setFontColorSample("binaryViewer_address_text", "binaryViewer_address_background", ui->binaryViewerAddressSampleLineEdit);
+    }
+}
+
+void PreferencesDialog::on_binaryViewerEncodeComboBox_activated(int index)
+{
+    qDebug() << "PreferencesDialog::on_binaryViewerEncodeComboBox_activated(" << index << ")";
+
+    // 選択されたエンコードをリストの先頭に移動する
+    QString encode = m_binaryViewerEncodeList[index];
+    m_binaryViewerEncodeList.removeAt(index);
+    m_binaryViewerEncodeList.insert(0, encode);
+
+    ui->binaryViewerEncodeComboBox->blockSignals(true);
+    ui->binaryViewerEncodeComboBox->clear();
+    ui->binaryViewerEncodeComboBox->addItems(m_binaryViewerEncodeList);
+    ui->binaryViewerEncodeComboBox->setCurrentIndex(0);
+    ui->binaryViewerEncodeComboBox->blockSignals(false);
+
 }
 
 void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()

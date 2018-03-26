@@ -69,12 +69,19 @@ private slots:
     void on_appearanceConsoleChooseColorPushButton_clicked();
     void on_appearanceConsoleChooseBGColorPushButton_clicked();
 
-    void on_textViewerEncodeComboBox_activated(int index);
     void on_textViewerFontPushButton_clicked();
     void on_textViewerFontColorPushButton_clicked();
     void on_textViewerBGColorPushButton_clicked();
     void on_textViewerLineNumberFontColorPushButton_clicked();
     void on_textViewerLineNumberBGColorPushButton_clicked();
+    void on_textViewerEncodeComboBox_activated(int index);
+
+    void on_binaryViewerFontPushButton_clicked();
+    void on_binaryViewerFontColorPushButton_clicked();
+    void on_binaryViewerBGColorPushButton_clicked();
+    void on_binaryViewerAddressFontColorPushButton_clicked();
+    void on_binaryViewerAddressBGColorPushButton_clicked();
+    void on_binaryViewerEncodeComboBox_activated(int index);
 
     void on_imageViewerBGColorPushButton_clicked();
 
@@ -95,6 +102,7 @@ private:
     QMap<QString, QColor> m_colorSettings;
 
     QList<QString> m_textViewerEncodeList;
+    QList<QString> m_binaryViewerEncodeList;
 
     Ui::PreferencesDialog *ui;
 };
