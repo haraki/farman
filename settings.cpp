@@ -115,41 +115,70 @@ void Settings::initialize()
     // Cursor width
     m_cursorWidth = value("main/cursorWidth", QString("%1").arg(DEFAULT_CURSOR_WIDTH)).toInt();
 
-    // ImageViewer Fit in view
-    QString imageViewerFitInViewValue = value("main/imageViewer_fitInView", "true").toString();
-    m_imageViewerFitInView = (imageViewerFitInViewValue == "false") ? false : true;
-
-    // ImageViewer BG type
-    QString imageViewerBGTypeValue = value("main/imageViewer_bgType", "checkered").toString();
-    m_imageViewerBGType = (imageViewerBGTypeValue == "solid") ? ImageViewerBGType::Solid : ImageViewerBGType::Checkered;
-
-    // TextViewer Show line number
-    QString textViewerShowLineNumberValue = value("main/textViewer_showLineNumber", "true").toString();
-    m_textViewerShowLineNumber = (textViewerShowLineNumberValue == "false") ? false : true;
-
-    // TextViewer Word wrap
-    QString textViewerWordWrapValue = value("main/textViewer_wordWrap", "false").toString();
-    m_textViewerWordWrap = (textViewerWordWrapValue == "true") ? true : false;
-
-    // TextViewer Encode list
-    m_textViewerEncodeList.clear();
-    int size = beginReadArray("main/textViewer_encodeList");
-    if(size > 0)
+    // ImageViewer
     {
-        for(int i = 0;i < size;i++)
-        {
-            setArrayIndex(i);
-            m_textViewerEncodeList.append(value("encode").toString());
-        }
+        // Fit in view
+        QString imageViewerFitInViewValue = value("main/imageViewer_fitInView", "true").toString();
+        m_imageViewerFitInView = (imageViewerFitInViewValue == "false") ? false : true;
+
+        // BG type
+        QString imageViewerBGTypeValue = value("main/imageViewer_bgType", "checkered").toString();
+        m_imageViewerBGType = (imageViewerBGTypeValue == "solid") ? ImageViewerBGType::Solid : ImageViewerBGType::Checkered;
     }
-    else
+
+    // TextViewer
     {
-        for(QByteArray encode : QTextCodec::availableCodecs())
+        // Show line number
+        QString textViewerShowLineNumberValue = value("main/textViewer_showLineNumber", "true").toString();
+        m_textViewerShowLineNumber = (textViewerShowLineNumberValue == "false") ? false : true;
+
+        // Word wrap
+        QString textViewerWordWrapValue = value("main/textViewer_wordWrap", "false").toString();
+        m_textViewerWordWrap = (textViewerWordWrapValue == "true") ? true : false;
+
+        // Encode list
+        m_textViewerEncodeList.clear();
+        int size = beginReadArray("main/textViewer_encodeList");
+        if(size > 0)
         {
-            m_textViewerEncodeList.append(QString(encode));
+            for(int i = 0;i < size;i++)
+            {
+                setArrayIndex(i);
+                m_textViewerEncodeList.append(value("encode").toString());
+            }
         }
+        else
+        {
+            for(QByteArray encode : QTextCodec::availableCodecs())
+            {
+                m_textViewerEncodeList.append(QString(encode));
+            }
+        }
+        endArray();
     }
-    endArray();
+
+    // BinaryViewer
+    {
+        // Encode list
+        m_binaryViewerEncodeList.clear();
+        int size = beginReadArray("main/binaryViewer_encodeList");
+        if(size > 0)
+        {
+            for(int i = 0;i < size;i++)
+            {
+                setArrayIndex(i);
+                m_binaryViewerEncodeList.append(value("encode").toString());
+            }
+        }
+        else
+        {
+            for(QByteArray encode : QTextCodec::availableCodecs())
+            {
+                m_binaryViewerEncodeList.append(QString(encode));
+            }
+        }
+        endArray();
+    }
 }
 
 void Settings::flush()
@@ -219,28 +248,46 @@ void Settings::flush()
     // Cursor width
     setValue("main/cursorWidth", m_cursorWidth);
 
-    // ImageViewer Fit in view
-    setValue("main/imageViewer_fitInView", m_imageViewerFitInView);
-
-    // ImageViewer BG type
-    QString imageViewerBGTypeValue = (m_imageViewerBGType == ImageViewerBGType::Solid) ? "solid"
-                                                                                       : "checkered";
-    setValue("main/imageViewer_bgType", imageViewerBGTypeValue);
-
-    // TextViewer Show line number
-    setValue("main/textViewer_showLineNumber", m_textViewerShowLineNumber);
-
-    // TextViewer Word wrap
-    setValue("main/textViewer_wordWrap", m_textViewerWordWrap);
-
-    // TextViewer Encode list
-    beginWriteArray("main/textViewer_encodeList");
-    for(int i = 0;i < m_textViewerEncodeList.size();i++)
+    // ImageViewer
     {
-        setArrayIndex(i);
-        setValue("encode", m_textViewerEncodeList[i]);
+        // Fit in view
+        setValue("main/imageViewer_fitInView", m_imageViewerFitInView);
+
+        // BG type
+        QString imageViewerBGTypeValue = (m_imageViewerBGType == ImageViewerBGType::Solid) ? "solid"
+                                                                                           : "checkered";
+        setValue("main/imageViewer_bgType", imageViewerBGTypeValue);
     }
-    endArray();
+
+    // TextViewer
+    {
+        // Show line number
+        setValue("main/textViewer_showLineNumber", m_textViewerShowLineNumber);
+
+        // Word wrap
+        setValue("main/textViewer_wordWrap", m_textViewerWordWrap);
+
+        // Encode list
+        beginWriteArray("main/textViewer_encodeList");
+        for(int i = 0;i < m_textViewerEncodeList.size();i++)
+        {
+            setArrayIndex(i);
+            setValue("encode", m_textViewerEncodeList[i]);
+        }
+        endArray();
+    }
+
+    // BinaryViewer
+    {
+        // Encode list
+        beginWriteArray("main/binaryViewer_encodeList");
+        for(int i = 0;i < m_binaryViewerEncodeList.size();i++)
+        {
+            setArrayIndex(i);
+            setValue("encode", m_binaryViewerEncodeList[i]);
+        }
+        endArray();
+    }
 }
 
 QColor Settings::getColorSetting(const QString& colorSettingType)
