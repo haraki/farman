@@ -29,7 +29,7 @@ void PlainTextView::resizeEvent(QResizeEvent *e)
     QPlainTextEdit::resizeEvent(e);
 
     QRect cr = contentsRect();
-    m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), getLineNumberAreaWidth(), cr.height()));
+    m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), m_lineNumberArea->getAreaWidth(), cr.height()));
 }
 
 bool PlainTextView::getVisibleLineNumberArea()
@@ -52,43 +52,6 @@ const QPalette& PlainTextView::getLineNumberAreaPalette() const
 void PlainTextView::setLineNumberAreaPalette(const QPalette& palette)
 {
     m_lineNumberArea->setPalette(palette);
-}
-
-void PlainTextView::lineNumberAreaPaintEvent(QPaintEvent *e)
-{
-    if(!m_lineNumberArea->isVisible())
-    {
-        return;
-    }
-
-    QPainter painter(m_lineNumberArea);
-
-    painter.fillRect(e->rect(), m_lineNumberArea->palette().base());
-
-    QTextBlock block = firstVisibleBlock();
-    int blockNumber = block.blockNumber() + 1;
-    int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
-    int bottom = top + (int)blockBoundingRect(block).height();
-    int width = m_lineNumberArea->width();
-    int height = fontMetrics().height();
-
-    painter.setPen(m_lineNumberArea->palette().text().color());
-
-    while(block.isValid() && top <= e->rect().bottom())
-    {
-        if (block.isVisible() && bottom >= e->rect().top())
-        {
-            QString number = QString::number(blockNumber);
-            painter.drawText(0, top, width, height, Qt::AlignRight, number);
-        }
-
-        block = block.next();
-
-        top = bottom;
-        bottom = top + (int)blockBoundingRect(block).height();
-
-        blockNumber++;
-    }
 }
 
 void PlainTextView::onBlockCountChanged(int newBlockCount)
@@ -117,26 +80,10 @@ void PlainTextView::onUpdateRequest(const QRect &rect, int dy)
 
 void PlainTextView::updateLineNumberAreaWidth()
 {
-    setViewportMargins(getLineNumberAreaWidth(), 0, 0, 0);
+    setViewportMargins(m_lineNumberArea->getAreaWidth(), 0, 0, 0);
 }
 
-int PlainTextView::getLineNumberAreaWidth()
-{
-    if(!m_lineNumberArea->isVisible())
-    {
-        return 0;
-    }
-
-    int digits = getDigitsNumber();
-    if(digits < 2)
-    {
-        digits = 2;
-    }
-
-    return fontMetrics().width('8') * (digits + 2);
-}
-
-int PlainTextView::getDigitsNumber()
+int PlainTextView::getDigitsLineNumber()
 {
     int lineNum = blockCount();
 
@@ -144,8 +91,7 @@ int PlainTextView::getDigitsNumber()
 }
 
 PlainTextView::LineNumberArea::LineNumberArea(PlainTextView* parent) :
-    QWidget(parent),
-    m_parent(parent)
+    QWidget(parent)
 {
 }
 
@@ -153,14 +99,66 @@ PlainTextView::LineNumberArea::~LineNumberArea()
 {
 }
 
+int PlainTextView::LineNumberArea::getAreaWidth() const
+{
+    if(!isVisible())
+    {
+        return 0;
+    }
+
+    PlainTextView* parent = dynamic_cast<PlainTextView*>(this->parent());
+
+    Q_ASSERT(parent);
+
+    int digits = parent->getDigitsLineNumber();
+    if(digits < 2)
+    {
+        digits = 2;
+    }
+
+    return parent->fontMetrics().width('8') * (digits + 2);
+}
+
 QSize PlainTextView::LineNumberArea::sizeHint() const
 {
-    return QSize(m_parent->getLineNumberAreaWidth(), 0);
+    return QSize(getAreaWidth(), 0);
 }
 
 void PlainTextView::LineNumberArea::paintEvent(QPaintEvent* e)
 {
-    m_parent->lineNumberAreaPaintEvent(e);
+    if(!isVisible())
+    {
+        return;
+    }
+
+    QPainter painter(this);
+    PlainTextView* parent = dynamic_cast<PlainTextView*>(this->parent());
+
+    Q_ASSERT(parent);
+
+    painter.fillRect(e->rect(), this->palette().base());
+
+    QTextBlock block = parent->firstVisibleBlock();
+    int top = parent->blockBoundingGeometry(block).translated(parent->contentOffset()).top();
+    int bottom = top + parent->blockBoundingRect(block).height();
+    int width = this->width();
+    int height = parent->fontMetrics().height();
+
+    painter.setPen(this->palette().text().color());
+
+    while(block.isValid() && top <= e->rect().bottom())
+    {
+        if (block.isVisible() && bottom >= e->rect().top())
+        {
+            QString number = QString::number(block.blockNumber() + 1);
+            painter.drawText(0, top, width, height, Qt::AlignRight, number);
+        }
+
+        block = block.next();
+
+        top = bottom;
+        bottom = top + parent->blockBoundingRect(block).height();
+    }
 }
 
 }           // namespace Farman

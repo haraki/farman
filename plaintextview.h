@@ -36,7 +36,7 @@ private Q_SLOTS:
 private:
     void updateLineNumberAreaWidth();
     int getLineNumberAreaWidth();
-    int getDigitsNumber();
+    int getDigitsLineNumber();
 
     class LineNumberArea : public QWidget
     {
@@ -44,13 +44,12 @@ private:
         explicit LineNumberArea(PlainTextView* parent);
         ~LineNumberArea();
 
-        QSize sizeHint() const Q_DECL_OVERRIDE;
-
-    protected:
-        void paintEvent(QPaintEvent* e) Q_DECL_OVERRIDE;
+        int getAreaWidth() const;
 
     private:
-        PlainTextView* m_parent;
+        QSize sizeHint() const Q_DECL_OVERRIDE;
+
+        void paintEvent(QPaintEvent* e) Q_DECL_OVERRIDE;
     };
 
     LineNumberArea* m_lineNumberArea;
