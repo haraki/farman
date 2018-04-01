@@ -1,4 +1,5 @@
 ﻿#include <QTextCodec>
+#include <QCoreApplication>
 #include <QDebug>
 #include "settings.h"
 
@@ -20,7 +21,9 @@ Settings* Settings::getInstance()
 }
 
 Settings::Settings()
-    : QSettings("settings.ini", QSettings::Format::IniFormat)
+    : QSettings(QSettings::IniFormat, QSettings::UserScope,
+                QCoreApplication::organizationName(),
+                QCoreApplication::applicationName())
 {
     this->setIniCodec("UTF-8");
 }
