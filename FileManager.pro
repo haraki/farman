@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_MAC_SDK = macosx10.13
 
-TARGET = FileManager
+TARGET = farman
 TEMPLATE = app
 
 
