@@ -514,67 +514,66 @@ void PreferencesDialog::on_textViewerEncodeComboBox_activated(int index)
     ui->textViewerEncodeComboBox->blockSignals(false);
 }
 
-void PreferencesDialog::on_binaryViewerFontPushButton_clicked()
+void PreferencesDialog::on_hexViewerFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
-    if(showChooseFontDialog(m_fontSettings["binaryViewer"], newFont))
+    if(showChooseFontDialog(m_fontSettings["hexViewer"], newFont))
     {
-        m_fontSettings["binaryViewer"] = newFont;
+        m_fontSettings["hexViewer"] = newFont;
 
         setViewerFontAndColorOption();
     }
 }
 
-void PreferencesDialog::on_binaryViewerFontColorPushButton_clicked()
+void PreferencesDialog::on_hexViewerFontColorPushButton_clicked()
 {
-    chooseColor("binaryViewer_text", "binaryViewer_background", ui->binaryViewerSampleLineEdit);
+    chooseColor("hexViewer_text", "hexViewer_background", ui->hexViewerSampleLineEdit);
 }
 
-void PreferencesDialog::on_binaryViewerBGColorPushButton_clicked()
+void PreferencesDialog::on_hexViewerBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
-    if(showChooseColorDialog(m_colorSettings["binaryViewer_background"], newColor))
+    if(showChooseColorDialog(m_colorSettings["hexViewer_background"], newColor))
     {
-        m_colorSettings["binaryViewer_background"] = newColor;
+        m_colorSettings["hexViewer_background"] = newColor;
 
-        setFontColorSample("binaryViewer_text", "binaryViewer_background", ui->binaryViewerSampleLineEdit);
+        setFontColorSample("hexViewer_text", "hexViewer_background", ui->hexViewerSampleLineEdit);
     }
 }
 
-void PreferencesDialog::on_binaryViewerAddressFontColorPushButton_clicked()
+void PreferencesDialog::on_hexViewerAddressFontColorPushButton_clicked()
 {
-    chooseColor("binaryViewer_address_text", "binaryViewer_address_background", ui->binaryViewerAddressSampleLineEdit);
+    chooseColor("hexViewer_address_text", "hexViewer_address_background", ui->hexViewerAddressSampleLineEdit);
 }
 
-void PreferencesDialog::on_binaryViewerAddressBGColorPushButton_clicked()
+void PreferencesDialog::on_hexViewerAddressBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
-    if(showChooseColorDialog(m_colorSettings["binaryViewer_address_background"], newColor))
+    if(showChooseColorDialog(m_colorSettings["hexViewer_address_background"], newColor))
     {
-        m_colorSettings["binaryViewer_address_background"] = newColor;
+        m_colorSettings["hexViewer_address_background"] = newColor;
 
-        setFontColorSample("binaryViewer_address_text", "binaryViewer_address_background", ui->binaryViewerAddressSampleLineEdit);
+        setFontColorSample("hexViewer_address_text", "hexViewer_address_background", ui->hexViewerAddressSampleLineEdit);
     }
 }
 
-void PreferencesDialog::on_binaryViewerEncodeComboBox_activated(int index)
+void PreferencesDialog::on_hexViewerEncodeComboBox_activated(int index)
 {
-    qDebug() << "PreferencesDialog::on_binaryViewerEncodeComboBox_activated(" << index << ")";
+    qDebug() << "PreferencesDialog::on_hexViewerEncodeComboBox_activated(" << index << ")";
 
     // 選択されたエンコードをリストの先頭に移動する
-    QString encode = m_binaryViewerEncodeList[index];
-    m_binaryViewerEncodeList.removeAt(index);
-    m_binaryViewerEncodeList.insert(0, encode);
+    QString encode = m_hexViewerEncodeList[index];
+    m_hexViewerEncodeList.removeAt(index);
+    m_hexViewerEncodeList.insert(0, encode);
 
-    ui->binaryViewerEncodeComboBox->blockSignals(true);
-    ui->binaryViewerEncodeComboBox->clear();
-    ui->binaryViewerEncodeComboBox->addItems(m_binaryViewerEncodeList);
-    ui->binaryViewerEncodeComboBox->setCurrentIndex(0);
-    ui->binaryViewerEncodeComboBox->blockSignals(false);
-
+    ui->hexViewerEncodeComboBox->blockSignals(true);
+    ui->hexViewerEncodeComboBox->clear();
+    ui->hexViewerEncodeComboBox->addItems(m_hexViewerEncodeList);
+    ui->hexViewerEncodeComboBox->setCurrentIndex(0);
+    ui->hexViewerEncodeComboBox->blockSignals(false);
 }
 
 void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()

@@ -996,37 +996,37 @@
         </widget>
        </item>
        <item row="1" column="0" colspan="2">
-        <widget class="QGroupBox" name="binaryViewerGroupBox">
+        <widget class="QGroupBox" name="hexViewerGroupBox">
          <property name="title">
-          <string>Binary viewer</string>
+          <string>Hex viewer</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_10" columnstretch="0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_10" columnstretch="0,0">
           <property name="spacing">
            <number>8</number>
           </property>
           <item row="6" column="0">
-           <widget class="QPushButton" name="binaryViewerAddressFontColorPushButton">
+           <widget class="QPushButton" name="hexViewerAddressFontColorPushButton">
             <property name="text">
              <string>Color</string>
             </property>
            </widget>
           </item>
           <item row="9" column="1">
-           <widget class="QComboBox" name="binaryViewerEncodeComboBox">
+           <widget class="QComboBox" name="hexViewerEncodeComboBox">
             <property name="insertPolicy">
              <enum>QComboBox::NoInsert</enum>
             </property>
            </widget>
           </item>
           <item row="9" column="0">
-           <widget class="QLabel" name="binaryViewerEncodeLabel">
+           <widget class="QLabel" name="hexViewerEncodeLabel">
             <property name="text">
              <string>Encode :</string>
             </property>
            </widget>
           </item>
           <item row="6" column="1">
-           <widget class="QLineEdit" name="binaryViewerAddressSampleLineEdit">
+           <widget class="QLineEdit" name="hexViewerAddressSampleLineEdit">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -1042,7 +1042,7 @@
            </widget>
           </item>
           <item row="5" column="0" colspan="2">
-           <widget class="QLabel" name="binaryViewerAddressFontColorLabel">
+           <widget class="QLabel" name="hexViewerAddressFontColorLabel">
             <property name="font">
              <font>
               <pointsize>11</pointsize>
@@ -1057,28 +1057,28 @@
            </widget>
           </item>
           <item row="7" column="0">
-           <widget class="QPushButton" name="binaryViewerAddressBGColorPushButton">
+           <widget class="QPushButton" name="hexViewerAddressBGColorPushButton">
             <property name="text">
              <string>BG Color</string>
             </property>
            </widget>
           </item>
           <item row="3" column="0" rowspan="2">
-           <widget class="QPushButton" name="binaryViewerBGColorPushButton">
+           <widget class="QPushButton" name="hexViewerBGColorPushButton">
             <property name="text">
              <string>BG Color</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0" rowspan="2">
-           <widget class="QPushButton" name="binaryViewerFontColorPushButton">
+           <widget class="QPushButton" name="hexViewerFontColorPushButton">
             <property name="text">
              <string>Color</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1" rowspan="2">
-           <widget class="QLineEdit" name="binaryViewerSampleLineEdit">
+           <widget class="QLineEdit" name="hexViewerSampleLineEdit">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -1094,14 +1094,14 @@
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QPushButton" name="binaryViewerFontPushButton">
+           <widget class="QPushButton" name="hexViewerFontPushButton">
             <property name="text">
              <string>Font</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="binaryViewerFontLabel">
+           <widget class="QLabel" name="hexViewerFontLabel">
             <property name="text">
              <string>TextLabel</string>
             </property>

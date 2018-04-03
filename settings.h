@@ -95,8 +95,8 @@ public:
     const QList<QString>& getTextViewerEncodeList() { return m_textViewerEncodeList; }
     void setTextViewerEncodeList(const QList<QString>& encodeList) { m_textViewerEncodeList = encodeList; }
 
-    const QList<QString>& getBinaryViewerEncodeList() { return m_binaryViewerEncodeList; }
-    void setBinaryViewerEncodeList(const QList<QString>& encodeList) { m_binaryViewerEncodeList = encodeList; }
+    const QList<QString>& getHexViewerEncodeList() { return m_hexViewerEncodeList; }
+    void setHexViewerEncodeList(const QList<QString>& encodeList) { m_hexViewerEncodeList = encodeList; }
 
 private:
     Settings();
@@ -164,10 +164,10 @@ private:
         { "textViewer_lineNumber_text",       "#000000", },
         { "textViewer_lineNumber_background", "#808080", },
 
-        { "binaryViewer_text",               "#000000", },
-        { "binaryViewer_background",         "#ffffff", },
-        { "binaryViewer_address_text",       "#000000", },
-        { "binaryViewer_address_background", "#808080", },
+        { "hexViewer_text",                 "#000000", },
+        { "hexViewer_background",           "#ffffff", },
+        { "hexViewer_address_text",         "#000000", },
+        { "hexViewer_address_background",   "#808080", },
     };
 
     QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;
@@ -185,11 +185,11 @@ private:
 
     const QMap<QString, QFont> m_defaultFontSettings =
     {
-        { "folderView",   getDefaultFixedFont(), },
-        { "folderPath",   getDefaultFixedFont(), },
-        { "console",      getDefaultFixedFont(), },
-        { "textViewer",   getDefaultFixedFont(), },
-        { "binaryViewer", getDefaultFixedFont(), },
+        { "folderView", getDefaultFixedFont(), },
+        { "folderPath", getDefaultFixedFont(), },
+        { "console",    getDefaultFixedFont(), },
+        { "textViewer", getDefaultFixedFont(), },
+        { "hexViewer",  getDefaultFixedFont(), },
     };
 
     QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;
@@ -203,7 +203,7 @@ private:
     bool m_textViewerWordWrap = false;
 
     QList<QString> m_textViewerEncodeList;
-    QList<QString> m_binaryViewerEncodeList;
+    QList<QString> m_hexViewerEncodeList;
 };
 
 }

@@ -76,10 +76,10 @@ int ViewerDispatcher::initialize()
     {
         for(auto mimeKey : mimeKeys)
         {
-            QString viewerTypeValue = Settings::getInstance()->value(mimeKey, "binary").toString();
+            QString viewerTypeValue = Settings::getInstance()->value(mimeKey, "hex").toString();
             m_viewerTypeSettings[mimeKey] = (viewerTypeValue == "image") ? ViewerType::Image :
                                             (viewerTypeValue == "text") ? ViewerType::Text :
-                                                                          ViewerType::Binary;
+                                                                          ViewerType::Hex;
         }
     }
 
@@ -90,7 +90,7 @@ int ViewerDispatcher::initialize()
     {
         qDebug() << key << ":" << ((m_viewerTypeSettings[key] == ViewerType::Image) ? "image" :
                                    (m_viewerTypeSettings[key] == ViewerType::Text) ? "text" :
-                                                                                     "binary");
+                                                                                     "hex");
     }
 
     return 0;
@@ -117,11 +117,11 @@ ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, QWidget* paren
             return new TextViewer(filePath, parent);
         }
 #if 0
-        else if(*viewerTypeItr == ViewerType::Binary)
+        else if(*viewerTypeItr == ViewerType::Hex)
         {
-            qDebug() << "create Binary viewer.";
+            qDebug() << "create Hex viewer.";
 
-            return new BinaryViewer(filePath, parent);
+            return new HexViewer(filePath, parent);
         }
 #endif
     }

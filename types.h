@@ -70,8 +70,8 @@ enum class OverwriteMethodType : int
 // Viewer 種別
 enum class ViewerType : int
 {
-    Text = 0,
-    Binary = 1,
+    Text  = 0,
+    Hex   = 1,
     Image = 2,
 
     ViewerTypeNum,

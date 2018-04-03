@@ -157,24 +157,24 @@ void Settings::initialize()
         endArray();
     }
 
-    // BinaryViewer
+    // HexViewer
     {
         // Encode list
-        m_binaryViewerEncodeList.clear();
-        int size = beginReadArray("main/binaryViewer_encodeList");
+        m_hexViewerEncodeList.clear();
+        int size = beginReadArray("main/hexViewer_encodeList");
         if(size > 0)
         {
             for(int i = 0;i < size;i++)
             {
                 setArrayIndex(i);
-                m_binaryViewerEncodeList.append(value("encode").toString());
+                m_hexViewerEncodeList.append(value("encode").toString());
             }
         }
         else
         {
             for(QByteArray encode : QTextCodec::availableCodecs())
             {
-                m_binaryViewerEncodeList.append(QString(encode));
+                m_hexViewerEncodeList.append(QString(encode));
             }
         }
         endArray();
@@ -248,7 +248,7 @@ void Settings::flush()
     // Cursor width
     setValue("main/cursorWidth", m_cursorWidth);
 
-    // ImageViewer
+    // Image Viewer
     {
         // Fit in view
         setValue("main/imageViewer_fitInView", m_imageViewerFitInView);
@@ -259,7 +259,7 @@ void Settings::flush()
         setValue("main/imageViewer_bgType", imageViewerBGTypeValue);
     }
 
-    // TextViewer
+    // Text Viewer
     {
         // Show line number
         setValue("main/textViewer_showLineNumber", m_textViewerShowLineNumber);
@@ -277,14 +277,14 @@ void Settings::flush()
         endArray();
     }
 
-    // BinaryViewer
+    // Hex Viewer
     {
         // Encode list
-        beginWriteArray("main/binaryViewer_encodeList");
-        for(int i = 0;i < m_binaryViewerEncodeList.size();i++)
+        beginWriteArray("main/hexViewer_encodeList");
+        for(int i = 0;i < m_hexViewerEncodeList.size();i++)
         {
             setArrayIndex(i);
-            setValue("encode", m_binaryViewerEncodeList[i]);
+            setValue("encode", m_hexViewerEncodeList[i]);
         }
         endArray();
     }

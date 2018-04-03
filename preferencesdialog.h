@@ -76,12 +76,12 @@ private slots:
     void on_textViewerLineNumberBGColorPushButton_clicked();
     void on_textViewerEncodeComboBox_activated(int index);
 
-    void on_binaryViewerFontPushButton_clicked();
-    void on_binaryViewerFontColorPushButton_clicked();
-    void on_binaryViewerBGColorPushButton_clicked();
-    void on_binaryViewerAddressFontColorPushButton_clicked();
-    void on_binaryViewerAddressBGColorPushButton_clicked();
-    void on_binaryViewerEncodeComboBox_activated(int index);
+    void on_hexViewerFontPushButton_clicked();
+    void on_hexViewerFontColorPushButton_clicked();
+    void on_hexViewerBGColorPushButton_clicked();
+    void on_hexViewerAddressFontColorPushButton_clicked();
+    void on_hexViewerAddressBGColorPushButton_clicked();
+    void on_hexViewerEncodeComboBox_activated(int index);
 
     void on_imageViewerBGColorPushButton_clicked();
 
@@ -102,7 +102,7 @@ private:
     QMap<QString, QColor> m_colorSettings;
 
     QList<QString> m_textViewerEncodeList;
-    QList<QString> m_binaryViewerEncodeList;
+    QList<QString> m_hexViewerEncodeList;
 
     Ui::PreferencesDialog *ui;
 };
