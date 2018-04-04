@@ -3,12 +3,12 @@
 #include <QTextBlock>
 #include <QPainter>
 #include <QDebug>
-#include "plaintextview.h"
+#include "textview.h"
 
 namespace Farman
 {
 
-PlainTextView::PlainTextView(QWidget *parent/* = Q_NULLPTR*/) :
+TextView::TextView(QWidget *parent/* = Q_NULLPTR*/) :
     QPlainTextEdit(parent)
 {
     m_lineNumberArea = new LineNumberArea(this);
@@ -19,12 +19,12 @@ PlainTextView::PlainTextView(QWidget *parent/* = Q_NULLPTR*/) :
     updateLineNumberAreaWidth();
 }
 
-PlainTextView::~PlainTextView()
+TextView::~TextView()
 {
 
 }
 
-void PlainTextView::resizeEvent(QResizeEvent *e)
+void TextView::resizeEvent(QResizeEvent *e)
 {
     QPlainTextEdit::resizeEvent(e);
 
@@ -32,36 +32,36 @@ void PlainTextView::resizeEvent(QResizeEvent *e)
     m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), m_lineNumberArea->getAreaWidth(), cr.height()));
 }
 
-bool PlainTextView::getVisibleLineNumberArea()
+bool TextView::getVisibleLineNumberArea()
 {
     return m_lineNumberArea->isVisible();
 }
 
-void PlainTextView::setVisibleLineNumberArea(bool visible)
+void TextView::setVisibleLineNumberArea(bool visible)
 {
     m_lineNumberArea->setVisible(visible);
 
     updateLineNumberAreaWidth();
 }
 
-const QPalette& PlainTextView::getLineNumberAreaPalette() const
+const QPalette& TextView::getLineNumberAreaPalette() const
 {
     return m_lineNumberArea->palette();
 }
 
-void PlainTextView::setLineNumberAreaPalette(const QPalette& palette)
+void TextView::setLineNumberAreaPalette(const QPalette& palette)
 {
     m_lineNumberArea->setPalette(palette);
 }
 
-void PlainTextView::onBlockCountChanged(int newBlockCount)
+void TextView::onBlockCountChanged(int newBlockCount)
 {
     Q_UNUSED(newBlockCount);
 
     updateLineNumberAreaWidth();
 }
 
-void PlainTextView::onUpdateRequest(const QRect &rect, int dy)
+void TextView::onUpdateRequest(const QRect &rect, int dy)
 {
     if(dy != 0)
     {
@@ -78,35 +78,35 @@ void PlainTextView::onUpdateRequest(const QRect &rect, int dy)
     }
 }
 
-void PlainTextView::updateLineNumberAreaWidth()
+void TextView::updateLineNumberAreaWidth()
 {
     setViewportMargins(m_lineNumberArea->getAreaWidth(), 0, 0, 0);
 }
 
-int PlainTextView::getDigitsLineNumber()
+int TextView::getDigitsLineNumber()
 {
     int lineNum = blockCount();
 
     return log10(lineNum) + 1;
 }
 
-PlainTextView::LineNumberArea::LineNumberArea(PlainTextView* parent) :
+TextView::LineNumberArea::LineNumberArea(TextView* parent) :
     QWidget(parent)
 {
 }
 
-PlainTextView::LineNumberArea::~LineNumberArea()
+TextView::LineNumberArea::~LineNumberArea()
 {
 }
 
-int PlainTextView::LineNumberArea::getAreaWidth() const
+int TextView::LineNumberArea::getAreaWidth() const
 {
     if(!isVisible())
     {
         return 0;
     }
 
-    PlainTextView* parent = dynamic_cast<PlainTextView*>(this->parent());
+    TextView* parent = dynamic_cast<TextView*>(this->parent());
 
     Q_ASSERT(parent);
 
@@ -119,12 +119,12 @@ int PlainTextView::LineNumberArea::getAreaWidth() const
     return parent->fontMetrics().width('8') * (digits + 2);
 }
 
-QSize PlainTextView::LineNumberArea::sizeHint() const
+QSize TextView::LineNumberArea::sizeHint() const
 {
     return QSize(getAreaWidth(), 0);
 }
 
-void PlainTextView::LineNumberArea::paintEvent(QPaintEvent* e)
+void TextView::LineNumberArea::paintEvent(QPaintEvent* e)
 {
     if(!isVisible())
     {
@@ -132,7 +132,7 @@ void PlainTextView::LineNumberArea::paintEvent(QPaintEvent* e)
     }
 
     QPainter painter(this);
-    PlainTextView* parent = dynamic_cast<PlainTextView*>(this->parent());
+    TextView* parent = dynamic_cast<TextView*>(this->parent());
 
     Q_ASSERT(parent);
 

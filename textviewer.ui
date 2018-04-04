@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item row="1" column="0" colspan="6">
-    <widget class="Farman::PlainTextView" name="textPlainTextView">
+    <widget class="Farman::TextView" name="textView">
      <property name="undoRedoEnabled">
       <bool>false</bool>
      </property>
@@ -97,9 +97,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Farman::PlainTextView</class>
+   <class>Farman::TextView</class>
    <extends>QPlainTextEdit</extends>
-   <header>plaintextview.h</header>
+   <header>textview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

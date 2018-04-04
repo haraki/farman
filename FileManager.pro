@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     viewerbase.cpp \
     imageviewer.cpp \
     textviewer.cpp \
-    plaintextview.cpp
+    textview.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -65,7 +65,7 @@ HEADERS  += mainwindow.h \
     viewerbase.h \
     imageviewer.h \
     textviewer.h \
-    plaintextview.h
+    textview.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \

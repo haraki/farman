@@ -2,7 +2,7 @@
 #include <QDebug>
 #include "textviewer.h"
 #include "ui_textviewer.h"
-#include "plaintextview.h"
+#include "textview.h"
 #include "settings.h"
 
 namespace Farman
@@ -20,14 +20,14 @@ TextViewer::TextViewer(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
     ui->showLineNumberCheckBox->setChecked(Settings::getInstance()->getTextViewerShowLineNumber());
     ui->wordWrapCheckBox->setChecked(Settings::getInstance()->getTextViewerWordWrap());
 
-    ui->textPlainTextView->setVisibleLineNumberArea(ui->showLineNumberCheckBox->isChecked());
-    ui->textPlainTextView->setLineWrapMode(ui->wordWrapCheckBox->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+    ui->textView->setVisibleLineNumberArea(ui->showLineNumberCheckBox->isChecked());
+    ui->textView->setLineWrapMode(ui->wordWrapCheckBox->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
 
     initFont();
 
     initPalette();
 
-    ui->textPlainTextView->setFocus();
+    ui->textView->setFocus();
 }
 
 TextViewer::~TextViewer()
@@ -60,7 +60,7 @@ void TextViewer::on_showLineNumberCheckBox_stateChanged(int arg1)
     Q_UNUSED(arg1);
 
     Settings::getInstance()->setTextViewerShowLineNumber(ui->showLineNumberCheckBox->isChecked());
-    ui->textPlainTextView->setVisibleLineNumberArea(ui->showLineNumberCheckBox->isChecked());
+    ui->textView->setVisibleLineNumberArea(ui->showLineNumberCheckBox->isChecked());
 }
 
 void TextViewer::on_wordWrapCheckBox_stateChanged(int arg1)
@@ -68,36 +68,36 @@ void TextViewer::on_wordWrapCheckBox_stateChanged(int arg1)
     Q_UNUSED(arg1);
 
     Settings::getInstance()->setTextViewerWordWrap(ui->wordWrapCheckBox->isChecked());
-    ui->textPlainTextView->setLineWrapMode(ui->wordWrapCheckBox->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
+    ui->textView->setLineWrapMode(ui->wordWrapCheckBox->isChecked() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
 }
 
 void TextViewer::initFont()
 {
-    ui->textPlainTextView->setFont(Settings::getInstance()->getFontSetting("textViewer"));
+    ui->textView->setFont(Settings::getInstance()->getFontSetting("textViewer"));
 }
 
 void TextViewer::initPalette()
 {
     QPalette pal;
 
-    pal = ui->textPlainTextView->palette();
+    pal = ui->textView->palette();
     pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("textViewer_text"));
     pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("textViewer_background"));
-    ui->textPlainTextView->setPalette(pal);
+    ui->textView->setPalette(pal);
 
-    pal = ui->textPlainTextView->getLineNumberAreaPalette();
+    pal = ui->textView->getLineNumberAreaPalette();
     pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("textViewer_lineNumber_text"));
     pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("textViewer_lineNumber_background"));
-    ui->textPlainTextView->setLineNumberAreaPalette(pal);
+    ui->textView->setLineNumberAreaPalette(pal);
 }
 
 int TextViewer::setData()
 {
     QTextCodec* codec = QTextCodec::codecForName(ui->encodeComboBox->currentText().toUtf8());
 
-    ui->textPlainTextView->setPlainText(codec->toUnicode(m_buffer));
+    ui->textView->setPlainText(codec->toUnicode(m_buffer));
 
     return 0;
 }
 
-}
+}           // namespace Farman
