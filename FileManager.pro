@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     viewerbase.cpp \
     imageviewer.cpp \
     textviewer.cpp \
-    textview.cpp
+    textview.cpp \
+    QHexView/src/QHexView.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     viewerbase.h \
     imageviewer.h \
     textviewer.h \
-    textview.h
+    textview.h \
+    QHexView/include/QHexView.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
