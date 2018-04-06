@@ -12,7 +12,7 @@ QMAKE_MAC_SDK = macosx10.13
 
 TARGET = farman
 TEMPLATE = app
-
+INCLUDEPATH += ./QHexView/include
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     imageviewer.cpp \
     textviewer.cpp \
     textview.cpp \
-    QHexView/src/QHexView.cpp
+    QHexView/src/QHexView.cpp \
+    hexviewer.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -67,7 +68,8 @@ HEADERS  += mainwindow.h \
     imageviewer.h \
     textviewer.h \
     textview.h \
-    QHexView/include/QHexView.h
+    QHexView/include/QHexView.h \
+    hexviewer.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \
@@ -81,4 +83,5 @@ FORMS    += mainwindow.ui \
     fileattributesdialog.ui \
     preferencesdialog.ui \
     imageviewer.ui \
-    textviewer.ui
+    textviewer.ui \
+    hexviewer.ui

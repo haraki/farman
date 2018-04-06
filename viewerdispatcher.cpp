@@ -8,6 +8,7 @@
 #include "settings.h"
 #include "imageviewer.h"
 #include "textviewer.h"
+#include "hexviewer.h"
 
 namespace Farman
 {
@@ -116,14 +117,12 @@ ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, QWidget* paren
 
             return new TextViewer(filePath, parent);
         }
-#if 0
         else if(*viewerTypeItr == ViewerType::Hex)
         {
             qDebug() << "create Hex viewer.";
 
             return new HexViewer(filePath, parent);
         }
-#endif
     }
 
     if(QImageReader::supportedMimeTypes().indexOf(mimeType.name().toUtf8()) >= 0)
@@ -141,7 +140,10 @@ ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, QWidget* paren
         return new TextViewer(filePath, parent);
     }
 
-    return Q_NULLPTR;
+    // 上記いずれの条件にも該当しない場合は HexViewer を起動する
+    qDebug() << "create Hex viewer.";
+
+    return new HexViewer(filePath, parent);
 }
 
 }
