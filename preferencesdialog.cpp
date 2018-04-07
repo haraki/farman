@@ -149,11 +149,11 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
 
     ui->imageViewerFitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
 
-    m_textViewerEncodeList = Settings::getInstance()->getTextViewerEncodeList();
-    ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
-
     ui->imageViewerBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
     ui->imageViewerBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid) ? 0 : 1);
+
+    m_textViewerEncodeList = Settings::getInstance()->getTextViewerEncodeList();
+    ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
 
     ui->textViewerShowLineNumberCheckBox->setChecked(Settings::getInstance()->getTextViewerShowLineNumber());
     ui->textViewerWordWrapCheckBox->setChecked(Settings::getInstance()->getTextViewerWordWrap());
@@ -664,6 +664,16 @@ void PreferencesDialog::setViewerFontAndColorOption()
 
     setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
     setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
+
+    // Hex viewer
+
+    font = m_fontSettings["hexViewer"];
+
+    ui->hexViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->hexViewerFontLabel->setFont(font);
+
+    setFontColorSample("hexViewer_text", "hexViewer_background", ui->hexViewerSampleLineEdit);
+    setFontColorSample("hexViewer_address_text", "hexViewer_address_background", ui->hexViewerAddressSampleLineEdit);
 }
 
 void PreferencesDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)
