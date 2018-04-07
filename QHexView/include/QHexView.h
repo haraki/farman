@@ -43,6 +43,11 @@ class QHexView: public QAbstractScrollArea
 		QHexView(QWidget *parent = 0);
 		~QHexView();
 
+        void setFont(const QFont& font);
+
+        const QPalette& getAddressAreaPalette() const;
+        void setAddressAreaPalette(const QPalette &pal);
+
 	public slots:
 		void setData(DataStorage *pData);
 		void clear();
@@ -67,6 +72,7 @@ class QHexView: public QAbstractScrollArea
 		std::size_t           m_selectInit;
 		std::size_t           m_cursorPos;
 
+        QPalette              m_addressAreaPalette;
 
 		QSize fullSize() const;
 		void resetSelection();
