@@ -100,7 +100,7 @@ void QHexView::paintEvent(QPaintEvent *event)
 	int firstLineIdx = verticalScrollBar() -> value();
 
 	int lastLineIdx = firstLineIdx + areaSize.height() / m_charHeight;
-	if(lastLineIdx > m_pdata->size() / BYTES_PER_LINE)
+    if(lastLineIdx > static_cast<int>(m_pdata->size() / BYTES_PER_LINE))
 	{
 		lastLineIdx = m_pdata->size() / BYTES_PER_LINE;
 		if(m_pdata->size() % BYTES_PER_LINE)
@@ -415,7 +415,7 @@ std::size_t QHexView::cursorPos(const QPoint &position)
 {
 	int pos = -1;
 
-	if ((position.x() >= m_posHex) && (position.x() < (m_posHex + HEXCHARS_IN_LINE * m_charWidth)))
+    if ((position.x() >= static_cast<int>(m_posHex)) && (position.x() < static_cast<int>(m_posHex + HEXCHARS_IN_LINE * m_charWidth)))
 	{
 		int x = (position.x() - m_posHex) / m_charWidth;
 		if ((x % 3) == 0)
@@ -452,7 +452,7 @@ void QHexView::setSelection(int pos)
     if (pos < 0)
         pos = 0;
 
-    if (pos >= m_selectInit)
+    if (pos >= static_cast<int>(m_selectInit))
     {
         m_selectEnd = pos;
         m_selectBegin = m_selectInit;
