@@ -375,8 +375,15 @@ void QHexView::keyPressEvent(QKeyEvent *event)
 	    }
     }
 
- 	if(setVisible)
-	    ensureVisible();
+    if(setVisible)
+    {
+        ensureVisible();
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 	viewport() -> update();
 }
 
