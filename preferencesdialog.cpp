@@ -560,6 +560,23 @@ void PreferencesDialog::on_hexViewerBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_hexViewerSelectedFontColorPushButton_clicked()
+{
+    chooseColor("hexViewer_selected_text", "hexViewer_selected_background", ui->hexViewerSelectedSampleLineEdit);
+}
+
+void PreferencesDialog::on_hexViewerSelectedBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["hexViewer_selected_background"], newColor))
+    {
+        m_colorSettings["hexViewer_selected_background"] = newColor;
+
+        setFontColorSample("hexViewer_selected_text", "hexViewer_selected_background", ui->hexViewerSelectedSampleLineEdit);
+    }
+}
+
 void PreferencesDialog::on_hexViewerAddressFontColorPushButton_clicked()
 {
     chooseColor("hexViewer_address_text", "hexViewer_address_background", ui->hexViewerAddressSampleLineEdit);
@@ -674,8 +691,9 @@ void PreferencesDialog::setViewerFontAndColorOption()
     ui->hexViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
     ui->hexViewerFontLabel->setFont(font);
 
-    setFontColorSample("hexViewer_text", "hexViewer_background", ui->hexViewerSampleLineEdit);
-    setFontColorSample("hexViewer_address_text", "hexViewer_address_background", ui->hexViewerAddressSampleLineEdit);
+    setFontColorSample("hexViewer_text",          "hexViewer_background",          ui->hexViewerSampleLineEdit);
+    setFontColorSample("hexViewer_selected_text", "hexViewer_selected_background", ui->hexViewerSelectedSampleLineEdit);
+    setFontColorSample("hexViewer_address_text",  "hexViewer_address_background",  ui->hexViewerAddressSampleLineEdit);
 }
 
 void PreferencesDialog::setFontColorSample(const QString& colorSettingType, const QString& bgSettingType, QWidget* widget)

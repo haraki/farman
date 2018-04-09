@@ -137,55 +137,91 @@ void QHexView::paintEvent(QPaintEvent *event)
 	int yPosStart = m_charHeight;
 
     QColor textPenColor = palette().color(QPalette::Text);
-    QColor addressTextPenColor = getAddressAreaPalette().color(QPalette::Text);
-	QBrush def = painter.brush();
-    QBrush selected = QBrush(QColor(0x6d, 0x9e, 0xff, 0xff));
+    QColor selectedPenColor = palette().color(QPalette::HighlightedText);
+    QColor addressPenColor = getAddressAreaPalette().color(QPalette::Text);
+    QBrush defaultBgBrush = painter.brush();
+    QBrush selectedBgBrush = QBrush(palette().color(QPalette::Highlight));
     QByteArray data = m_pdata->getData(firstLineIdx * BYTES_PER_LINE, (lastLineIdx - firstLineIdx) * BYTES_PER_LINE);
 
-	for (int lineIdx = firstLineIdx, yPos = yPosStart;  lineIdx < lastLineIdx; lineIdx += 1, yPos += m_charHeight)
+    bool selected = false;
+    for (int lineIdx = firstLineIdx, yPos = yPosStart;  lineIdx < lastLineIdx; lineIdx += 1, yPos += m_charHeight)
 	{
-        painter.setPen(addressTextPenColor);
+        painter.setPen(addressPenColor);
         QString address = QString("%1").arg(lineIdx * 16, 10, 16, QChar('0'));
-		painter.drawText(m_posAddr, yPos, address);
+        painter.drawText(m_posAddr, yPos, address);
 
         painter.setPen(textPenColor);
         for(int xPos = m_posHex, i=0; i<BYTES_PER_LINE && ((lineIdx - firstLineIdx) * BYTES_PER_LINE + i) < data.size(); i++, xPos += 3 * m_charWidth)
 		{
-			std::size_t pos = (lineIdx * BYTES_PER_LINE + i) * 2;
-			if(pos >= m_selectBegin && pos < m_selectEnd)
-			{
-				painter.setBackground(selected);
-				painter.setBackgroundMode(Qt::OpaqueMode);
-			}
+            auto changeNormal = [&]()
+            {
+                painter.setPen(textPenColor);
+                painter.setBackground(defaultBgBrush);
+                painter.setBackgroundMode(Qt::OpaqueMode);
 
-			QString val = QString::number((data.at((lineIdx - firstLineIdx) * BYTES_PER_LINE + i) & 0xF0) >> 4, 16);
+                selected = false;
+            };
+
+            auto changeSelected = [&]()
+            {
+                painter.setPen(selectedPenColor);
+                painter.setBackground(selectedBgBrush);
+                painter.setBackgroundMode(Qt::OpaqueMode);
+
+                selected = true;
+            };
+
+            uint8_t ch = data.at((lineIdx - firstLineIdx) * BYTES_PER_LINE + i);
+
+			std::size_t pos = (lineIdx * BYTES_PER_LINE + i) * 2;
+            if(pos >= m_selectBegin && pos < m_selectEnd)
+            {
+                if(!selected)
+                {
+                    changeSelected();
+                }
+            }
+            else
+            {
+                if(selected)
+                {
+                    changeNormal();
+                }
+            }
+
+            QString val = QString::number((ch & 0xF0) >> 4, 16);
 			painter.drawText(xPos, yPos, val);
 
 
 			if((pos+1) >= m_selectBegin && (pos+1) < m_selectEnd)
-			{
-				painter.setBackground(selected);
-				painter.setBackgroundMode(Qt::OpaqueMode);
-			}
-			else
-			{
-				painter.setBackground(def);
-				painter.setBackgroundMode(Qt::OpaqueMode);
-			}
+            {
+                if(!selected)
+                {
+                    changeSelected();
+                }
+            }
+            else
+            {
+                if(selected)
+                {
+                    changeNormal();
+                }
+            }
 
-			val = QString::number((data.at((lineIdx - firstLineIdx) * BYTES_PER_LINE + i) & 0xF), 16);
+            val = QString::number((ch & 0xF), 16);
 			painter.drawText(xPos+m_charWidth, yPos, val);
 
-			painter.setBackground(def);
-			painter.setBackgroundMode(Qt::OpaqueMode);
-
-		}
+            if(selected)
+            {
+                changeNormal();
+            }
+        }
 
 		for (int xPosAscii = m_posAscii, i=0; ((lineIdx - firstLineIdx) * BYTES_PER_LINE + i) < data.size() && (i < BYTES_PER_LINE); i++, xPosAscii += m_charWidth)
 		{
 			char ch = data[(lineIdx - firstLineIdx) * BYTES_PER_LINE + i];
 			if ((ch < 0x20) or (ch > 0x7e))
-			ch = '.';
+                ch = '.';
 
 			painter.drawText(xPosAscii, yPos, QString(ch));
 		}

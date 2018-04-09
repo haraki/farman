@@ -165,6 +165,8 @@ private:
 
         { "hexViewer_text",                 "#000000", },
         { "hexViewer_background",           "#ffffff", },
+        { "hexViewer_selected_text",        "#000000", },
+        { "hexViewer_selected_background",  "#b2d7ff", },
         { "hexViewer_address_text",         "#000000", },
         { "hexViewer_address_background",   "#dfdfdf", },
     };

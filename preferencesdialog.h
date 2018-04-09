@@ -81,6 +81,8 @@ private slots:
     void on_hexViewerFontPushButton_clicked();
     void on_hexViewerFontColorPushButton_clicked();
     void on_hexViewerBGColorPushButton_clicked();
+    void on_hexViewerSelectedFontColorPushButton_clicked();
+    void on_hexViewerSelectedBGColorPushButton_clicked();
     void on_hexViewerAddressFontColorPushButton_clicked();
     void on_hexViewerAddressBGColorPushButton_clicked();
 

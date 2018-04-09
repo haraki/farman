@@ -33,8 +33,10 @@ void HexViewer::initPalette()
     QPalette pal;
 
     pal = ui->hexView->palette();
-    pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("hexViewer_text"));
-    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("hexViewer_background"));
+    pal.setColor(QPalette::Text,            Settings::getInstance()->getColorSetting("hexViewer_text"));
+    pal.setColor(QPalette::Base,            Settings::getInstance()->getColorSetting("hexViewer_background"));
+    pal.setColor(QPalette::HighlightedText, Settings::getInstance()->getColorSetting("hexViewer_selected_text"));
+    pal.setColor(QPalette::Highlight,       Settings::getInstance()->getColorSetting("hexViewer_selected_background"));
     ui->hexView->setPalette(pal);
 
     pal = ui->hexView->getAddressAreaPalette();
