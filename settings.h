@@ -159,12 +159,12 @@ private:
         { "textViewer_text",                  "#000000", },
         { "textViewer_background",            "#ffffff", },
         { "textViewer_lineNumber_text",       "#000000", },
-        { "textViewer_lineNumber_background", "#808080", },
+        { "textViewer_lineNumber_background", "#dfdfdf", },
 
         { "hexViewer_text",                 "#000000", },
         { "hexViewer_background",           "#ffffff", },
         { "hexViewer_address_text",         "#000000", },
-        { "hexViewer_address_background",   "#808080", },
+        { "hexViewer_address_background",   "#dfdfdf", },
     };
 
     QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;
