@@ -481,6 +481,23 @@ void PreferencesDialog::on_textViewerBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_textViewerSelectedFontColorPushButton_clicked()
+{
+    chooseColor("textViewer_selected_text", "textViewer_selected_background", ui->textViewerSelectedSampleLineEdit);
+}
+
+void PreferencesDialog::on_textViewerSelectedBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["textViewer_selected_background"], newColor))
+    {
+        m_colorSettings["textViewer_selected_background"] = newColor;
+
+        setFontColorSample("textViewer_selected_text", "textViewer_selected_background", ui->textViewerSelectedSampleLineEdit);
+    }
+}
+
 void PreferencesDialog::on_textViewerLineNumberFontColorPushButton_clicked()
 {
     chooseColor("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
@@ -646,7 +663,8 @@ void PreferencesDialog::setViewerFontAndColorOption()
     ui->textViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
     ui->textViewerFontLabel->setFont(font);
 
-    setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
+    setFontColorSample("textViewer_text",            "textViewer_background",            ui->textViewerSampleLineEdit);
+    setFontColorSample("textViewer_selected_text",   "textViewer_selected_background",   ui->textViewerSelectedSampleLineEdit);
     setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
 
     // Hex viewer

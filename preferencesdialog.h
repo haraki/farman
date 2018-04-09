@@ -72,6 +72,8 @@ private slots:
     void on_textViewerFontPushButton_clicked();
     void on_textViewerFontColorPushButton_clicked();
     void on_textViewerBGColorPushButton_clicked();
+    void on_textViewerSelectedFontColorPushButton_clicked();
+    void on_textViewerSelectedBGColorPushButton_clicked();
     void on_textViewerLineNumberFontColorPushButton_clicked();
     void on_textViewerLineNumberBGColorPushButton_clicked();
     void on_textViewerEncodeComboBox_activated(int index);

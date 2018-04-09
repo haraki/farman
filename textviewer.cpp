@@ -81,8 +81,10 @@ void TextViewer::initPalette()
     QPalette pal;
 
     pal = ui->textView->palette();
-    pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("textViewer_text"));
-    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("textViewer_background"));
+    pal.setColor(QPalette::Text,            Settings::getInstance()->getColorSetting("textViewer_text"));
+    pal.setColor(QPalette::Base,            Settings::getInstance()->getColorSetting("textViewer_background"));
+    pal.setColor(QPalette::HighlightedText, Settings::getInstance()->getColorSetting("textViewer_selected_text"));
+    pal.setColor(QPalette::Highlight,       Settings::getInstance()->getColorSetting("textViewer_selected_background"));
     ui->textView->setPalette(pal);
 
     pal = ui->textView->getLineNumberAreaPalette();

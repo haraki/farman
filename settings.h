@@ -158,6 +158,8 @@ private:
 
         { "textViewer_text",                  "#000000", },
         { "textViewer_background",            "#ffffff", },
+        { "textViewer_selected_text",         "#000000", },
+        { "textViewer_selected_background",   "#b2d7ff", },
         { "textViewer_lineNumber_text",       "#000000", },
         { "textViewer_lineNumber_background", "#dfdfdf", },
 
