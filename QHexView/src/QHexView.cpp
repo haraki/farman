@@ -65,6 +65,8 @@ void QHexView::setData(QHexView::DataStorage *pData)
 	m_pdata = pData;
 	m_cursorPos = 0;
 	resetSelection(0);
+
+    viewport()->update();
 }
 
 
