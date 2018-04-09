@@ -156,29 +156,6 @@ void Settings::initialize()
         }
         endArray();
     }
-
-    // HexViewer
-    {
-        // Encode list
-        m_hexViewerEncodeList.clear();
-        int size = beginReadArray("main/hexViewer_encodeList");
-        if(size > 0)
-        {
-            for(int i = 0;i < size;i++)
-            {
-                setArrayIndex(i);
-                m_hexViewerEncodeList.append(value("encode").toString());
-            }
-        }
-        else
-        {
-            for(QByteArray encode : QTextCodec::availableCodecs())
-            {
-                m_hexViewerEncodeList.append(QString(encode));
-            }
-        }
-        endArray();
-    }
 }
 
 void Settings::flush()
@@ -273,18 +250,6 @@ void Settings::flush()
         {
             setArrayIndex(i);
             setValue("encode", m_textViewerEncodeList[i]);
-        }
-        endArray();
-    }
-
-    // Hex Viewer
-    {
-        // Encode list
-        beginWriteArray("main/hexViewer_encodeList");
-        for(int i = 0;i < m_hexViewerEncodeList.size();i++)
-        {
-            setArrayIndex(i);
-            setValue("encode", m_hexViewerEncodeList[i]);
         }
         endArray();
     }

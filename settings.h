@@ -95,9 +95,6 @@ public:
     const QList<QString>& getTextViewerEncodeList() { return m_textViewerEncodeList; }
     void setTextViewerEncodeList(const QList<QString>& encodeList) { m_textViewerEncodeList = encodeList; }
 
-    const QList<QString>& getHexViewerEncodeList() { return m_hexViewerEncodeList; }
-    void setHexViewerEncodeList(const QList<QString>& encodeList) { m_hexViewerEncodeList = encodeList; }
-
 private:
     Settings();
 
@@ -203,7 +200,6 @@ private:
     bool m_textViewerWordWrap = false;
 
     QList<QString> m_textViewerEncodeList;
-    QList<QString> m_hexViewerEncodeList;
 };
 
 }

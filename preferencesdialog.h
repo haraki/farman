@@ -81,7 +81,6 @@ private slots:
     void on_hexViewerBGColorPushButton_clicked();
     void on_hexViewerAddressFontColorPushButton_clicked();
     void on_hexViewerAddressBGColorPushButton_clicked();
-    void on_hexViewerEncodeComboBox_activated(int index);
 
     void on_imageViewerBGColorPushButton_clicked();
 
@@ -102,7 +101,6 @@ private:
     QMap<QString, QColor> m_colorSettings;
 
     QList<QString> m_textViewerEncodeList;
-    QList<QString> m_hexViewerEncodeList;
 
     Ui::PreferencesDialog *ui;
 };

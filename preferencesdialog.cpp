@@ -560,22 +560,6 @@ void PreferencesDialog::on_hexViewerAddressBGColorPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_hexViewerEncodeComboBox_activated(int index)
-{
-    qDebug() << "PreferencesDialog::on_hexViewerEncodeComboBox_activated(" << index << ")";
-
-    // 選択されたエンコードをリストの先頭に移動する
-    QString encode = m_hexViewerEncodeList[index];
-    m_hexViewerEncodeList.removeAt(index);
-    m_hexViewerEncodeList.insert(0, encode);
-
-    ui->hexViewerEncodeComboBox->blockSignals(true);
-    ui->hexViewerEncodeComboBox->clear();
-    ui->hexViewerEncodeComboBox->addItems(m_hexViewerEncodeList);
-    ui->hexViewerEncodeComboBox->setCurrentIndex(0);
-    ui->hexViewerEncodeComboBox->blockSignals(false);
-}
-
 void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
 {
     QColor oldColor = ui->imageViewerBGColorSampleLineEdit->palette().base().color();
