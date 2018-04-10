@@ -1,5 +1,5 @@
-﻿#ifndef FILEREADWORKER_H
-#define FILEREADWORKER_H
+﻿#ifndef READFILEWORKER_H
+#define READFILEWORKER_H
 
 #include "worker.h"
 
@@ -27,4 +27,4 @@ private:
 
 }
 
-#endif // FILEREADWORKER_H
+#endif // READFILEWORKER_H
