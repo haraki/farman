@@ -93,7 +93,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionOpenInApp"/>
+    <addaction name="actionOpenWithApp"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
     <addaction name="separator"/>
@@ -189,9 +189,12 @@
     <string>Esc</string>
    </property>
   </action>
-  <action name="actionOpenInApp">
+  <action name="actionOpenWithApp">
    <property name="text">
-    <string>Open in Application</string>
+    <string>Open With Application</string>
+   </property>
+   <property name="toolTip">
+    <string>Open With Application</string>
    </property>
    <property name="shortcut">
     <string>Shift+Return</string>

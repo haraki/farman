@@ -78,7 +78,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     connect(this,
             SIGNAL(openFileInApp(const QModelIndex)),
             MainWindow::getInstance(),
-            SLOT(onOpenInApp(const QModelIndex)));
+            SLOT(onOpenWithApp(const QModelIndex)));
 
     QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);

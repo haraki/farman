@@ -192,11 +192,11 @@ void MainWindow::onCloseViewer(const QString& viewerObjectName)
     }
 }
 
-void MainWindow::onOpenInApp(const QModelIndex& index/* = QModelIndex()*/)
+void MainWindow::onOpenWithApp(const QModelIndex& index/* = QModelIndex()*/)
 {
     Q_UNUSED(index);
 
-    qDebug() << "MainWindow::onOpenInApp()";
+    qDebug() << "MainWindow::onOpenWithApp()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel == Q_NULLPTR)
@@ -239,11 +239,11 @@ void MainWindow::on_actionOpen_triggered()
     onOpen();
 }
 
-void MainWindow::on_actionOpenInApp_triggered()
+void MainWindow::on_actionOpenWithApp_triggered()
 {
-    qDebug() << "MainWindow::on_actionOpenInApp_triggered()";
+    qDebug() << "MainWindow::on_actionOpenWithApp_triggered()";
 
-    onOpenInApp();
+    onOpenWithApp();
 }
 
 void MainWindow::on_actionPreferences_triggered()
