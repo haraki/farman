@@ -27,47 +27,47 @@ public:
     ~PreferencesDialog();
 
 private slots:
-    void on_generalSizeDefaultRadioButton_clicked();
-    void on_generalSizeLastTimeRadioButton_clicked();
-    void on_generalSizeFixedRadioButton_clicked();
-    void on_generalPositionDefaultRadioButton_clicked();
-    void on_generalPositionLastTimeRadioButton_clicked();
-    void on_generalPositionFixedRadioButton_clicked();
-    void on_generalLeftFolderDefaultRadioButton_clicked();
-    void on_generalLeftFolderLastTimeRadioButton_clicked();
-    void on_generalLeftFolderFixedRadioButton_clicked();
-    void on_generalLeftFolderSelectButton_clicked();
-    void on_generalRightFolderDefaultRadioButton_clicked();
-    void on_generalRightFolderLastTimeRadioButton_clicked();
-    void on_generalRightFolderFixedRadioButton_clicked();
-    void on_generalRightFolderSelectButton_clicked();
+    void on_sizeDefaultRadioButton_clicked();
+    void on_sizeLastTimeRadioButton_clicked();
+    void on_sizeFixedRadioButton_clicked();
+    void on_positionDefaultRadioButton_clicked();
+    void on_positionLastTimeRadioButton_clicked();
+    void on_positionFixedRadioButton_clicked();
+    void on_leftFolderDefaultRadioButton_clicked();
+    void on_leftFolderLastTimeRadioButton_clicked();
+    void on_leftFolderFixedRadioButton_clicked();
+    void on_leftFolderSelectButton_clicked();
+    void on_rightFolderDefaultRadioButton_clicked();
+    void on_rightFolderLastTimeRadioButton_clicked();
+    void on_rightFolderFixedRadioButton_clicked();
+    void on_rightFolderSelectButton_clicked();
 
-    void on_appearanceFolderViewChooseFontPushButton_clicked();
+    void on_folderViewFontFontPushButton_clicked();
 
-    void on_appearanceFolderViewChooseNormalColorPushButton_clicked();
-    void on_appearanceFolderViewChooseNormalSelectedColorPushButton_clicked();
-    void on_appearanceFolderViewChooseFolderColorPushButton_clicked();
-    void on_appearanceFolderViewChooseFolderSelectedColorPushButton_clicked();
-    void on_appearanceFolderViewChooseReadOnlyColorPushButton_clicked();
-    void on_appearanceFolderViewChooseReadOnlySelectedColorPushButton_clicked();
-    void on_appearanceFolderViewChooseHiddenColorPushButton_clicked();
-    void on_appearanceFolderViewChooseHiddenSelectedColorPushButton_clicked();
-    void on_appearanceFolderViewChooseSystemColorPushButton_clicked();
-    void on_appearanceFolderViewChooseSystemSelectedColorPushButton_clicked();
+    void on_folderViewFontNormalColorPushButton_clicked();
+    void on_folderViewFontNormalSelectedColorPushButton_clicked();
+    void on_folderViewFontFolderColorPushButton_clicked();
+    void on_folderViewFontFolderSelectedColorPushButton_clicked();
+    void on_folderViewFontReadOnlyColorPushButton_clicked();
+    void on_folderViewFontReadOnlySelectedColorPushButton_clicked();
+    void on_folderViewFontHiddenColorPushButton_clicked();
+    void on_folderViewFontHiddenSelectedColorPushButton_clicked();
+    void on_folderViewFontSystemColorPushButton_clicked();
+    void on_folderViewFontSystemSelectedColorPushButton_clicked();
 
-    void on_appearanceFolderViewChooseBGColorPushButton_clicked();
-    void on_appearanceFolderViewChooseSelectedBGColorPushButton_clicked();
+    void on_folderViewFontBGColorPushButton_clicked();
+    void on_folderViewFontSelectedBGColorPushButton_clicked();
 
-    void on_appearanceFolderViewChooseCursorColorPushButton_clicked();
-    void on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked();
+    void on_folderViewCursorColorPushButton_clicked();
+    void on_folderViewCursorInactiveColorPushButton_clicked();
 
-    void on_appearanceFolderPathChooseFontPushButton_clicked();
-    void on_appearanceFolderPathChooseColorPushButton_clicked();
-    void on_appearanceFolderPathChooseBGColorPushButton_clicked();
+    void on_folderPathFontPushButton_clicked();
+    void on_folderPathColorPushButton_clicked();
+    void on_folderPathBGColorPushButton_clicked();
 
-    void on_appearanceConsoleChooseFontPushButton_clicked();
-    void on_appearanceConsoleChooseColorPushButton_clicked();
-    void on_appearanceConsoleChooseBGColorPushButton_clicked();
+    void on_consoleFontPushButton_clicked();
+    void on_consoleColorPushButton_clicked();
+    void on_consoleBGColorPushButton_clicked();
 
     void on_textViewerFontPushButton_clicked();
     void on_textViewerFontColorPushButton_clicked();

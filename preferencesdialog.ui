@@ -43,7 +43,7 @@
         <number>-1</number>
        </property>
        <item row="0" column="1">
-        <widget class="QGroupBox" name="generalPositionAtStartupGroupBox">
+        <widget class="QGroupBox" name="positionAtStartupGroupBox">
          <property name="title">
           <string>Position at startup</string>
          </property>
@@ -52,7 +52,7 @@
            <number>8</number>
           </property>
           <item row="3" column="1">
-           <widget class="QLabel" name="generalPositionXLabel">
+           <widget class="QLabel" name="positionXLabel">
             <property name="text">
              <string>X:</string>
             </property>
@@ -62,10 +62,10 @@
            </widget>
           </item>
           <item row="3" column="4">
-           <widget class="QLineEdit" name="generalPositionYLineEdit"/>
+           <widget class="QLineEdit" name="positionYLineEdit"/>
           </item>
           <item row="3" column="0">
-           <spacer name="generalPositionHorizontalSpacer">
+           <spacer name="positionHorizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -81,7 +81,7 @@
            </spacer>
           </item>
           <item row="3" column="3">
-           <widget class="QLabel" name="generalPositionYLabel">
+           <widget class="QLabel" name="positionYLabel">
             <property name="text">
              <string>Y:</string>
             </property>
@@ -91,24 +91,24 @@
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="generalPositionXLineEdit"/>
+           <widget class="QLineEdit" name="positionXLineEdit"/>
           </item>
           <item row="0" column="0" colspan="5">
-           <widget class="QRadioButton" name="generalPositionDefaultRadioButton">
+           <widget class="QRadioButton" name="positionDefaultRadioButton">
             <property name="text">
              <string>Default</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0" colspan="5">
-           <widget class="QRadioButton" name="generalPositionLastTimeRadioButton">
+           <widget class="QRadioButton" name="positionLastTimeRadioButton">
             <property name="text">
              <string>Same as last time</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0" colspan="5">
-           <widget class="QRadioButton" name="generalPositionFixedRadioButton">
+           <widget class="QRadioButton" name="positionFixedRadioButton">
             <property name="text">
              <string>Fixed</string>
             </property>
@@ -118,7 +118,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QGroupBox" name="generalRightFolderAtStartupGroupBox">
+        <widget class="QGroupBox" name="rightFolderAtStartupGroupBox">
          <property name="title">
           <string>Folder at startup(Right)</string>
          </property>
@@ -127,14 +127,14 @@
            <number>8</number>
           </property>
           <item row="3" column="1">
-           <widget class="QToolButton" name="generalRightFolderSelectButton">
+           <widget class="QToolButton" name="rightFolderSelectButton">
             <property name="text">
              <string>...</string>
             </property>
            </widget>
           </item>
           <item row="3" column="0">
-           <spacer name="generalRightFolderHorizontalSpacer">
+           <spacer name="rightFolderHorizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -150,24 +150,24 @@
            </spacer>
           </item>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="generalRightFolderPathLineEdit"/>
+           <widget class="QLineEdit" name="rightFolderPathLineEdit"/>
           </item>
           <item row="2" column="0" colspan="3">
-           <widget class="QRadioButton" name="generalRightFolderFixedRadioButton">
+           <widget class="QRadioButton" name="rightFolderFixedRadioButton">
             <property name="text">
              <string>Fixed</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0" colspan="3">
-           <widget class="QRadioButton" name="generalRightFolderLastTimeRadioButton">
+           <widget class="QRadioButton" name="rightFolderLastTimeRadioButton">
             <property name="text">
              <string>Same as last time</string>
             </property>
            </widget>
           </item>
           <item row="0" column="0" colspan="3">
-           <widget class="QRadioButton" name="generalRightFolderDefaultRadioButton">
+           <widget class="QRadioButton" name="rightFolderDefaultRadioButton">
             <property name="text">
              <string>Default</string>
             </property>
@@ -177,7 +177,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QGroupBox" name="generalLeftFolderAtStartupGroupBox">
+        <widget class="QGroupBox" name="leftFolderAtStartupGroupBox">
          <property name="title">
           <string>Folder at startup(Left)</string>
          </property>
@@ -186,10 +186,10 @@
            <number>8</number>
           </property>
           <item row="3" column="2">
-           <widget class="QLineEdit" name="generalLeftFolderPathLineEdit"/>
+           <widget class="QLineEdit" name="leftFolderPathLineEdit"/>
           </item>
           <item row="3" column="0">
-           <spacer name="generalLeftFolderHorizontalSpacer">
+           <spacer name="leftFolderHorizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -205,28 +205,28 @@
            </spacer>
           </item>
           <item row="3" column="1">
-           <widget class="QToolButton" name="generalLeftFolderSelectButton">
+           <widget class="QToolButton" name="leftFolderSelectButton">
             <property name="text">
              <string>...</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0" colspan="3">
-           <widget class="QRadioButton" name="generalLeftFolderFixedRadioButton">
+           <widget class="QRadioButton" name="leftFolderFixedRadioButton">
             <property name="text">
              <string>Fixed</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0" colspan="3">
-           <widget class="QRadioButton" name="generalLeftFolderLastTimeRadioButton">
+           <widget class="QRadioButton" name="leftFolderLastTimeRadioButton">
             <property name="text">
              <string>Same as last time</string>
             </property>
            </widget>
           </item>
           <item row="0" column="0" colspan="3">
-           <widget class="QRadioButton" name="generalLeftFolderDefaultRadioButton">
+           <widget class="QRadioButton" name="leftFolderDefaultRadioButton">
             <property name="text">
              <string>Default</string>
             </property>
@@ -236,7 +236,7 @@
         </widget>
        </item>
        <item row="0" column="0">
-        <widget class="QGroupBox" name="generalSizeAtStartupGroupBox">
+        <widget class="QGroupBox" name="sizeAtStartupGroupBox">
          <property name="title">
           <string>Size at startup</string>
          </property>
@@ -245,7 +245,7 @@
            <number>8</number>
           </property>
           <item row="7" column="3">
-           <widget class="QLabel" name="generalSizeHeightLabel">
+           <widget class="QLabel" name="sizeHeightLabel">
             <property name="text">
              <string>Height:</string>
             </property>
@@ -255,7 +255,7 @@
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QLabel" name="generalSizeWidthLabel">
+           <widget class="QLabel" name="sizeWidthLabel">
             <property name="text">
              <string>Width:</string>
             </property>
@@ -265,10 +265,10 @@
            </widget>
           </item>
           <item row="7" column="4">
-           <widget class="QLineEdit" name="generalSizeHeightLineEdit"/>
+           <widget class="QLineEdit" name="sizeHeightLineEdit"/>
           </item>
           <item row="7" column="0">
-           <spacer name="generalSizeHorizontalSpacer">
+           <spacer name="sizeHorizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -284,24 +284,24 @@
            </spacer>
           </item>
           <item row="7" column="2">
-           <widget class="QLineEdit" name="generalSizeWidthLineEdit"/>
+           <widget class="QLineEdit" name="sizeWidthLineEdit"/>
           </item>
           <item row="0" column="0" colspan="5">
-           <widget class="QRadioButton" name="generalSizeDefaultRadioButton">
+           <widget class="QRadioButton" name="sizeDefaultRadioButton">
             <property name="text">
              <string>Default</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0" colspan="5">
-           <widget class="QRadioButton" name="generalSizeLastTimeRadioButton">
+           <widget class="QRadioButton" name="sizeLastTimeRadioButton">
             <property name="text">
              <string>Same as last time</string>
             </property>
            </widget>
           </item>
           <item row="3" column="0" colspan="5">
-           <widget class="QRadioButton" name="generalSizeFixedRadioButton">
+           <widget class="QRadioButton" name="sizeFixedRadioButton">
             <property name="text">
              <string>Fixed</string>
             </property>
@@ -311,7 +311,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QCheckBox" name="generalConfirmQuitCheckBox">
+        <widget class="QCheckBox" name="confirmQuitCheckBox">
          <property name="text">
           <string>Confirm quit</string>
          </property>
@@ -356,7 +356,7 @@
         <number>-1</number>
        </property>
        <item row="2" column="1">
-        <widget class="QGroupBox" name="appearanceConsoleGroupBox">
+        <widget class="QGroupBox" name="consoleGroupBox">
          <property name="title">
           <string>Console</string>
          </property>
@@ -365,28 +365,28 @@
            <number>8</number>
           </property>
           <item row="0" column="0">
-           <widget class="QPushButton" name="appearanceConsoleChooseFontPushButton">
+           <widget class="QPushButton" name="consoleFontPushButton">
             <property name="text">
              <string>Font</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="appearanceConsoleFontLabel">
+           <widget class="QLabel" name="consoleFontLabel">
             <property name="text">
              <string>TextLabel</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QPushButton" name="appearanceConsoleChooseColorPushButton">
+           <widget class="QPushButton" name="consoleColorPushButton">
             <property name="text">
              <string>Color</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="appearanceConsoleLineEdit">
+           <widget class="QLineEdit" name="consoleLineEdit">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -402,7 +402,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QPushButton" name="appearanceConsoleChooseBGColorPushButton">
+           <widget class="QPushButton" name="consoleBGColorPushButton">
             <property name="text">
              <string>BG Color</string>
             </property>
@@ -412,13 +412,13 @@
         </widget>
        </item>
        <item row="0" column="0" colspan="2">
-        <widget class="QGroupBox" name="appearanceFolderViewGroupBox">
+        <widget class="QGroupBox" name="folderViewGroupBox">
          <property name="title">
           <string>Folder View</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="QGroupBox" name="appearanceFolderViewFontGroupBox">
+           <widget class="QGroupBox" name="folderViewFontGroupBox">
             <property name="title">
              <string>Font</string>
             </property>
@@ -433,28 +433,28 @@
               <number>8</number>
              </property>
              <item row="5" column="1">
-              <widget class="QPushButton" name="appearanceFolderViewChooseHiddenColorPushButton">
+              <widget class="QPushButton" name="folderViewFontHiddenColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="3" column="4">
-              <widget class="QPushButton" name="appearanceFolderViewChooseFolderSelectedColorPushButton">
+              <widget class="QPushButton" name="folderViewFontFolderSelectedColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlyColorPushButton">
+              <widget class="QPushButton" name="folderViewFontReadOnlyColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="4" column="5">
-              <widget class="QLineEdit" name="appearanceFolderViewReadOnlySelectedLineEdit">
+              <widget class="QLineEdit" name="folderViewFontReadOnlySelectedLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -470,7 +470,7 @@
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QLabel" name="appearanceFolderViewFolderLabel">
+              <widget class="QLabel" name="folderViewFontFolderLabel">
                <property name="text">
                 <string>Folder :</string>
                </property>
@@ -480,14 +480,14 @@
               </widget>
              </item>
              <item row="6" column="4">
-              <widget class="QPushButton" name="appearanceFolderViewChooseSystemSelectedColorPushButton">
+              <widget class="QPushButton" name="folderViewFontSystemSelectedColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="6" column="0">
-              <widget class="QLabel" name="appearanceFolderViewSystemLabel">
+              <widget class="QLabel" name="folderViewFontSystemLabel">
                <property name="text">
                 <string>System :</string>
                </property>
@@ -497,21 +497,21 @@
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QPushButton" name="appearanceFolderViewChooseSystemColorPushButton">
+              <widget class="QPushButton" name="folderViewFontSystemColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="0" column="1" colspan="2">
-              <widget class="QLabel" name="appearanceFolderViewFontLabel">
+              <widget class="QLabel" name="folderViewFontFontLabel">
                <property name="text">
                 <string>TextLabel</string>
                </property>
               </widget>
              </item>
              <item row="3" column="2">
-              <widget class="QLineEdit" name="appearanceFolderViewFolderLineEdit">
+              <widget class="QLineEdit" name="folderViewFontFolderLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -527,7 +527,7 @@
               </widget>
              </item>
              <item row="4" column="0">
-              <widget class="QLabel" name="appearanceFolderViewReadOnlyLabel">
+              <widget class="QLabel" name="folderViewFontReadOnlyLabel">
                <property name="text">
                 <string>Read only :</string>
                </property>
@@ -537,35 +537,35 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QPushButton" name="appearanceFolderViewChooseFolderColorPushButton">
+              <widget class="QPushButton" name="folderViewFontFolderColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="5" column="4">
-              <widget class="QPushButton" name="appearanceFolderViewChooseHiddenSelectedColorPushButton">
+              <widget class="QPushButton" name="folderViewFontHiddenSelectedColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="4" column="4">
-              <widget class="QPushButton" name="appearanceFolderViewChooseReadOnlySelectedColorPushButton">
+              <widget class="QPushButton" name="folderViewFontReadOnlySelectedColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QPushButton" name="appearanceFolderViewChooseNormalColorPushButton">
+              <widget class="QPushButton" name="folderViewFontNormalColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="5" column="0">
-              <widget class="QLabel" name="appearanceFolderViewHiddenLabel">
+              <widget class="QLabel" name="folderViewFontHiddenLabel">
                <property name="text">
                 <string>Hidden :</string>
                </property>
@@ -575,7 +575,7 @@
               </widget>
              </item>
              <item row="3" column="5">
-              <widget class="QLineEdit" name="appearanceFolderViewFolderSelectedLineEdit">
+              <widget class="QLineEdit" name="folderViewFontFolderSelectedLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -591,7 +591,7 @@
               </widget>
              </item>
              <item row="6" column="5">
-              <widget class="QLineEdit" name="appearanceFolderViewSystemSelectedLineEdit">
+              <widget class="QLineEdit" name="folderViewFontSystemSelectedLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -607,7 +607,7 @@
               </widget>
              </item>
              <item row="5" column="2">
-              <widget class="QLineEdit" name="appearanceFolderViewHiddenLineEdit">
+              <widget class="QLineEdit" name="folderViewFontHiddenLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -623,14 +623,14 @@
               </widget>
              </item>
              <item row="2" column="4">
-              <widget class="QPushButton" name="appearanceFolderViewChooseNormalSelectedColorPushButton">
+              <widget class="QPushButton" name="folderViewFontNormalSelectedColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="appearanceFolderViewNormalLabel">
+              <widget class="QLabel" name="folderViewFontNormalLabel">
                <property name="text">
                 <string>Normal :</string>
                </property>
@@ -640,14 +640,14 @@
               </widget>
              </item>
              <item row="7" column="4">
-              <widget class="QPushButton" name="appearanceFolderViewChooseSelectedBGColorPushButton">
+              <widget class="QPushButton" name="folderViewFontSelectedBGColorPushButton">
                <property name="text">
                 <string>BG Color</string>
                </property>
               </widget>
              </item>
              <item row="2" column="5">
-              <widget class="QLineEdit" name="appearanceFolderViewNormalSelectedLineEdit">
+              <widget class="QLineEdit" name="folderViewFontNormalSelectedLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -663,7 +663,7 @@
               </widget>
              </item>
              <item row="4" column="2">
-              <widget class="QLineEdit" name="appearanceFolderViewReadOnlyLineEdit">
+              <widget class="QLineEdit" name="folderViewFontReadOnlyLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -679,7 +679,7 @@
               </widget>
              </item>
              <item row="5" column="5">
-              <widget class="QLineEdit" name="appearanceFolderViewHiddenSelectedLineEdit">
+              <widget class="QLineEdit" name="folderViewFontHiddenSelectedLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -695,7 +695,7 @@
               </widget>
              </item>
              <item row="6" column="2">
-              <widget class="QLineEdit" name="appearanceFolderViewSystemLineEdit">
+              <widget class="QLineEdit" name="folderViewFontSystemLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -711,7 +711,7 @@
               </widget>
              </item>
              <item row="2" column="2">
-              <widget class="QLineEdit" name="appearanceFolderViewNormalLineEdit">
+              <widget class="QLineEdit" name="folderViewFontNormalLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -727,7 +727,7 @@
               </widget>
              </item>
              <item row="1" column="1" colspan="2">
-              <widget class="QLabel" name="appearanceFolderViewFontColorLabel">
+              <widget class="QLabel" name="folderViewFontFontColorLabel">
                <property name="font">
                 <font>
                  <pointsize>11</pointsize>
@@ -742,14 +742,14 @@
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QPushButton" name="appearanceFolderViewChooseFontPushButton">
+              <widget class="QPushButton" name="folderViewFontFontPushButton">
                <property name="text">
                 <string>Font</string>
                </property>
               </widget>
              </item>
              <item row="1" column="4" colspan="2">
-              <widget class="QLabel" name="appearanceFolderViewSelectedFontColorLabel">
+              <widget class="QLabel" name="folderViewFontSelectedFontColorLabel">
                <property name="font">
                 <font>
                  <pointsize>11</pointsize>
@@ -764,14 +764,14 @@
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="QPushButton" name="appearanceFolderViewChooseBGColorPushButton">
+              <widget class="QPushButton" name="folderViewFontBGColorPushButton">
                <property name="text">
                 <string>BG Color</string>
                </property>
               </widget>
              </item>
              <item row="1" column="3" rowspan="7">
-              <widget class="Line" name="appearanceFolderViewFontLine">
+              <widget class="Line" name="folderViewFontLine">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
                </property>
@@ -781,7 +781,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="appearanceFolderViewCursorGroupBox">
+           <widget class="QGroupBox" name="folderViewCursorGroupBox">
             <property name="title">
              <string>Cursor</string>
             </property>
@@ -790,21 +790,21 @@
               <number>8</number>
              </property>
              <item row="0" column="5">
-              <widget class="QPushButton" name="appearanceFolderViewChooseCursorInactiveColorPushButton">
+              <widget class="QPushButton" name="folderViewCursorInactiveColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QPushButton" name="appearanceFolderViewChooseCursorColorPushButton">
+              <widget class="QPushButton" name="folderViewCursorColorPushButton">
                <property name="text">
                 <string>Color</string>
                </property>
               </widget>
              </item>
              <item row="0" column="3">
-              <widget class="QLineEdit" name="appearanceFolderViewCursorLineEdit">
+              <widget class="QLineEdit" name="folderViewCursorLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -820,7 +820,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QSpinBox" name="appearanceFolderViewCursorWidthSpinBox">
+              <widget class="QSpinBox" name="folderViewCursorWidthSpinBox">
                <property name="suffix">
                 <string> px</string>
                </property>
@@ -833,7 +833,7 @@
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QLabel" name="appearanceFolderViewCursorWidthLabel">
+              <widget class="QLabel" name="folderViewCursorWidthLabel">
                <property name="text">
                 <string>Width :</string>
                </property>
@@ -843,7 +843,7 @@
               </widget>
              </item>
              <item row="0" column="4">
-              <widget class="QLabel" name="appearanceFolderViewCursorColorInactiveLabel">
+              <widget class="QLabel" name="folderViewCursorColorInactiveLabel">
                <property name="text">
                 <string>(Inactive)</string>
                </property>
@@ -853,7 +853,7 @@
               </widget>
              </item>
              <item row="0" column="6">
-              <widget class="QLineEdit" name="appearanceFolderViewCursorInactiveLineEdit">
+              <widget class="QLineEdit" name="folderViewCursorInactiveLineEdit">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -888,7 +888,7 @@
         </spacer>
        </item>
        <item row="2" column="0">
-        <widget class="QGroupBox" name="appearanceFolderPathGroupBox">
+        <widget class="QGroupBox" name="folderPathGroupBox">
          <property name="title">
           <string>Folder Path</string>
          </property>
@@ -897,28 +897,28 @@
            <number>8</number>
           </property>
           <item row="0" column="0">
-           <widget class="QPushButton" name="appearanceFolderPathChooseFontPushButton">
+           <widget class="QPushButton" name="folderPathFontPushButton">
             <property name="text">
              <string>Font</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLabel" name="appearanceFolderPathFontLabel">
+           <widget class="QLabel" name="folderPathFontLabel">
             <property name="text">
              <string>TextLabel</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QPushButton" name="appearanceFolderPathChooseColorPushButton">
+           <widget class="QPushButton" name="folderPathColorPushButton">
             <property name="text">
              <string>Color</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="appearanceFolderPathLineEdit">
+           <widget class="QLineEdit" name="folderPathLineEdit">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -934,7 +934,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QPushButton" name="appearanceFolderPathChooseBGColorPushButton">
+           <widget class="QPushButton" name="folderPathBGColorPushButton">
             <property name="text">
              <string>BG Color</string>
             </property>
@@ -969,7 +969,7 @@
         <number>-1</number>
        </property>
        <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="viewerLeftGroupBox">
          <property name="title">
           <string/>
          </property>
@@ -1180,7 +1180,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="viewerRightGroupBox">
          <property name="title">
           <string/>
          </property>
@@ -1435,49 +1435,49 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>generalSizeDefaultRadioButton</tabstop>
-  <tabstop>generalSizeLastTimeRadioButton</tabstop>
-  <tabstop>generalSizeFixedRadioButton</tabstop>
-  <tabstop>generalSizeWidthLineEdit</tabstop>
-  <tabstop>generalSizeHeightLineEdit</tabstop>
-  <tabstop>generalPositionDefaultRadioButton</tabstop>
-  <tabstop>generalPositionLastTimeRadioButton</tabstop>
-  <tabstop>generalPositionFixedRadioButton</tabstop>
-  <tabstop>generalPositionXLineEdit</tabstop>
-  <tabstop>generalPositionYLineEdit</tabstop>
-  <tabstop>generalLeftFolderDefaultRadioButton</tabstop>
-  <tabstop>generalLeftFolderLastTimeRadioButton</tabstop>
-  <tabstop>generalLeftFolderFixedRadioButton</tabstop>
-  <tabstop>generalLeftFolderSelectButton</tabstop>
-  <tabstop>generalLeftFolderPathLineEdit</tabstop>
-  <tabstop>generalRightFolderDefaultRadioButton</tabstop>
-  <tabstop>generalRightFolderLastTimeRadioButton</tabstop>
-  <tabstop>generalRightFolderFixedRadioButton</tabstop>
-  <tabstop>generalRightFolderSelectButton</tabstop>
-  <tabstop>generalRightFolderPathLineEdit</tabstop>
-  <tabstop>generalConfirmQuitCheckBox</tabstop>
-  <tabstop>appearanceFolderViewChooseFontPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseNormalColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseNormalSelectedColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseFolderColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseFolderSelectedColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseReadOnlyColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseReadOnlySelectedColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseHiddenColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseHiddenSelectedColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseSystemColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseSystemSelectedColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseBGColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseSelectedBGColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewCursorWidthSpinBox</tabstop>
-  <tabstop>appearanceFolderViewChooseCursorColorPushButton</tabstop>
-  <tabstop>appearanceFolderViewChooseCursorInactiveColorPushButton</tabstop>
-  <tabstop>appearanceFolderPathChooseFontPushButton</tabstop>
-  <tabstop>appearanceFolderPathChooseColorPushButton</tabstop>
-  <tabstop>appearanceFolderPathChooseBGColorPushButton</tabstop>
-  <tabstop>appearanceConsoleChooseFontPushButton</tabstop>
-  <tabstop>appearanceConsoleChooseColorPushButton</tabstop>
-  <tabstop>appearanceConsoleChooseBGColorPushButton</tabstop>
+  <tabstop>sizeDefaultRadioButton</tabstop>
+  <tabstop>sizeLastTimeRadioButton</tabstop>
+  <tabstop>sizeFixedRadioButton</tabstop>
+  <tabstop>sizeWidthLineEdit</tabstop>
+  <tabstop>sizeHeightLineEdit</tabstop>
+  <tabstop>positionDefaultRadioButton</tabstop>
+  <tabstop>positionLastTimeRadioButton</tabstop>
+  <tabstop>positionFixedRadioButton</tabstop>
+  <tabstop>positionXLineEdit</tabstop>
+  <tabstop>positionYLineEdit</tabstop>
+  <tabstop>leftFolderDefaultRadioButton</tabstop>
+  <tabstop>leftFolderLastTimeRadioButton</tabstop>
+  <tabstop>leftFolderFixedRadioButton</tabstop>
+  <tabstop>leftFolderSelectButton</tabstop>
+  <tabstop>leftFolderPathLineEdit</tabstop>
+  <tabstop>rightFolderDefaultRadioButton</tabstop>
+  <tabstop>rightFolderLastTimeRadioButton</tabstop>
+  <tabstop>rightFolderFixedRadioButton</tabstop>
+  <tabstop>rightFolderSelectButton</tabstop>
+  <tabstop>rightFolderPathLineEdit</tabstop>
+  <tabstop>confirmQuitCheckBox</tabstop>
+  <tabstop>folderViewFontFontPushButton</tabstop>
+  <tabstop>folderViewFontNormalColorPushButton</tabstop>
+  <tabstop>folderViewFontNormalSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontFolderColorPushButton</tabstop>
+  <tabstop>folderViewFontFolderSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontReadOnlyColorPushButton</tabstop>
+  <tabstop>folderViewFontReadOnlySelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontHiddenColorPushButton</tabstop>
+  <tabstop>folderViewFontHiddenSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontSystemColorPushButton</tabstop>
+  <tabstop>folderViewFontSystemSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontBGColorPushButton</tabstop>
+  <tabstop>folderViewFontSelectedBGColorPushButton</tabstop>
+  <tabstop>folderViewCursorWidthSpinBox</tabstop>
+  <tabstop>folderViewCursorColorPushButton</tabstop>
+  <tabstop>folderViewCursorInactiveColorPushButton</tabstop>
+  <tabstop>folderPathFontPushButton</tabstop>
+  <tabstop>folderPathColorPushButton</tabstop>
+  <tabstop>folderPathBGColorPushButton</tabstop>
+  <tabstop>consoleFontPushButton</tabstop>
+  <tabstop>consoleColorPushButton</tabstop>
+  <tabstop>consoleBGColorPushButton</tabstop>
   <tabstop>textViewerFontPushButton</tabstop>
   <tabstop>textViewerFontColorPushButton</tabstop>
   <tabstop>textViewerBGColorPushButton</tabstop>

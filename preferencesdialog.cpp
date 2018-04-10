@@ -23,127 +23,127 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     SizeAtStartup sizeAtStartupType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeAtStartupType == SizeAtStartup::Fixed)
     {
-        ui->generalSizeFixedRadioButton->setChecked(true);
-        ui->generalSizeWidthLabel->setEnabled(true);
-        ui->generalSizeWidthLineEdit->setEnabled(true);
-        ui->generalSizeHeightLabel->setEnabled(true);
-        ui->generalSizeHeightLineEdit->setEnabled(true);
+        ui->sizeFixedRadioButton->setChecked(true);
+        ui->sizeWidthLabel->setEnabled(true);
+        ui->sizeWidthLineEdit->setEnabled(true);
+        ui->sizeHeightLabel->setEnabled(true);
+        ui->sizeHeightLineEdit->setEnabled(true);
 
         QSize size = Settings::getInstance()->getSizeAtStartup();
 
-        ui->generalSizeWidthLineEdit->setText(QString::number(size.width()));
-        ui->generalSizeHeightLineEdit->setText(QString::number(size.height()));
+        ui->sizeWidthLineEdit->setText(QString::number(size.width()));
+        ui->sizeHeightLineEdit->setText(QString::number(size.height()));
     }
     else
     {
         if(sizeAtStartupType == SizeAtStartup::LastTime)
         {
-            ui->generalSizeLastTimeRadioButton->setChecked(true);
+            ui->sizeLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->generalSizeDefaultRadioButton->setChecked(true);
+            ui->sizeDefaultRadioButton->setChecked(true);
         }
 
-        ui->generalSizeWidthLabel->setEnabled(false);
-        ui->generalSizeWidthLineEdit->setEnabled(false);
-        ui->generalSizeHeightLabel->setEnabled(false);
-        ui->generalSizeHeightLineEdit->setEnabled(false);
+        ui->sizeWidthLabel->setEnabled(false);
+        ui->sizeWidthLineEdit->setEnabled(false);
+        ui->sizeHeightLabel->setEnabled(false);
+        ui->sizeHeightLineEdit->setEnabled(false);
 
-        ui->generalSizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
-        ui->generalSizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
+        ui->sizeWidthLineEdit->setText(QString::number(mainWindowSize.width()));
+        ui->sizeHeightLineEdit->setText(QString::number(mainWindowSize.height()));
     }
 
     PositionAtStartup positionAtStartupType = Settings::getInstance()->getPositionAtStartupType();
     if(positionAtStartupType == PositionAtStartup::Fixed)
     {
-        ui->generalPositionFixedRadioButton->setChecked(true);
-        ui->generalPositionXLabel->setEnabled(true);
-        ui->generalPositionXLineEdit->setEnabled(true);
-        ui->generalPositionYLabel->setEnabled(true);
-        ui->generalPositionYLineEdit->setEnabled(true);
+        ui->positionFixedRadioButton->setChecked(true);
+        ui->positionXLabel->setEnabled(true);
+        ui->positionXLineEdit->setEnabled(true);
+        ui->positionYLabel->setEnabled(true);
+        ui->positionYLineEdit->setEnabled(true);
 
         QPoint pos = Settings::getInstance()->getPositionAtStartup();
 
-        ui->generalPositionXLineEdit->setText(QString::number(pos.x()));
-        ui->generalPositionYLineEdit->setText(QString::number(pos.y()));
+        ui->positionXLineEdit->setText(QString::number(pos.x()));
+        ui->positionYLineEdit->setText(QString::number(pos.y()));
     }
     else
     {
         if(positionAtStartupType == PositionAtStartup::LastTime)
         {
-            ui->generalPositionLastTimeRadioButton->setChecked(true);
+            ui->positionLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->generalPositionDefaultRadioButton->setChecked(true);
+            ui->positionDefaultRadioButton->setChecked(true);
         }
 
-        ui->generalPositionXLabel->setEnabled(false);
-        ui->generalPositionXLineEdit->setEnabled(false);
-        ui->generalPositionYLabel->setEnabled(false);
-        ui->generalPositionYLineEdit->setEnabled(false);
+        ui->positionXLabel->setEnabled(false);
+        ui->positionXLineEdit->setEnabled(false);
+        ui->positionYLabel->setEnabled(false);
+        ui->positionYLineEdit->setEnabled(false);
 
-        ui->generalPositionXLineEdit->setText(QString::number(mainWindowPos.x()));
-        ui->generalPositionYLineEdit->setText(QString::number(mainWindowPos.y()));
+        ui->positionXLineEdit->setText(QString::number(mainWindowPos.x()));
+        ui->positionYLineEdit->setText(QString::number(mainWindowPos.y()));
     }
 
     FolderAtStartup leftFolderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
     if(leftFolderAtStartup == FolderAtStartup::Fixed)
     {
-        ui->generalLeftFolderFixedRadioButton->setChecked(true);
-        ui->generalLeftFolderSelectButton->setEnabled(true);
-        ui->generalLeftFolderPathLineEdit->setEnabled(true);
+        ui->leftFolderFixedRadioButton->setChecked(true);
+        ui->leftFolderSelectButton->setEnabled(true);
+        ui->leftFolderPathLineEdit->setEnabled(true);
 
-        ui->generalLeftFolderPathLineEdit->setText(Settings::getInstance()->getLeftFolderPath());
+        ui->leftFolderPathLineEdit->setText(Settings::getInstance()->getLeftFolderPath());
     }
     else
     {
         if(leftFolderAtStartup == FolderAtStartup::LastTime)
         {
-            ui->generalLeftFolderLastTimeRadioButton->setChecked(true);
+            ui->leftFolderLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->generalLeftFolderDefaultRadioButton->setChecked(true);
+            ui->leftFolderDefaultRadioButton->setChecked(true);
         }
-        ui->generalLeftFolderSelectButton->setEnabled(false);
-        ui->generalLeftFolderPathLineEdit->setEnabled(false);
+        ui->leftFolderSelectButton->setEnabled(false);
+        ui->leftFolderPathLineEdit->setEnabled(false);
 
-        ui->generalLeftFolderPathLineEdit->setText(leftDirPath);
+        ui->leftFolderPathLineEdit->setText(leftDirPath);
     }
 
     FolderAtStartup rightFolderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
     if(rightFolderAtStartup == FolderAtStartup::Fixed)
     {
-        ui->generalRightFolderFixedRadioButton->setChecked(true);
-        ui->generalRightFolderSelectButton->setEnabled(true);
-        ui->generalRightFolderPathLineEdit->setEnabled(true);
+        ui->rightFolderFixedRadioButton->setChecked(true);
+        ui->rightFolderSelectButton->setEnabled(true);
+        ui->rightFolderPathLineEdit->setEnabled(true);
 
-        ui->generalRightFolderPathLineEdit->setText(Settings::getInstance()->getRightFolderPath());
+        ui->rightFolderPathLineEdit->setText(Settings::getInstance()->getRightFolderPath());
     }
     else
     {
         if(rightFolderAtStartup == FolderAtStartup::LastTime)
         {
-            ui->generalRightFolderLastTimeRadioButton->setChecked(true);
+            ui->rightFolderLastTimeRadioButton->setChecked(true);
         }
         else
         {
-            ui->generalRightFolderDefaultRadioButton->setChecked(true);
+            ui->rightFolderDefaultRadioButton->setChecked(true);
         }
-        ui->generalRightFolderSelectButton->setEnabled(false);
-        ui->generalRightFolderPathLineEdit->setEnabled(false);
+        ui->rightFolderSelectButton->setEnabled(false);
+        ui->rightFolderPathLineEdit->setEnabled(false);
 
-        ui->generalRightFolderPathLineEdit->setText(rightDirPath);
+        ui->rightFolderPathLineEdit->setText(rightDirPath);
     }
 
-    ui->generalConfirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
+    ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
     m_fontSettings = Settings::getInstance()->getFontSettings();
     m_colorSettings = Settings::getInstance()->getColorSettings();
 
-    ui->appearanceFolderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
+    ui->folderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
 
     setAppearanceFontAndColorOption();
 
@@ -166,117 +166,117 @@ PreferencesDialog::~PreferencesDialog()
     delete ui;
 }
 
-void PreferencesDialog::on_generalSizeDefaultRadioButton_clicked()
+void PreferencesDialog::on_sizeDefaultRadioButton_clicked()
 {
-    ui->generalSizeWidthLabel->setEnabled(false);
-    ui->generalSizeWidthLineEdit->setEnabled(false);
-    ui->generalSizeHeightLabel->setEnabled(false);
-    ui->generalSizeHeightLineEdit->setEnabled(false);
+    ui->sizeWidthLabel->setEnabled(false);
+    ui->sizeWidthLineEdit->setEnabled(false);
+    ui->sizeHeightLabel->setEnabled(false);
+    ui->sizeHeightLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalSizeLastTimeRadioButton_clicked()
+void PreferencesDialog::on_sizeLastTimeRadioButton_clicked()
 {
-    ui->generalSizeWidthLabel->setEnabled(false);
-    ui->generalSizeWidthLineEdit->setEnabled(false);
-    ui->generalSizeHeightLabel->setEnabled(false);
-    ui->generalSizeHeightLineEdit->setEnabled(false);
+    ui->sizeWidthLabel->setEnabled(false);
+    ui->sizeWidthLineEdit->setEnabled(false);
+    ui->sizeHeightLabel->setEnabled(false);
+    ui->sizeHeightLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalSizeFixedRadioButton_clicked()
+void PreferencesDialog::on_sizeFixedRadioButton_clicked()
 {
-    ui->generalSizeWidthLabel->setEnabled(true);
-    ui->generalSizeWidthLineEdit->setEnabled(true);
-    ui->generalSizeHeightLabel->setEnabled(true);
-    ui->generalSizeHeightLineEdit->setEnabled(true);
+    ui->sizeWidthLabel->setEnabled(true);
+    ui->sizeWidthLineEdit->setEnabled(true);
+    ui->sizeHeightLabel->setEnabled(true);
+    ui->sizeHeightLineEdit->setEnabled(true);
 }
 
-void PreferencesDialog::on_generalPositionDefaultRadioButton_clicked()
+void PreferencesDialog::on_positionDefaultRadioButton_clicked()
 {
-    ui->generalPositionXLabel->setEnabled(false);
-    ui->generalPositionXLineEdit->setEnabled(false);
-    ui->generalPositionYLabel->setEnabled(false);
-    ui->generalPositionYLineEdit->setEnabled(false);
+    ui->positionXLabel->setEnabled(false);
+    ui->positionXLineEdit->setEnabled(false);
+    ui->positionYLabel->setEnabled(false);
+    ui->positionYLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalPositionLastTimeRadioButton_clicked()
+void PreferencesDialog::on_positionLastTimeRadioButton_clicked()
 {
-    ui->generalPositionXLabel->setEnabled(false);
-    ui->generalPositionXLineEdit->setEnabled(false);
-    ui->generalPositionYLabel->setEnabled(false);
-    ui->generalPositionYLineEdit->setEnabled(false);
+    ui->positionXLabel->setEnabled(false);
+    ui->positionXLineEdit->setEnabled(false);
+    ui->positionYLabel->setEnabled(false);
+    ui->positionYLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalPositionFixedRadioButton_clicked()
+void PreferencesDialog::on_positionFixedRadioButton_clicked()
 {
-    ui->generalPositionXLabel->setEnabled(true);
-    ui->generalPositionXLineEdit->setEnabled(true);
-    ui->generalPositionYLabel->setEnabled(true);
-    ui->generalPositionYLineEdit->setEnabled(true);
+    ui->positionXLabel->setEnabled(true);
+    ui->positionXLineEdit->setEnabled(true);
+    ui->positionYLabel->setEnabled(true);
+    ui->positionYLineEdit->setEnabled(true);
 }
 
-void PreferencesDialog::on_generalLeftFolderDefaultRadioButton_clicked()
+void PreferencesDialog::on_leftFolderDefaultRadioButton_clicked()
 {
-    ui->generalLeftFolderSelectButton->setEnabled(false);
-    ui->generalLeftFolderPathLineEdit->setEnabled(false);
+    ui->leftFolderSelectButton->setEnabled(false);
+    ui->leftFolderPathLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalLeftFolderLastTimeRadioButton_clicked()
+void PreferencesDialog::on_leftFolderLastTimeRadioButton_clicked()
 {
-    ui->generalLeftFolderSelectButton->setEnabled(false);
-    ui->generalLeftFolderPathLineEdit->setEnabled(false);
+    ui->leftFolderSelectButton->setEnabled(false);
+    ui->leftFolderPathLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalLeftFolderFixedRadioButton_clicked()
+void PreferencesDialog::on_leftFolderFixedRadioButton_clicked()
 {
-    ui->generalLeftFolderSelectButton->setEnabled(true);
-    ui->generalLeftFolderPathLineEdit->setEnabled(true);
+    ui->leftFolderSelectButton->setEnabled(true);
+    ui->leftFolderPathLineEdit->setEnabled(true);
 }
 
-void PreferencesDialog::on_generalRightFolderDefaultRadioButton_clicked()
+void PreferencesDialog::on_rightFolderDefaultRadioButton_clicked()
 {
-    ui->generalRightFolderSelectButton->setEnabled(false);
-    ui->generalRightFolderPathLineEdit->setEnabled(false);
+    ui->rightFolderSelectButton->setEnabled(false);
+    ui->rightFolderPathLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalRightFolderLastTimeRadioButton_clicked()
+void PreferencesDialog::on_rightFolderLastTimeRadioButton_clicked()
 {
-    ui->generalRightFolderSelectButton->setEnabled(false);
-    ui->generalRightFolderPathLineEdit->setEnabled(false);
+    ui->rightFolderSelectButton->setEnabled(false);
+    ui->rightFolderPathLineEdit->setEnabled(false);
 }
 
-void PreferencesDialog::on_generalRightFolderFixedRadioButton_clicked()
+void PreferencesDialog::on_rightFolderFixedRadioButton_clicked()
 {
-    ui->generalRightFolderSelectButton->setEnabled(true);
-    ui->generalRightFolderPathLineEdit->setEnabled(true);
+    ui->rightFolderSelectButton->setEnabled(true);
+    ui->rightFolderPathLineEdit->setEnabled(true);
 }
 
-void PreferencesDialog::on_generalLeftFolderSelectButton_clicked()
+void PreferencesDialog::on_leftFolderSelectButton_clicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
-                                                        ui->generalLeftFolderPathLineEdit->text(),
+                                                        ui->leftFolderPathLineEdit->text(),
                                                         QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
     if(!dirPath.isEmpty())
     {
-        ui->generalLeftFolderPathLineEdit->setText(dirPath);
+        ui->leftFolderPathLineEdit->setText(dirPath);
     }
 }
 
-void PreferencesDialog::on_generalRightFolderSelectButton_clicked()
+void PreferencesDialog::on_rightFolderSelectButton_clicked()
 {
     QString dirPath = QFileDialog::getExistingDirectory(this,
                                                         tr("Select folder."),
-                                                        ui->generalRightFolderPathLineEdit->text(),
+                                                        ui->rightFolderPathLineEdit->text(),
                                                         QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
     if(!dirPath.isEmpty())
     {
-        ui->generalRightFolderPathLineEdit->setText(dirPath);
+        ui->rightFolderPathLineEdit->setText(dirPath);
     }
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseFontPushButton_clicked()
+void PreferencesDialog::on_folderViewFontFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
@@ -288,57 +288,57 @@ void PreferencesDialog::on_appearanceFolderViewChooseFontPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseNormalColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontNormalColorPushButton_clicked()
 {
-    chooseColor("folderView_normal", "folderView_background", ui->appearanceFolderViewNormalLineEdit);
+    chooseColor("folderView_normal", "folderView_background", ui->folderViewFontNormalLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseNormalSelectedColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontNormalSelectedColorPushButton_clicked()
 {
-    chooseColor("folderView_normal_selected", "folderView_selected_background", ui->appearanceFolderViewNormalSelectedLineEdit);
+    chooseColor("folderView_normal_selected", "folderView_selected_background", ui->folderViewFontNormalSelectedLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseFolderColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontFolderColorPushButton_clicked()
 {
-    chooseColor("folderView_folder", "folderView_background", ui->appearanceFolderViewFolderLineEdit);
+    chooseColor("folderView_folder", "folderView_background", ui->folderViewFontFolderLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseFolderSelectedColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontFolderSelectedColorPushButton_clicked()
 {
-    chooseColor("folderView_folder_selected", "folderView_selected_background", ui->appearanceFolderViewFolderSelectedLineEdit);
+    chooseColor("folderView_folder_selected", "folderView_selected_background", ui->folderViewFontFolderSelectedLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseReadOnlyColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontReadOnlyColorPushButton_clicked()
 {
-    chooseColor("folderView_readOnly", "folderView_background", ui->appearanceFolderViewReadOnlyLineEdit);
+    chooseColor("folderView_readOnly", "folderView_background", ui->folderViewFontReadOnlyLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseReadOnlySelectedColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontReadOnlySelectedColorPushButton_clicked()
 {
-    chooseColor("folderView_readOnly_selected", "folderView_selected_background", ui->appearanceFolderViewReadOnlySelectedLineEdit);
+    chooseColor("folderView_readOnly_selected", "folderView_selected_background", ui->folderViewFontReadOnlySelectedLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseHiddenColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontHiddenColorPushButton_clicked()
 {
-    chooseColor("folderView_hidden", "folderView_background", ui->appearanceFolderViewHiddenLineEdit);
+    chooseColor("folderView_hidden", "folderView_background", ui->folderViewFontHiddenLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseHiddenSelectedColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontHiddenSelectedColorPushButton_clicked()
 {
-    chooseColor("folderView_hidden_selected", "folderView_selected_background", ui->appearanceFolderViewHiddenSelectedLineEdit);
+    chooseColor("folderView_hidden_selected", "folderView_selected_background", ui->folderViewFontHiddenSelectedLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseSystemColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontSystemColorPushButton_clicked()
 {
-    chooseColor("folderView_system", "folderView_background", ui->appearanceFolderViewSystemLineEdit);
+    chooseColor("folderView_system", "folderView_background", ui->folderViewFontSystemLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseSystemSelectedColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontSystemSelectedColorPushButton_clicked()
 {
-    chooseColor("folderView_system_selected", "folderView_selected_background", ui->appearanceFolderViewSystemSelectedLineEdit);
+    chooseColor("folderView_system_selected", "folderView_selected_background", ui->folderViewFontSystemSelectedLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseBGColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -346,15 +346,15 @@ void PreferencesDialog::on_appearanceFolderViewChooseBGColorPushButton_clicked()
     {
         m_colorSettings["folderView_background"] = newColor;
 
-        setFontColorSample("folderView_normal",   "folderView_background", ui->appearanceFolderViewNormalLineEdit);
-        setFontColorSample("folderView_folder",   "folderView_background", ui->appearanceFolderViewFolderLineEdit);
-        setFontColorSample("folderView_readOnly", "folderView_background", ui->appearanceFolderViewReadOnlyLineEdit);
-        setFontColorSample("folderView_hidden",   "folderView_background", ui->appearanceFolderViewHiddenLineEdit);
-        setFontColorSample("folderView_system",   "folderView_background", ui->appearanceFolderViewSystemLineEdit);
+        setFontColorSample("folderView_normal",   "folderView_background", ui->folderViewFontNormalLineEdit);
+        setFontColorSample("folderView_folder",   "folderView_background", ui->folderViewFontFolderLineEdit);
+        setFontColorSample("folderView_readOnly", "folderView_background", ui->folderViewFontReadOnlyLineEdit);
+        setFontColorSample("folderView_hidden",   "folderView_background", ui->folderViewFontHiddenLineEdit);
+        setFontColorSample("folderView_system",   "folderView_background", ui->folderViewFontSystemLineEdit);
     }
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseSelectedBGColorPushButton_clicked()
+void PreferencesDialog::on_folderViewFontSelectedBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -362,15 +362,15 @@ void PreferencesDialog::on_appearanceFolderViewChooseSelectedBGColorPushButton_c
     {
         m_colorSettings["folderView_selected_background"] = newColor;
 
-        setFontColorSample("folderView_normal_selected",   "folderView_selected_background", ui->appearanceFolderViewNormalSelectedLineEdit);
-        setFontColorSample("folderView_folder_selected",   "folderView_selected_background", ui->appearanceFolderViewFolderSelectedLineEdit);
-        setFontColorSample("folderView_readOnly_selected", "folderView_selected_background", ui->appearanceFolderViewReadOnlySelectedLineEdit);
-        setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->appearanceFolderViewHiddenSelectedLineEdit);
-        setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->appearanceFolderViewSystemSelectedLineEdit);
+        setFontColorSample("folderView_normal_selected",   "folderView_selected_background", ui->folderViewFontNormalSelectedLineEdit);
+        setFontColorSample("folderView_folder_selected",   "folderView_selected_background", ui->folderViewFontFolderSelectedLineEdit);
+        setFontColorSample("folderView_readOnly_selected", "folderView_selected_background", ui->folderViewFontReadOnlySelectedLineEdit);
+        setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->folderViewFontHiddenSelectedLineEdit);
+        setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->folderViewFontSystemSelectedLineEdit);
     }
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseCursorColorPushButton_clicked()
+void PreferencesDialog::on_folderViewCursorColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -378,11 +378,11 @@ void PreferencesDialog::on_appearanceFolderViewChooseCursorColorPushButton_click
     {
         m_colorSettings["folderView_cursor"] = newColor;
 
-        setFontColorSample("folderView_cursor", "folderView_cursor", ui->appearanceFolderViewCursorLineEdit);
+        setFontColorSample("folderView_cursor", "folderView_cursor", ui->folderViewCursorLineEdit);
     }
 }
 
-void PreferencesDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButton_clicked()
+void PreferencesDialog::on_folderViewCursorInactiveColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -390,11 +390,11 @@ void PreferencesDialog::on_appearanceFolderViewChooseCursorInactiveColorPushButt
     {
         m_colorSettings["folderView_cursor_inactive"] = newColor;
 
-        setFontColorSample("folderView_cursor_inactive", "folderView_cursor_inactive", ui->appearanceFolderViewCursorInactiveLineEdit);
+        setFontColorSample("folderView_cursor_inactive", "folderView_cursor_inactive", ui->folderViewCursorInactiveLineEdit);
     }
 }
 
-void PreferencesDialog::on_appearanceFolderPathChooseFontPushButton_clicked()
+void PreferencesDialog::on_folderPathFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
@@ -406,12 +406,12 @@ void PreferencesDialog::on_appearanceFolderPathChooseFontPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_appearanceFolderPathChooseColorPushButton_clicked()
+void PreferencesDialog::on_folderPathColorPushButton_clicked()
 {
-    chooseColor("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
+    chooseColor("folderPath_text", "folderPath_background", ui->folderPathLineEdit);
 }
 
-void PreferencesDialog::on_appearanceFolderPathChooseBGColorPushButton_clicked()
+void PreferencesDialog::on_folderPathBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -419,11 +419,11 @@ void PreferencesDialog::on_appearanceFolderPathChooseBGColorPushButton_clicked()
     {
         m_colorSettings["folderPath_background"] = newColor;
 
-        setFontColorSample("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
+        setFontColorSample("folderPath_text", "folderPath_background", ui->folderPathLineEdit);
     }
 }
 
-void PreferencesDialog::on_appearanceConsoleChooseFontPushButton_clicked()
+void PreferencesDialog::on_consoleFontPushButton_clicked()
 {
     QFont newFont = QFont();
 
@@ -435,12 +435,12 @@ void PreferencesDialog::on_appearanceConsoleChooseFontPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_appearanceConsoleChooseColorPushButton_clicked()
+void PreferencesDialog::on_consoleColorPushButton_clicked()
 {
-    chooseColor("console_text", "console_background", ui->appearanceConsoleLineEdit);
+    chooseColor("console_text", "console_background", ui->consoleLineEdit);
 }
 
-void PreferencesDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
+void PreferencesDialog::on_consoleBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -448,7 +448,7 @@ void PreferencesDialog::on_appearanceConsoleChooseBGColorPushButton_clicked()
     {
         m_colorSettings["console_background"] = newColor;
 
-        setFontColorSample("console_text", "console_background", ui->appearanceConsoleLineEdit);
+        setFontColorSample("console_text", "console_background", ui->consoleLineEdit);
     }
 }
 
@@ -615,54 +615,54 @@ void PreferencesDialog::setAppearanceFontAndColorOption()
 
     font = m_fontSettings["folderView"];
 
-    ui->appearanceFolderViewFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
-    ui->appearanceFolderViewFontLabel->setFont(font);
+    ui->folderViewFontFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->folderViewFontFontLabel->setFont(font);
 
-    ui->appearanceFolderViewNormalLineEdit->setFont(font);
-    ui->appearanceFolderViewNormalSelectedLineEdit->setFont(font);
-    ui->appearanceFolderViewFolderLineEdit->setFont(font);
-    ui->appearanceFolderViewFolderSelectedLineEdit->setFont(font);
-    ui->appearanceFolderViewReadOnlyLineEdit->setFont(font);
-    ui->appearanceFolderViewReadOnlySelectedLineEdit->setFont(font);
-    ui->appearanceFolderViewHiddenLineEdit->setFont(font);
-    ui->appearanceFolderViewHiddenSelectedLineEdit->setFont(font);
-    ui->appearanceFolderViewSystemLineEdit->setFont(font);
-    ui->appearanceFolderViewSystemSelectedLineEdit->setFont(font);
+    ui->folderViewFontNormalLineEdit->setFont(font);
+    ui->folderViewFontNormalSelectedLineEdit->setFont(font);
+    ui->folderViewFontFolderLineEdit->setFont(font);
+    ui->folderViewFontFolderSelectedLineEdit->setFont(font);
+    ui->folderViewFontReadOnlyLineEdit->setFont(font);
+    ui->folderViewFontReadOnlySelectedLineEdit->setFont(font);
+    ui->folderViewFontHiddenLineEdit->setFont(font);
+    ui->folderViewFontHiddenSelectedLineEdit->setFont(font);
+    ui->folderViewFontSystemLineEdit->setFont(font);
+    ui->folderViewFontSystemSelectedLineEdit->setFont(font);
 
-    setFontColorSample("folderView_normal",            "folderView_background",          ui->appearanceFolderViewNormalLineEdit);
-    setFontColorSample("folderView_normal_selected",   "folderView_selected_background", ui->appearanceFolderViewNormalSelectedLineEdit);
-    setFontColorSample("folderView_folder",            "folderView_background",          ui->appearanceFolderViewFolderLineEdit);
-    setFontColorSample("folderView_folder_selected",   "folderView_selected_background", ui->appearanceFolderViewFolderSelectedLineEdit);
-    setFontColorSample("folderView_readOnly",          "folderView_background",          ui->appearanceFolderViewReadOnlyLineEdit);
-    setFontColorSample("folderView_readOnly_selected", "folderView_selected_background", ui->appearanceFolderViewReadOnlySelectedLineEdit);
-    setFontColorSample("folderView_hidden",            "folderView_background",          ui->appearanceFolderViewHiddenLineEdit);
-    setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->appearanceFolderViewHiddenSelectedLineEdit);
-    setFontColorSample("folderView_system",            "folderView_background",          ui->appearanceFolderViewSystemLineEdit);
-    setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->appearanceFolderViewSystemSelectedLineEdit);
-    setFontColorSample("folderView_cursor",            "folderView_cursor",              ui->appearanceFolderViewCursorLineEdit);
-    setFontColorSample("folderView_cursor_inactive",   "folderView_cursor_inactive",     ui->appearanceFolderViewCursorInactiveLineEdit);
+    setFontColorSample("folderView_normal",            "folderView_background",          ui->folderViewFontNormalLineEdit);
+    setFontColorSample("folderView_normal_selected",   "folderView_selected_background", ui->folderViewFontNormalSelectedLineEdit);
+    setFontColorSample("folderView_folder",            "folderView_background",          ui->folderViewFontFolderLineEdit);
+    setFontColorSample("folderView_folder_selected",   "folderView_selected_background", ui->folderViewFontFolderSelectedLineEdit);
+    setFontColorSample("folderView_readOnly",          "folderView_background",          ui->folderViewFontReadOnlyLineEdit);
+    setFontColorSample("folderView_readOnly_selected", "folderView_selected_background", ui->folderViewFontReadOnlySelectedLineEdit);
+    setFontColorSample("folderView_hidden",            "folderView_background",          ui->folderViewFontHiddenLineEdit);
+    setFontColorSample("folderView_hidden_selected",   "folderView_selected_background", ui->folderViewFontHiddenSelectedLineEdit);
+    setFontColorSample("folderView_system",            "folderView_background",          ui->folderViewFontSystemLineEdit);
+    setFontColorSample("folderView_system_selected",   "folderView_selected_background", ui->folderViewFontSystemSelectedLineEdit);
+    setFontColorSample("folderView_cursor",            "folderView_cursor",              ui->folderViewCursorLineEdit);
+    setFontColorSample("folderView_cursor_inactive",   "folderView_cursor_inactive",     ui->folderViewCursorInactiveLineEdit);
 
     // Folder Path
 
     font = m_fontSettings["folderPath"];
 
-    ui->appearanceFolderPathFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
-    ui->appearanceFolderPathFontLabel->setFont(font);
+    ui->folderPathFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->folderPathFontLabel->setFont(font);
 
-    ui->appearanceFolderPathLineEdit->setFont(font);
+    ui->folderPathLineEdit->setFont(font);
 
-    setFontColorSample("folderPath_text", "folderPath_background", ui->appearanceFolderPathLineEdit);
+    setFontColorSample("folderPath_text", "folderPath_background", ui->folderPathLineEdit);
 
     // Console
 
     font = m_fontSettings["console"];
 
-    ui->appearanceConsoleFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
-    ui->appearanceConsoleFontLabel->setFont(font);
+    ui->consoleFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
+    ui->consoleFontLabel->setFont(font);
 
-    ui->appearanceConsoleLineEdit->setFont(font);
+    ui->consoleLineEdit->setFont(font);
 
-    setFontColorSample("console_text", "console_background", ui->appearanceConsoleLineEdit);
+    setFontColorSample("console_text", "console_background", ui->consoleLineEdit);
 }
 
 void PreferencesDialog::setViewerFontAndColorOption()
@@ -739,14 +739,14 @@ bool PreferencesDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFon
 
 void PreferencesDialog::on_buttonBox_accepted()
 {
-    if(ui->generalSizeFixedRadioButton->isChecked())
+    if(ui->sizeFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Fixed);
 
-        QSize size = QSize(ui->generalSizeWidthLineEdit->text().toInt(), ui->generalSizeHeightLineEdit->text().toInt());
+        QSize size = QSize(ui->sizeWidthLineEdit->text().toInt(), ui->sizeHeightLineEdit->text().toInt());
         Settings::getInstance()->setSizeAtStartup(size);
     }
-    else if(ui->generalSizeLastTimeRadioButton->isChecked())
+    else if(ui->sizeLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::LastTime);
     }
@@ -755,14 +755,14 @@ void PreferencesDialog::on_buttonBox_accepted()
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Default);
     }
 
-    if(ui->generalPositionFixedRadioButton->isChecked())
+    if(ui->positionFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::Fixed);
 
-        QPoint pos = QPoint(ui->generalPositionXLineEdit->text().toInt(), ui->generalPositionYLineEdit->text().toInt());
+        QPoint pos = QPoint(ui->positionXLineEdit->text().toInt(), ui->positionYLineEdit->text().toInt());
         Settings::getInstance()->setPositionAtStartup(pos);
     }
-    else if(ui->generalPositionLastTimeRadioButton->isChecked())
+    else if(ui->positionLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::LastTime);
     }
@@ -771,14 +771,14 @@ void PreferencesDialog::on_buttonBox_accepted()
         Settings::getInstance()->setPositionAtStartupType(PositionAtStartup::Default);
     }
 
-    if(ui->generalLeftFolderFixedRadioButton->isChecked())
+    if(ui->leftFolderFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::Fixed);
 
-        QString dirPath = ui->generalLeftFolderPathLineEdit->text();
+        QString dirPath = ui->leftFolderPathLineEdit->text();
         Settings::getInstance()->setLeftFolderPath(dirPath);
     }
-    else if(ui->generalLeftFolderLastTimeRadioButton->isChecked())
+    else if(ui->leftFolderLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::LastTime);
     }
@@ -787,14 +787,14 @@ void PreferencesDialog::on_buttonBox_accepted()
         Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::Default);
     }
 
-    if(ui->generalRightFolderFixedRadioButton->isChecked())
+    if(ui->rightFolderFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Fixed);
 
-        QString dirPath = ui->generalRightFolderPathLineEdit->text();
+        QString dirPath = ui->rightFolderPathLineEdit->text();
         Settings::getInstance()->setRightFolderPath(dirPath);
     }
-    else if(ui->generalRightFolderLastTimeRadioButton->isChecked())
+    else if(ui->rightFolderLastTimeRadioButton->isChecked())
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::LastTime);
     }
@@ -803,12 +803,12 @@ void PreferencesDialog::on_buttonBox_accepted()
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
     }
 
-    Settings::getInstance()->setConfirmQuit(ui->generalConfirmQuitCheckBox->isChecked());
+    Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
 
     Settings::getInstance()->setFontSettings(m_fontSettings);
     Settings::getInstance()->setColorSettings(m_colorSettings);
 
-    Settings::getInstance()->setCursorWidth(ui->appearanceFolderViewCursorWidthSpinBox->value());
+    Settings::getInstance()->setCursorWidth(ui->folderViewCursorWidthSpinBox->value());
 
     Settings::getInstance()->setImageViewerFitInView(ui->imageViewerFitInViewCheckBox->isChecked());
 
