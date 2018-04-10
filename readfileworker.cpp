@@ -52,7 +52,18 @@ void ReadFileWorker::run()
         return;
     }
 
-    emitStart(0, file.size());
+    int fileSize = file.size();
+    if(fileSize == 0)
+    {
+        file.close();
+
+        emitOutputConsole(tr("File size is 0.\n"));
+        emitFinished(static_cast<int>(WorkerResult::ErrorSizeZero));
+
+        return;
+    }
+
+    emitStart(0, fileSize);
 
     while(!file.atEnd())
     {

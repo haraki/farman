@@ -23,6 +23,7 @@ enum class WorkerResult : int
     // ファイル読み込み系
     ErrorOpenFile   = ErrorMask | 0x0201,   // ファイルオープン失敗
     ErrorReadFile   = ErrorMask | 0x0202,   // ファイル読み込み失敗
+    ErrorSizeZero   = ErrorMask | 0x0203,   // ファイルサイズ0
 
     ErrorFatal = ErrorMask | 0xFFFF,        // 異常なエラー
 };
