@@ -1434,15 +1434,27 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>generalSizeDefaultRadioButton</tabstop>
+  <tabstop>generalSizeLastTimeRadioButton</tabstop>
+  <tabstop>generalSizeFixedRadioButton</tabstop>
+  <tabstop>generalSizeWidthLineEdit</tabstop>
+  <tabstop>generalSizeHeightLineEdit</tabstop>
   <tabstop>generalPositionDefaultRadioButton</tabstop>
   <tabstop>generalPositionLastTimeRadioButton</tabstop>
   <tabstop>generalPositionFixedRadioButton</tabstop>
+  <tabstop>generalPositionXLineEdit</tabstop>
+  <tabstop>generalPositionYLineEdit</tabstop>
   <tabstop>generalLeftFolderDefaultRadioButton</tabstop>
   <tabstop>generalLeftFolderLastTimeRadioButton</tabstop>
   <tabstop>generalLeftFolderFixedRadioButton</tabstop>
+  <tabstop>generalLeftFolderSelectButton</tabstop>
+  <tabstop>generalLeftFolderPathLineEdit</tabstop>
   <tabstop>generalRightFolderDefaultRadioButton</tabstop>
   <tabstop>generalRightFolderLastTimeRadioButton</tabstop>
   <tabstop>generalRightFolderFixedRadioButton</tabstop>
+  <tabstop>generalRightFolderSelectButton</tabstop>
+  <tabstop>generalRightFolderPathLineEdit</tabstop>
   <tabstop>generalConfirmQuitCheckBox</tabstop>
   <tabstop>appearanceFolderViewChooseFontPushButton</tabstop>
   <tabstop>appearanceFolderViewChooseNormalColorPushButton</tabstop>
@@ -1466,6 +1478,26 @@
   <tabstop>appearanceConsoleChooseFontPushButton</tabstop>
   <tabstop>appearanceConsoleChooseColorPushButton</tabstop>
   <tabstop>appearanceConsoleChooseBGColorPushButton</tabstop>
+  <tabstop>textViewerFontPushButton</tabstop>
+  <tabstop>textViewerFontColorPushButton</tabstop>
+  <tabstop>textViewerBGColorPushButton</tabstop>
+  <tabstop>textViewerSelectedFontColorPushButton</tabstop>
+  <tabstop>textViewerSelectedBGColorPushButton</tabstop>
+  <tabstop>textViewerLineNumberFontColorPushButton</tabstop>
+  <tabstop>textViewerLineNumberBGColorPushButton</tabstop>
+  <tabstop>textViewerEncodeComboBox</tabstop>
+  <tabstop>textViewerShowLineNumberCheckBox</tabstop>
+  <tabstop>textViewerWordWrapCheckBox</tabstop>
+  <tabstop>hexViewerFontPushButton</tabstop>
+  <tabstop>hexViewerFontColorPushButton</tabstop>
+  <tabstop>hexViewerBGColorPushButton</tabstop>
+  <tabstop>hexViewerSelectedFontColorPushButton</tabstop>
+  <tabstop>hexViewerSelectedBGColorPushButton</tabstop>
+  <tabstop>hexViewerAddressFontColorPushButton</tabstop>
+  <tabstop>hexViewerAddressBGColorPushButton</tabstop>
+  <tabstop>imageViewerFitInViewCheckBox</tabstop>
+  <tabstop>imageViewerBGTypeComboBox</tabstop>
+  <tabstop>imageViewerBGColorPushButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
