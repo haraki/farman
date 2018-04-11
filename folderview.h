@@ -7,20 +7,26 @@
 namespace Farman
 {
 
+class FolderModel;
+
 class FolderView : public QTableView
 {
 public:
     explicit FolderView(QWidget *parent = Q_NULLPTR);
     virtual ~FolderView();
 
-    void setModel(QAbstractItemModel *model) Q_DECL_OVERRIDE;
+    using QTableView::setModel;
+    void setModel(FolderModel *folderModel);
 
     QItemSelectionModel::SelectionFlags selectionCommand(const QModelIndex &index, const QEvent *e = Q_NULLPTR) const Q_DECL_OVERRIDE;
+
+    void selectCurrent();
 
     void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
 private:
     void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
 };
 
 }           // namespace Farman

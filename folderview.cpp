@@ -21,7 +21,7 @@ FolderView::~FolderView()
 
 }
 
-void FolderView::setModel(QAbstractItemModel *model)
+void FolderView::setModel(FolderModel *model)
 {
     QTableView::setModel(model);
 
@@ -37,6 +37,18 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
     ret &= ~(QItemSelectionModel::SelectionFlag::ClearAndSelect | QItemSelectionModel::SelectionFlag::Toggle);
 
     return ret;
+}
+
+void FolderView::selectCurrent()
+{
+    FolderModel* folderModel = dynamic_cast<FolderModel*>(model());
+    Q_ASSERT(folderModel);
+
+    const QModelIndex index = currentIndex();
+    if(folderModel->fileName(index) != "..")
+    {
+        folderModel->setSelect(index.row(), QItemSelectionModel::Toggle, index.parent());
+    }
 }
 
 void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight)
@@ -82,6 +94,18 @@ void FolderView::keyPressEvent(QKeyEvent *e)
     }
 
     e->ignore();
+}
+
+void FolderView::mousePressEvent(QMouseEvent *e)
+{
+    qDebug() << "FolderView::mousePressEvent()";
+
+    QTableView::mousePressEvent(e);
+
+    if(e->buttons() & Qt::LeftButton && indexAt(e->pos()).isValid())
+    {
+        selectCurrent();
+    }
 }
 
 }           // namespace Farman

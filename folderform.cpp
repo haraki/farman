@@ -283,12 +283,9 @@ void FolderForm::onDirectoryChanged(const QString& path)
 
 void FolderForm::onSelect()
 {
-    const QModelIndex currentIndex = ui->folderView->currentIndex();
-    if(m_folderModel->fileName(currentIndex) != "..")
-    {
-        m_folderModel->setSelect(currentIndex.row(), QItemSelectionModel::Toggle, currentIndex.parent());
-    }
+    ui->folderView->selectCurrent();
 
+    const QModelIndex currentIndex = ui->folderView->currentIndex();
     if(currentIndex.row() + 1 < m_folderModel->rowCount(currentIndex.parent()))
     {
         QModelIndex newIndex = m_folderModel->index(currentIndex.row() + 1, 0, currentIndex.parent());
