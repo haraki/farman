@@ -3,9 +3,11 @@
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 #include <QHeaderView>
+#include <QMimeData>
 #include "folderview.h"
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
+#include "file.h"
 
 namespace Farman
 {
@@ -105,6 +107,64 @@ void FolderView::mousePressEvent(QMouseEvent *e)
     if(e->buttons() & Qt::LeftButton && indexAt(e->pos()).isValid())
     {
         selectCurrent();
+    }
+}
+
+void FolderView::dragEnterEvent(QDragEnterEvent *e)
+{
+    qDebug() << "FolderView::dragEnterEvent()";
+
+    FolderView* source = dynamic_cast<FolderView*>(e->source());
+    if(this != source)
+    {
+        e->accept();
+    }
+}
+
+void FolderView::dragMoveEvent(QDragMoveEvent *e)
+{
+    qDebug() << "FolderView::dragMoveEvent()";
+
+    FolderView* source = dynamic_cast<FolderView*>(e->source());
+    if(this != source)
+    {
+        e->accept();
+    }
+}
+
+void FolderView::dropEvent(QDropEvent *e)
+{
+    qDebug() << "FolderView::dropEvent()";
+
+    FolderView* source = dynamic_cast<FolderView*>(e->source());
+    if(this != source)
+    {
+        FolderModel* folderModel = dynamic_cast<FolderModel*>(model());
+        Q_ASSERT(folderModel);
+
+        QString dstDirPath = folderModel->filePath(rootIndex());
+        QStringList srcPaths;
+        for(QUrl url : e->mimeData()->urls())
+        {
+            QString srcPath = QFileInfo(url.toLocalFile()).absoluteFilePath();
+            if(!srcPath.isNull() && !srcPath.isEmpty())
+            {
+                // 末尾が'/'だとコピーできない
+                while(srcPath.endsWith('/'))
+                {
+                    srcPath.chop(1);
+                }
+                srcPaths.push_back(srcPath);
+            }
+        }
+
+        qDebug() << "srcPaths : " << srcPaths;
+        qDebug() << "dstDirPath : " << dstDirPath;
+
+        File::getInstance()->copyFile(srcPaths, dstDirPath);
+//        File::getInstance()->moveFile(srcPaths, dstDirPath);
+
+        e->accept();
     }
 }
 
