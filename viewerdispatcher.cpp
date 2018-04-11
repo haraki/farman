@@ -9,6 +9,7 @@
 #include "imageviewer.h"
 #include "textviewer.h"
 #include "hexviewer.h"
+#include "types.h"
 
 namespace Farman
 {
@@ -97,53 +98,60 @@ int ViewerDispatcher::initialize()
     return 0;
 }
 
-ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, QWidget* parent/* = Q_NULLPTR*/)
+ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, ViewerType viewerType, QWidget* parent/* = Q_NULLPTR*/)
 {
     QMimeType mimeType = m_mimeDb->mimeTypeForFile(filePath);
     qDebug() << "mimeType : " << mimeType.name();
 
-    auto viewerTypeItr = m_viewerTypeSettings.find(mimeType.name());
-    if(viewerTypeItr != m_viewerTypeSettings.end())
+    if(viewerType == ViewerType::Auto)
     {
-        if(*viewerTypeItr == ViewerType::Image)
+        // mimeType に紐付けられている Viewer があればそれを起動する
+        auto viewerTypeItr = m_viewerTypeSettings.find(mimeType.name());
+        if(viewerTypeItr != m_viewerTypeSettings.end())
         {
-            qDebug() << "create Image viewer.";
-
-            return new ImageViewer(filePath, parent);
-        }
-        else if(*viewerTypeItr == ViewerType::Text)
-        {
-            qDebug() << "create Text viewer.";
-
-            return new TextViewer(filePath, parent);
-        }
-        else if(*viewerTypeItr == ViewerType::Hex)
-        {
-            qDebug() << "create Hex viewer.";
-
-            return new HexViewer(filePath, parent);
+            viewerType = *viewerTypeItr;
         }
     }
 
-    if(QImageReader::supportedMimeTypes().indexOf(mimeType.name().toUtf8()) >= 0)
+    if(viewerType == ViewerType::Auto)
     {
-        // QImageReader がサポートしているフォーマットの場合は ImageViewer を起動する
+        if(QImageReader::supportedMimeTypes().indexOf(mimeType.name().toUtf8()) >= 0)
+        {
+            // QImageReader がサポートしているフォーマットの場合は ImageViewer を起動する
+            viewerType = ViewerType::Image;
+        }
+        else if(mimeType.name().startsWith("text/"))
+        {
+            // MIME-type が "text/〜" の場合は TextViewer を起動する
+            viewerType = ViewerType::Text;
+        }
+        else
+        {
+            // 上記いずれの条件にも該当しない場合は HexViewer を起動する
+            viewerType = ViewerType::Hex;
+        }
+    }
+
+    if(viewerType == ViewerType::Image)
+    {
         qDebug() << "create Image viewer.";
 
         return new ImageViewer(filePath, parent);
     }
-    else if(mimeType.name().startsWith("text/"))
+    else if(viewerType == ViewerType::Text)
     {
-        // MIME-type が "text/〜" の場合は TextViewer を起動する
         qDebug() << "create Text viewer.";
 
         return new TextViewer(filePath, parent);
     }
+    else if(viewerType == ViewerType::Hex)
+    {
+        qDebug() << "create Hex viewer.";
 
-    // 上記いずれの条件にも該当しない場合は HexViewer を起動する
-    qDebug() << "create Hex viewer.";
+        return new HexViewer(filePath, parent);
+    }
 
-    return new HexViewer(filePath, parent);
+    return Q_NULLPTR;
 }
 
 }

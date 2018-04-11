@@ -127,6 +127,11 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
 
     qDebug() << "MainWindow::onOpen()";
 
+    onOpen(ViewerType::Auto);
+}
+
+void MainWindow::onOpen(ViewerType viewerType)
+{
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel == Q_NULLPTR)
     {
@@ -142,12 +147,19 @@ void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
     QFileInfo fileInfo = activeFolderForm->getCurrentFileInfo();
     if(fileInfo.isDir())
     {
-        activeFolderForm->onGoToChildDir();
+        if(viewerType == ViewerType::Auto)
+        {
+            activeFolderForm->onGoToChildDir();
+        }
+        else
+        {
+            onOutputConsole(tr("Folder can not be opened with the viewer.\n"));
+        }
 
         return;
     }
 
-    ViewerBase* viewer = ViewerDispatcher::getInstance()->dispatcher(fileInfo.absoluteFilePath(), ui->mainWidget);
+    ViewerBase* viewer = ViewerDispatcher::getInstance()->dispatcher(fileInfo.absoluteFilePath(), viewerType, ui->mainWidget);
     if(viewer == Q_NULLPTR)
     {
         return;
@@ -214,6 +226,7 @@ void MainWindow::onOpenWithApp(const QModelIndex& index/* = QModelIndex()*/)
     if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
     {
         qDebug() << "open url error:" << path;
+        onOutputConsole(tr("Open failed : ") + path);
     }
 }
 
@@ -244,6 +257,27 @@ void MainWindow::on_actionOpenWithApp_triggered()
     qDebug() << "MainWindow::on_actionOpenWithApp_triggered()";
 
     onOpenWithApp();
+}
+
+void MainWindow::on_actionOpenWithTextViewer_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithTextViewer_triggered()";
+
+    onOpen(ViewerType::Text);
+}
+
+void MainWindow::on_actionOpenWithHexViewer_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithHexViewer_triggered()";
+
+    onOpen(ViewerType::Hex);
+}
+
+void MainWindow::on_actionOpenWithImageViewer_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithImageViewer_triggered()";
+
+    onOpen(ViewerType::Image);
 }
 
 void MainWindow::on_actionPreferences_triggered()

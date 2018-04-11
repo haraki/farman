@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <qdir.h>
+#include "types.h"
 #include "doublefolderpanel.h"
 
 class QStringList;
@@ -24,6 +25,7 @@ public:
 
 public Q_SLOTS:
     void onOpen(const QModelIndex& index = QModelIndex());
+    void onOpen(ViewerType viewerType);
     void onCloseViewer(const QString& viewerName);
     void onOpenWithApp(const QModelIndex& index = QModelIndex());
     void onStatusChanged(const QString& statusString);
@@ -40,10 +42,14 @@ private:
     void initPalette();
 
     void updateSettings();
+    void openCurrentFile(ViewerType viewerType = ViewerType::Auto);
 
 private Q_SLOTS:
     void on_actionOpen_triggered();
     void on_actionOpenWithApp_triggered();
+    void on_actionOpenWithTextViewer_triggered();
+    void on_actionOpenWithHexViewer_triggered();
+    void on_actionOpenWithImageViewer_triggered();
     void on_actionPreferences_triggered();
     void on_actionQuit_triggered();
     void on_actionSingleView_triggered();

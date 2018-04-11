@@ -94,6 +94,9 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenWithApp"/>
+    <addaction name="actionOpenWithTextViewer"/>
+    <addaction name="actionOpenWithHexViewer"/>
+    <addaction name="actionOpenWithImageViewer"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
     <addaction name="separator"/>
@@ -219,6 +222,30 @@
    </property>
    <property name="shortcut">
     <string>Return</string>
+   </property>
+  </action>
+  <action name="actionOpenWithTextViewer">
+   <property name="text">
+    <string>Open With TextViewer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionOpenWithHexViewer">
+   <property name="text">
+    <string>Open With HexViewer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionOpenWithImageViewer">
+   <property name="text">
+    <string>Open With ImageViewer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
  </widget>

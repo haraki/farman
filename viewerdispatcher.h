@@ -21,7 +21,7 @@ public:
 
     int initialize();
 
-    ViewerBase* dispatcher(const QString& filePath, QWidget* parent = Q_NULLPTR);
+    ViewerBase* dispatcher(const QString& filePath, ViewerType viewerType, QWidget* parent = Q_NULLPTR);
 
 private:
     explicit ViewerDispatcher();
