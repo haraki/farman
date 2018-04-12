@@ -8,17 +8,14 @@
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
 #include "folderview.h"
-#include "copyworker.h"
-#include "removeworker.h"
 #include "sortdialog.h"
 #include "filterdialog.h"
-#include "overwritedialog.h"
-#include "workingdialog.h"
 #include "renamedialog.h"
 #include "mainwindow.h"
 #include "settings.h"
 #include "fileoperationdialog.h"
 #include "fileattributesdialog.h"
+#include "file.h"
 
 namespace Farman
 {
@@ -64,11 +61,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             SIGNAL(statusChanged(const QString)),
             MainWindow::getInstance(),
             SLOT(onStatusChanged(const QString)));
-
-    connect(this,
-            SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onOutputConsole(const QString)));
 
     connect(this,
             SIGNAL(openFile(const QModelIndex)),
@@ -391,7 +383,7 @@ void DoubleFolderPanel::onCopy()
         srcPaths.push_back(fileInfo.absoluteFilePath());
     }
 
-    copyFile(srcPaths, dstDirPath);
+    File::getInstance()->copyFile(srcPaths, dstDirPath);
 }
 
 void DoubleFolderPanel::onMove()
@@ -433,7 +425,7 @@ void DoubleFolderPanel::onMove()
         srcPaths.push_back(fileInfo.absoluteFilePath());
     }
 
-    moveFile(srcPaths, dstDirPath);
+    File::getInstance()->moveFile(srcPaths, dstDirPath);
 }
 
 void DoubleFolderPanel::onRemove()
@@ -468,7 +460,7 @@ void DoubleFolderPanel::onRemove()
         paths.push_back(fileInfo.absoluteFilePath());
     }
 
-    removeFile(paths);
+    File::getInstance()->removeFile(paths);
 }
 
 void DoubleFolderPanel::onMakeDirectory()
@@ -476,10 +468,24 @@ void DoubleFolderPanel::onMakeDirectory()
     qDebug() << "DoubleFolderPanel::onMakeDirectory()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        makeDirectory(activeForm->getCurrentDirPath());
+        return;
     }
+
+    bool ok = false;
+    QString dirName = QInputDialog::getText(this->parentWidget(),
+                                            tr("Make directory"),
+                                            tr("Directory name:"),
+                                            QLineEdit::Normal, QString(), &ok);
+
+    if(!ok || dirName.isEmpty())
+    {
+        // キャンセル
+        return;
+    }
+
+    File::getInstance()->makeDirectory(activeForm->getCurrentDirPath(), dirName);
 }
 
 void DoubleFolderPanel::onRename()
@@ -487,12 +493,33 @@ void DoubleFolderPanel::onRename()
     qDebug() << "DoubleFolderPanel::onRename()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        if(activeForm->getCurrentFileName() != "..")
-        {
-            renameFile(activeForm->getCurrentDirPath(), activeForm->getCurrentFileName());
-        }
+        return;
+    }
+
+    QString oldName = activeForm->getCurrentFileName();
+    if(oldName == "..")
+    {
+        return;
+    }
+
+    RenameDialog dialog(oldName);
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    QString newName = dialog.getNewName();
+    if(newName.isEmpty() || oldName == newName)
+    {
+        return;
+    }
+
+    if(File::getInstance()->renameFile(activeForm->getCurrentDirPath(), oldName, newName))
+    {
+        activeForm->refresh();
+        activeForm->setCursor(newName);
     }
 }
 
@@ -501,13 +528,32 @@ void DoubleFolderPanel::onAttributes()
     qDebug() << "DoubleFolderPanel::onAttributes()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        if(activeForm->getCurrentFileName() != "..")
-        {
-            showFileAttributes(activeForm->getCurrentFileInfo());
-        }
+        return;
     }
+
+    if(activeForm->getCurrentFileName() == "..")
+    {
+        return;
+    }
+
+    QFileInfo fileInfo = activeForm->getCurrentFileInfo();
+    QFile file(fileInfo.absoluteFilePath());
+
+    FileAttributesDialog dialog(fileInfo,
+                                file.permissions(),
+                                file.fileTime(QFile::FileBirthTime),
+                                file.fileTime(QFile::FileModificationTime));
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
+    }
+
+    File::getInstance()->changeFileAttributes(fileInfo.absoluteFilePath(),
+                                              dialog.getPermissions(),
+                                              dialog.getCreated(),
+                                              dialog.getLastModified());
 }
 
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
@@ -563,11 +609,6 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 {
     emit statusChanged(statusString);
-}
-
-void DoubleFolderPanel::emitOutputConsole(const QString& consoleString)
-{
-    emit outputConsole(consoleString);
 }
 
 void DoubleFolderPanel::emitOpenFile(const QModelIndex& index)
@@ -640,188 +681,6 @@ FolderForm* DoubleFolderPanel::getRightFolderForm()
     return findChild<FolderForm*>("r_folderForm");
 }
 
-void DoubleFolderPanel::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
-{
-    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstDirPath, false);
-
-    connect(copyWorker,
-            SIGNAL(finished(int)),
-            this,
-            SLOT(onCopyFileFinished(int)));
-    connect(copyWorker,
-            SIGNAL(error(QString)),
-            this,
-            SLOT(onCopyFileError(QString)));
-    connect(copyWorker,
-            SIGNAL(confirmOverwrite(QString,QString,int)),
-            this,
-            SLOT(onConfirmOverwrite(QString,QString,int)));
-
-    WorkingDialog dialog(copyWorker, this);
-    if(dialog.exec())
-    {
-
-    }
-}
-
-void DoubleFolderPanel::moveFile(const QStringList& srcPaths, const QString& dstPath)
-{
-    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true);
-
-    connect(copyWorker,
-            SIGNAL(finished(int)),
-            this,
-            SLOT(onMoveFileFinished(int)));
-    connect(copyWorker,
-            SIGNAL(error(QString)),
-            this,
-            SLOT(onMoveFileError(QString)));
-    connect(copyWorker,
-            SIGNAL(confirmOverwrite(QString,QString,int)),
-            this,
-            SLOT(onConfirmOverwrite(QString,QString,int)));
-
-    WorkingDialog dialog(copyWorker, this);
-    if(dialog.exec())
-    {
-
-    }
-}
-
-void DoubleFolderPanel::removeFile(const QStringList& paths)
-{
-    Worker* worker = new RemoveWorker(paths);
-
-    connect(worker,
-            SIGNAL(finished(int)),
-            this,
-            SLOT(onRemoveFileFinished(int)));
-    connect(worker,
-            SIGNAL(error(QString)),
-            this,
-            SLOT(onRemoveFileError(QString)));
-
-    WorkingDialog dialog(worker, this);
-    if(dialog.exec())
-    {
-
-    }
-}
-
-void DoubleFolderPanel::makeDirectory(const QString& path)
-{
-    bool ok = false;
-    QString name = QInputDialog::getText(this->parentWidget(),
-                                         tr("Make directory"),
-                                         tr("Directory name:"),
-                                         QLineEdit::Normal, QString(), &ok);
-
-    if(!ok || name.isEmpty())
-    {
-        // キャンセル
-        return;
-    }
-
-    QDir dir(path);
-    QString absPath = dir.absoluteFilePath(name);
-
-    emitOutputConsole(QString("%1 ... ").arg(absPath));
-    qDebug() << absPath;
-
-    if(dir.exists(name))
-    {
-        // 既に存在しているので何もしない
-        emitOutputConsole(tr("is exists.\n"));
-        return;
-    }
-
-    if(!dir.mkdir(name))
-    {
-        // ディレクトリ作成失敗
-        emitOutputConsole(tr("Failed make directory.\n"));
-        return;
-    }
-
-    emitOutputConsole(tr("Made directory.\n"));
-}
-
-void DoubleFolderPanel::renameFile(const QString& path, const QString& name)
-{
-    RenameDialog dialog(name);
-    if(dialog.exec() != QDialog::Accepted)
-    {
-        return;
-    }
-
-    QString newFileName = dialog.getNewName();
-    if(newFileName.isEmpty() || name == newFileName)
-    {
-        return;
-    }
-
-    QDir dir(path);
-    if(!dir.rename(name, newFileName))
-    {
-        return;
-    }
-
-    emitOutputConsole(QString("%1 >> %2 ... ").arg(name).arg(newFileName));
-    emitOutputConsole(tr("Renamed.\n"));
-
-    FolderForm* activeFolderForm = getActiveFolderForm();
-    if(activeFolderForm != Q_NULLPTR)
-    {
-        activeFolderForm->setCursor(newFileName);
-    }
-}
-
-void DoubleFolderPanel::showFileAttributes(const QFileInfo& fileInfo)
-{
-    QFile file(fileInfo.absoluteFilePath());
-
-    FileAttributesDialog dialog(fileInfo,
-                                file.permissions(),
-                                file.fileTime(QFile::FileBirthTime),
-                                file.fileTime(QFile::FileModificationTime));
-    if(dialog.exec() != QDialog::Accepted)
-    {
-        return;
-    }
-
-    if(file.permissions() != dialog.getPermissions())
-    {
-        if(!file.setPermissions(dialog.getPermissions()))
-        {
-            qDebug() << "permission change failed. " << file.errorString();
-        }
-    }
-
-    bool changeCreated      = fileInfo.created() != dialog.getCreated();
-    bool changeLastModified = fileInfo.lastModified() != dialog.getLastModified();
-
-    if(changeCreated || changeLastModified)
-    {
-        if(file.open(QFile::ReadWrite))
-        {
-            if(changeCreated && !file.setFileTime(dialog.getCreated(), QFile::FileBirthTime))
-            {
-                qDebug() << "created time change failed. " << file.errorString();
-            }
-
-            if(changeLastModified && !file.setFileTime(dialog.getLastModified(), QFile::FileModificationTime))
-            {
-                qDebug() << "lastModified time change failed. " << file.errorString();
-            }
-
-            file.close();
-        }
-        else
-        {
-            qDebug() << "file open failed. " << file.errorString();
-        }
-    }
-}
-
 void DoubleFolderPanel::refresh()
 {
     FolderForm* activeFolderForm = getActiveFolderForm();
@@ -844,53 +703,6 @@ void DoubleFolderPanel::setVisible(bool visible)
     if(visible)
     {
         setActiveFolderForm(m_activeFolderFormName);
-    }
-}
-
-void DoubleFolderPanel::onCopyFileFinished(int result)
-{
-    qDebug() << "DoubleFolderPanel::onCopyFileFinished : result : " << result;
-}
-
-void DoubleFolderPanel::onCopyFileError(const QString& err)
-{
-    qDebug() << "DoubleFolderPanel::onCopyFileError : err : " << err;
-}
-
-void DoubleFolderPanel::onMoveFileFinished(int result)
-{
-    qDebug() << "DoubleFolderPanel::onMoveFileFinished : result : " << result;
-}
-
-void DoubleFolderPanel::onMoveFileError(const QString& err)
-{
-    qDebug() << "DoubleFolderPanel::onMoveFileError : err : " << err;
-}
-
-void DoubleFolderPanel::onRemoveFileFinished(int result)
-{
-    qDebug() << "DoubleFolderPanel::onRemoveFileFinished : result : " << result;
-}
-
-void DoubleFolderPanel::onRemoveFileError(const QString& err)
-{
-    qDebug() << "DoubleFolderPanel::onRemoveFileError : err : " << err;
-}
-
-void DoubleFolderPanel::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType)
-{
-    CopyWorker* copyWorker = dynamic_cast<CopyWorker*>(sender());
-    if(copyWorker != nullptr)
-    {
-        OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType));
-        if(dialog.exec() == QDialog::Accepted)
-        {
-            copyWorker->finishConfirmOverwrite(dialog.getMethodType(), dialog.getKeepSetting(), dialog.getRenameFileName());
-        }
-        else
-        {
-            copyWorker->cancelConfirmOverwrite();
-        }
     }
 }
 

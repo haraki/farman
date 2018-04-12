@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     textviewer.cpp \
     textview.cpp \
     QHexView/src/QHexView.cpp \
-    hexviewer.cpp
+    hexviewer.cpp \
+    file.cpp
 
 HEADERS  += mainwindow.h \
     folderform.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     textviewer.h \
     textview.h \
     QHexView/include/QHexView.h \
-    hexviewer.h
+    hexviewer.h \
+    file.h
 
 FORMS    += mainwindow.ui \
     folderform.ui \

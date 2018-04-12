@@ -11,6 +11,7 @@
 #include "preferencesdialog.h"
 #include "viewerdispatcher.h"
 #include "imageviewer.h"
+#include "file.h"
 
 namespace Farman
 {
@@ -46,6 +47,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::initialize()
 {
+    File::create(this);
+    connect(File::getInstance(),
+            SIGNAL(outputConsole(const QString)),
+            this,
+            SLOT(onOutputConsole(const QString)));
+
     DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ui->mainWidget);
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
