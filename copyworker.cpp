@@ -6,7 +6,6 @@
 #include <QMutex>
 #include "copyworker.h"
 #include "workerresult.h"
-#include "mainwindow.h"
 
 namespace Farman
 {
@@ -20,10 +19,6 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool
     , m_methodTypeKeep(false)
     , m_renameFileName("")
 {
-    connect(this,
-            SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onOutputConsole(const QString)));
 }
 
 CopyWorker::~CopyWorker()

@@ -36,6 +36,10 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
     CopyWorker* copyWorker = new CopyWorker(srcPaths, dstDirPath, false);
 
     connect(copyWorker,
+            SIGNAL(outputConsole(const QString)),
+            this,
+            SLOT(onOutputConsole(const QString)));
+    connect(copyWorker,
             SIGNAL(finished(int)),
             this,
             SLOT(onCopyFileFinished(int)));
@@ -62,6 +66,10 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
     CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true);
 
     connect(copyWorker,
+            SIGNAL(outputConsole(const QString)),
+            this,
+            SLOT(onOutputConsole(const QString)));
+    connect(copyWorker,
             SIGNAL(finished(int)),
             this,
             SLOT(onMoveFileFinished(int)));
@@ -87,6 +95,10 @@ bool File::removeFile(const QStringList& paths)
 {
     Worker* worker = new RemoveWorker(paths);
 
+    connect(worker,
+            SIGNAL(outputConsole(const QString)),
+            this,
+            SLOT(onOutputConsole(const QString)));
     connect(worker,
             SIGNAL(finished(int)),
             this,
@@ -191,6 +203,11 @@ bool File::changeFileAttributes(const QString& path,
     return true;
 }
 
+void File::emitOutputConsole(const QString& consoleString)
+{
+    emit outputConsole(consoleString);
+}
+
 void File::onCopyFileFinished(int result)
 {
     qDebug() << "DoubleFolderPanel::onCopyFileFinished : result : " << result;
@@ -238,9 +255,9 @@ void File::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFile
     }
 }
 
-void File::emitOutputConsole(const QString& consoleString)
+void File::onOutputConsole(const QString& consoleString)
 {
-    emit outputConsole(consoleString);
+    emitOutputConsole(consoleString);
 }
 
 }           // namespace Farman

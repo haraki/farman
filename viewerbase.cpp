@@ -51,6 +51,10 @@ int ViewerBase::start()
     }
 
     connect(m_worker,
+            SIGNAL(outputConsole(const QString)),
+            MainWindow::getInstance(),
+            SLOT(onOutputConsole(const QString)));
+    connect(m_worker,
             SIGNAL(start(int,int)),
             m_progressDialog,
             SLOT(setRange(int,int)));

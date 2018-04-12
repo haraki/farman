@@ -4,7 +4,6 @@
 #include <QThread>
 #include "readfileworker.h"
 #include "workerresult.h"
-#include "mainwindow.h"
 
 namespace Farman
 {
@@ -17,11 +16,6 @@ ReadFileWorker::ReadFileWorker(const QString& filePath, QByteArray* buffer, QObj
     m_buffer(buffer)
 {
     Q_ASSERT(m_buffer != Q_NULLPTR);
-
-    connect(this,
-            SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onOutputConsole(const QString)));
 }
 
 ReadFileWorker::~ReadFileWorker()

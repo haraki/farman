@@ -4,7 +4,6 @@
 #include <QFile>
 #include "removeworker.h"
 #include "workerresult.h"
-#include "mainwindow.h"
 
 namespace Farman
 {
@@ -13,10 +12,6 @@ RemoveWorker::RemoveWorker(const QStringList& paths, QObject *parent)
     : Worker(parent)
     , m_paths(paths)
 {
-    connect(this,
-            SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onOutputConsole(const QString)));
 }
 
 RemoveWorker::~RemoveWorker()
