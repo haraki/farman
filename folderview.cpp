@@ -4,10 +4,13 @@
 #include <QItemSelectionModel>
 #include <QHeaderView>
 #include <QMimeData>
+#include <QMenu>
 #include "folderview.h"
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
 #include "file.h"
+#include "settings.h"
+#include "types.h"
 
 namespace Farman
 {
@@ -161,8 +164,35 @@ void FolderView::dropEvent(QDropEvent *e)
         qDebug() << "srcPaths : " << srcPaths;
         qDebug() << "dstDirPath : " << dstDirPath;
 
-        File::getInstance()->copyFile(srcPaths, dstDirPath);
-//        File::getInstance()->moveFile(srcPaths, dstDirPath);
+        DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
+        if(behaviorType == DragAndDropBehaviorType::Select)
+        {
+            // コピー or 移動選択用ポップアップメニュー表示
+            QMenu menu(this);
+            QAction *actionCopy = menu.addAction(tr("Copy"));
+            QAction *actionMove = menu.addAction(tr("Move"));
+            menu.addSeparator();
+            menu.addAction(tr("Cancel"));
+
+            QAction *selected = menu.exec(mapToGlobal(e->pos()));
+            if(selected == actionCopy)
+            {
+                behaviorType = DragAndDropBehaviorType::Copy;
+            }
+            else if(selected == actionMove)
+            {
+                behaviorType = DragAndDropBehaviorType::Move;
+            }
+        }
+
+        if(behaviorType == DragAndDropBehaviorType::Copy)
+        {
+            File::getInstance()->copyFile(srcPaths, dstDirPath);
+        }
+        else if(behaviorType == DragAndDropBehaviorType::Move)
+        {
+            File::getInstance()->moveFile(srcPaths, dstDirPath);
+        }
 
         e->accept();
     }
