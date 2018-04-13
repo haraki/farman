@@ -138,6 +138,20 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
         ui->rightFolderPathLineEdit->setText(rightDirPath);
     }
 
+    DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
+    if(behaviorType == DragAndDropBehaviorType::Copy)
+    {
+        ui->dragAndDropBehaviorCopyRadioButton->setChecked(true);
+    }
+    else if(behaviorType == DragAndDropBehaviorType::Move)
+    {
+        ui->dragAndDropBehaviorMoveRadioButton->setChecked(true);
+    }
+    else
+    {
+        ui->dragAndDropBehaviorSelectRadioButton->setChecked(true);
+    }
+
     ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
     m_fontSettings = Settings::getInstance()->getFontSettings();
@@ -801,6 +815,19 @@ void PreferencesDialog::on_buttonBox_accepted()
     else
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
+    }
+
+    if(ui->dragAndDropBehaviorCopyRadioButton->isChecked())
+    {
+        Settings::getInstance()->setDragAndDropBehaviorType(DragAndDropBehaviorType::Copy);
+    }
+    else if(ui->dragAndDropBehaviorMoveRadioButton->isChecked())
+    {
+        Settings::getInstance()->setDragAndDropBehaviorType(DragAndDropBehaviorType::Move);
+    }
+    else
+    {
+        Settings::getInstance()->setDragAndDropBehaviorType(DragAndDropBehaviorType::Select);
     }
 
     Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());

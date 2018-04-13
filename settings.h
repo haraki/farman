@@ -62,6 +62,9 @@ public:
     QDir::Filters getRightFilterSettings() { return m_rightFilterSettings; }
     void setRightFilterSettings(QDir::Filters rightFilterSettings) { m_rightFilterSettings = rightFilterSettings; }
 
+    DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
+    void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
+
     bool getConfirmQuit() { return m_confirmQuit; }
     void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
 
@@ -126,6 +129,8 @@ private:
 
     QDir::Filters m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
     QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
+
+    DragAndDropBehaviorType m_dragAndDropBehaviorType = DragAndDropBehaviorType::Default;
 
     bool m_confirmQuit = true;
 

@@ -74,6 +74,12 @@ void Settings::initialize()
     // Right side Filter settings
     m_rightFilterSettings = getFilterSettings("right");
 
+    // Drag & Drop behavior in FolderView
+    QString behaviorTypeValue = value("main/dragAndDropBehaviorType", "select").toString();
+    m_dragAndDropBehaviorType = (behaviorTypeValue == "copy") ? DragAndDropBehaviorType::Copy :
+                                (behaviorTypeValue == "move") ? DragAndDropBehaviorType::Move :
+                                                                DragAndDropBehaviorType::Select;
+
     // Confirm quit
     QString confirmQuitValue = value("main/confirmQuit", "true").toString();
     m_confirmQuit = (confirmQuitValue == "false") ? false : true;
@@ -204,6 +210,12 @@ void Settings::flush()
 
     // Right side Filter settings
     setFilterSettings(m_rightFilterSettings, "right");
+
+    // Drag & Drop behavior in FolderView
+    QString behaviorTypeValue = (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Copy) ? "copy" :
+                                (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Move) ? "move" :
+                                                                                               "select";
+    setValue("main/dragAndDropBehaviorType", behaviorTypeValue);
 
     // Confirm at quit
     setValue("main/confirmQuit", m_confirmQuit);

@@ -78,6 +78,18 @@ enum class ViewerType : int
     ViewerTypeNum,
 };
 
+// FolderView にドラッグ&ドロップした際の振る舞い
+enum class DragAndDropBehaviorType : int
+{
+    Select = 0,
+    Copy   = 1,
+    Move   = 2,
+
+    DragAndDropBehaviorTypeNum,
+
+    Default = DragAndDropBehaviorType::Select,
+};
+
 }
 
 #endif // TYPES_H
