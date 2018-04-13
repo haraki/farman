@@ -243,7 +243,7 @@ void File::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFile
     CopyWorker* copyWorker = dynamic_cast<CopyWorker*>(sender());
     if(copyWorker != nullptr)
     {
-        OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType));
+        OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType), dynamic_cast<QWidget*>(parent()));
         if(dialog.exec() == QDialog::Accepted)
         {
             copyWorker->finishConfirmOverwrite(dialog.getMethodType(), dialog.getKeepSetting(), dialog.getRenameFileName());
