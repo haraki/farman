@@ -46,7 +46,7 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
 
 void FolderView::selectCurrent()
 {
-    FolderModel* folderModel = dynamic_cast<FolderModel*>(model());
+    FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
 
     const QModelIndex index = currentIndex();
@@ -117,7 +117,7 @@ void FolderView::dragEnterEvent(QDragEnterEvent *e)
 {
     qDebug() << "FolderView::dragEnterEvent()";
 
-    FolderView* source = dynamic_cast<FolderView*>(e->source());
+    FolderView* source = qobject_cast<FolderView*>(e->source());
     if(this != source)
     {
         e->accept();
@@ -128,7 +128,7 @@ void FolderView::dragMoveEvent(QDragMoveEvent *e)
 {
     qDebug() << "FolderView::dragMoveEvent()";
 
-    FolderView* source = dynamic_cast<FolderView*>(e->source());
+    FolderView* source = qobject_cast<FolderView*>(e->source());
     if(this != source)
     {
         e->accept();
@@ -139,10 +139,10 @@ void FolderView::dropEvent(QDropEvent *e)
 {
     qDebug() << "FolderView::dropEvent()";
 
-    FolderView* source = dynamic_cast<FolderView*>(e->source());
+    FolderView* source = qobject_cast<FolderView*>(e->source());
     if(this != source)
     {
-        FolderModel* folderModel = dynamic_cast<FolderModel*>(model());
+        FolderModel* folderModel = qobject_cast<FolderModel*>(model());
         Q_ASSERT(folderModel);
 
         QString dstDirPath = folderModel->filePath(rootIndex());

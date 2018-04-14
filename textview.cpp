@@ -106,7 +106,7 @@ int TextView::LineNumberArea::getAreaWidth() const
         return 0;
     }
 
-    TextView* parent = dynamic_cast<TextView*>(this->parent());
+    TextView* parent = qobject_cast<TextView*>(this->parent());
 
     Q_ASSERT(parent);
 
@@ -132,7 +132,7 @@ void TextView::LineNumberArea::paintEvent(QPaintEvent* e)
     }
 
     QPainter painter(this);
-    TextView* parent = dynamic_cast<TextView*>(this->parent());
+    TextView* parent = qobject_cast<TextView*>(this->parent());
 
     Q_ASSERT(parent);
 

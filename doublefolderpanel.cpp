@@ -189,7 +189,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     {
     case QEvent::KeyPress:
     {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
         if(keyEvent != Q_NULLPTR)
         {
             Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
@@ -649,7 +649,7 @@ FolderForm* DoubleFolderPanel::getActiveFolderForm()
         return Q_NULLPTR;
     }
 
-    return dynamic_cast<FolderForm*>(fw->parent());
+    return qobject_cast<FolderForm*>(fw->parent());
 }
 
 FolderForm* DoubleFolderPanel::getInactiveFolderForm()

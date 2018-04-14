@@ -52,7 +52,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, dynamic_cast<QWidget*>(parent()));
+    WorkingDialog dialog(copyWorker, qobject_cast<QWidget*>(parent()));
     if(dialog.exec() == QDialog::Accepted)
     {
         return true;
@@ -82,7 +82,7 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, dynamic_cast<QWidget*>(parent()));
+    WorkingDialog dialog(copyWorker, qobject_cast<QWidget*>(parent()));
     if(dialog.exec() == QDialog::Accepted)
     {
         return true;
@@ -108,7 +108,7 @@ bool File::removeFile(const QStringList& paths)
             this,
             SLOT(onRemoveFileError(QString)));
 
-    WorkingDialog dialog(worker, dynamic_cast<QWidget*>(parent()));
+    WorkingDialog dialog(worker, qobject_cast<QWidget*>(parent()));
     if(dialog.exec() == QDialog::Accepted)
     {
         return true;
@@ -240,10 +240,10 @@ void File::onRemoveFileError(const QString& err)
 
 void File::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType)
 {
-    CopyWorker* copyWorker = dynamic_cast<CopyWorker*>(sender());
-    if(copyWorker != nullptr)
+    CopyWorker* copyWorker = qobject_cast<CopyWorker*>(sender());
+    if(copyWorker != Q_NULLPTR)
     {
-        OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType), dynamic_cast<QWidget*>(parent()));
+        OverwriteDialog dialog(srcFilePath, dstFilePath, static_cast<OverwriteMethodType>(methodType), qobject_cast<QWidget*>(parent()));
         if(dialog.exec() == QDialog::Accepted)
         {
             copyWorker->finishConfirmOverwrite(dialog.getMethodType(), dialog.getKeepSetting(), dialog.getRenameFileName());

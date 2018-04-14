@@ -21,6 +21,8 @@ namespace Farman
 
 class FolderModel : public QDirModel
 {
+    Q_OBJECT
+
 public:
     explicit FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent = Q_NULLPTR);
     explicit FolderModel(QObject *parent = Q_NULLPTR);

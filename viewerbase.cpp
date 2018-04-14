@@ -87,7 +87,7 @@ bool ViewerBase::eventFilter(QObject *watched, QEvent *e)
     {
     case QEvent::KeyPress:
     {
-        QKeyEvent* keyEvent = dynamic_cast<QKeyEvent*>(e);
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
         if(keyEvent != Q_NULLPTR)
         {
             Qt::Key key = static_cast<Qt::Key>(keyEvent->key());

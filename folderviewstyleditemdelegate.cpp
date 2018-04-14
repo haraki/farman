@@ -24,7 +24,7 @@ void FolderViewStyledItemDelegate::paint(QPainter *painter, const QStyleOptionVi
 
     QStyledItemDelegate::paint(painter, opt, index);
 
-    FolderView* parent = dynamic_cast<FolderView*>(this->parent());
+    FolderView* parent = qobject_cast<FolderView*>(this->parent());
     if(parent != Q_NULLPTR)
     {
         if(parent->currentIndex().row() == index.row())
