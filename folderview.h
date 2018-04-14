@@ -22,7 +22,7 @@ public:
 
     QItemSelectionModel::SelectionFlags selectionCommand(const QModelIndex &index, const QEvent *e = Q_NULLPTR) const Q_DECL_OVERRIDE;
 
-    void selectCurrent();
+    void selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag = QItemSelectionModel::Toggle);
 
     void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 

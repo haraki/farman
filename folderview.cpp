@@ -39,12 +39,12 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
     QItemSelectionModel::SelectionFlags ret = QTableView::selectionCommand(index, e);
 
     // ここでは選択処理は行わない
-    ret &= ~(QItemSelectionModel::SelectionFlag::ClearAndSelect | QItemSelectionModel::SelectionFlag::Toggle);
+    ret &= ~(QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Toggle);
 
     return ret;
 }
 
-void FolderView::selectCurrent()
+void FolderView::selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag/* = QItemSelectionModel::Toggle*/)
 {
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
@@ -52,7 +52,7 @@ void FolderView::selectCurrent()
     const QModelIndex index = currentIndex();
     if(folderModel->fileName(index) != "..")
     {
-        folderModel->setSelect(index.row(), QItemSelectionModel::Toggle, index.parent());
+        folderModel->setSelect(index.row(), selectionFlag, index.parent());
     }
 }
 
@@ -109,7 +109,16 @@ void FolderView::mousePressEvent(QMouseEvent *e)
 
     if(e->buttons() & Qt::LeftButton && indexAt(e->pos()).isValid())
     {
-        selectCurrent();
+        QItemSelectionModel::SelectionFlag selectionFlag = QItemSelectionModel::ClearAndSelect;
+        if(e->modifiers() & Qt::ControlModifier)
+        {
+            selectionFlag = QItemSelectionModel::Toggle;
+        }
+        else if(e->modifiers() & Qt::ShiftModifier)
+        {
+        }
+
+        selectCurrent(selectionFlag);
     }
 }
 
