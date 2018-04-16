@@ -19,7 +19,7 @@ public:
     explicit ViewerBase(const QString& filePath, QWidget *parent = Q_NULLPTR);
     virtual ~ViewerBase();
 
-    int start();
+    virtual int start();
 
 Q_SIGNALS:
     void closeViewer(const QString& viewerName);

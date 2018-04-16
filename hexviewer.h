@@ -18,6 +18,8 @@ public:
     explicit HexViewer(const QString& filePath, QWidget *parent = Q_NULLPTR);
     ~HexViewer();
 
+    int start() Q_DECL_OVERRIDE;
+
     const QPalette& getAddressAreaPalette() const;
     void setAddressAreaPalette(const QPalette& palette);
 

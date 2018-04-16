@@ -45,9 +45,14 @@ void HexViewer::initPalette()
     ui->hexView->setAddressAreaPalette(pal);
 }
 
+int HexViewer::start()
+{
+    return setData();
+}
+
 int HexViewer::setData()
 {
-    ui->hexView->setData(new QHexView::DataStorageArray(m_buffer));
+    ui->hexView->setData(new QHexView::DataStorageFile(m_filePath));
 
     return 0;
 }
