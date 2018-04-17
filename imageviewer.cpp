@@ -3,6 +3,10 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QBitmap>
+#include <QBuffer>
+#include <QMovie>
+#include <QGraphicsProxyWidget>
+#include <QMimeDatabase>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
 #include "settings.h"
@@ -13,8 +17,8 @@ namespace Farman
 ImageViewer::ImageViewer(const QString& filePath, QWidget *parent) :
     ViewerBase(filePath, parent),
     ui(new Ui::ImageViewer),
-    m_pixmapItem(Q_NULLPTR),
-    m_transparentBgRectItem(Q_NULLPTR)
+    m_transparentBgRectItem(Q_NULLPTR),
+    m_item(Q_NULLPTR)
 {
     ui->setupUi(this);
 
@@ -142,25 +146,29 @@ void ImageViewer::makeScaleComboBox(const QString& scaleStr)
 
 int ImageViewer::setData()
 {
-    QPixmap pixmap = QPixmap();
-    if(!pixmap.loadFromData(m_buffer))
+    ImageViewer::ItemWidget* itemWidget = new ImageViewer::ItemWidget(m_buffer);
+    if(itemWidget == Q_NULLPTR)
     {
         return -1;
     }
 
-    m_transparentBgRectItem = m_scene.addRect(0, 0, pixmap.width(), pixmap.height(), QPen(QBrush(), 0, Qt::NoPen), createTransparentBGBrush());
+    m_item = m_scene.addWidget(itemWidget);
+
+    if(m_item == Q_NULLPTR)
+    {
+        return -1;
+    }
+
+    QSizeF itemSize = m_item->boundingRect().size();
+
+    m_transparentBgRectItem = m_scene.addRect(0, 0, itemSize.width(), itemSize.height(), QPen(QBrush(), 0, Qt::NoPen), createTransparentBGBrush());
     if(m_transparentBgRectItem == Q_NULLPTR)
     {
         return -1;
     }
+    m_transparentBgRectItem->setZValue(m_item->zValue() - 1);
 
-    m_pixmapItem = m_scene.addPixmap(pixmap);
-    if(m_pixmapItem == Q_NULLPTR)
-    {
-        return -1;
-    }
-
-    ui->sizeLabel->setText(QString("%1 x %2").arg(pixmap.width()).arg(pixmap.height()));
+    ui->sizeLabel->setText(QString("%1 x %2").arg(itemSize.width()).arg(itemSize.height()));
 
     if(ui->fitInViewCheckBox->isChecked())
     {
@@ -183,17 +191,17 @@ int ImageViewer::setData()
 
 void ImageViewer::autoScale()
 {
-    if(m_pixmapItem == Q_NULLPTR)
+    if(m_item == Q_NULLPTR)
     {
         return;
     }
 
     // 拡縮率を自動算出
-    QSizeF pixmapSize = m_pixmapItem->boundingRect().size();
+    QSizeF itemSize = m_item->boundingRect().size();
     QSize viewSize = ui->imageGraphicsView->size();
 
-    float wScale = viewSize.width() / pixmapSize.width();
-    float hScale = viewSize.height() / pixmapSize.height();
+    float wScale = viewSize.width() / itemSize.width();
+    float hScale = viewSize.height() / itemSize.height();
     float scale = (wScale <= hScale) ? wScale : hScale;
 
     setScale(scale);
@@ -203,14 +211,14 @@ void ImageViewer::autoScale()
 
 void ImageViewer::setScale(float scale)
 {
-    if(m_pixmapItem == Q_NULLPTR)
+    if(m_item == Q_NULLPTR)
     {
         return;
     }
 
-    m_pixmapItem->setScale(scale);
+    m_item->setScale(scale);
 
-    QRectF sceneRect = m_pixmapItem->boundingRect();
+    QRectF sceneRect = m_item->boundingRect();
     sceneRect.setWidth(sceneRect.width() * scale);
     sceneRect.setHeight(sceneRect.height() * scale);
     m_scene.setSceneRect(sceneRect);
@@ -256,6 +264,45 @@ QBrush ImageViewer::createTransparentBGBrush()
     bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_background"));
 
     return bgBrush;
+}
+
+ImageViewer::ItemWidget::ItemWidget(QByteArray& buffer) :
+    m_buffer(Q_NULLPTR),
+    m_movie(Q_NULLPTR)
+{
+    qDebug() << "ImageViewer::ItemWidget::ItemWidget()";
+
+    m_buffer = new QBuffer(&buffer);
+    Q_ASSERT(m_buffer);
+
+    m_movie = new QMovie(m_buffer);
+    Q_ASSERT(m_movie);
+
+    setMovie(m_movie);
+
+    m_movie->start();
+
+    setFixedSize(m_movie->frameRect().size());          // QMovie::start() の後でないとサイズは取得できない
+    setAlignment(Qt::AlignCenter);
+    setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    setAttribute(Qt::WA_TranslucentBackground, true);
+}
+
+ImageViewer::ItemWidget::~ItemWidget()
+{
+    qDebug() << "ImageViewer::ItemWidget::~ItemWidget()";
+
+    if(m_movie != Q_NULLPTR)
+    {
+        delete m_movie;
+        m_movie = Q_NULLPTR;
+    }
+
+    if(m_buffer != Q_NULLPTR)
+    {
+        delete m_buffer;
+        m_buffer = Q_NULLPTR;
+    }
 }
 
 }

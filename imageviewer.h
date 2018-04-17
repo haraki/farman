@@ -2,12 +2,16 @@
 #define IMAGEVIEWER_H
 
 #include <QGraphicsScene>
+#include <QLabel>
 #include "viewerbase.h"
 
 class QString;
 class QBrush;
 class QPixmap;
 class QByteArray;
+class QMovie;
+class QBuffer;
+class QGraphicsProxyWidget;
 
 namespace Ui {
 class ImageViewer;
@@ -40,8 +44,19 @@ private:
     Ui::ImageViewer *ui;
 
     QGraphicsScene m_scene;
-    QGraphicsPixmapItem* m_pixmapItem;
     QGraphicsRectItem* m_transparentBgRectItem;             // PNG等透過部分がある画像の背景
+    QGraphicsItem* m_item;
+
+    class ItemWidget : public QLabel
+    {
+    public:
+        ItemWidget(QByteArray& buffer);
+        ~ItemWidget();
+
+    private:
+        QBuffer* m_buffer;
+        QMovie* m_movie;
+    };
 };
 
 }
