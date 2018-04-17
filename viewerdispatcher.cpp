@@ -28,8 +28,7 @@ ViewerDispatcher* ViewerDispatcher::getInstance()
     return s_instance;
 }
 
-ViewerDispatcher::ViewerDispatcher() :
-    m_mimeDb(new QMimeDatabase())
+ViewerDispatcher::ViewerDispatcher()
 {
     for(auto mimeType : QMimeDatabase().allMimeTypes())
     {
@@ -44,7 +43,6 @@ ViewerDispatcher::ViewerDispatcher() :
 
 ViewerDispatcher::~ViewerDispatcher()
 {
-    delete m_mimeDb;
 }
 
 int ViewerDispatcher::initialize()
@@ -100,7 +98,7 @@ int ViewerDispatcher::initialize()
 
 ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, ViewerType viewerType, QWidget* parent/* = Q_NULLPTR*/)
 {
-    QMimeType mimeType = m_mimeDb->mimeTypeForFile(filePath);
+    QMimeType mimeType = QMimeDatabase().mimeTypeForFile(filePath);
     qDebug() << "mimeType : " << mimeType.name();
 
     if(viewerType == ViewerType::Auto)

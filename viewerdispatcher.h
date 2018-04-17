@@ -29,8 +29,6 @@ private:
 
     static ViewerDispatcher* s_instance;
 
-    QMimeDatabase* m_mimeDb;
-
     QMap<QString, ViewerType> m_viewerTypeSettings;
 };
 
