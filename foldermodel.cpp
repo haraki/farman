@@ -1,38 +1,64 @@
-﻿#include <QVariant>
-#include <QDebug>
+﻿#include <QFileSystemModel>
+#include <QDir>
 #include <QDateTime>
-#include <QFont>
-#include <QPalette>
+#include <QDebug>
 #include <QItemSelectionModel>
+#include <QFileIconProvider>
 #include "foldermodel.h"
 #include "settings.h"
 
 namespace Farman
 {
 
-FolderModel::FolderModel(const QStringList &nameFilters, QDir::Filters filters, QDir::SortFlags sort, QObject *parent/* = Q_NULLPTR*/)
-    : QDirModel(nameFilters, filters, sort, parent)
-    , m_selectionModel(Q_NULLPTR)
+FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
+    QSortFilterProxyModel(parent),
+    m_fsModel(new QFileSystemModel(this)),
+    m_sortFlags(QDir::Name | QDir::IgnoreCase),
+    m_sortOrder(Qt::AscendingOrder),
+    m_dotFirst(true),
+    m_selectionModel(new QItemSelectionModel(this))
 {
-    m_selectionModel = new QItemSelectionModel(this);
-}
+    m_fsModel->setRootPath(QDir::currentPath());
+    m_fsModel->setFilter(QDir::AllDirs | QDir::Files);
 
-FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/)
-    : QDirModel(parent)
-    , m_selectionModel(Q_NULLPTR)
-{
-    m_selectionModel = new QItemSelectionModel(this);
+    setSourceModel(m_fsModel);
 }
 
 FolderModel::~FolderModel()
 {
     delete m_selectionModel;
+    delete m_fsModel;
 }
 
 void FolderModel::updateSettings()
 {
     initFont();
     initBrush();
+}
+
+QModelIndex FolderModel::index(const QString &path, int column/* = 0*/) const
+{
+    return mapFromSource(m_fsModel->index(path, column));
+}
+
+void FolderModel::setSorting(QDir::SortFlags sort)
+{
+    m_sortFlags = sort;
+}
+
+QDir::SortFlags FolderModel::sorting() const
+{
+    return m_sortFlags;
+}
+
+void FolderModel::setDotFirst(bool enable)
+{
+    m_dotFirst = enable;
+}
+
+bool FolderModel::dotFirst()
+{
+    return m_dotFirst;
 }
 
 int FolderModel::columnCount(const QModelIndex& parent) const
@@ -132,7 +158,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 
         break;
 
-    case FileIconRole:
+    case QFileSystemModel::FileIconRole:
         if(sectionType == SectionType::FileName)
         {
             ret = fileIcon(modelIndex);
@@ -140,7 +166,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 
         break;
 
-    case FilePathRole:
+    case QFileSystemModel::FilePathRole:
         if(sectionType == SectionType::FileName)
         {
             ret = filePath(modelIndex);
@@ -148,7 +174,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
 
         break;
 
-    case FileNameRole:
+    case QFileSystemModel::FileNameRole:
         if(sectionType == SectionType::FileName)
         {
             ret = fileName(modelIndex);
@@ -194,7 +220,7 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
 
     if(ret.isNull())
     {
-        ret = QDirModel::headerData(section, orientation, role);
+        ret = QSortFilterProxyModel::headerData(section, orientation, role);
     }
 
 //    qDebug() << "headerData(" << section << "," << orientation << "," << static_cast<Qt::ItemDataRole>(role) << ") : ret = " << ret;
@@ -202,13 +228,33 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
     return ret;
 }
 
-void FolderModel::sort(int column, Qt::SortOrder order)
+void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 {
-    qDebug() << "================= sort(" << column << ", " << order << ")";
+    m_sortFlags &= ~(QDir::Name | QDir::Size | QDir::Type | QDir::Time);
+    switch(column)
+    {
+    case 0:
+        m_sortFlags |= QDir::Name;
+        break;
+    case 1:
+        m_sortFlags |= QDir::Size;
+        break;
+    case 2:
+        m_sortFlags |= QDir::Type;
+        break;
+    case 3:
+        m_sortFlags |= QDir::Time;
+        break;
+    }
 
-    QDirModel::sort(column, order);
+    m_sortOrder = order;
 
-    qDebug() << "================= sorting : " << QDirModel::sorting();
+    refresh();
+}
+
+void FolderModel::refresh()
+{
+    QSortFilterProxyModel::sort(0, m_sortOrder);
 }
 
 QItemSelectionModel* FolderModel::getSelectionModel()
@@ -244,6 +290,98 @@ void FolderModel::clearSelected()
         m_selectionModel->clear();
     }
 }
+
+bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
+{
+    QFileInfo l_info = m_fsModel->fileInfo(source_left);
+    QFileInfo r_info = m_fsModel->fileInfo(source_right);
+    bool ascOrder = (m_sortOrder == Qt::AscendingOrder);
+
+    if(m_dotFirst)
+    {
+        if(l_info.fileName() == ".")
+        {
+            return ascOrder;
+        }
+        else if(r_info.fileName() == ".")
+        {
+            return !ascOrder;
+        }
+        else if(l_info.fileName() == ".." && r_info.fileName() != ".")
+        {
+            return ascOrder;
+        }
+        else if(r_info.fileName() == ".." && l_info.fileName() != ".")
+        {
+            return !ascOrder;
+        }
+    }
+
+    if(m_sortFlags & QDir::DirsFirst)
+    {
+        if(!l_info.isDir() && r_info.isDir())
+        {
+            return !ascOrder;
+        }
+        else if(l_info.isDir() && !r_info.isDir())
+        {
+            return ascOrder;
+        }
+    }
+    else if(m_sortFlags & QDir::DirsLast)
+    {
+        if(!l_info.isDir() && r_info.isDir())
+        {
+            return ascOrder;
+        }
+        else if(l_info.isDir() && !r_info.isDir())
+        {
+            return !ascOrder;
+        }
+    }
+
+    if(m_sortFlags & QDir::Size)
+    {
+        return l_info.size() < r_info.size();
+    }
+    else if(m_sortFlags & QDir::Type)
+    {
+        return l_info.completeSuffix() < r_info.completeSuffix();
+    }
+    else if(m_sortFlags & QDir::Time)
+    {
+        return l_info.lastModified() < r_info.lastModified();
+    }
+    else
+    {
+        if(m_sortFlags & QDir::IgnoreCase)
+        {
+            return l_info.fileName().toLower() < r_info.fileName().toLower();
+        }
+        else
+        {
+            return l_info.fileName() < r_info.fileName();
+        }
+    }
+
+    return false;
+}
+
+#ifdef Q_OS_WIN
+bool FolderModel::isDrive(const QModelIndex& index) const
+{
+    QFileInfo fi = fileInfo(index);
+    foreach(QFileInfo drive, QDir::drives())
+    {
+        if(drive.absoluteFilePath() == fi.absoluteFilePath())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif
 
 FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
 {
@@ -388,254 +526,140 @@ bool FolderModel::isSelected(const QModelIndex& index) const
     return false;
 }
 
-#ifdef Q_OS_WIN
-bool FolderModel::isDrive(const QModelIndex& index) const
+// QFileSystemModel specific API
+QModelIndex FolderModel::setRootPath(const QString &path)
 {
-    QFileInfo fi = fileInfo(index);
-    foreach(QFileInfo drive, QDir::drives())
-    {
-        if(drive.absoluteFilePath() == fi.absoluteFilePath())
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-#endif
-
-#if 0
-FolderModel::FolderModel(QObject *parent)
-    : QAbstractItemModel(parent)
-{
+    return mapFromSource(m_fsModel->setRootPath(path));
 }
 
-QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int role) const
+QString FolderModel::rootPath() const
 {
-    // FIXME: Implement me!
+    return m_fsModel->rootPath();
 }
 
-bool FolderModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+QDir FolderModel::rootDirectory() const
 {
-    if (value != headerData(section, orientation, role)) {
-        // FIXME: Implement me!
-        emit headerDataChanged(orientation, section, section);
-        return true;
-    }
-    return false;
-}
-
-QModelIndex FolderModel::index(int row, int column, const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-}
-
-QModelIndex FolderModel::parent(const QModelIndex &index) const
-{
-    // FIXME: Implement me!
-}
-
-int FolderModel::rowCount(const QModelIndex &parent) const
-{
-    if (!parent.isValid())
-        return 0;
-
-    // FIXME: Implement me!
-}
-
-int FolderModel::columnCount(const QModelIndex &parent) const
-{
-    if (!parent.isValid())
-        return 0;
-
-    // FIXME: Implement me!
-}
-
-bool FolderModel::hasChildren(const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-}
-
-bool FolderModel::canFetchMore(const QModelIndex &parent) const
-{
-    // FIXME: Implement me!
-    return false;
-}
-
-void FolderModel::fetchMore(const QModelIndex &parent)
-{
-    // FIXME: Implement me!
-}
-
-QVariant FolderModel::data(const QModelIndex &index, int role) const
-{
-    if (!index.isValid())
-        return QVariant();
-
-    // FIXME: Implement me!
-    return QVariant();
-}
-
-bool FolderModel::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (data(index, role) != value) {
-        // FIXME: Implement me!
-        emit dataChanged(index, index, QVector<int>() << role);
-        return true;
-    }
-    return false;
-}
-
-Qt::ItemFlags FolderModel::flags(const QModelIndex &index) const
-{
-    if (!index.isValid())
-        return Qt::NoItemFlags;
-
-    return Qt::ItemIsEditable; // FIXME: Implement me!
-}
-
-bool FolderModel::insertRows(int row, int count, const QModelIndex &parent)
-{
-    beginInsertRows(parent, row, row + count - 1);
-    // FIXME: Implement me!
-    endInsertRows();
-}
-
-bool FolderModel::insertColumns(int column, int count, const QModelIndex &parent)
-{
-    beginInsertColumns(parent, column, column + count - 1);
-    // FIXME: Implement me!
-    endInsertColumns();
-}
-
-bool FolderModel::removeRows(int row, int count, const QModelIndex &parent)
-{
-    beginRemoveRows(parent, row, row + count - 1);
-    // FIXME: Implement me!
-    endRemoveRows();
-}
-
-bool FolderModel::removeColumns(int column, int count, const QModelIndex &parent)
-{
-    beginRemoveColumns(parent, column, column + count - 1);
-    // FIXME: Implement me!
-    endRemoveColumns();
+    return m_fsModel->rootDirectory();
 }
 
 void FolderModel::setIconProvider(QFileIconProvider *provider)
 {
-    // FIXME: Implement me!
+    m_fsModel->setIconProvider(provider);
 }
 
 QFileIconProvider* FolderModel::iconProvider() const
 {
-    // FIXME: Implement me!
-}
-
-void FolderModel::setNameFilters(const QStringList &filters)
-{
-    // FIXME: Implement me!
-}
-
-QStringList FolderModel::nameFilters() const
-{
-    // FIXME: Implement me!
+    return m_fsModel->iconProvider();
 }
 
 void FolderModel::setFilter(QDir::Filters filters)
 {
-    // FIXME: Implement me!
+    m_fsModel->setFilter(filters);
 }
 
 QDir::Filters FolderModel::filter() const
 {
-    // FIXME: Implement me!
-}
-
-void FolderModel::setSorting(QDir::SortFlags sort)
-{
-    // FIXME: Implement me!
-}
-
-QDir::SortFlags FolderModel::sorting() const
-{
-    // FIXME: Implement me!
+    return m_fsModel->filter();
 }
 
 void FolderModel::setResolveSymlinks(bool enable)
 {
-    // FIXME: Implement me!
+    m_fsModel->setResolveSymlinks(enable);
 }
 
 bool FolderModel::resolveSymlinks() const
 {
-    // FIXME: Implement me!
+    return m_fsModel->resolveSymlinks();
 }
 
 void FolderModel::setReadOnly(bool enable)
 {
-    // FIXME: Implement me!
+    m_fsModel->setReadOnly(enable);
 }
 
 bool FolderModel::isReadOnly() const
 {
-    // FIXME: Implement me!
+    return m_fsModel->isReadOnly();
 }
 
-void FolderModel::setLazyChildCount(bool enable)
+void FolderModel::setNameFilterDisables(bool enable)
 {
-    // FIXME: Implement me!
+    m_fsModel->setNameFilterDisables(enable);
 }
 
-bool FolderModel::lazyChildCount() const
+bool FolderModel::nameFilterDisables() const
 {
-    // FIXME: Implement me!
+    return m_fsModel->nameFilterDisables();
 }
 
-QModelIndex FolderModel::index(const QString &path, int column) const
+void FolderModel::setNameFilters(const QStringList &filters)
 {
-    // FIXME: Implement me!
+    return m_fsModel->setNameFilters(filters);
 }
 
-bool FolderModel::isDir(const QModelIndex &index) const
+QStringList FolderModel::nameFilters() const
 {
-    // FIXME: Implement me!
-}
-
-QModelIndex FolderModel::mkdir(const QModelIndex &parent, const QString &name)
-{
-    // FIXME: Implement me!
-}
-
-bool FolderModel::rmdir(const QModelIndex &index)
-{
-    // FIXME: Implement me!
-}
-
-bool FolderModel::remove(const QModelIndex &index)
-{
-    // FIXME: Implement me!
+    return m_fsModel->nameFilters();
 }
 
 QString FolderModel::filePath(const QModelIndex &index) const
 {
-    // FIXME: Implement me!
+    return m_fsModel->filePath(mapToSource(index));
+}
+
+bool FolderModel::isDir(const QModelIndex &index) const
+{
+    return m_fsModel->isDir(mapToSource(index));
+}
+
+qint64 FolderModel::size(const QModelIndex &index) const
+{
+    return m_fsModel->size(mapToSource(index));
+}
+
+QString FolderModel::type(const QModelIndex &index) const
+{
+    return m_fsModel->type(mapToSource(index));
+}
+
+QDateTime FolderModel::lastModified(const QModelIndex &index) const
+{
+    return m_fsModel->lastModified(mapToSource(index));
+}
+
+QModelIndex FolderModel::mkdir(const QModelIndex &parent, const QString &name)
+{
+    return mapFromSource(m_fsModel->mkdir(mapToSource(parent), name));
+}
+
+bool FolderModel::rmdir(const QModelIndex &index)
+{
+    return m_fsModel->rmdir(mapToSource(index));
 }
 
 QString FolderModel::fileName(const QModelIndex &index) const
 {
-    // FIXME: Implement me!
+    return m_fsModel->fileName(mapToSource(index));
 }
 
 QIcon FolderModel::fileIcon(const QModelIndex &index) const
 {
-    // FIXME: Implement me!
+    return m_fsModel->fileIcon(mapToSource(index));
+}
+
+QFile::Permissions FolderModel::permissions(const QModelIndex &index) const
+{
+    return m_fsModel->permissions(mapToSource(index));
 }
 
 QFileInfo FolderModel::fileInfo(const QModelIndex &index) const
 {
-    // FIXME: Implement me!
+    return m_fsModel->fileInfo(mapToSource(index));
 }
-#endif
+
+bool FolderModel::remove(const QModelIndex &index)
+{
+    return m_fsModel->remove(mapToSource(index));
+}
 
 }           // namespace Farman

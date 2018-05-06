@@ -173,18 +173,18 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         {
             filterFlags = m_folderModel->filter() & ~QDir::NoDotDot;
         }
-
+#if 0
         if(dir.entryInfoList(filterFlags, m_folderModel->sorting()).size() == 0)
         {
             qDebug() << dirPath << " size() == 0";
             return;
         }
-
+#endif
         m_folderModel->setFilter(filterFlags);
 
         m_folderModel->clearSelected();
 
-        QModelIndex newDirIndex = m_folderModel->index(dirPath);
+        QModelIndex newDirIndex = m_folderModel->setRootPath(dirPath);
         ui->folderView->setRootIndex(newDirIndex);
 
         QModelIndex newCursorIndex;
@@ -197,7 +197,7 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
         if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
         {
             // 初期カーソル位置はリストの先頭
-            newCursorIndex = ui->folderView->indexAt(QPoint(0,0));
+            newCursorIndex = m_folderModel->index(0, 0);
         }
         ui->folderView->setCurrentIndex(newCursorIndex);
         ui->folderView->scrollTo(newCursorIndex);
