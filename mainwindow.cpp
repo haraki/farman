@@ -156,7 +156,14 @@ void MainWindow::onOpen(ViewerType viewerType)
     {
         if(viewerType == ViewerType::Auto)
         {
-            activeFolderForm->onGoToChildDir();
+            if(fileInfo.fileName() == "..")
+            {
+                activeFolderForm->onGoToParentDir();
+            }
+            else
+            {
+                activeFolderForm->onGoToChildDir();
+            }
         }
         else
         {
