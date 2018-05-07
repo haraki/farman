@@ -156,13 +156,20 @@ void MainWindow::onOpen(ViewerType viewerType)
     {
         if(viewerType == ViewerType::Auto)
         {
+            int ret = 0;
+
             if(fileInfo.fileName() == "..")
             {
-                activeFolderForm->onGoToParentDir();
+                ret = activeFolderForm->onGoToParentDir();
             }
             else
             {
-                activeFolderForm->onGoToChildDir();
+                ret = activeFolderForm->onGoToChildDir();
+            }
+
+            if(ret < 0)
+            {
+                onOutputConsole(tr("Folder can not be opened.\n"));
             }
         }
         else

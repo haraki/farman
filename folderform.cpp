@@ -188,7 +188,7 @@ Qt::SortOrder FolderForm::getSortOrder() const
     return m_folderModel->sortOrder();
 }
 
-void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
+int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
 {
     if(!beforePath.isEmpty())
     {
@@ -207,13 +207,19 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
     {
         filterFlags = m_folderModel->filter() & ~QDir::NoDotDot;
     }
-#if 0
-    if(dir.entryInfoList(filterFlags, m_folderModel->sorting()).size() == 0)
+
+    if(dir.entryInfoList(filterFlags).size() == 0)
     {
         qDebug() << dirPath << " size() == 0";
-        return;
+
+        if(!beforePath.isEmpty())
+        {
+            m_folderWatcher->addPath(beforePath);
+        }
+
+        return -1;
     }
-#endif
+
     m_folderModel->setFilter(filterFlags);
 
     m_folderModel->clearSelected();
@@ -239,6 +245,8 @@ void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = Q
     ui->folderPathEdit->setText(dirPath);
 
     m_folderWatcher->addPath(dirPath);
+
+    return 0;
 }
 
 QString FolderForm::getCurrentDirPath()
@@ -330,39 +338,43 @@ void FolderForm::setCursor(const QString& fileName)
     }
 }
 
-void FolderForm::onGoToChildDir()
+int FolderForm::onGoToChildDir()
 {
     const QModelIndex currentIndex = ui->folderView->currentIndex();
 
-    if(m_folderModel->isDir(currentIndex))
+    if(!m_folderModel->isDir(currentIndex))
     {
-        const QString newPath = m_folderModel->filePath(currentIndex);
-
-        qDebug() << "================== onGoToChildDir() : " << currentIndex << " -> " << newPath;
-
-        const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
-
-        setPath(newPath, currentPath);
+        return -1;
     }
+
+    const QString newPath = m_folderModel->filePath(currentIndex);
+
+    qDebug() << "================== onGoToChildDir() : " << currentIndex << " -> " << newPath;
+
+    const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
+
+    return setPath(newPath, currentPath);
 }
 
-void FolderForm::onGoToParentDir()
+int FolderForm::onGoToParentDir()
 {
     const QModelIndex currentDirIndex = ui->folderView->rootIndex();
     const QString currentPath = m_folderModel->filePath(currentDirIndex);
 
 #ifdef Q_OS_WIN
-    if(currentPath != "")
+    if(currentPath == "")
 #else           // Q_OS_WIN
-    if(!QDir(currentPath).isRoot())
+    if(QDir(currentPath).isRoot())
 #endif          // Q_OS_WIN
     {
-        const QString newPath = m_folderModel->filePath(currentDirIndex.parent());
-
-        qDebug() << "================== onGoToParentDir() : " << newPath;
-
-        setPath(newPath, currentPath);
+        return -1;
     }
+
+    const QString newPath = m_folderModel->filePath(currentDirIndex.parent());
+
+    qDebug() << "================== onGoToParentDir() : " << newPath;
+
+    return setPath(newPath, currentPath);
 }
 
 void FolderForm::refresh()

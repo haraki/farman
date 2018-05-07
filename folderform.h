@@ -43,7 +43,7 @@ public:
     Qt::CaseSensitivity getSortCaseSensitivity() const;
     Qt::SortOrder getSortOrder() const;
 
-    void setPath(const QString& dirPath, const QString& beforePath = QString());
+    int setPath(const QString& dirPath, const QString& beforePath = QString());
 
     QString getCurrentDirPath();
     QString getCurrentFileName();
@@ -53,8 +53,8 @@ public:
 
     void setCursor(const QString& fileName);
 
-    void onGoToChildDir();
-    void onGoToParentDir();
+    int onGoToChildDir();
+    int onGoToParentDir();
     void refresh();
 
 Q_SIGNALS:
