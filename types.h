@@ -47,10 +47,29 @@ enum class ViewMode : int
     Default = ViewMode::Double,
 };
 
+enum class SectionType : int
+{
+    Unknown = -1,
+
+    FileName = 0,
+    FileSize,
+    FileType,
+    LastModified,
+
+    SectionTypeNum
+};
+
+enum class SortDirsType : int
+{
+    First = 0,
+    Last = 1,
+    NoSpecify = 2,
+
+    SortDirsTypeNum
+};
+
 const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
 const QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
-const QDir::SortFlags FIX_SORT_FLAGS = static_cast<QDir::SortFlags>(0);
-const QDir::SortFlags DEFAULT_SORT_FLAGS = FIX_SORT_FLAGS | QDir::DirsFirst | QDir::IgnoreCase | QDir::Name;
 
 const int DEFAULT_CURSOR_WIDTH = 1;
 

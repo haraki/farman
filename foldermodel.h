@@ -6,6 +6,7 @@
 #include <QFont>
 #include <QBrush>
 #include <QItemSelectionModel>
+#include "types.h"
 
 class QFileSystemModel;
 class QFileIconProvider;
@@ -26,11 +27,17 @@ public:
     using QSortFilterProxyModel::index;
     QModelIndex index(const QString &path, int column = 0) const;
 
-    void setSorting(QDir::SortFlags sort);
-    QDir::SortFlags sorting() const;
+    void setSortSectionType(SectionType sectionType);
+    SectionType sortSectionType() const;
 
-    void setDotFirst(bool enable);
-    bool dotFirst();
+    void setSortDirsType(SortDirsType dirsType);
+    SortDirsType sortDirsType() const;
+
+    void setSortDotFirst(bool dotFirst);
+    bool sortDotFirst() const;
+
+    void setSortOrder(Qt::SortOrder order);
+    Qt::SortOrder sortOrder() const;
 
     int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -91,22 +98,6 @@ private:
 
     bool isSelected(const QModelIndex& index) const;
 
-    // don't use
-    Qt::CaseSensitivity sortCaseSensitivity() const;
-    void setSortCaseSensitivity(Qt::CaseSensitivity cs);
-
-    enum class SectionType : int
-    {
-        Unknown = -1,
-
-        FileName = 0,
-        FileSize,
-        FileType,
-        LastModified,
-
-        SectionTypeNum
-    };
-
     SectionType getSectionTypeFromColumn(int column) const;
 
     enum class BrushType : int
@@ -137,9 +128,11 @@ private:
     void initBrush();
 
     QFileSystemModel* m_fsModel;
-    QDir::SortFlags m_sortFlags;
+
+    SectionType m_sortSectionType;
+    SortDirsType m_sortDirsType;
+    bool m_sortDotFirst;
     Qt::SortOrder m_sortOrder;
-    bool m_dotFirst;
 
     QFont m_font;
     QMap<BrushType, QBrush> m_brush;

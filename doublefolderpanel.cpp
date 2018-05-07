@@ -52,8 +52,18 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         r_path = QDir::currentPath();
     }
 
-    QDir::SortFlags l_sortFlags = Settings::getInstance()->getLeftSortSettings();
-    QDir::SortFlags r_sortFlags = Settings::getInstance()->getRightSortSettings();
+    SectionType l_sortSectionType = Settings::getInstance()->getLeftSortSectionType();
+    SortDirsType l_sortDirsType = Settings::getInstance()->getLeftSortDirsType();
+    bool l_sortDotFirst = Settings::getInstance()->getLeftSortDotFirst();
+    Qt::CaseSensitivity l_sortCaseSensitivity = Settings::getInstance()->getLeftSortCaseSensitivity();
+    Qt::SortOrder l_sortOrder = Settings::getInstance()->getLeftSortOrder();
+
+    SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
+    SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
+    bool r_sortDotFirst = Settings::getInstance()->getRightSortDotFirst();
+    Qt::CaseSensitivity r_sortCaseSensitivity = Settings::getInstance()->getRightSortCaseSensitivity();
+    Qt::SortOrder r_sortOrder = Settings::getInstance()->getRightSortOrder();
+
     QDir::Filters l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
     QDir::Filters r_filterFlags = Settings::getInstance()->getRightFilterSettings();
 
@@ -77,7 +87,13 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     l_vLayout->setObjectName(QStringLiteral("l_vLayout"));
     l_vLayout->setContentsMargins(0, 0, 0, 0);
 
-    FolderForm* l_folderForm = new FolderForm(l_filterFlags, l_sortFlags, this);
+    FolderForm* l_folderForm = new FolderForm(l_filterFlags,
+                                              l_sortSectionType,
+                                              l_sortDirsType,
+                                              l_sortDotFirst,
+                                              l_sortCaseSensitivity,
+                                              l_sortOrder,
+                                              this);
     l_folderForm->setObjectName(QStringLiteral("l_folderForm"));
     l_folderForm->setPath(l_path);
 
@@ -96,7 +112,13 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     r_vLayout->setObjectName(QStringLiteral("r_vLayout"));
     r_vLayout->setContentsMargins(0, 0, 0, 0);
 
-    FolderForm* r_folderForm = new FolderForm(r_filterFlags, r_sortFlags, this);
+    FolderForm* r_folderForm = new FolderForm(r_filterFlags,
+                                              r_sortSectionType,
+                                              r_sortDirsType,
+                                              r_sortDotFirst,
+                                              r_sortCaseSensitivity,
+                                              r_sortOrder,
+                                              this);
     r_folderForm->setObjectName(QStringLiteral("r_folderForm"));
     r_folderForm->setPath(r_path);
 
@@ -301,20 +323,37 @@ void DoubleFolderPanel::onChangeSortSettings()
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR)
     {
-        QDir::SortFlags sortFlags = activeForm->getSortFlags();
+        SectionType sectionType = activeForm->getSortSectionType();
+        SortDirsType dirsType = activeForm->getSortDirsType();
+        bool dotFirst = activeForm->getSortDotFirst();
+        Qt::CaseSensitivity caseSensitivity = activeForm->getSortCaseSensitivity();
+        Qt::SortOrder order = activeForm->getSortOrder();
 
-        SortDialog dialog(sortFlags, this);
+        SortDialog dialog(sectionType, dirsType, dotFirst, caseSensitivity, order, this);
         if(dialog.exec())
         {
-            sortFlags = dialog.getSortFlags();
-            activeForm->setSortFlags(sortFlags);
+            sectionType = dialog.getSortSectionType();
+            dirsType = dialog.getSortDirsType();
+            dotFirst = dialog.getSortDotFirst();
+            caseSensitivity = dialog.getSortCaseSensitivity();
+            order = dialog.getSortOrder();
+
+            activeForm->setSortSettings(sectionType, dirsType, dotFirst, caseSensitivity, order);
             if(activeForm->objectName() == "l_folderForm")
             {
-                Settings::getInstance()->setLeftSortSettings(sortFlags);
+                Settings::getInstance()->setLeftSortSectionType(sectionType);
+                Settings::getInstance()->setLeftSortDirsType(dirsType);
+                Settings::getInstance()->setLeftSortDotFirst(dotFirst);
+                Settings::getInstance()->setLeftSortCaseSensitivity(caseSensitivity);
+                Settings::getInstance()->setLeftSortOrder(order);
             }
             else
             {
-                Settings::getInstance()->setRightSortSettings(sortFlags);
+                Settings::getInstance()->setRightSortSectionType(sectionType);
+                Settings::getInstance()->setRightSortDirsType(dirsType);
+                Settings::getInstance()->setRightSortDotFirst(dotFirst);
+                Settings::getInstance()->setRightSortCaseSensitivity(caseSensitivity);
+                Settings::getInstance()->setRightSortOrder(order);
             }
         }
     }

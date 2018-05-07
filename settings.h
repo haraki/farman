@@ -50,11 +50,27 @@ public:
     QString getRightFolderPath() { return m_rightFolderPath; }
     void setRightFolderPath(const QString& rightFolderPath) { m_rightFolderPath = rightFolderPath; }
 
-    QDir::SortFlags getLeftSortSettings() { return m_leftSortSettings; }
-    void setLeftSortSettings(QDir::SortFlags leftSortSettings) { m_leftSortSettings = leftSortSettings; }
+    SectionType getLeftSortSectionType() { return m_leftSortSectionType; }
+    SortDirsType getLeftSortDirsType() { return m_leftSortDirsType; }
+    bool getLeftSortDotFirst() { return m_leftSortDotFirst; }
+    Qt::CaseSensitivity getLeftSortCaseSensitivity() { return m_leftSortCaseSensitivity; }
+    Qt::SortOrder getLeftSortOrder() { return m_leftSortOrder; }
+    void setLeftSortSectionType(SectionType sectionType) { m_leftSortSectionType = sectionType; }
+    void setLeftSortDirsType(SortDirsType dirsType) { m_leftSortDirsType = dirsType; }
+    void setLeftSortDotFirst(bool dotFirst) { m_leftSortDotFirst = dotFirst; }
+    void setLeftSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity) { m_leftSortCaseSensitivity = caseSensitivity; }
+    void setLeftSortOrder(Qt::SortOrder order) { m_leftSortOrder = order; }
 
-    QDir::SortFlags getRightSortSettings() { return m_rightSortSettings; }
-    void setRightSortSettings(QDir::SortFlags rightSortSettings) { m_rightSortSettings = rightSortSettings; }
+    SectionType getRightSortSectionType() { return m_rightSortSectionType; }
+    SortDirsType getRightSortDirsType() { return m_rightSortDirsType; }
+    bool getRightSortDotFirst() { return m_rightSortDotFirst; }
+    Qt::CaseSensitivity getRightSortCaseSensitivity() { return m_rightSortCaseSensitivity; }
+    Qt::SortOrder getRightSortOrder() { return m_rightSortOrder; }
+    void setRightSortSectionType(SectionType sectionType) { m_rightSortSectionType = sectionType; }
+    void setRightSortDirsType(SortDirsType dirsType) { m_rightSortDirsType = dirsType; }
+    void setRightSortDotFirst(bool dotFirst) { m_rightSortDotFirst = dotFirst; }
+    void setRightSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity) { m_rightSortCaseSensitivity = caseSensitivity; }
+    void setRightSortOrder(Qt::SortOrder order) { m_rightSortOrder = order; }
 
     QDir::Filters getLeftFilterSettings() { return m_leftFilterSettings; }
     void setLeftFilterSettings(QDir::Filters leftFilterSettings) { m_leftFilterSettings = leftFilterSettings; }
@@ -103,8 +119,16 @@ private:
 
     void initialize();
 
-    QDir::SortFlags getSortSettings(const QString& prefix);
-    void setSortSettings(QDir::SortFlags sortSettings, const QString& prefix);
+    SectionType getSortSectionType(const QString& prefix);
+    SortDirsType getSortDirsType(const QString& prefix);
+    bool getSortDotFirst(const QString& prefix);
+    Qt::CaseSensitivity getSortCaseSensitivity(const QString& prefix);
+    Qt::SortOrder getSortOrder(const QString& prefix);
+    void setSortSectionType(SectionType sectionType, const QString& prefix);
+    void setSortDirsType(SortDirsType dirsType, const QString& prefix);
+    void setSortDotFirst(bool dotFirst, const QString& prefix);
+    void setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
+    void setSortOrder(Qt::SortOrder order, const QString& prefix);
 
     QDir::Filters getFilterSettings(const QString& prefix);
     void setFilterSettings(QDir::Filters filterSettings, const QString& prefix);
@@ -124,8 +148,16 @@ private:
     FolderAtStartup m_rightFolderAtStartup = FolderAtStartup::Default;
     QString m_rightFolderPath = "";
 
-    QDir::SortFlags m_leftSortSettings = DEFAULT_SORT_FLAGS;
-    QDir::SortFlags m_rightSortSettings = DEFAULT_SORT_FLAGS;
+    SectionType m_leftSortSectionType = SectionType::FileName;
+    SortDirsType m_leftSortDirsType = SortDirsType::NoSpecify;
+    bool m_leftSortDotFirst = true;
+    Qt::CaseSensitivity m_leftSortCaseSensitivity = Qt::CaseInsensitive;
+    Qt::SortOrder m_leftSortOrder = Qt::AscendingOrder;
+    SectionType m_rightSortSectionType = SectionType::FileName;
+    SortDirsType m_rightSortDirsType = SortDirsType::NoSpecify;
+    bool m_rightSortDotFirst = true;
+    Qt::CaseSensitivity m_rightSortCaseSensitivity = Qt::CaseInsensitive;
+    Qt::SortOrder m_rightSortOrder = Qt::AscendingOrder;
 
     QDir::Filters m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
     QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;

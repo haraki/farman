@@ -13,23 +13,31 @@
 namespace Farman
 {
 
-FolderForm::FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent/* = Q_NULLPTR*/)
+FolderForm::FolderForm(QDir::Filters filterFlags,
+                       SectionType sortSectionType,
+                       SortDirsType sortDirsType,
+                       bool sortDotFirst,
+                       Qt::CaseSensitivity sortCaseSensitivity,
+                       Qt::SortOrder sortOrder,
+                       QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::FolderForm)
-    , m_folderModel(Q_NULLPTR)
-    , m_folderWatcher(Q_NULLPTR)
+    , m_folderModel(new FolderModel(this))
+    , m_folderWatcher(new QFileSystemWatcher(this))
 {
     ui->setupUi(this);
 
-    m_folderModel = new FolderModel(this);
     m_folderModel->setReadOnly(true);
+    m_folderModel->setDynamicSortFilter(false);
     m_folderModel->setFilter(filterFlags);
-    m_folderModel->setSorting(sortFlags);
+    m_folderModel->setSortSectionType(sortSectionType);
+    m_folderModel->setSortDirsType(sortDirsType);
+    m_folderModel->setSortDotFirst(sortDotFirst);
+    m_folderModel->setSortCaseSensitivity(sortCaseSensitivity);
+    m_folderModel->setSortOrder(sortOrder);
     ui->folderView->setModel(m_folderModel);
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
-
-    m_folderWatcher = new QFileSystemWatcher(this);
 
     connect(m_folderModel->getSelectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
@@ -134,88 +142,103 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
 void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 {
-    if(m_folderModel != Q_NULLPTR)
-    {
-        m_folderModel->setFilter(filterFlags);
+    m_folderModel->setFilter(filterFlags);
 
-        refresh();
-    }
+    refresh();
 }
 
-void FolderForm::setSortFlags(QDir::SortFlags sortFlags)
-{
-    if(m_folderModel != Q_NULLPTR)
-    {
-        m_folderModel->setSorting(sortFlags);
-
-        refresh();
-    }
-}
-
-void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
-{
-    if(m_folderModel != Q_NULLPTR)
-    {
-        if(!beforePath.isEmpty())
-        {
-            m_folderWatcher->removePath(beforePath);
-        }
-
-        QDir dir(dirPath);
-        QDir::Filters filterFlags;
-
-        // ルートディレクトリの場合は".."を表示しないようにする
-        if(dir.isRoot())
-        {
-            filterFlags = m_folderModel->filter() | QDir::NoDotDot;
-        }
-        else
-        {
-            filterFlags = m_folderModel->filter() & ~QDir::NoDotDot;
-        }
-#if 0
-        if(dir.entryInfoList(filterFlags, m_folderModel->sorting()).size() == 0)
-        {
-            qDebug() << dirPath << " size() == 0";
-            return;
-        }
-#endif
-        m_folderModel->setFilter(filterFlags);
-
-        m_folderModel->clearSelected();
-
-        QModelIndex newDirIndex = m_folderModel->setRootPath(dirPath);
-        ui->folderView->setRootIndex(newDirIndex);
-
-        QModelIndex newCursorIndex;
-        if(!beforePath.isEmpty())
-        {
-            // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
-            newCursorIndex = m_folderModel->index(beforePath);
-        }
-
-        if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
-        {
-            // 初期カーソル位置はリストの先頭
-            newCursorIndex = m_folderModel->index(0, 0);
-        }
-        ui->folderView->setCurrentIndex(newCursorIndex);
-        ui->folderView->scrollTo(newCursorIndex);
-
-        ui->folderPathEdit->setText(dirPath);
-
-        m_folderWatcher->addPath(dirPath);
-    }
-}
-
-QDir::Filters FolderForm::getFilterFlags()
+QDir::Filters FolderForm::getFilterFlags() const
 {
     return m_folderModel->filter();
 }
 
-QDir::SortFlags FolderForm::getSortFlags()
+void FolderForm::setSortSettings(SectionType sectionType, SortDirsType dirsType, bool dotFirst, Qt::CaseSensitivity caseSensitivity, Qt::SortOrder order)
 {
-    return m_folderModel->sorting();
+    m_folderModel->setSortSectionType(sectionType);
+    m_folderModel->setSortDirsType(dirsType);
+    m_folderModel->setSortDotFirst(dotFirst);
+    m_folderModel->setSortCaseSensitivity(caseSensitivity);
+    m_folderModel->setSortOrder(order);
+
+    refresh();
+}
+
+SectionType FolderForm::getSortSectionType() const
+{
+    return m_folderModel->sortSectionType();
+}
+
+SortDirsType FolderForm::getSortDirsType() const
+{
+    return m_folderModel->sortDirsType();
+}
+
+bool FolderForm::getSortDotFirst() const
+{
+    return m_folderModel->sortDotFirst();
+}
+
+Qt::CaseSensitivity FolderForm::getSortCaseSensitivity() const
+{
+    return m_folderModel->sortCaseSensitivity();
+}
+
+Qt::SortOrder FolderForm::getSortOrder() const
+{
+    return m_folderModel->sortOrder();
+}
+
+void FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
+{
+    if(!beforePath.isEmpty())
+    {
+        m_folderWatcher->removePath(beforePath);
+    }
+
+    QDir dir(dirPath);
+    QDir::Filters filterFlags;
+
+    // ルートディレクトリの場合は".."を表示しないようにする
+    if(dir.isRoot())
+    {
+        filterFlags = m_folderModel->filter() | QDir::NoDotDot;
+    }
+    else
+    {
+        filterFlags = m_folderModel->filter() & ~QDir::NoDotDot;
+    }
+#if 0
+    if(dir.entryInfoList(filterFlags, m_folderModel->sorting()).size() == 0)
+    {
+        qDebug() << dirPath << " size() == 0";
+        return;
+    }
+#endif
+    m_folderModel->setFilter(filterFlags);
+
+    m_folderModel->clearSelected();
+
+    QModelIndex newDirIndex = m_folderModel->setRootPath(dirPath);
+    ui->folderView->setRootIndex(newDirIndex);
+
+    QModelIndex newCursorIndex;
+    if(!beforePath.isEmpty())
+    {
+        // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
+        newCursorIndex = m_folderModel->index(beforePath);
+    }
+
+    if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
+    {
+        // 初期カーソル位置はリストの先頭
+        newCursorIndex = m_folderModel->index(0, 0);
+    }
+    ui->folderView->setCurrentIndex(newCursorIndex);
+    ui->folderView->scrollTo(newCursorIndex);
+
+    ui->folderPathEdit->setText(dirPath);
+
+    m_folderWatcher->addPath(dirPath);
 }
 
 QString FolderForm::getCurrentDirPath()

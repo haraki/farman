@@ -5,22 +5,31 @@
 namespace Farman
 {
 
-SortDialog::SortDialog(QDir::SortFlags sortFlags, QWidget *parent) :
+SortDialog::SortDialog(SectionType sectionType,
+                       SortDirsType dirsType,
+                       bool dotFirst,
+                       Qt::CaseSensitivity caseSensitivity,
+                       Qt::SortOrder order,
+                       QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::SortDialog),
-    m_sortFlags(sortFlags)
+    m_sortSectionType(sectionType),
+    m_sortDirsType(dirsType),
+    m_sortDotFirst(dotFirst),
+    m_sortCaseSensitivity(caseSensitivity),
+    m_sortOrder(order)
 {
     ui->setupUi(this);
 
-    if(sortFlags & QDir::SortFlag::Time)
+    if(sectionType == SectionType::LastModified)
     {
         ui->sortLastModifiedRadioButton->setChecked(true);
     }
-    else if(sortFlags & QDir::SortFlag::Size)
+    else if(sectionType == SectionType::FileSize)
     {
         ui->sortSizeRadioButton->setChecked(true);
     }
-    else if(sortFlags & QDir::SortFlag::Type)
+    else if(sectionType == SectionType::FileType)
     {
         ui->sortTypeRadioButton->setChecked(true);
     }
@@ -29,7 +38,7 @@ SortDialog::SortDialog(QDir::SortFlags sortFlags, QWidget *parent) :
         ui->sortNameRadioButton->setChecked(true);
     }
 
-    if(sortFlags & QDir::SortFlag::Reversed)
+    if(order == Qt::DescendingOrder)
     {
         ui->orderDescendingRadioButton->setChecked(true);
     }
@@ -38,11 +47,11 @@ SortDialog::SortDialog(QDir::SortFlags sortFlags, QWidget *parent) :
         ui->orderAscendingRadioButton->setChecked(true);
     }
 
-    if(sortFlags & QDir::SortFlag::DirsFirst)
+    if(dirsType == SortDirsType::First)
     {
         ui->dirFirstRadioButton->setChecked(true);
     }
-    else if(sortFlags & QDir::SortFlag::DirsLast)
+    else if(dirsType == SortDirsType::Last)
     {
         ui->dirLastRadioButton->setChecked(true);
     }
@@ -51,7 +60,7 @@ SortDialog::SortDialog(QDir::SortFlags sortFlags, QWidget *parent) :
         ui->dirNoSpecifyRadioButton->setChecked(true);
     }
 
-    if(sortFlags & QDir::SortFlag::IgnoreCase)
+    if(caseSensitivity == Qt::CaseInsensitive)
     {
         ui->caseInsensitiveRadioButton->setChecked(true);
     }
@@ -66,54 +75,80 @@ SortDialog::~SortDialog()
     delete ui;
 }
 
-QDir::SortFlags SortDialog::getSortFlags()
+SectionType SortDialog::getSortSectionType()
 {
-    return m_sortFlags;
+    return m_sortSectionType;
+}
+
+SortDirsType SortDialog::getSortDirsType()
+{
+    return m_sortDirsType;
+}
+
+bool SortDialog::getSortDotFirst()
+{
+    return m_sortDotFirst;
+}
+
+Qt::CaseSensitivity SortDialog::getSortCaseSensitivity()
+{
+    return m_sortCaseSensitivity;
+}
+
+Qt::SortOrder SortDialog::getSortOrder()
+{
+    return m_sortOrder;
 }
 
 void SortDialog::accept()
 {
-    m_sortFlags &= ~(QDir::SortFlag::Time | QDir::SortFlag::Size | QDir::SortFlag::Type);
     if(ui->sortLastModifiedRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::Time;
+        m_sortSectionType = SectionType::LastModified;
     }
     else if(ui->sortSizeRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::Size;
+        m_sortSectionType = SectionType::FileSize;
     }
     else if(ui->sortTypeRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::Type;
+        m_sortSectionType = SectionType::FileType;
     }
     else
     {
-        m_sortFlags |= QDir::SortFlag::Name;
+        m_sortSectionType = SectionType::FileName;
     }
 
-    m_sortFlags &= ~(QDir::SortFlag::Reversed);
     if(ui->orderDescendingRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::Reversed;
+        m_sortOrder = Qt::DescendingOrder;
+    }
+    else
+    {
+        m_sortOrder = Qt::AscendingOrder;
     }
 
-    m_sortFlags &= ~(QDir::SortFlag::DirsFirst | QDir::SortFlag::DirsLast);
     if(ui->dirFirstRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::DirsFirst;
+        m_sortDirsType = SortDirsType::First;
     }
     else if(ui->dirLastRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::DirsLast;
+        m_sortDirsType = SortDirsType::Last;
+    }
+    else
+    {
+        m_sortDirsType = SortDirsType::NoSpecify;
     }
 
-    m_sortFlags &= ~QDir::SortFlag::IgnoreCase;
     if(ui->caseInsensitiveRadioButton->isChecked())
     {
-        m_sortFlags |= QDir::SortFlag::IgnoreCase;
+        m_sortCaseSensitivity = Qt::CaseInsensitive;
     }
-
-    qDebug() << "sortFlag == " << m_sortFlags;
+    else
+    {
+        m_sortCaseSensitivity = Qt::CaseSensitive;
+    }
 
     QDialog::accept();
 }

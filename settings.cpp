@@ -63,10 +63,18 @@ void Settings::initialize()
     m_rightFolderPath = value("main/rightFolderPath", QString("")).toString();
 
     // Left side Sort settings
-    m_leftSortSettings = getSortSettings("left");
+    m_leftSortSectionType = getSortSectionType("left");
+    m_leftSortDirsType = getSortDirsType("left");
+    m_leftSortDotFirst = getSortDotFirst("left");
+    m_leftSortCaseSensitivity = getSortCaseSensitivity("left");
+    m_leftSortOrder = getSortOrder("left");
 
     // Right side Sort settings
-    m_rightSortSettings = getSortSettings("right");
+    m_rightSortSectionType = getSortSectionType("right");
+    m_rightSortDirsType = getSortDirsType("right");
+    m_rightSortDotFirst = getSortDotFirst("right");
+    m_rightSortCaseSensitivity = getSortCaseSensitivity("right");
+    m_rightSortOrder = getSortOrder("right");
 
     // Left side Filter settings
     m_leftFilterSettings = getFilterSettings("left");
@@ -200,10 +208,18 @@ void Settings::flush()
     setValue("main/rightFolderPath", m_rightFolderPath);
 
     // Left side Sort settings
-    setSortSettings(m_leftSortSettings, "left");
+    setSortSectionType(m_leftSortSectionType, "left");
+    setSortDirsType(m_leftSortDirsType, "left");
+    setSortDotFirst(m_leftSortDotFirst, "left");
+    setSortCaseSensitivity(m_leftSortCaseSensitivity, "left");
+    setSortOrder(m_leftSortOrder, "left");
 
     // Right side Sort settings
-    setSortSettings(m_rightSortSettings, "right");
+    setSortSectionType(m_rightSortSectionType, "right");
+    setSortDirsType(m_rightSortDirsType, "right");
+    setSortDotFirst(m_rightSortDotFirst, "right");
+    setSortCaseSensitivity(m_rightSortCaseSensitivity, "right");
+    setSortOrder(m_rightSortOrder, "right");
 
     // Left side Filter settings
     setFilterSettings(m_leftFilterSettings, "left");
@@ -303,52 +319,100 @@ void Settings::setFontSetting(const QString& fontSettingType, const QFont& font)
     m_fontSettings[fontSettingType] = font;
 }
 
-QDir::SortFlags Settings::getSortSettings(const QString& prefix)
+SectionType Settings::getSortSectionType(const QString& prefix)
 {
-    QDir::SortFlags ret = FIX_SORT_FLAGS;
+    SectionType ret = SectionType::FileName;
 
     QString sortTypeValue = value("main/" + prefix + "SortType", "name").toString();
-    ret |= (sortTypeValue == "lastModified") ? QDir::SortFlag::Time :
-           (sortTypeValue == "size") ? QDir::SortFlag::Size :
-           (sortTypeValue == "type") ? QDir::SortFlag::Type :
-                                       QDir::SortFlag::Name;
-
-    QString sortOrderValue = value("main/" + prefix + "SortOrder", "asc").toString();
-    ret |= (sortOrderValue == "desc") ? QDir::SortFlag::Reversed :
-                                        static_cast<QDir::SortFlags>(0);
-
-    QString sortDirsValue = value("main/" + prefix + "SortDirs", "first").toString();
-    ret |= (sortDirsValue == "first") ? QDir::SortFlag::DirsFirst :
-           (sortDirsValue == "last") ? QDir::SortFlag::DirsLast :
-                                       static_cast<QDir::SortFlags>(0);
-
-    QString sortCaseValue = value("main/" + prefix + "SortCase", "sensitive").toString();
-    ret |= (sortCaseValue == "insensitive") ? QDir::SortFlag::IgnoreCase :
-                                              static_cast<QDir::SortFlags>(0);
+    ret = (sortTypeValue == "lastModified") ? SectionType::LastModified :
+          (sortTypeValue == "size") ? SectionType::FileSize :
+          (sortTypeValue == "type") ? SectionType::FileType :
+                                      SectionType::FileName;
 
     return ret;
 }
 
-void Settings::setSortSettings(QDir::SortFlags sortSettings, const QString& prefix)
+SortDirsType Settings::getSortDirsType(const QString& prefix)
 {
-    QString sortTypeValue = (sortSettings & QDir::SortFlag::Type) ? "type" :
-                            ((sortSettings & QDir::SortFlag::SortByMask) == QDir::SortFlag::Time) ? "lastModified" :
-                            ((sortSettings & QDir::SortFlag::SortByMask) == QDir::SortFlag::Size) ? "size" :
-                                                                                                    "name";
+    SortDirsType ret = SortDirsType::NoSpecify;
+
+    QString sortDirsValue = value("main/" + prefix + "SortDirs", "first").toString();
+    ret = (sortDirsValue == "first") ? SortDirsType::First :
+          (sortDirsValue == "last") ? SortDirsType::Last :
+                                      SortDirsType::NoSpecify;
+
+    return ret;
+}
+
+bool Settings::getSortDotFirst(const QString& prefix)
+{
+    bool ret = true;
+
+    QString sortDotFirstValue = value("main/" + prefix + "SortDotFirst", "true").toString();
+    ret = (sortDotFirstValue == "false") ? false :
+                                           true;
+
+    return ret;
+}
+
+Qt::CaseSensitivity Settings::getSortCaseSensitivity(const QString& prefix)
+{
+    Qt::CaseSensitivity ret = Qt::CaseSensitive;
+
+    QString sortCaseValue = value("main/" + prefix + "SortCase", "sensitive").toString();
+    ret = (sortCaseValue == "insensitive") ? Qt::CaseInsensitive :
+                                             Qt::CaseSensitive;
+
+    return ret;
+}
+
+Qt::SortOrder Settings::getSortOrder(const QString& prefix)
+{
+    Qt::SortOrder ret = Qt::AscendingOrder;
+
+    QString sortOrderValue = value("main/" + prefix + "SortOrder", "asc").toString();
+    ret = (sortOrderValue == "desc") ? Qt::DescendingOrder :
+                                       Qt::AscendingOrder;
+
+    return ret;
+}
+
+void Settings::setSortSectionType(SectionType sectionType, const QString& prefix)
+{
+    QString sortTypeValue = (sectionType == SectionType::LastModified) ? "lastModified" :
+                            (sectionType == SectionType::FileSize) ? "size" :
+                            (sectionType == SectionType::FileType) ? "type" :
+                                                                     "name";
     setValue("main/" + prefix + "SortType", sortTypeValue);
+}
 
-    QString sortOrderValue = (sortSettings & QDir::SortFlag::Reversed) ? "desc" :
-                                                                         "asc";
-    setValue("main/" + prefix + "SortOrder", sortOrderValue);
-
-    QString sortDirsValue = (sortSettings & QDir::SortFlag::DirsFirst) ? "first" :
-                            (sortSettings & QDir::SortFlag::DirsLast) ? "last" :
-                                                                        "none";
+void Settings::setSortDirsType(SortDirsType dirsType, const QString& prefix)
+{
+    QString sortDirsValue = (dirsType == SortDirsType::First) ? "first" :
+                            (dirsType == SortDirsType::Last) ? "last" :
+                                                               "none";
     setValue("main/" + prefix + "SortDirs", sortDirsValue);
+}
 
-    QString sortCaseValue = (sortSettings & QDir::SortFlag::IgnoreCase) ? "insensitive" :
-                                                                          "sensitive";
+void Settings::setSortDotFirst(bool dotFirst, const QString& prefix)
+{
+    QString sortDotFirstValue = (dotFirst == false) ? "false" :
+                                                      "true";
+    setValue("main/" + prefix + "SortDotFirst", sortDotFirstValue);
+}
+
+void Settings::setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix)
+{
+    QString sortCaseValue = (caseSensitivity == Qt::CaseInsensitive) ? "insensitive" :
+                                                                       "sensitive";
     setValue("main/" + prefix + "SortCase", sortCaseValue);
+}
+
+void Settings::setSortOrder(Qt::SortOrder order, const QString& prefix)
+{
+    QString sortOrderValue = (order == Qt::DescendingOrder) ? "desc" :
+                                                              "asc";
+    setValue("main/" + prefix + "SortOrder", sortOrderValue);
 }
 
 QDir::Filters Settings::getFilterSettings(const QString& prefix)

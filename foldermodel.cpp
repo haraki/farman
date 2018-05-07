@@ -13,11 +13,14 @@ namespace Farman
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
     m_fsModel(new QFileSystemModel(this)),
-    m_sortFlags(QDir::Name | QDir::IgnoreCase),
+    m_sortSectionType(SectionType::FileName),
+    m_sortDirsType(SortDirsType::NoSpecify),
+    m_sortDotFirst(true),
     m_sortOrder(Qt::AscendingOrder),
-    m_dotFirst(true),
     m_selectionModel(new QItemSelectionModel(this))
 {
+    setSortCaseSensitivity(Qt::CaseInsensitive);
+
     m_fsModel->setRootPath(QDir::currentPath());
     m_fsModel->setFilter(QDir::AllDirs | QDir::Files);
 
@@ -41,24 +44,44 @@ QModelIndex FolderModel::index(const QString &path, int column/* = 0*/) const
     return mapFromSource(m_fsModel->index(path, column));
 }
 
-void FolderModel::setSorting(QDir::SortFlags sort)
+void FolderModel::setSortSectionType(SectionType sectionType)
 {
-    m_sortFlags = sort;
+    m_sortSectionType = sectionType;
 }
 
-QDir::SortFlags FolderModel::sorting() const
+SectionType FolderModel::sortSectionType() const
 {
-    return m_sortFlags;
+    return m_sortSectionType;
 }
 
-void FolderModel::setDotFirst(bool enable)
+void FolderModel::setSortDirsType(SortDirsType dirsType)
 {
-    m_dotFirst = enable;
+    m_sortDirsType = dirsType;
 }
 
-bool FolderModel::dotFirst()
+SortDirsType FolderModel::sortDirsType() const
 {
-    return m_dotFirst;
+    return m_sortDirsType;
+}
+
+void FolderModel::setSortDotFirst(bool dotFirst)
+{
+    m_sortDotFirst = dotFirst;
+}
+
+bool FolderModel::sortDotFirst() const
+{
+    return m_sortDotFirst;
+}
+
+void FolderModel::setSortOrder(Qt::SortOrder order)
+{
+    m_sortOrder = order;
+}
+
+Qt::SortOrder FolderModel::sortOrder() const
+{
+    return m_sortOrder;
 }
 
 int FolderModel::columnCount(const QModelIndex& parent) const
@@ -230,23 +253,7 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
 
 void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 {
-    m_sortFlags &= ~(QDir::Name | QDir::Size | QDir::Type | QDir::Time);
-    switch(column)
-    {
-    case 0:
-        m_sortFlags |= QDir::Name;
-        break;
-    case 1:
-        m_sortFlags |= QDir::Size;
-        break;
-    case 2:
-        m_sortFlags |= QDir::Type;
-        break;
-    case 3:
-        m_sortFlags |= QDir::Time;
-        break;
-    }
-
+    m_sortSectionType = getSectionTypeFromColumn(column);
     m_sortOrder = order;
 
     refresh();
@@ -297,7 +304,7 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
     QFileInfo r_info = m_fsModel->fileInfo(source_right);
     bool ascOrder = (m_sortOrder == Qt::AscendingOrder);
 
-    if(m_dotFirst)
+    if(m_sortDotFirst)
     {
         if(l_info.fileName() == ".")
         {
@@ -317,7 +324,7 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
         }
     }
 
-    if(m_sortFlags & QDir::DirsFirst)
+    if(m_sortDirsType == SortDirsType::First)
     {
         if(!l_info.isDir() && r_info.isDir())
         {
@@ -328,7 +335,7 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
             return ascOrder;
         }
     }
-    else if(m_sortFlags & QDir::DirsLast)
+    else if(m_sortDirsType == SortDirsType::Last)
     {
         if(!l_info.isDir() && r_info.isDir())
         {
@@ -340,21 +347,21 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
         }
     }
 
-    if(m_sortFlags & QDir::Size)
+    if(m_sortSectionType == SectionType::FileSize)
     {
         return l_info.size() < r_info.size();
     }
-    else if(m_sortFlags & QDir::Type)
+    else if(m_sortSectionType == SectionType::FileType)
     {
         return l_info.completeSuffix() < r_info.completeSuffix();
     }
-    else if(m_sortFlags & QDir::Time)
+    else if(m_sortSectionType == SectionType::LastModified)
     {
         return l_info.lastModified() < r_info.lastModified();
     }
     else
     {
-        if(m_sortFlags & QDir::IgnoreCase)
+        if(sortCaseSensitivity() == Qt::CaseInsensitive)
         {
             return l_info.fileName().toLower() < r_info.fileName().toLower();
         }
@@ -383,7 +390,7 @@ bool FolderModel::isDrive(const QModelIndex& index) const
 }
 #endif
 
-FolderModel::SectionType FolderModel::getSectionTypeFromColumn(int column) const
+SectionType FolderModel::getSectionTypeFromColumn(int column) const
 {
     // Todo: 将来的に可変にする
     if(column == 0)

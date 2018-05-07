@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDir>
 #include <QModelIndex>
+#include "types.h"
 
 namespace Ui {
 class FolderForm;
@@ -21,17 +22,28 @@ class FolderForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit FolderForm(QDir::Filters filterFlags, QDir::SortFlags sortFlags, QWidget *parent = Q_NULLPTR);
+    explicit FolderForm(QDir::Filters filterFlags,
+                        SectionType sortSectionType,
+                        SortDirsType sortDirsType,
+                        bool sortDotFirst,
+                        Qt::CaseSensitivity sortCaseSensitivity,
+                        Qt::SortOrder sortOrder,
+                        QWidget *parent = Q_NULLPTR);
     ~FolderForm();
 
     void updateSettings();
 
     void setFilterFlags(QDir::Filters filterFlags);
-    void setSortFlags(QDir::SortFlags sortFlags);
-    void setPath(const QString& dirPath, const QString& beforePath = QString());
+    QDir::Filters getFilterFlags() const;
 
-    QDir::Filters getFilterFlags();
-    QDir::SortFlags getSortFlags();
+    void setSortSettings(SectionType sectionType, SortDirsType dirsType, bool dotFirst, Qt::CaseSensitivity caseSensitivity, Qt::SortOrder order);
+    SectionType getSortSectionType() const;
+    SortDirsType getSortDirsType() const;
+    bool getSortDotFirst() const;
+    Qt::CaseSensitivity getSortCaseSensitivity() const;
+    Qt::SortOrder getSortOrder() const;
+
+    void setPath(const QString& dirPath, const QString& beforePath = QString());
 
     QString getCurrentDirPath();
     QString getCurrentFileName();

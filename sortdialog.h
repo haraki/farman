@@ -2,7 +2,8 @@
 #define SORTDIALOG_H
 
 #include <QDialog>
-#include <qdir.h>
+#include <QDir>
+#include "types.h"
 
 namespace Ui {
 class SortDialog;
@@ -16,16 +17,30 @@ class SortDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SortDialog(QDir::SortFlags sortFlags, QWidget *parent = 0);
+    explicit SortDialog(SectionType sectionType,
+                        SortDirsType dirsType,
+                        bool dotFirst,
+                        Qt::CaseSensitivity caseSensitivity,
+                        Qt::SortOrder order,
+                        QWidget *parent = Q_NULLPTR);
     ~SortDialog();
 
-    QDir::SortFlags getSortFlags();
+    SectionType getSortSectionType();
+    SortDirsType getSortDirsType();
+    bool getSortDotFirst();
+    Qt::CaseSensitivity getSortCaseSensitivity();
+    Qt::SortOrder getSortOrder();
 
 private:
     void accept() Q_DECL_OVERRIDE;
 
     Ui::SortDialog *ui;
-    QDir::SortFlags m_sortFlags;
+
+    SectionType m_sortSectionType;
+    SortDirsType m_sortDirsType;
+    bool m_sortDotFirst;
+    Qt::CaseSensitivity m_sortCaseSensitivity;
+    Qt::SortOrder m_sortOrder;
 };
 
 }           // namespace Farman
