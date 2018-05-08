@@ -357,11 +357,24 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
 
     if(m_sortSectionType == SectionType::FileSize)
     {
-        return l_info.size() < r_info.size();
+        if(!l_info.isDir() && !r_info.isDir())
+        {
+            return l_info.size() < r_info.size();
+        }
     }
     else if(m_sortSectionType == SectionType::FileType)
     {
-        return l_info.completeSuffix() < r_info.completeSuffix();
+        const QString& l_type = (!l_info.isDir() && !l_info.baseName().isEmpty()) ? l_info.suffix() : "";
+        const QString& r_type = (!r_info.isDir() && !r_info.baseName().isEmpty()) ? r_info.suffix() : "";
+
+        if(sortCaseSensitivity() == Qt::CaseInsensitive)
+        {
+            return l_type.toLower() < r_type.toLower();
+        }
+        else
+        {
+            return l_type < r_type;
+        }
     }
     else if(m_sortSectionType == SectionType::LastModified)
     {
@@ -369,13 +382,16 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
     }
     else
     {
+        const QString& l_name = (!l_info.isDir() && !l_info.baseName().isEmpty()) ? l_info.baseName() : l_info.fileName();
+        const QString& r_name = (!r_info.isDir() && !r_info.baseName().isEmpty()) ? r_info.baseName() : r_info.fileName();
+
         if(sortCaseSensitivity() == Qt::CaseInsensitive)
         {
-            return l_info.fileName().toLower() < r_info.fileName().toLower();
+            return l_name.toLower() < r_name.toLower();
         }
         else
         {
-            return l_info.fileName() < r_info.fileName();
+            return l_name < r_name;
         }
     }
 
