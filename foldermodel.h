@@ -131,8 +131,6 @@ private:
     void initFont();
     void initBrush();
 
-    QFileSystemModel* m_fsModel;
-
     int m_sortColumn;
     SortDirsType m_sortDirsType;
     bool m_sortDotFirst;

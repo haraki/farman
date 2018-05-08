@@ -6,13 +6,13 @@
 #include <QFileIconProvider>
 #include "foldermodel.h"
 #include "settings.h"
+#include "types.h"
 
 namespace Farman
 {
 
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
-    m_fsModel(new QFileSystemModel(this)),
     m_sortColumn(0),
     m_sortDirsType(SortDirsType::NoSpecify),
     m_sortDotFirst(true),
@@ -21,16 +21,17 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
 {
     setSortCaseSensitivity(Qt::CaseInsensitive);
 
-    m_fsModel->setRootPath(QDir::currentPath());
-    m_fsModel->setFilter(QDir::AllDirs | QDir::Files);
+    QFileSystemModel* fsModel = new QFileSystemModel(this);
 
-    setSourceModel(m_fsModel);
+    fsModel->setRootPath(QDir::currentPath());
+    fsModel->setFilter(DEFAULT_FILTER_FLAGS);
+
+    setSourceModel(fsModel);
 }
 
 FolderModel::~FolderModel()
 {
     delete m_selectionModel;
-    delete m_fsModel;
 }
 
 void FolderModel::updateSettings()
@@ -41,7 +42,9 @@ void FolderModel::updateSettings()
 
 QModelIndex FolderModel::index(const QString &path, int column/* = 0*/) const
 {
-    return mapFromSource(m_fsModel->index(path, column));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return mapFromSource(fsModel->index(path, column));
 }
 
 void FolderModel::setSortSectionType(SectionType sectionType)
@@ -321,8 +324,10 @@ void FolderModel::clearSelected()
 
 bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
-    QFileInfo l_info = m_fsModel->fileInfo(source_left);
-    QFileInfo r_info = m_fsModel->fileInfo(source_right);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    QFileInfo l_info = fsModel->fileInfo(source_left);
+    QFileInfo r_info = fsModel->fileInfo(source_right);
     bool ascOrder = (m_sortOrder == Qt::AscendingOrder);
 
     if(m_sortDotFirst)
@@ -597,137 +602,191 @@ bool FolderModel::isSelected(const QModelIndex& index) const
 // QFileSystemModel specific API
 QModelIndex FolderModel::setRootPath(const QString &path)
 {
-    return mapFromSource(m_fsModel->setRootPath(path));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return mapFromSource(fsModel->setRootPath(path));
 }
 
 QString FolderModel::rootPath() const
 {
-    return m_fsModel->rootPath();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->rootPath();
 }
 
 QDir FolderModel::rootDirectory() const
 {
-    return m_fsModel->rootDirectory();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->rootDirectory();
 }
 
 void FolderModel::setIconProvider(QFileIconProvider *provider)
 {
-    m_fsModel->setIconProvider(provider);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    fsModel->setIconProvider(provider);
 }
 
 QFileIconProvider* FolderModel::iconProvider() const
 {
-    return m_fsModel->iconProvider();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->iconProvider();
 }
 
 void FolderModel::setFilter(QDir::Filters filters)
 {
-    m_fsModel->setFilter(filters);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    fsModel->setFilter(filters);
 }
 
 QDir::Filters FolderModel::filter() const
 {
-    return m_fsModel->filter();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->filter();
 }
 
 void FolderModel::setResolveSymlinks(bool enable)
 {
-    m_fsModel->setResolveSymlinks(enable);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    fsModel->setResolveSymlinks(enable);
 }
 
 bool FolderModel::resolveSymlinks() const
 {
-    return m_fsModel->resolveSymlinks();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->resolveSymlinks();
 }
 
 void FolderModel::setReadOnly(bool enable)
 {
-    m_fsModel->setReadOnly(enable);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    fsModel->setReadOnly(enable);
 }
 
 bool FolderModel::isReadOnly() const
 {
-    return m_fsModel->isReadOnly();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->isReadOnly();
 }
 
 void FolderModel::setNameFilterDisables(bool enable)
 {
-    m_fsModel->setNameFilterDisables(enable);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    fsModel->setNameFilterDisables(enable);
 }
 
 bool FolderModel::nameFilterDisables() const
 {
-    return m_fsModel->nameFilterDisables();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->nameFilterDisables();
 }
 
 void FolderModel::setNameFilters(const QStringList &filters)
 {
-    return m_fsModel->setNameFilters(filters);
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->setNameFilters(filters);
 }
 
 QStringList FolderModel::nameFilters() const
 {
-    return m_fsModel->nameFilters();
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->nameFilters();
 }
 
 QString FolderModel::filePath(const QModelIndex &index) const
 {
-    return m_fsModel->filePath(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->filePath(mapToSource(index));
 }
 
 bool FolderModel::isDir(const QModelIndex &index) const
 {
-    return m_fsModel->isDir(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->isDir(mapToSource(index));
 }
 
 qint64 FolderModel::size(const QModelIndex &index) const
 {
-    return m_fsModel->size(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->size(mapToSource(index));
 }
 
 QString FolderModel::type(const QModelIndex &index) const
 {
-    return m_fsModel->type(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->type(mapToSource(index));
 }
 
 QDateTime FolderModel::lastModified(const QModelIndex &index) const
 {
-    return m_fsModel->lastModified(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->lastModified(mapToSource(index));
 }
 
 QModelIndex FolderModel::mkdir(const QModelIndex &parent, const QString &name)
 {
-    return mapFromSource(m_fsModel->mkdir(mapToSource(parent), name));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return mapFromSource(fsModel->mkdir(mapToSource(parent), name));
 }
 
 bool FolderModel::rmdir(const QModelIndex &index)
 {
-    return m_fsModel->rmdir(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->rmdir(mapToSource(index));
 }
 
 QString FolderModel::fileName(const QModelIndex &index) const
 {
-    return m_fsModel->fileName(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->fileName(mapToSource(index));
 }
 
 QIcon FolderModel::fileIcon(const QModelIndex &index) const
 {
-    return m_fsModel->fileIcon(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->fileIcon(mapToSource(index));
 }
 
 QFile::Permissions FolderModel::permissions(const QModelIndex &index) const
 {
-    return m_fsModel->permissions(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->permissions(mapToSource(index));
 }
 
 QFileInfo FolderModel::fileInfo(const QModelIndex &index) const
 {
-    return m_fsModel->fileInfo(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->fileInfo(mapToSource(index));
 }
 
 bool FolderModel::remove(const QModelIndex &index)
 {
-    return m_fsModel->remove(mapToSource(index));
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    return fsModel->remove(mapToSource(index));
 }
 
 }           // namespace Farman
