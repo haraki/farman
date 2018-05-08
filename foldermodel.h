@@ -30,6 +30,9 @@ public:
     void setSortSectionType(SectionType sectionType);
     SectionType sortSectionType() const;
 
+    void setSortColumn(int column);
+    int sortColumn() const;
+
     void setSortDirsType(SortDirsType dirsType);
     SortDirsType sortDirsType() const;
 
@@ -99,6 +102,7 @@ private:
     bool isSelected(const QModelIndex& index) const;
 
     SectionType getSectionTypeFromColumn(int column) const;
+    int getColumnFromSectionType(SectionType sectionType) const;
 
     enum class BrushType : int
     {
@@ -129,7 +133,7 @@ private:
 
     QFileSystemModel* m_fsModel;
 
-    SectionType m_sortSectionType;
+    int m_sortColumn;
     SortDirsType m_sortDirsType;
     bool m_sortDotFirst;
     Qt::SortOrder m_sortOrder;

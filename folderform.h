@@ -38,6 +38,7 @@ public:
 
     void setSortSettings(SectionType sectionType, SortDirsType dirsType, bool dotFirst, Qt::CaseSensitivity caseSensitivity, Qt::SortOrder order);
     SectionType getSortSectionType() const;
+    int getSortColumn() const;
     SortDirsType getSortDirsType() const;
     bool getSortDotFirst() const;
     Qt::CaseSensitivity getSortCaseSensitivity() const;

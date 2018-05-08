@@ -13,7 +13,7 @@ namespace Farman
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
     m_fsModel(new QFileSystemModel(this)),
-    m_sortSectionType(SectionType::FileName),
+    m_sortColumn(0),
     m_sortDirsType(SortDirsType::NoSpecify),
     m_sortDotFirst(true),
     m_sortOrder(Qt::AscendingOrder),
@@ -46,12 +46,22 @@ QModelIndex FolderModel::index(const QString &path, int column/* = 0*/) const
 
 void FolderModel::setSortSectionType(SectionType sectionType)
 {
-    m_sortSectionType = sectionType;
+    setSortColumn(getColumnFromSectionType(sectionType));
 }
 
 SectionType FolderModel::sortSectionType() const
 {
-    return m_sortSectionType;
+    return getSectionTypeFromColumn(m_sortColumn);
+}
+
+void FolderModel::setSortColumn(int column)
+{
+    m_sortColumn = column;
+}
+
+int FolderModel::sortColumn() const
+{
+    return m_sortColumn;
 }
 
 void FolderModel::setSortDirsType(SortDirsType dirsType)
@@ -261,7 +271,7 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
 
 void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 {
-    m_sortSectionType = getSectionTypeFromColumn(column);
+    m_sortColumn = column;
     m_sortOrder = order;
 
     refresh();
@@ -269,7 +279,10 @@ void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 
 void FolderModel::refresh()
 {
-    QSortFilterProxyModel::sort(0, m_sortOrder);
+    bool backup = dynamicSortFilter();
+    setDynamicSortFilter(false);
+    QSortFilterProxyModel::sort(m_sortColumn, m_sortOrder);
+    setDynamicSortFilter(backup);
 }
 
 QItemSelectionModel* FolderModel::getSelectionModel()
@@ -355,14 +368,16 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
         }
     }
 
-    if(m_sortSectionType == SectionType::FileSize)
+    SectionType sortSectionType = getSectionTypeFromColumn(m_sortColumn);
+
+    if(sortSectionType == SectionType::FileSize)
     {
         if(!l_info.isDir() && !r_info.isDir())
         {
             return l_info.size() < r_info.size();
         }
     }
-    else if(m_sortSectionType == SectionType::FileType)
+    else if(sortSectionType == SectionType::FileType)
     {
         const QString& l_type = (!l_info.isDir() && !l_info.baseName().isEmpty()) ? l_info.suffix() : "";
         const QString& r_type = (!r_info.isDir() && !r_info.baseName().isEmpty()) ? r_info.suffix() : "";
@@ -376,7 +391,7 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
             return l_type < r_type;
         }
     }
-    else if(m_sortSectionType == SectionType::LastModified)
+    else if(sortSectionType == SectionType::LastModified)
     {
         return l_info.lastModified() < r_info.lastModified();
     }
@@ -435,6 +450,28 @@ SectionType FolderModel::getSectionTypeFromColumn(int column) const
     }
 
     return SectionType::Unknown;
+}
+
+int FolderModel::getColumnFromSectionType(SectionType sectionType) const
+{
+    if(sectionType == SectionType::FileName)
+    {
+        return 0;
+    }
+    else if(sectionType == SectionType::FileType)
+    {
+        return 1;
+    }
+    else if(sectionType == SectionType::FileSize)
+    {
+        return 2;
+    }
+    else if(sectionType == SectionType::LastModified)
+    {
+        return 3;
+    }
+
+    return -1;
 }
 
 QBrush FolderModel::getTextBrush(const QModelIndex& index) const

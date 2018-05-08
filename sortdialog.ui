@@ -34,6 +34,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QRadioButton" name="sortTypeRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QRadioButton" name="sortSizeRadioButton">
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -50,16 +60,6 @@
         </property>
         <property name="text">
          <string>Last modified</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="sortTypeRadioButton">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Type</string>
         </property>
        </widget>
       </item>
@@ -175,6 +175,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>sortNameRadioButton</tabstop>
+  <tabstop>sortTypeRadioButton</tabstop>
+  <tabstop>sortSizeRadioButton</tabstop>
+  <tabstop>sortLastModifiedRadioButton</tabstop>
+  <tabstop>dirFirstRadioButton</tabstop>
+  <tabstop>dirLastRadioButton</tabstop>
+  <tabstop>dirNoSpecifyRadioButton</tabstop>
+  <tabstop>orderAscendingRadioButton</tabstop>
+  <tabstop>orderDescendingRadioButton</tabstop>
+  <tabstop>caseSensitiveRadioButton</tabstop>
+  <tabstop>caseInsensitiveRadioButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

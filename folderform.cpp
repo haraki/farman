@@ -28,7 +28,7 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
     ui->setupUi(this);
 
     m_folderModel->setReadOnly(true);
-    m_folderModel->setDynamicSortFilter(false);
+    m_folderModel->setDynamicSortFilter(true);
     m_folderModel->setFilter(filterFlags);
     m_folderModel->setSortSectionType(sortSectionType);
     m_folderModel->setSortDirsType(sortDirsType);
@@ -166,6 +166,11 @@ void FolderForm::setSortSettings(SectionType sectionType, SortDirsType dirsType,
 SectionType FolderForm::getSortSectionType() const
 {
     return m_folderModel->sortSectionType();
+}
+
+int FolderForm::getSortColumn() const
+{
+    return m_folderModel->sortColumn();
 }
 
 SortDirsType FolderForm::getSortDirsType() const
