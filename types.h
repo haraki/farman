@@ -52,8 +52,8 @@ enum class SectionType : int
     Unknown = -1,
 
     FileName = 0,
-    FileSize,
     FileType,
+    FileSize,
     LastModified,
 
     SectionTypeNum

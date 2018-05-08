@@ -91,7 +91,7 @@ int FolderModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 3;
+    return 4;
 }
 
 QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
@@ -123,8 +123,19 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             }
             else
 #endif
+            if(!fi.isDir() && !fi.baseName().isEmpty())
+            {
+                ret = fi.baseName();
+            }
+            else
             {
                 ret = fi.fileName();
+            }
+            break;
+        case SectionType::FileType:
+            if(!fi.isDir() && !fi.baseName().isEmpty())
+            {
+                ret = fi.suffix();
             }
             break;
         case SectionType::FileSize:
@@ -143,9 +154,6 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             {
                 ret = fi.size();
             }
-            break;
-        case SectionType::FileType:
-            ret = iconProvider()->type(fi);
             break;
         case SectionType::LastModified:
             ret = fi.lastModified().toString("yyyy-MM-dd HH:mm:ss");
@@ -226,11 +234,11 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
         case SectionType::FileName:
             ret = tr("Name");
             break;
-        case SectionType::FileSize:
-            ret = tr("Size");
-            break;
         case SectionType::FileType:
             ret = tr("Type");
+            break;
+        case SectionType::FileSize:
+            ret = tr("Size");
             break;
         case SectionType::LastModified:
             ret = tr("Last modified");
@@ -399,13 +407,13 @@ SectionType FolderModel::getSectionTypeFromColumn(int column) const
     }
     else if(column == 1)
     {
-        return SectionType::FileSize;
+        return SectionType::FileType;
     }
     else if(column == 2)
-//    {
-//        return SectionType::FileType;
-//    }
-//    else if(column == 3)
+    {
+        return SectionType::FileSize;
+    }
+    else if(column == 3)
     {
         return SectionType::LastModified;
     }
