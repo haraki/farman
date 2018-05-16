@@ -421,7 +421,7 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
             r_type = r_info.fileName();
         }
 
-        if(sortCaseSensitivity() == Qt::CaseInsensitive)
+        if(sortCaseSensitivity() == Qt::CaseInsensitive && l_type.toLower() != r_type.toLower())
         {
             return l_type.toLower() < r_type.toLower();
         }
@@ -439,7 +439,7 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
         QString l_name = (!l_info.isDir() && !l_info.completeBaseName().isEmpty()) ? l_info.completeBaseName() : l_info.fileName();
         QString r_name = (!r_info.isDir() && !r_info.completeBaseName().isEmpty()) ? r_info.completeBaseName() : r_info.fileName();
 
-        if(sortCaseSensitivity() == Qt::CaseInsensitive)
+        if(sortCaseSensitivity() == Qt::CaseInsensitive && l_name.toLower() != r_name.toLower())
         {
             return l_name.toLower() < r_name.toLower();
         }
