@@ -136,9 +136,9 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             }
             else
 #endif
-            if(!fi.isDir() && !fi.baseName().isEmpty())
+            if(!fi.isDir() && !fi.completeBaseName().isEmpty())
             {
-                ret = fi.baseName();
+                ret = fi.completeBaseName();
             }
             else
             {
@@ -146,7 +146,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             }
             break;
         case SectionType::FileType:
-            if(!fi.isDir() && !fi.baseName().isEmpty())
+            if(!fi.isDir() && !fi.completeBaseName().isEmpty())
             {
                 ret = fi.suffix();
             }
