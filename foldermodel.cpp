@@ -23,8 +23,21 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
 
     QFileSystemModel* fsModel = new QFileSystemModel(this);
 
-    fsModel->setRootPath(QDir::currentPath());
+//    fsModel->setRootPath(QDir::currentPath());
     fsModel->setFilter(DEFAULT_FILTER_FLAGS);
+
+    connect(fsModel,
+            SIGNAL(rootPathChanged(QString)),
+            this,
+            SLOT(onRootPathChanged(QString)));
+    connect(fsModel,
+            SIGNAL(rootPathChanged(QString)),
+            this,
+            SLOT(onRootPathChanged(QString)));
+    connect(fsModel,
+            SIGNAL(directoryLoaded(QString)),
+            this,
+            SLOT(onDirectoryLoaded(QString)));
 
     setSourceModel(fsModel);
 }
@@ -32,6 +45,21 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
 FolderModel::~FolderModel()
 {
     delete m_selectionModel;
+}
+
+void FolderModel::onRootPathChanged(const QString &newPath)
+{
+    emitRootPathChanged(newPath);
+}
+
+void FolderModel::onFileRenamed(const QString &path, const QString &oldName, const QString &newName)
+{
+    emitFileRenamed(path, oldName, newName);
+}
+
+void FolderModel::onDirectoryLoaded(const QString &path)
+{
+    emitDirectoryLoaded(path);
 }
 
 void FolderModel::updateSettings()
@@ -603,6 +631,21 @@ bool FolderModel::isSelected(const QModelIndex& index) const
     }
 
     return false;
+}
+
+void FolderModel::emitRootPathChanged(const QString &newPath)
+{
+    emit rootPathChanged(newPath);
+}
+
+void FolderModel::emitFileRenamed(const QString &path, const QString &oldName, const QString &newName)
+{
+    emit fileRenamed(path, oldName, newName);
+}
+
+void FolderModel::emitDirectoryLoaded(const QString &path)
+{
+    emit directoryLoaded(path);
 }
 
 // QFileSystemModel specific API

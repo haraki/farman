@@ -96,6 +96,16 @@ public:
     QFileInfo fileInfo(const QModelIndex &index) const;
     bool remove(const QModelIndex &index);
 
+Q_SIGNALS:
+    void rootPathChanged(const QString &newPath);
+    void fileRenamed(const QString &path, const QString &oldName, const QString &newName);
+    void directoryLoaded(const QString &path);
+
+private Q_SLOTS:
+    void onRootPathChanged(const QString &newPath);
+    void onFileRenamed(const QString &path, const QString &oldName, const QString &newName);
+    void onDirectoryLoaded(const QString &path);
+
 private:
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const Q_DECL_OVERRIDE;
 
@@ -130,6 +140,10 @@ private:
     QBrush getBrush(BrushType brushType) const;
     void initFont();
     void initBrush();
+
+    void emitRootPathChanged(const QString &newPath);
+    void emitFileRenamed(const QString &path, const QString &oldName, const QString &newName);
+    void emitDirectoryLoaded(const QString &path);
 
     int m_sortColumn;
     SortDirsType m_sortDirsType;

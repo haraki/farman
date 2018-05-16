@@ -65,6 +65,7 @@ Q_SIGNALS:
 protected Q_SLOTS:
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
     void onDirectoryChanged(const QString& path);
+    void onDirectoryLoaded(const QString &path);
 
 private Q_SLOTS:
     void on_folderSelectButton_clicked();
@@ -87,6 +88,9 @@ private:
     FolderModel *m_folderModel;
 
     QFileSystemWatcher* m_folderWatcher;
+
+    QString m_beforePath;
+    bool m_isSettingPath;
 };
 
 }           // namespace Farman

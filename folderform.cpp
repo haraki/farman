@@ -24,11 +24,14 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
     , ui(new Ui::FolderForm)
     , m_folderModel(new FolderModel(this))
     , m_folderWatcher(new QFileSystemWatcher(this))
+    , m_beforePath()
+    , m_isSettingPath(false)
 {
     ui->setupUi(this);
 
     m_folderModel->setReadOnly(true);
     m_folderModel->setDynamicSortFilter(true);
+    m_folderModel->setSortLocaleAware(true);
     m_folderModel->setFilter(filterFlags);
     m_folderModel->setSortSectionType(sortSectionType);
     m_folderModel->setSortDirsType(sortDirsType);
@@ -51,6 +54,10 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
             SIGNAL(doubleClicked(const QModelIndex&)),
             MainWindow::getInstance(),
             SLOT(onOpen(const QModelIndex&)));
+    connect(m_folderModel,
+            SIGNAL(directoryLoaded(const QString&)),
+            this,
+            SLOT(onDirectoryLoaded(const QString&)));
 
     ui->folderView->installEventFilter(this);
 }
@@ -195,9 +202,12 @@ Qt::SortOrder FolderForm::getSortOrder() const
 
 int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
 {
-    if(!beforePath.isEmpty())
+    if(m_isSettingPath)
     {
-        m_folderWatcher->removePath(beforePath);
+        // 前回の setPath() が終わっていない
+        qDebug() << "previous setPath() has not ended.";
+
+        return -1;
     }
 
     QDir dir(dirPath);
@@ -217,35 +227,22 @@ int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QS
     {
         qDebug() << dirPath << " size() == 0";
 
-        if(!beforePath.isEmpty())
-        {
-            m_folderWatcher->addPath(beforePath);
-        }
-
         return -1;
     }
 
-    m_folderModel->setFilter(filterFlags);
+    if(!beforePath.isEmpty())
+    {
+        m_folderWatcher->removePath(beforePath);
+    }
+
+    m_beforePath = beforePath;
+    m_isSettingPath = true;
 
     m_folderModel->clearSelected();
 
-    QModelIndex newDirIndex = m_folderModel->setRootPath(dirPath);
-    ui->folderView->setRootIndex(newDirIndex);
+    m_folderModel->setFilter(filterFlags);
 
-    QModelIndex newCursorIndex;
-    if(!beforePath.isEmpty())
-    {
-        // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
-        newCursorIndex = m_folderModel->index(beforePath);
-    }
-
-    if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
-    {
-        // 初期カーソル位置はリストの先頭
-        newCursorIndex = m_folderModel->index(0, 0);
-    }
-    ui->folderView->setCurrentIndex(newCursorIndex);
-    ui->folderView->scrollTo(newCursorIndex);
+    m_folderModel->setRootPath(dirPath);
 
     ui->folderPathEdit->setText(dirPath);
 
@@ -315,6 +312,34 @@ void FolderForm::onDirectoryChanged(const QString& path)
     qDebug() << "directory changed." << path;
 
     refresh();
+}
+
+void FolderForm::onDirectoryLoaded(const QString& path)
+{
+    qDebug() << "directory loaded." << path;
+
+    QModelIndex newDirIndex = m_folderModel->index(path);
+    ui->folderView->setRootIndex(newDirIndex);
+
+    QModelIndex newCursorIndex;
+
+    if(!m_beforePath.isEmpty())
+    {
+        // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
+        newCursorIndex = m_folderModel->index(m_beforePath);
+        m_beforePath.clear();
+    }
+
+    if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
+    {
+        // 初期カーソル位置はリストの先頭
+        newCursorIndex = m_folderModel->index(0, 0, newDirIndex);
+    }
+
+    ui->folderView->setCurrentIndex(newCursorIndex);
+    ui->folderView->scrollTo(newCursorIndex);
+
+    m_isSettingPath = false;
 }
 
 void FolderForm::onSelect()
