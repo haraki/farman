@@ -384,8 +384,14 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
     }
     else if(sortSectionType == SectionType::FileType)
     {
-        const QString& l_type = (!l_info.isDir() && !l_info.baseName().isEmpty()) ? l_info.suffix() : "";
-        const QString& r_type = (!r_info.isDir() && !r_info.baseName().isEmpty()) ? r_info.suffix() : "";
+        QString l_type = (!l_info.isDir() && !l_info.completeBaseName().isEmpty()) ? l_info.suffix() : "";
+        QString r_type = (!r_info.isDir() && !r_info.completeBaseName().isEmpty()) ? r_info.suffix() : "";
+
+        if(l_type.isEmpty() && r_type.isEmpty())
+        {
+            l_type = l_info.fileName();
+            r_type = r_info.fileName();
+        }
 
         if(sortCaseSensitivity() == Qt::CaseInsensitive)
         {
@@ -402,8 +408,8 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
     }
     else
     {
-        const QString& l_name = (!l_info.isDir() && !l_info.baseName().isEmpty()) ? l_info.baseName() : l_info.fileName();
-        const QString& r_name = (!r_info.isDir() && !r_info.baseName().isEmpty()) ? r_info.baseName() : r_info.fileName();
+        QString l_name = (!l_info.isDir() && !l_info.completeBaseName().isEmpty()) ? l_info.completeBaseName() : l_info.fileName();
+        QString r_name = (!r_info.isDir() && !r_info.completeBaseName().isEmpty()) ? r_info.completeBaseName() : r_info.fileName();
 
         if(sortCaseSensitivity() == Qt::CaseInsensitive)
         {
