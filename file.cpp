@@ -123,7 +123,6 @@ bool File::makeDirectory(const QString& path, const QString& dirName)
     QString absPath = dir.absoluteFilePath(dirName);
 
     emitOutputConsole(QString("%1 ... ").arg(absPath));
-    qDebug() << absPath;
 
     if(dir.exists(dirName))
     {
@@ -135,7 +134,7 @@ bool File::makeDirectory(const QString& path, const QString& dirName)
     if(!dir.mkdir(dirName))
     {
         // ディレクトリ作成失敗
-        emitOutputConsole(tr("Failed make directory.\n"));
+        emitOutputConsole(tr("Failed to make directory.\n"));
         return false;
     }
 
