@@ -94,8 +94,7 @@ void Settings::initialize()
     m_autoDialogCloseRemove = value("main/autoDialogCloseRemove", false).toBool();
 
     // Confirm quit
-    QString confirmQuitValue = value("main/confirmQuit", "true").toString();
-    m_confirmQuit = (confirmQuitValue == "false") ? false : true;
+    m_confirmQuit = value("main/confirmQuit", true).toBool();
 
     auto getColorSettingParam = [this](const QString& key, const QColor& defColor)
     {
@@ -137,8 +136,7 @@ void Settings::initialize()
     // ImageViewer
     {
         // Fit in view
-        QString imageViewerFitInViewValue = value("main/imageViewer_fitInView", "true").toString();
-        m_imageViewerFitInView = (imageViewerFitInViewValue == "false") ? false : true;
+        m_imageViewerFitInView = value("main/imageViewer_fitInView", true).toBool();
 
         // BG type
         QString imageViewerBGTypeValue = value("main/imageViewer_bgType", "checkered").toString();
@@ -148,12 +146,10 @@ void Settings::initialize()
     // TextViewer
     {
         // Show line number
-        QString textViewerShowLineNumberValue = value("main/textViewer_showLineNumber", "true").toString();
-        m_textViewerShowLineNumber = (textViewerShowLineNumberValue == "false") ? false : true;
+        m_textViewerShowLineNumber = value("main/textViewer_showLineNumber", true).toBool();
 
         // Word wrap
-        QString textViewerWordWrapValue = value("main/textViewer_wordWrap", "false").toString();
-        m_textViewerWordWrap = (textViewerWordWrapValue == "true") ? true : false;
+        m_textViewerWordWrap = value("main/textViewer_wordWrap", false).toBool();
 
         // Encode list
         m_textViewerEncodeList.clear();
@@ -356,13 +352,7 @@ SortDirsType Settings::getSortDirsType(const QString& prefix)
 
 bool Settings::getSortDotFirst(const QString& prefix)
 {
-    bool ret = true;
-
-    QString sortDotFirstValue = value("main/" + prefix + "SortDotFirst", "true").toString();
-    ret = (sortDotFirstValue == "false") ? false :
-                                           true;
-
-    return ret;
+    return value("main/" + prefix + "SortDotFirst", true).toBool();
 }
 
 Qt::CaseSensitivity Settings::getSortCaseSensitivity(const QString& prefix)
@@ -406,9 +396,7 @@ void Settings::setSortDirsType(SortDirsType dirsType, const QString& prefix)
 
 void Settings::setSortDotFirst(bool dotFirst, const QString& prefix)
 {
-    QString sortDotFirstValue = (dotFirst == false) ? "false" :
-                                                      "true";
-    setValue("main/" + prefix + "SortDotFirst", sortDotFirstValue);
+    setValue("main/" + prefix + "SortDotFirst", dotFirst);
 }
 
 void Settings::setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix)
@@ -429,25 +417,25 @@ QDir::Filters Settings::getFilterSettings(const QString& prefix)
 {
     QDir::Filters ret = FIX_FILTER_FLAGS;
 
-    QString filterHiddenValue = value("main/" + prefix + "FilterHidden", "false").toString();
-    ret |= (filterHiddenValue == "true") ? QDir::Filter::Hidden :
-                                           static_cast<QDir::Filters>(0);
+    if(value("main/" + prefix + "FilterHidden", false).toBool())
+    {
+        ret |= QDir::Filter::Hidden;
+    }
 
-    QString filterSystemValue = value("main/" + prefix + "FilterSystem", "false").toString();
-    ret |= (filterSystemValue == "true") ? QDir::Filter::System :
-                                           static_cast<QDir::Filters>(0);
+    if(value("main/" + prefix + "FilterSystem", false).toBool())
+    {
+        ret |= QDir::Filter::System;
+    }
 
     return ret;
 }
 
 void Settings::setFilterSettings(QDir::Filters filterSettings, const QString& prefix)
 {
-    QString filterHiddenValue = (filterSettings & QDir::Filter::Hidden) ? "true" :
-                                                                          "false";
+    bool filterHiddenValue = (filterSettings & QDir::Filter::Hidden) ? true : false;
     setValue("main/" + prefix + "FilterHidden", filterHiddenValue);
 
-    QString filterSystemValue = (filterSettings & QDir::Filter::System) ? "true" :
-                                                                          "false";
+    bool filterSystemValue = (filterSettings & QDir::Filter::System) ? true : false;
     setValue("main/" + prefix + "FilterSystem", filterSystemValue);
 }
 
