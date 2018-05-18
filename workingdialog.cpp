@@ -66,7 +66,7 @@ void WorkingDialog::onFinished(int result)
 
     ui->closePushButton->setText(tr("Close"));
 
-    if(ui->autoCloseCheckBox->isChecked())
+    if(result == 0 && ui->autoCloseCheckBox->isChecked())
     {
         QDialog::accept();
     }

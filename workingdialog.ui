@@ -49,7 +49,7 @@
      <item>
       <widget class="QCheckBox" name="autoCloseCheckBox">
        <property name="text">
-        <string>Auto Close</string>
+        <string>Auto close at successful.</string>
        </property>
       </widget>
      </item>
