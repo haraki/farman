@@ -147,12 +147,17 @@ bool File::makeDirectory(const QString& path, const QString& dirName)
 bool File::renameFile(const QString& path, const QString& oldName, const QString& newName)
 {
     QDir dir(path);
+    QString oldAbsPath = dir.absoluteFilePath(oldName);
+
+    emitOutputConsole(QString("%1 >> %2 ... ").arg(oldAbsPath).arg(newName));
+
     if(!dir.rename(oldName, newName))
     {
+        // リネーム失敗
+        emitOutputConsole(tr("Failed to rename.\n"));
         return false;
     }
 
-    emitOutputConsole(QString("%1 >> %2 ... ").arg(oldName).arg(newName));
     emitOutputConsole(tr("Renamed.\n"));
 
     return true;

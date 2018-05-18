@@ -550,16 +550,13 @@ void DoubleFolderPanel::onRename()
     }
 
     QString newName = dialog.getNewName();
-    if(newName.isEmpty() || oldName == newName)
+    if(!File::getInstance()->renameFile(activeForm->getCurrentDirPath(), oldName, newName))
     {
         return;
     }
 
-    if(File::getInstance()->renameFile(activeForm->getCurrentDirPath(), oldName, newName))
-    {
-        activeForm->refresh();
-        activeForm->setCursor(newName);
-    }
+    activeForm->refresh();
+    activeForm->setCursor(newName);
 }
 
 void DoubleFolderPanel::onAttributes()
