@@ -4,6 +4,7 @@
 #include "removeworker.h"
 #include "overwritedialog.h"
 #include "workingdialog.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -52,8 +53,11 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, qobject_cast<QWidget*>(parent()));
-    if(dialog.exec() == QDialog::Accepted)
+    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseCopy(), qobject_cast<QWidget*>(parent()));
+    int result = dialog.exec();
+    Settings::getInstance()->setAutoDialogCloseCopy(dialog.getAutoClose());
+
+    if(result == QDialog::Accepted)
     {
         return true;
     }
@@ -82,8 +86,11 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, qobject_cast<QWidget*>(parent()));
-    if(dialog.exec() == QDialog::Accepted)
+    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseMove(), qobject_cast<QWidget*>(parent()));
+    int result = dialog.exec();
+    Settings::getInstance()->setAutoDialogCloseMove(dialog.getAutoClose());
+
+    if(result == QDialog::Accepted)
     {
         return true;
     }
@@ -108,8 +115,11 @@ bool File::removeFile(const QStringList& paths)
             this,
             SLOT(onRemoveFileError(QString)));
 
-    WorkingDialog dialog(worker, qobject_cast<QWidget*>(parent()));
-    if(dialog.exec() == QDialog::Accepted)
+    WorkingDialog dialog(worker, Settings::getInstance()->getAutoDialogCloseRemove(), qobject_cast<QWidget*>(parent()));
+    int result = dialog.exec();
+    Settings::getInstance()->setAutoDialogCloseRemove(dialog.getAutoClose());
+
+    if(result == QDialog::Accepted)
     {
         return true;
     }

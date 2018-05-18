@@ -17,8 +17,10 @@ class WorkingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit WorkingDialog(Worker* worker, QWidget *parent = 0);
+    explicit WorkingDialog(Worker* worker, bool autoClose, QWidget *parent = 0);
     virtual ~WorkingDialog();
+
+    bool getAutoClose();
 
 public Q_SLOTS:
     virtual int exec() Q_DECL_OVERRIDE;

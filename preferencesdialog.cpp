@@ -152,6 +152,10 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
         ui->dragAndDropBehaviorSelectRadioButton->setChecked(true);
     }
 
+    ui->autoDialogCloseCopyCheckBox->setChecked(Settings::getInstance()->getAutoDialogCloseCopy());
+    ui->autoDialogCloseMoveCheckBox->setChecked(Settings::getInstance()->getAutoDialogCloseMove());
+    ui->autoDialogCloseRemoveCheckBox->setChecked(Settings::getInstance()->getAutoDialogCloseRemove());
+
     ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
     m_fontSettings = Settings::getInstance()->getFontSettings();
@@ -829,6 +833,10 @@ void PreferencesDialog::on_buttonBox_accepted()
     {
         Settings::getInstance()->setDragAndDropBehaviorType(DragAndDropBehaviorType::Select);
     }
+
+    Settings::getInstance()->setAutoDialogCloseCopy(ui->autoDialogCloseCopyCheckBox->isChecked());
+    Settings::getInstance()->setAutoDialogCloseMove(ui->autoDialogCloseMoveCheckBox->isChecked());
+    Settings::getInstance()->setAutoDialogCloseRemove(ui->autoDialogCloseRemoveCheckBox->isChecked());
 
     Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
 

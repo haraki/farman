@@ -6,7 +6,7 @@
 namespace Farman
 {
 
-WorkingDialog::WorkingDialog(Worker* worker, QWidget *parent/*= Q_NULLPTR*/) :
+WorkingDialog::WorkingDialog(Worker* worker, bool autoClose, QWidget *parent/*= Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::WorkingDialog),
     m_worker(worker),
@@ -19,11 +19,17 @@ WorkingDialog::WorkingDialog(Worker* worker, QWidget *parent/*= Q_NULLPTR*/) :
     ui->progressBar->setValue(0);
     ui->progressLabel->setVisible(false);
     ui->closePushButton->setText(tr("Cancel"));
+    ui->autoCloseCheckBox->setChecked(autoClose);
 }
 
 WorkingDialog::~WorkingDialog()
 {
     delete ui;
+}
+
+bool WorkingDialog::getAutoClose()
+{
+    return ui->autoCloseCheckBox->isChecked();
 }
 
 void WorkingDialog::onStart(int min, int max)
@@ -60,7 +66,7 @@ void WorkingDialog::onFinished(int result)
 
     ui->closePushButton->setText(tr("Close"));
 
-    if(ui->autoCloseCheckBox->checkState() == Qt::Checked)
+    if(ui->autoCloseCheckBox->isChecked())
     {
         QDialog::accept();
     }
