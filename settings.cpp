@@ -88,6 +88,11 @@ void Settings::initialize()
                                 (behaviorTypeValue == "move") ? DragAndDropBehaviorType::Move :
                                                                 DragAndDropBehaviorType::Select;
 
+    // Auto dialog closing at successful operation.
+    m_autoDialogCloseCopy = value("main/autoDialogCloseCopy", false).toBool();
+    m_autoDialogCloseMove = value("main/autoDialogCloseMove", false).toBool();
+    m_autoDialogCloseRemove = value("main/autoDialogCloseRemove", false).toBool();
+
     // Confirm quit
     QString confirmQuitValue = value("main/confirmQuit", "true").toString();
     m_confirmQuit = (confirmQuitValue == "false") ? false : true;
@@ -232,6 +237,11 @@ void Settings::flush()
                                 (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Move) ? "move" :
                                                                                                "select";
     setValue("main/dragAndDropBehaviorType", behaviorTypeValue);
+
+    // Auto dialog closing at successful operation.
+    setValue("main/autoDialogCloseCopy", m_autoDialogCloseCopy);
+    setValue("main/autoDialogCloseMove", m_autoDialogCloseMove);
+    setValue("main/autoDialogCloseRemove", m_autoDialogCloseRemove);
 
     // Confirm at quit
     setValue("main/confirmQuit", m_confirmQuit);

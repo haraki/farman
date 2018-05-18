@@ -81,6 +81,15 @@ public:
     DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
     void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
 
+    bool getAutoDialogCloseCopy() { return m_autoDialogCloseCopy; }
+    void setAutoDialogCloseCopy(bool autoClose) { m_autoDialogCloseCopy = autoClose; }
+
+    bool getAutoDialogCloseMove() { return m_autoDialogCloseMove; }
+    void setAutoDialogCloseMove(bool autoClose) { m_autoDialogCloseMove = autoClose; }
+
+    bool getAutoDialogCloseRemove() { return m_autoDialogCloseRemove; }
+    void setAutoDialogCloseRemove(bool autoClose) { m_autoDialogCloseRemove = autoClose; }
+
     bool getConfirmQuit() { return m_confirmQuit; }
     void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
 
@@ -163,6 +172,10 @@ private:
     QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
 
     DragAndDropBehaviorType m_dragAndDropBehaviorType = DragAndDropBehaviorType::Default;
+
+    bool m_autoDialogCloseCopy = false;
+    bool m_autoDialogCloseMove = false;
+    bool m_autoDialogCloseRemove = false;
 
     bool m_confirmQuit = true;
 
