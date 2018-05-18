@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFile>
+#include <QThread>
 #include "removeworker.h"
 #include "workerresult.h"
 
@@ -28,6 +29,8 @@ void RemoveWorker::run()
     int progress = 0;
     for(auto path : m_paths)
     {
+        thread()->msleep(1);                    // sleep を入れないと Abort できない場合がある
+
         if(isAborted())
         {
             emitOutputConsole(tr("Aborted.\n"));

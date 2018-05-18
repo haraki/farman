@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDateTime>
 #include <QMutex>
+#include <QThread>
 #include "copyworker.h"
 #include "workerresult.h"
 
@@ -72,6 +73,8 @@ void CopyWorker::run()
     int progress = 0;
     for(QMap<QString, QString>::const_iterator itr = copyList.cbegin();itr != copyList.cend();itr++)
     {
+        thread()->msleep(1);                    // sleep を入れないと Abort できない場合がある
+
         emitProcess(QString(preStr).arg(progress + 1));
 
         int ret = copyExec(itr.key(), itr.value());
