@@ -345,6 +345,36 @@
          </property>
         </spacer>
        </item>
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="autoDialogCloseGroupBox">
+         <property name="title">
+          <string>Auto dialog close at successful operation</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseCopyCheckBox">
+            <property name="text">
+             <string>Copy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseMoveCheckBox">
+            <property name="text">
+             <string>Move</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseRemoveCheckBox">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="appearanceTab">
