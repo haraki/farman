@@ -163,45 +163,84 @@ bool File::renameFile(const QString& path, const QString& oldName, const QString
 }
 
 bool File::changeFileAttributes(const QString& path,
-                                             const QFile::Permissions& newPermissions,
-                                             const QDateTime& newCreated,
-                                             const QDateTime& newLastModified)
+                                const QFile::Permissions& newPermissions,
+                                const QDateTime& newCreated,
+                                const QDateTime& newLastModified)
 {
     QFile file(path);
-
-    if(file.permissions() != newPermissions)
-    {
-        if(!file.setPermissions(newPermissions))
-        {
-            qDebug() << "Failed change permissions. " << file.errorString();
-        }
-    }
-
     QFileInfo fileInfo(file);
 
+    bool changePermission   = file.permissions() != newPermissions;
     bool changeCreated      = fileInfo.created() != newCreated;
     bool changeLastModified = fileInfo.lastModified() != newLastModified;
 
-    if(changeCreated || changeLastModified)
+    if(changePermission || changeCreated || changeLastModified)
     {
-        if(file.open(QFile::ReadWrite))
-        {
-            if(changeCreated && !file.setFileTime(newCreated, QFile::FileBirthTime))
-            {
-                qDebug() << "Failed change Created time. " << file.errorString();
-            }
+        emitOutputConsole(QString("%1 ... ").arg(path));
 
-            if(changeLastModified && !file.setFileTime(newLastModified, QFile::FileModificationTime))
-            {
-                qDebug() << "Failed change Last modified time. " << file.errorString();
-            }
+        QStringList outputStrings;
 
-            file.close();
-        }
-        else
+        if(changePermission)
         {
-            qDebug() << "Failed open file. " << file.errorString();
+            if(file.setPermissions(newPermissions))
+            {
+                outputStrings.append(tr("Changed permissions"));
+            }
+            else
+            {
+                outputStrings.append(tr("Failed to change permissions"));
+                qDebug() << "Failed to change permissions. " << file.errorString();
+            }
         }
+
+        if(changeCreated || changeLastModified)
+        {
+            if(file.open(QFile::ReadWrite))
+            {
+                if(changeCreated)
+                {
+                    if(file.setFileTime(newCreated, QFile::FileBirthTime))
+                    {
+                        outputStrings.append(tr("Changed created time"));
+                    }
+                    else
+                    {
+                        outputStrings.append(tr("Failed to changed created time"));
+                        qDebug() << "Failed to change created time. " << file.errorString();
+                    }
+                }
+
+                if(changeLastModified)
+                {
+                    if(file.setFileTime(newLastModified, QFile::FileModificationTime))
+                    {
+                        outputStrings.append(tr("Changed last modified time"));
+                    }
+                    else
+                    {
+                        outputStrings.append(tr("Failed to changed last modified time"));
+                        qDebug() << "Failed to change last modified time. " << file.errorString();
+                    }
+                }
+
+                file.close();
+            }
+            else
+            {
+                if(changeCreated)
+                {
+                    outputStrings.append(tr("Failed to changed created time"));
+                }
+                if(changeLastModified)
+                {
+                    outputStrings.append(tr("Failed to changed last modified time"));
+                }
+
+                qDebug() << "Failed to open file. " << file.errorString();
+            }
+        }
+
+        emitOutputConsole(outputStrings.join(", ") + ".\n");
     }
 
     return true;
