@@ -65,18 +65,48 @@ void FolderView::setCursor(const QModelIndex& index)
     }
 }
 
+void FolderView::movePreviousCursor()
+{
+    const QModelIndex index = currentIndex();
+    FolderModel* folderModel = qobject_cast<FolderModel*>(model());
+    Q_ASSERT(folderModel);
+
+    int rowNext = index.row() - 1;
+    if(rowNext < 0)
+    {
+        if(!Settings::getInstance()->getAllowCursorAround())
+        {
+            return;
+        }
+
+        rowNext = folderModel->rowCount(index.parent()) - 1;
+    }
+
+    QModelIndex newIndex = folderModel->index(rowNext, 0, index.parent());
+
+    setCursor(newIndex);
+}
+
 void FolderView::moveNextCursor()
 {
     const QModelIndex index = currentIndex();
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
 
-    if(index.row() + 1 < folderModel->rowCount(index.parent()))
+    int rowNext = index.row() + 1;
+    if(rowNext == folderModel->rowCount(index.parent()))
     {
-        QModelIndex newIndex = folderModel->index(index.row() + 1, 0, index.parent());
+        if(!Settings::getInstance()->getAllowCursorAround())
+        {
+            return;
+        }
 
-        setCursor(newIndex);
+        rowNext = 0;
     }
+
+    QModelIndex newIndex = folderModel->index(rowNext, 0, index.parent());
+
+    setCursor(newIndex);
 }
 
 void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight)
@@ -89,7 +119,13 @@ void FolderView::keyPressEvent(QKeyEvent *e)
     switch(e->key())
     {
     case Qt::Key_Up:
+        movePreviousCursor();
+        e->accept();
+        return;
     case Qt::Key_Down:
+        moveNextCursor();
+        e->accept();
+        return;
     case Qt::Key_PageUp:
     case Qt::Key_PageDown:
         QTableView::keyPressEvent(e);
@@ -97,7 +133,8 @@ void FolderView::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Space:
         selectCurrent();
         moveNextCursor();
-        break;
+        e->accept();
+        return;
     default:
         break;
     }

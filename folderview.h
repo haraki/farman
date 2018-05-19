@@ -23,6 +23,7 @@ public:
     QItemSelectionModel::SelectionFlags selectionCommand(const QModelIndex &index, const QEvent *e = Q_NULLPTR) const Q_DECL_OVERRIDE;
 
     void setCursor(const QModelIndex& index);
+    void movePreviousCursor();
     void moveNextCursor();
 
     void selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag = QItemSelectionModel::Toggle);
