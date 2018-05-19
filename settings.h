@@ -90,6 +90,9 @@ public:
     bool getAutoDialogCloseRemove() { return m_autoDialogCloseRemove; }
     void setAutoDialogCloseRemove(bool autoClose) { m_autoDialogCloseRemove = autoClose; }
 
+    bool getAllowCursorAround() { return m_allowCursorAround; }
+    void setAllowCursorAround(bool allow) { m_allowCursorAround = allow; }
+
     bool getConfirmQuit() { return m_confirmQuit; }
     void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
 
@@ -176,6 +179,8 @@ private:
     bool m_autoDialogCloseCopy = false;
     bool m_autoDialogCloseMove = false;
     bool m_autoDialogCloseRemove = false;
+
+    bool m_allowCursorAround = false;
 
     bool m_confirmQuit = true;
 

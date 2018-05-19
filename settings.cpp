@@ -93,6 +93,9 @@ void Settings::initialize()
     m_autoDialogCloseMove = value("main/autoDialogCloseMove", false).toBool();
     m_autoDialogCloseRemove = value("main/autoDialogCloseRemove", false).toBool();
 
+    // Allow cursor around
+    m_allowCursorAround = value("main/allowCursorAround", false).toBool();
+
     // Confirm quit
     m_confirmQuit = value("main/confirmQuit", true).toBool();
 
@@ -238,6 +241,9 @@ void Settings::flush()
     setValue("main/autoDialogCloseCopy", m_autoDialogCloseCopy);
     setValue("main/autoDialogCloseMove", m_autoDialogCloseMove);
     setValue("main/autoDialogCloseRemove", m_autoDialogCloseRemove);
+
+    // Allow cursor around
+    setValue("main/allowCursorAround", m_allowCursorAround);
 
     // Confirm at quit
     setValue("main/confirmQuit", m_confirmQuit);

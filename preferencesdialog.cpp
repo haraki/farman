@@ -156,6 +156,8 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     ui->autoDialogCloseMoveCheckBox->setChecked(Settings::getInstance()->getAutoDialogCloseMove());
     ui->autoDialogCloseRemoveCheckBox->setChecked(Settings::getInstance()->getAutoDialogCloseRemove());
 
+    ui->allowCursorAroundCheckBox->setChecked(Settings::getInstance()->getAllowCursorAround());
+
     ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
     m_fontSettings = Settings::getInstance()->getFontSettings();
@@ -837,6 +839,8 @@ void PreferencesDialog::on_buttonBox_accepted()
     Settings::getInstance()->setAutoDialogCloseCopy(ui->autoDialogCloseCopyCheckBox->isChecked());
     Settings::getInstance()->setAutoDialogCloseMove(ui->autoDialogCloseMoveCheckBox->isChecked());
     Settings::getInstance()->setAutoDialogCloseRemove(ui->autoDialogCloseRemoveCheckBox->isChecked());
+
+    Settings::getInstance()->setAllowCursorAround(ui->allowCursorAroundCheckBox->isChecked());
 
     Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
 
