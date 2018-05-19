@@ -78,8 +78,6 @@ private:
     void initPalette();
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
-    void onSelect();
-
     int getTotalColumnWidth(int withOutColumn = -1);
 
 private:

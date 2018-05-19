@@ -106,31 +106,6 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
     switch (e->type())
     {
-    case QEvent::KeyPress:
-    {
-        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
-        if(keyEvent != Q_NULLPTR)
-        {
-            Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
-
-            qDebug() << "FolderForm::eventFilter : " << key;
-
-            switch(key)
-            {
-            case Qt::Key_Space:
-                onSelect();
-
-                ret = true;
-
-                break;
-
-            default:
-                break;
-            }
-        }
-
-        break;
-    }
     case QEvent::FocusIn:
         emitFocusChanged(true);
 
@@ -336,36 +311,17 @@ void FolderForm::onDirectoryLoaded(const QString& path)
         newCursorIndex = m_folderModel->index(0, 0, newDirIndex);
     }
 
-    ui->folderView->setCurrentIndex(newCursorIndex);
-    ui->folderView->scrollTo(newCursorIndex);
+    ui->folderView->setCursor(newCursorIndex);
 
     m_isSettingPath = false;
-}
-
-void FolderForm::onSelect()
-{
-    ui->folderView->selectCurrent();
-
-    const QModelIndex currentIndex = ui->folderView->currentIndex();
-    if(currentIndex.row() + 1 < m_folderModel->rowCount(currentIndex.parent()))
-    {
-        QModelIndex newIndex = m_folderModel->index(currentIndex.row() + 1, 0, currentIndex.parent());
-
-        ui->folderView->setCurrentIndex(newIndex);
-        ui->folderView->scrollTo(newIndex);
-    }
 }
 
 void FolderForm::setCursor(const QString& fileName)
 {
     const QString currentPath = getCurrentDirPath();
-
     QModelIndex newIndex = m_folderModel->index(QFileInfo(currentPath, fileName).absoluteFilePath());
-    if(newIndex.isValid())
-    {
-        ui->folderView->setCurrentIndex(newIndex);
-        ui->folderView->scrollTo(newIndex);
-    }
+
+    ui->folderView->setCursor(newIndex);
 }
 
 int FolderForm::onGoToChildDir()
@@ -414,11 +370,10 @@ void FolderForm::refresh()
     QModelIndex cursorIndex = ui->folderView->currentIndex();
     if(!cursorIndex.isValid() || cursorIndex.parent() != ui->folderView->rootIndex() || cursorIndex.row() < 0)
     {
-        cursorIndex = ui->folderView->rootIndex().child(0,0);
+        cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
     }
 
-    ui->folderView->setCurrentIndex(cursorIndex);
-    ui->folderView->scrollTo(cursorIndex);
+    ui->folderView->setCursor(cursorIndex);
 }
 
 int FolderForm::getTotalColumnWidth(int withOutColumn)

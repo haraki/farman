@@ -56,6 +56,29 @@ void FolderView::selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag/
     }
 }
 
+void FolderView::setCursor(const QModelIndex& index)
+{
+    if(index.isValid())
+    {
+        setCurrentIndex(index);
+        scrollTo(index);
+    }
+}
+
+void FolderView::moveNextCursor()
+{
+    const QModelIndex index = currentIndex();
+    FolderModel* folderModel = qobject_cast<FolderModel*>(model());
+    Q_ASSERT(folderModel);
+
+    if(index.row() + 1 < folderModel->rowCount(index.parent()))
+    {
+        QModelIndex newIndex = folderModel->index(index.row() + 1, 0, index.parent());
+
+        setCursor(newIndex);
+    }
+}
+
 void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
     emit dataChanged(topLeft, bottomRight);
@@ -71,6 +94,10 @@ void FolderView::keyPressEvent(QKeyEvent *e)
     case Qt::Key_PageDown:
         QTableView::keyPressEvent(e);
         return;
+    case Qt::Key_Space:
+        selectCurrent();
+        moveNextCursor();
+        break;
     default:
         break;
     }
