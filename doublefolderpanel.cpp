@@ -555,7 +555,6 @@ void DoubleFolderPanel::onRename()
         return;
     }
 
-    activeForm->refresh();
     activeForm->setCursor(newName);
 }
 

@@ -272,27 +272,31 @@ void FolderForm::onDirectoryLoaded(const QString& path)
 {
     qDebug() << "directory loaded." << path;
 
-    QModelIndex newDirIndex = m_folderModel->index(path);
-    ui->folderView->setRootIndex(newDirIndex);
-
-    QModelIndex newCursorIndex;
-
-    if(!m_beforePath.isEmpty())
+    if(m_isSettingPath)
     {
-        // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
-        newCursorIndex = m_folderModel->index(m_beforePath);
-        m_beforePath.clear();
+        // setPath() によって発生した場合はカーソル位置を再設定する
+        QModelIndex newDirIndex = m_folderModel->index(path);
+        ui->folderView->setRootIndex(newDirIndex);
+
+        QModelIndex newCursorIndex;
+
+        if(!m_beforePath.isEmpty())
+        {
+            // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
+            newCursorIndex = m_folderModel->index(m_beforePath);
+            m_beforePath.clear();
+        }
+
+        if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
+        {
+            // 初期カーソル位置はリストの先頭
+            newCursorIndex = m_folderModel->index(0, 0, newDirIndex);
+        }
+
+        ui->folderView->setCursor(newCursorIndex);
+
+        m_isSettingPath = false;
     }
-
-    if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
-    {
-        // 初期カーソル位置はリストの先頭
-        newCursorIndex = m_folderModel->index(0, 0, newDirIndex);
-    }
-
-    ui->folderView->setCursor(newCursorIndex);
-
-    m_isSettingPath = false;
 }
 
 void FolderForm::setCursor(const QString& fileName)
