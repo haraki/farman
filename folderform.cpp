@@ -3,7 +3,6 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QItemSelectionModel>
-#include <QFileSystemWatcher>
 #include "mainwindow.h"
 #include "folderform.h"
 #include "ui_folderform.h"
@@ -23,7 +22,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
     : QWidget(parent)
     , ui(new Ui::FolderForm)
     , m_folderModel(new FolderModel(this))
-    , m_folderWatcher(new QFileSystemWatcher(this))
     , m_beforePath()
     , m_isSettingPath(false)
 {
@@ -46,10 +44,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
-    connect(m_folderWatcher,
-            SIGNAL(directoryChanged(const QString&)),
-            this,
-            SLOT(onDirectoryChanged(const QString&)));
     connect(ui->folderView,
             SIGNAL(doubleClicked(const QModelIndex&)),
             MainWindow::getInstance(),
@@ -64,7 +58,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
 
 FolderForm::~FolderForm()
 {
-    delete m_folderWatcher;
     delete m_folderModel;
     delete ui;
 }
@@ -205,11 +198,6 @@ int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QS
         return -1;
     }
 
-    if(!beforePath.isEmpty())
-    {
-        m_folderWatcher->removePath(beforePath);
-    }
-
     m_beforePath = beforePath;
     m_isSettingPath = true;
 
@@ -220,8 +208,6 @@ int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QS
     m_folderModel->setRootPath(dirPath);
 
     ui->folderPathEdit->setText(dirPath);
-
-    m_folderWatcher->addPath(dirPath);
 
     return 0;
 }
@@ -280,13 +266,6 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
 
     emitCurrentChanged((newIndex.row() >= 0) ? m_folderModel->fileInfo(newIndex) : QFileInfo(),
                        (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
-}
-
-void FolderForm::onDirectoryChanged(const QString& path)
-{
-    qDebug() << "directory changed." << path;
-
-    refresh();
 }
 
 void FolderForm::onDirectoryLoaded(const QString& path)
