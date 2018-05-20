@@ -136,6 +136,10 @@ void FolderView::onDoubleClicked(const QModelIndex& index)
     QString path = folderModel->filePath(index);
 
     emitOpen(path);
+
+    // ダブルクリックの場合は非選択状態にする
+    folderModel->clearSelected();
+    setCurrentIndex(index);
 }
 
 void FolderView::keyPressEvent(QKeyEvent *e)
