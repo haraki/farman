@@ -22,7 +22,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
     : QWidget(parent)
     , ui(new Ui::FolderForm)
     , m_folderModel(new FolderModel(this))
-    , m_beforePath()
     , m_isSettingPath(false)
 {
     ui->setupUi(this);
@@ -168,7 +167,7 @@ Qt::SortOrder FolderForm::getSortOrder() const
     return m_folderModel->sortOrder();
 }
 
-int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QString() */)
+int FolderForm::setPath(const QString& dirPath)
 {
     if(m_isSettingPath)
     {
@@ -198,7 +197,6 @@ int FolderForm::setPath(const QString& dirPath, const QString& beforePath/* = QS
         return -1;
     }
 
-    m_beforePath = beforePath;
     m_isSettingPath = true;
 
     m_folderModel->clearSelected();
@@ -274,18 +272,12 @@ void FolderForm::onDirectoryLoaded(const QString& path)
 
     if(m_isSettingPath)
     {
+        // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
+        QModelIndex newCursorIndex = ui->folderView->rootIndex();
+
         // setPath() によって発生した場合はカーソル位置を再設定する
         QModelIndex newDirIndex = m_folderModel->index(path);
         ui->folderView->setRootIndex(newDirIndex);
-
-        QModelIndex newCursorIndex;
-
-        if(!m_beforePath.isEmpty())
-        {
-            // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
-            newCursorIndex = m_folderModel->index(m_beforePath);
-            m_beforePath.clear();
-        }
 
         if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
         {
@@ -318,11 +310,9 @@ int FolderForm::onGoToChildDir()
 
     const QString newPath = m_folderModel->filePath(currentIndex);
 
-    qDebug() << "================== onGoToChildDir() : " << currentIndex << " -> " << newPath;
+    qDebug() << "================== onGoToChildDir() : " << newPath;
 
-    const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
-
-    return setPath(newPath, currentPath);
+    return setPath(newPath);
 }
 
 int FolderForm::onGoToParentDir()
@@ -343,7 +333,7 @@ int FolderForm::onGoToParentDir()
 
     qDebug() << "================== onGoToParentDir() : " << newPath;
 
-    return setPath(newPath, currentPath);
+    return setPath(newPath);
 }
 
 void FolderForm::refresh()
@@ -385,7 +375,7 @@ void FolderForm::on_folderSelectButton_clicked()
 
     if(!dirPath.isEmpty())
     {
-        setPath(dirPath, currentPath);
+        setPath(dirPath);
     }
 }
 

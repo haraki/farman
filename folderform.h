@@ -43,7 +43,7 @@ public:
     Qt::CaseSensitivity getSortCaseSensitivity() const;
     Qt::SortOrder getSortOrder() const;
 
-    int setPath(const QString& dirPath, const QString& beforePath = QString());
+    int setPath(const QString& dirPath);
 
     QString getCurrentDirPath();
     QString getCurrentFileName();
@@ -83,7 +83,6 @@ private:
 
     FolderModel *m_folderModel;
 
-    QString m_beforePath;
     bool m_isSettingPath;
 };
 
