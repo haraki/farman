@@ -24,6 +24,81 @@
        <string>General</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="positionAtStartupGroupBox">
+         <property name="title">
+          <string>Position at startup</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="3" column="1">
+           <widget class="QLabel" name="positionXLabel">
+            <property name="text">
+             <string>X:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QLineEdit" name="positionYLineEdit"/>
+          </item>
+          <item row="3" column="0">
+           <spacer name="positionHorizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="positionYLabel">
+            <property name="text">
+             <string>Y:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="positionXLineEdit"/>
+          </item>
+          <item row="0" column="0" colspan="5">
+           <widget class="QRadioButton" name="positionDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="5">
+           <widget class="QRadioButton" name="positionLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="5">
+           <widget class="QRadioButton" name="positionFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="leftFolderAtStartupGroupBox">
          <property name="title">
@@ -142,6 +217,36 @@
          </layout>
         </widget>
        </item>
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="autoDialogCloseGroupBox">
+         <property name="title">
+          <string>Auto dialog close at successful operation</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseCopyCheckBox">
+            <property name="text">
+             <string>Copy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseMoveCheckBox">
+            <property name="text">
+             <string>Move</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseRemoveCheckBox">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="2" column="0">
         <widget class="QGroupBox" name="dragAndDropBehaviorGroupBox">
          <property name="title">
@@ -169,94 +274,6 @@
            <widget class="QRadioButton" name="dragAndDropBehaviorSelectRadioButton">
             <property name="text">
              <string>Select</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <spacer name="generalVerticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="positionAtStartupGroupBox">
-         <property name="title">
-          <string>Position at startup</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <property name="spacing">
-           <number>8</number>
-          </property>
-          <item row="3" column="1">
-           <widget class="QLabel" name="positionXLabel">
-            <property name="text">
-             <string>X:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="4">
-           <widget class="QLineEdit" name="positionYLineEdit"/>
-          </item>
-          <item row="3" column="0">
-           <spacer name="positionHorizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="3" column="3">
-           <widget class="QLabel" name="positionYLabel">
-            <property name="text">
-             <string>Y:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="positionXLineEdit"/>
-          </item>
-          <item row="0" column="0" colspan="5">
-           <widget class="QRadioButton" name="positionDefaultRadioButton">
-            <property name="text">
-             <string>Default</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="5">
-           <widget class="QRadioButton" name="positionLastTimeRadioButton">
-            <property name="text">
-             <string>Same as last time</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="5">
-           <widget class="QRadioButton" name="positionFixedRadioButton">
-            <property name="text">
-             <string>Fixed</string>
             </property>
            </widget>
           </item>
@@ -338,47 +355,37 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="autoDialogCloseGroupBox">
-         <property name="title">
-          <string>Auto dialog close at successful operation</string>
+       <item row="6" column="0">
+        <spacer name="generalVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QCheckBox" name="autoDialogCloseCopyCheckBox">
-            <property name="text">
-             <string>Copy</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="autoDialogCloseMoveCheckBox">
-            <property name="text">
-             <string>Move</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="autoDialogCloseRemoveCheckBox">
-            <property name="text">
-             <string>Remove</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="confirmQuitCheckBox">
-         <property name="text">
-          <string>Confirm quit</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-        </widget>
+        </spacer>
        </item>
-       <item row="3" column="0">
+       <item row="3" column="0" colspan="2">
         <widget class="QCheckBox" name="allowCursorAroundCheckBox">
          <property name="text">
           <string>Allow cursor around</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QCheckBox" name="moveCursorOpenViewerCheckBox">
+         <property name="text">
+          <string>Move the cursor to the next, after open the viewer with Enter key</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QCheckBox" name="confirmQuitCheckBox">
+         <property name="text">
+          <string>Confirm quit</string>
          </property>
         </widget>
        </item>

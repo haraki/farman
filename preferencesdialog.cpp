@@ -158,6 +158,8 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
 
     ui->allowCursorAroundCheckBox->setChecked(Settings::getInstance()->getAllowCursorAround());
 
+    ui->moveCursorOpenViewerCheckBox->setChecked(Settings::getInstance()->getMoveCursorOpenViewer());
+
     ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
     m_fontSettings = Settings::getInstance()->getFontSettings();
@@ -841,6 +843,8 @@ void PreferencesDialog::on_buttonBox_accepted()
     Settings::getInstance()->setAutoDialogCloseRemove(ui->autoDialogCloseRemoveCheckBox->isChecked());
 
     Settings::getInstance()->setAllowCursorAround(ui->allowCursorAroundCheckBox->isChecked());
+
+    Settings::getInstance()->setMoveCursorOpenViewer(ui->moveCursorOpenViewerCheckBox->isChecked());
 
     Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
 

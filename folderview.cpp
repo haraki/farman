@@ -178,6 +178,12 @@ void FolderView::keyPressEvent(QKeyEvent *e)
         {
             emitOpen(path);
         }
+
+        if(Settings::getInstance()->getMoveCursorOpenViewer())
+        {
+            moveNextCursor();
+        }
+
         e->accept();
         return;
     }

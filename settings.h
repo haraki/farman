@@ -93,6 +93,9 @@ public:
     bool getAllowCursorAround() { return m_allowCursorAround; }
     void setAllowCursorAround(bool allow) { m_allowCursorAround = allow; }
 
+    bool getMoveCursorOpenViewer() { return m_moveCursorOpenViewer; }
+    void setMoveCursorOpenViewer(bool enable) { m_moveCursorOpenViewer = enable; }
+
     bool getConfirmQuit() { return m_confirmQuit; }
     void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
 
@@ -181,6 +184,8 @@ private:
     bool m_autoDialogCloseRemove = false;
 
     bool m_allowCursorAround = false;
+
+    bool m_moveCursorOpenViewer = false;
 
     bool m_confirmQuit = true;
 

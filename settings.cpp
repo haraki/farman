@@ -96,6 +96,9 @@ void Settings::initialize()
     // Allow cursor around
     m_allowCursorAround = value("main/allowCursorAround", false).toBool();
 
+    // Move the cursor to the next, after open the viewer with Enter key
+    m_moveCursorOpenViewer = value("main/moveCursorOpenViewer", false).toBool();
+
     // Confirm quit
     m_confirmQuit = value("main/confirmQuit", true).toBool();
 
@@ -244,6 +247,9 @@ void Settings::flush()
 
     // Allow cursor around
     setValue("main/allowCursorAround", m_allowCursorAround);
+
+    // Move the cursor to the next, after open the viewer with Enter key.
+    setValue("main/moveCursorOpenViewer", m_moveCursorOpenViewer);
 
     // Confirm at quit
     setValue("main/confirmQuit", m_confirmQuit);
