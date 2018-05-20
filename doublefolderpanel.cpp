@@ -68,19 +68,9 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     QDir::Filters r_filterFlags = Settings::getInstance()->getRightFilterSettings();
 
     connect(this,
-            SIGNAL(statusChanged(const QString)),
+            SIGNAL(statusChanged(const QString&)),
             MainWindow::getInstance(),
-            SLOT(onStatusChanged(const QString)));
-
-    connect(this,
-            SIGNAL(openFile(const QModelIndex)),
-            MainWindow::getInstance(),
-            SLOT(onOpen(const QModelIndex)));
-
-    connect(this,
-            SIGNAL(openFileInApp(const QModelIndex)),
-            MainWindow::getInstance(),
-            SLOT(onOpenWithApp(const QModelIndex)));
+            SLOT(onStatusChanged(const QString&)));
 
     QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);
@@ -226,21 +216,6 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 
             switch(key)
             {
-            case Qt::Key_Return:
-                // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
-                if(keyEvent->modifiers() & Qt::ShiftModifier)
-                {
-                    emitOpenFileInApp();
-                }
-                else
-                {
-                    emitOpenFile();
-                }
-
-                ret = true;
-
-                break;
-
             case Qt::Key_Left:
                 if(m_viewMode == ViewMode::Single || activeForm->objectName() == "l_folderForm")
                 {
@@ -644,16 +619,6 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 {
     emit statusChanged(statusString);
-}
-
-void DoubleFolderPanel::emitOpenFile(const QModelIndex& index)
-{
-    emit openFile(index);
-}
-
-void DoubleFolderPanel::emitOpenFileInApp(const QModelIndex& index)
-{
-    emit openFileInApp(index);
 }
 
 void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)

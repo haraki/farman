@@ -24,10 +24,10 @@ public:
     static MainWindow* getInstance();
 
 public Q_SLOTS:
-    void onOpen(const QModelIndex& index = QModelIndex());
     void onOpen(ViewerType viewerType);
+    void onOpen(const QString& path, ViewerType viewerType = ViewerType::Auto);
     void onCloseViewer(const QString& viewerName);
-    void onOpenWithApp(const QModelIndex& index = QModelIndex());
+    void onOpenWithApp(const QString& path);
     void onStatusChanged(const QString& statusString);
     void onOutputConsole(const QString& consoleString);
 

@@ -8,6 +8,7 @@
 #include "folderview.h"
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
+#include "mainwindow.h"
 #include "file.h"
 #include "settings.h"
 #include "types.h"
@@ -19,6 +20,19 @@ FolderView::FolderView(QWidget *parent/* = Q_NULLPTR*/)
     : QTableView(parent)
 {
     setItemDelegate(new FolderViewStyledItemDelegate(this));
+
+    connect(this,
+            SIGNAL(doubleClicked(const QModelIndex&)),
+            this,
+            SLOT(onDoubleClicked(const QModelIndex&)));
+    connect(this,
+            SIGNAL(open(const QString&)),
+            MainWindow::getInstance(),
+            SLOT(onOpen(const QString&)));
+    connect(this,
+            SIGNAL(openWithApp(const QString&)),
+            MainWindow::getInstance(),
+            SLOT(onOpenWithApp(const QString&)));
 }
 
 FolderView::~FolderView()
@@ -114,6 +128,16 @@ void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRi
     emit dataChanged(topLeft, bottomRight);
 }
 
+void FolderView::onDoubleClicked(const QModelIndex& index)
+{
+    FolderModel* folderModel = qobject_cast<FolderModel*>(model());
+    Q_ASSERT(folderModel);
+
+    QString path = folderModel->filePath(index);
+
+    emitOpen(path);
+}
+
 void FolderView::keyPressEvent(QKeyEvent *e)
 {
     switch(e->key())
@@ -135,6 +159,24 @@ void FolderView::keyPressEvent(QKeyEvent *e)
         moveNextCursor();
         e->accept();
         return;
+    case Qt::Key_Return:
+    {
+        // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
+        FolderModel* folderModel = qobject_cast<FolderModel*>(model());
+        Q_ASSERT(folderModel);
+
+        const QString path = folderModel->filePath(currentIndex());
+        if(e->modifiers() & Qt::ShiftModifier)
+        {
+            emitOpenWithApp(path);
+        }
+        else
+        {
+            emitOpen(path);
+        }
+        e->accept();
+        return;
+    }
     default:
         break;
     }
@@ -269,6 +311,16 @@ void FolderView::dropEvent(QDropEvent *e)
 
         e->accept();
     }
+}
+
+void FolderView::emitOpen(const QString& path)
+{
+    emit open(path);
+}
+
+void FolderView::emitOpenWithApp(const QString& path)
+{
+    emit openWithApp(path);
 }
 
 }           // namespace Farman

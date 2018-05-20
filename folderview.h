@@ -30,12 +30,22 @@ public:
 
     void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
+Q_SIGNALS:
+    void open(const QString&);
+    void openWithApp(const QString&);
+
+private Q_SLOTS:
+    void onDoubleClicked(const QModelIndex&);
+
 private:
     void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
     void dragEnterEvent(QDragEnterEvent *e) Q_DECL_OVERRIDE;
     void dragMoveEvent(QDragMoveEvent *e) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent *e) Q_DECL_OVERRIDE;
+
+    void emitOpen(const QString& path);
+    void emitOpenWithApp(const QString& path);
 };
 
 }           // namespace Farman

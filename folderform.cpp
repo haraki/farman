@@ -3,7 +3,6 @@
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QItemSelectionModel>
-#include "mainwindow.h"
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
@@ -43,10 +42,6 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
-    connect(ui->folderView,
-            SIGNAL(doubleClicked(const QModelIndex&)),
-            MainWindow::getInstance(),
-            SLOT(onOpen(const QModelIndex&)));
     connect(m_folderModel,
             SIGNAL(directoryLoaded(const QString&)),
             this,

@@ -128,17 +128,10 @@ void MainWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::onOpen(const QModelIndex& index/* = QModelIndex()*/)
-{
-    Q_UNUSED(index);
-
-    qDebug() << "MainWindow::onOpen()";
-
-    onOpen(ViewerType::Auto);
-}
-
 void MainWindow::onOpen(ViewerType viewerType)
 {
+    qDebug() << "MainWindow::onOpen()";
+
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel == Q_NULLPTR)
     {
@@ -151,12 +144,30 @@ void MainWindow::onOpen(ViewerType viewerType)
         return;
     }
 
-    QFileInfo fileInfo = activeFolderForm->getCurrentFileInfo();
-    if(fileInfo.isDir())
+    QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
+
+    onOpen(path, viewerType);
+}
+
+void MainWindow::onOpen(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
+{
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
+
+    if(QFileInfo(path).isDir())
     {
         if(viewerType == ViewerType::Auto)
         {
-            int ret = activeFolderForm->setPath(fileInfo.absoluteFilePath());
+            FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+            if(activeFolderForm == Q_NULLPTR)
+            {
+                return;
+            }
+
+            int ret = activeFolderForm->setPath(path);
             if(ret < 0)
             {
                 onOutputConsole(tr("Folder can not be opened.\n"));
@@ -170,7 +181,7 @@ void MainWindow::onOpen(ViewerType viewerType)
         return;
     }
 
-    ViewerBase* viewer = ViewerDispatcher::getInstance()->dispatcher(fileInfo.absoluteFilePath(), viewerType, ui->mainWidget);
+    ViewerBase* viewer = ViewerDispatcher::getInstance()->dispatcher(path, viewerType, ui->mainWidget);
     if(viewer == Q_NULLPTR)
     {
         return;
@@ -215,25 +226,10 @@ void MainWindow::onCloseViewer(const QString& viewerObjectName)
     }
 }
 
-void MainWindow::onOpenWithApp(const QModelIndex& index/* = QModelIndex()*/)
+void MainWindow::onOpenWithApp(const QString& path)
 {
-    Q_UNUSED(index);
-
     qDebug() << "MainWindow::onOpenWithApp()";
 
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return;
-    }
-
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    if(activeFolderForm == Q_NULLPTR)
-    {
-        return;
-    }
-
-    const QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
     if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
     {
         qDebug() << "open url error:" << path;
@@ -260,14 +256,28 @@ void MainWindow::on_actionOpen_triggered()
 {
     qDebug() << "MainWindow::on_actionOpen_triggered()";
 
-    onOpen();
+    onOpen(ViewerType::Auto);
 }
 
 void MainWindow::on_actionOpenWithApp_triggered()
 {
     qDebug() << "MainWindow::on_actionOpenWithApp_triggered()";
 
-    onOpenWithApp();
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    if(activeFolderForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    const QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
+
+    onOpenWithApp(path);
 }
 
 void MainWindow::on_actionOpenWithTextViewer_triggered()

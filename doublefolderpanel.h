@@ -48,8 +48,6 @@ public:
 
 Q_SIGNALS:
     void statusChanged(const QString& statusString);
-    void openFile(const QModelIndex& index);
-    void openFileInApp(const QModelIndex& index);
 
 protected Q_SLOTS:
     void onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
@@ -62,8 +60,6 @@ private:
     void setActiveFolderForm(const QString& objectName);
 
     void emitStatusChanged(const QString& statusString);
-    void emitOpenFile(const QModelIndex& index = QModelIndex());
-    void emitOpenFileInApp(const QModelIndex& index = QModelIndex());
 
     Ui::DoubleFolderPanel *ui;
 
