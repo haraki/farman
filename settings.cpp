@@ -102,18 +102,6 @@ void Settings::initialize()
     // Confirm quit
     m_confirmQuit = value("main/confirmQuit", true).toBool();
 
-    auto getColorSettingParam = [this](const QString& key, const QColor& defColor)
-    {
-        QString colorSettingString = value(key).toString();
-        if(colorSettingString.length() > 0 && QColor::isValidColor(colorSettingString))
-        {
-            return QColor(colorSettingString);
-        }
-        else
-        {
-            return defColor;
-        }
-    };
 
     // Color settings
     for(auto colorSettingKey : m_colorSettings.keys())
@@ -298,6 +286,19 @@ void Settings::flush()
             setValue("encode", m_textViewerEncodeList[i]);
         }
         endArray();
+    }
+}
+
+QColor Settings::getColorSettingParam(const QString& key, const QColor& defColor)
+{
+    QString colorSettingString = value(key).toString();
+    if(colorSettingString.length() > 0 && QColor::isValidColor(colorSettingString))
+    {
+        return QColor(colorSettingString);
+    }
+    else
+    {
+        return defColor;
     }
 }
 

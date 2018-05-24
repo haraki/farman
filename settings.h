@@ -148,6 +148,8 @@ private:
     QDir::Filters getFilterSettings(const QString& prefix);
     void setFilterSettings(QDir::Filters filterSettings, const QString& prefix);
 
+    QColor getColorSettingParam(const QString& key, const QColor& defColor);
+
     static Settings* s_instance;
 
     SizeAtStartup m_sizeAtStartupType = SizeAtStartup::Default;
