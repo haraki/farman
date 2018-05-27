@@ -22,7 +22,8 @@ public:
     explicit FolderModel(QObject *parent = Q_NULLPTR);
     ~FolderModel();
 
-    void updateSettings();
+    void setFont(const QFont& font);
+    void setBrushes(const QMap<BrushType, QBrush>& brushes);
 
     using QSortFilterProxyModel::index;
     QModelIndex index(const QString &path, int column = 0) const;
@@ -114,32 +115,9 @@ private:
     SectionType getSectionTypeFromColumn(int column) const;
     int getColumnFromSectionType(SectionType sectionType) const;
 
-    enum class BrushType : int
-    {
-        Unknown = -1,
-
-        Normal,
-        Normal_Selected,
-        Folder,
-        Folder_Selected,
-        ReadOnly,
-        ReadOnly_Selected,
-        Hidden,
-        Hidden_Selected,
-        System,
-        System_Selected,
-
-        Background,
-        Selected_Background,
-
-        BrushTypeNum
-    };
-
     QBrush getTextBrush(const QModelIndex& index) const;
     QBrush getBackgroundBrush(const QModelIndex& index) const;
     QBrush getBrush(BrushType brushType) const;
-    void initFont();
-    void initBrush();
 
     void emitRootPathChanged(const QString &newPath);
     void emitFileRenamed(const QString &path, const QString &oldName, const QString &newName);
@@ -151,7 +129,7 @@ private:
     Qt::SortOrder m_sortOrder;
 
     QFont m_font;
-    QMap<BrushType, QBrush> m_brush;
+    QMap<BrushType, QBrush> m_brushes;
 
     QItemSelectionModel* m_selectionModel;
 };

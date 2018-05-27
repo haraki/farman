@@ -59,7 +59,30 @@ void FolderForm::updateSettings()
     initFont();
     initPalette();
 
-    m_folderModel->updateSettings();
+    m_folderModel->setFont(QFont(Settings::getInstance()->getFontSetting("folderView")));
+
+    auto createBrush = [](const QString& colorSettingType)
+    {
+        return QBrush(Settings::getInstance()->getColorSetting(colorSettingType));
+    };
+
+    QMap<BrushType, QBrush> brushes;
+
+    brushes[BrushType::Normal]              = createBrush("folderView_normal");
+    brushes[BrushType::Normal_Selected]     = createBrush("folderView_normal_selected");
+    brushes[BrushType::Folder]              = createBrush("folderView_folder");
+    brushes[BrushType::Folder_Selected]     = createBrush("folderView_folder_selected");
+    brushes[BrushType::ReadOnly]            = createBrush("folderView_readOnly");
+    brushes[BrushType::ReadOnly_Selected]   = createBrush("folderView_readOnly_selected");
+    brushes[BrushType::Hidden]              = createBrush("folderView_hidden");
+    brushes[BrushType::Hidden_Selected]     = createBrush("folderView_hidden_selected");
+    brushes[BrushType::System]              = createBrush("folderView_system");
+    brushes[BrushType::System_Selected]     = createBrush("folderView_system_selected");
+
+    brushes[BrushType::Background]          = createBrush("folderView_background");
+    brushes[BrushType::Selected_Background] = createBrush("folderView_selected_background");
+
+    m_folderModel->setBrushes(brushes);
 }
 
 void FolderForm::initFont()

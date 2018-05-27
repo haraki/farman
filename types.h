@@ -68,6 +68,27 @@ enum class SortDirsType : int
     SortDirsTypeNum
 };
 
+enum class BrushType : int
+{
+    Unknown = -1,
+
+    Normal,
+    Normal_Selected,
+    Folder,
+    Folder_Selected,
+    ReadOnly,
+    ReadOnly_Selected,
+    Hidden,
+    Hidden_Selected,
+    System,
+    System_Selected,
+
+    Background,
+    Selected_Background,
+
+    BrushTypeNum
+};
+
 const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
 const QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
 

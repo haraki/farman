@@ -5,7 +5,6 @@
 #include <QItemSelectionModel>
 #include <QFileIconProvider>
 #include "foldermodel.h"
-#include "settings.h"
 #include "types.h"
 
 namespace Farman
@@ -60,12 +59,6 @@ void FolderModel::onFileRenamed(const QString &path, const QString &oldName, con
 void FolderModel::onDirectoryLoaded(const QString &path)
 {
     emitDirectoryLoaded(path);
-}
-
-void FolderModel::updateSettings()
-{
-    initFont();
-    initBrush();
 }
 
 QModelIndex FolderModel::index(const QString &path, int column/* = 0*/) const
@@ -587,8 +580,8 @@ QBrush FolderModel::getBrush(BrushType brushType) const
 {
     QBrush ret;
 
-    QMap<BrushType, QBrush>::const_iterator itr = m_brush.find(brushType);
-    if(itr != m_brush.end())
+    QMap<BrushType, QBrush>::const_iterator itr = m_brushes.find(brushType);
+    if(itr != m_brushes.end())
     {
         ret = *itr;
     }
@@ -596,31 +589,14 @@ QBrush FolderModel::getBrush(BrushType brushType) const
     return ret;
 }
 
-void FolderModel::initFont()
+void FolderModel::setFont(const QFont& font)
 {
-    m_font = QFont(Settings::getInstance()->getFontSetting("folderView"));
+    m_font = font;
 }
 
-void FolderModel::initBrush()
+void FolderModel::setBrushes(const QMap<BrushType, QBrush>& brushes)
 {
-    auto createBrush = [](const QString& colorSettingType)
-    {
-        return QBrush(Settings::getInstance()->getColorSetting(colorSettingType));
-    };
-
-    m_brush[BrushType::Normal]              = createBrush("folderView_normal");
-    m_brush[BrushType::Normal_Selected]     = createBrush("folderView_normal_selected");
-    m_brush[BrushType::Folder]              = createBrush("folderView_folder");
-    m_brush[BrushType::Folder_Selected]     = createBrush("folderView_folder_selected");
-    m_brush[BrushType::ReadOnly]            = createBrush("folderView_readOnly");
-    m_brush[BrushType::ReadOnly_Selected]   = createBrush("folderView_readOnly_selected");
-    m_brush[BrushType::Hidden]              = createBrush("folderView_hidden");
-    m_brush[BrushType::Hidden_Selected]     = createBrush("folderView_hidden_selected");
-    m_brush[BrushType::System]              = createBrush("folderView_system");
-    m_brush[BrushType::System_Selected]     = createBrush("folderView_system_selected");
-
-    m_brush[BrushType::Background]          = createBrush("folderView_background");
-    m_brush[BrushType::Selected_Background] = createBrush("folderView_selected_background");
+    m_brushes = brushes;
 }
 
 bool FolderModel::isSelected(const QModelIndex& index) const
