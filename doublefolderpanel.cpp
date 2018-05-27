@@ -23,12 +23,12 @@ namespace Farman
 DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
-    , m_viewMode(ViewMode::Default)
+    , m_paneMode(PaneMode::Default)
     , m_activeFolderFormName("l_folderForm")
 {
     ui->setupUi(this);
 
-    ViewMode viewMode = Settings::getInstance()->getViewMode();
+    PaneMode paneMode = Settings::getInstance()->getPaneMode();
 
     QString l_path = QDir::homePath();
     FolderAtStartup l_folderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
@@ -141,7 +141,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
 
     setActiveFolderForm(m_activeFolderFormName);
 
-    onSetViewMode(viewMode);
+    onSetPaneMode(paneMode);
 }
 
 DoubleFolderPanel::~DoubleFolderPanel()
@@ -217,7 +217,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
             switch(key)
             {
             case Qt::Key_Left:
-                if(m_viewMode == ViewMode::Single || activeForm->objectName() == "l_folderForm")
+                if(m_paneMode == PaneMode::Single || activeForm->objectName() == "l_folderForm")
                 {
                     activeForm->onGoToParentDir();
                 }
@@ -231,7 +231,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
                 break;
 
             case Qt::Key_Right:
-                if(m_viewMode == ViewMode::Double)
+                if(m_paneMode == PaneMode::Dual)
                 {
                     if(activeForm->objectName() == "r_folderForm")
                     {
@@ -261,14 +261,14 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     return ret;
 }
 
-void DoubleFolderPanel::onSetViewMode(ViewMode viewMode)
+void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)
 {
-    m_viewMode = viewMode;
-    Settings::getInstance()->setViewMode(viewMode);
+    m_paneMode = paneMode;
+    Settings::getInstance()->setPaneMode(paneMode);
 
-    switch(viewMode)
+    switch(paneMode)
     {
-    case ViewMode::Single:
+    case PaneMode::Single:
         if(getActiveFolderForm()->objectName() == "l_folderForm")
         {
             ui->leftPanel->setVisible(true);
@@ -282,7 +282,7 @@ void DoubleFolderPanel::onSetViewMode(ViewMode viewMode)
 
         break;
 
-    case ViewMode::Double:
+    case PaneMode::Dual:
         ui->leftPanel->setVisible(true);
         ui->rightPanel->setVisible(true);
 

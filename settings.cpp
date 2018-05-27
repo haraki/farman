@@ -44,9 +44,9 @@ void Settings::initialize()
                                                                         PositionAtStartup::Default;
     m_positionAtStartup = value("main/positionAtStartup", QPoint(0, 0)).toPoint();
 
-    // View mode
-    QString viewModeValue = value("main/viewMode", "double").toString();
-    m_viewMode = (viewModeValue == "single") ? ViewMode::Single : ViewMode::Double;
+    // Pane mode
+    QString paneModeValue = value("main/paneMode", "dual").toString();
+    m_paneMode = (paneModeValue == "single") ? PaneMode::Single : PaneMode::Dual;
 
     // Folder at startup(Left)
     QString leftFolderAtStartupValue = value("main/leftFolderAtStartup", "default").toString();
@@ -183,10 +183,10 @@ void Settings::flush()
     setValue("main/positionAtStartupType", positionAtStartupTypeValue);
     setValue("main/positionAtStartup", m_positionAtStartup);
 
-    // View mode
-    QString viewModeValue = (m_viewMode == ViewMode::Single) ? "single"
-                                                             : "double";
-    setValue("main/viewMode", viewModeValue);
+    // Pane mode
+    QString paneModeValue = (m_paneMode == PaneMode::Single) ? "single"
+                                                             : "dual";
+    setValue("main/paneMode", paneModeValue);
 
     // Folder at startup(Left)
     QString leftFolderAtStartupValue = (m_leftFolderAtStartup == FolderAtStartup::LastTime) ? "lastTime" :

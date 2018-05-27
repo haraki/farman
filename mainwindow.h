@@ -52,8 +52,8 @@ private Q_SLOTS:
     void on_actionOpenWithImageViewer_triggered();
     void on_actionPreferences_triggered();
     void on_actionQuit_triggered();
-    void on_actionSingleView_triggered();
-    void on_actionDoubleView_triggered();
+    void on_actionSinglePane_triggered();
+    void on_actionDualPane_triggered();
     void on_actionSortSettings_triggered();
     void on_actionFilterSettings_triggered();
     void on_actionCopy_triggered();

@@ -37,14 +37,14 @@ enum class ImageViewerBGType : int
     Checkered = 1,
 };
 
-enum class ViewMode : int
+enum class PaneMode : int
 {
     Single = 0,
-    Double = 1,
+    Dual = 1,
 
-    ViewModeNum,
+    PaneModeNum,
 
-    Default = ViewMode::Double,
+    Default = PaneMode::Dual,
 };
 
 enum class SectionType : int

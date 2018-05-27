@@ -338,25 +338,25 @@ void MainWindow::on_actionQuit_triggered()
     close();
 }
 
-void MainWindow::on_actionSingleView_triggered()
+void MainWindow::on_actionSinglePane_triggered()
 {
-    qDebug() << "MainWindow::on_actionSingleView_triggered()";
+    qDebug() << "MainWindow::on_actionSinglePane_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
     {
-        doubleFolderPanel->onSetViewMode(ViewMode::Single);
+        doubleFolderPanel->onSetPaneMode(PaneMode::Single);
     }
 }
 
-void MainWindow::on_actionDoubleView_triggered()
+void MainWindow::on_actionDualPane_triggered()
 {
-    qDebug() << "MainWindow::on_actionDoubleView_triggered()";
+    qDebug() << "MainWindow::on_actionDualPane_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
     {
-        doubleFolderPanel->onSetViewMode(ViewMode::Double);
+        doubleFolderPanel->onSetPaneMode(PaneMode::Dual);
     }
 }
 

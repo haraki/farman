@@ -36,7 +36,7 @@ public:
     FolderForm* getLeftFolderForm();
     FolderForm* getRightFolderForm();
 
-    void onSetViewMode(ViewMode viewMode);
+    void onSetPaneMode(PaneMode paneMode);
     void onChangeSortSettings();
     void onChangeFilterSettings();
     void onCopy();
@@ -63,7 +63,7 @@ private:
 
     Ui::DoubleFolderPanel *ui;
 
-    ViewMode m_viewMode;
+    PaneMode m_paneMode;
 
     QString m_activeFolderFormName;
 };

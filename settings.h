@@ -35,8 +35,8 @@ public:
     QPoint getPositionAtStartup() { return m_positionAtStartup; }
     void setPositionAtStartup(const QPoint& positionAtStartup) { m_positionAtStartup = positionAtStartup; }
 
-    ViewMode getViewMode() { return m_viewMode; }
-    void setViewMode(ViewMode viewMode) { m_viewMode = viewMode; }
+    PaneMode getPaneMode() { return m_paneMode; }
+    void setPaneMode(PaneMode paneMode) { m_paneMode = paneMode; }
 
     FolderAtStartup getLeftFolderAtStartup() { return m_leftFolderAtStartup; }
     void setLeftFolderAtStartup(FolderAtStartup leftFolderAtStartup) { m_leftFolderAtStartup = leftFolderAtStartup; }
@@ -158,7 +158,7 @@ private:
     PositionAtStartup m_positionAtStartupType = PositionAtStartup::Default;
     QPoint m_positionAtStartup = QPoint(0, 0);
 
-    ViewMode m_viewMode = ViewMode::Double;
+    PaneMode m_paneMode = PaneMode::Dual;
 
     FolderAtStartup m_leftFolderAtStartup = FolderAtStartup::Default;
     QString m_leftFolderPath = "";
