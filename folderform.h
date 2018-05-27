@@ -35,7 +35,11 @@ public:
     void setFilterFlags(QDir::Filters filterFlags);
     QDir::Filters getFilterFlags() const;
 
-    void setSortSettings(SectionType sectionType, SortDirsType dirsType, bool dotFirst, Qt::CaseSensitivity caseSensitivity, Qt::SortOrder order);
+    void setSortSettings(SectionType sectionType,
+                         SortDirsType dirsType,
+                         bool dotFirst,
+                         Qt::CaseSensitivity caseSensitivity,
+                         Qt::SortOrder order);
     SectionType getSortSectionType() const;
     int getSortColumn() const;
     SortDirsType getSortDirsType() const;

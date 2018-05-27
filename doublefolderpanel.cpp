@@ -330,6 +330,8 @@ void DoubleFolderPanel::onChangeSortSettings()
                 Settings::getInstance()->setRightSortCaseSensitivity(caseSensitivity);
                 Settings::getInstance()->setRightSortOrder(order);
             }
+
+            activeForm->refresh();
         }
     }
 }
@@ -354,6 +356,8 @@ void DoubleFolderPanel::onChangeFilterSettings()
             {
                 Settings::getInstance()->setRightFilterSettings(filterFlags);
             }
+
+            activeForm->refresh();
         }
     }
 }

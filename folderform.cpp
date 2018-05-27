@@ -28,12 +28,10 @@ FolderForm::FolderForm(QDir::Filters filterFlags,
     m_folderModel->setReadOnly(true);
     m_folderModel->setDynamicSortFilter(true);
     m_folderModel->setSortLocaleAware(true);
-    m_folderModel->setFilter(filterFlags);
-    m_folderModel->setSortSectionType(sortSectionType);
-    m_folderModel->setSortDirsType(sortDirsType);
-    m_folderModel->setSortDotFirst(sortDotFirst);
-    m_folderModel->setSortCaseSensitivity(sortCaseSensitivity);
-    m_folderModel->setSortOrder(sortOrder);
+
+    setFilterFlags(filterFlags);
+    setSortSettings(sortSectionType, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
+
     ui->folderView->setModel(m_folderModel);
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
@@ -112,8 +110,6 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 void FolderForm::setFilterFlags(QDir::Filters filterFlags)
 {
     m_folderModel->setFilter(filterFlags);
-
-    refresh();
 }
 
 QDir::Filters FolderForm::getFilterFlags() const
@@ -121,15 +117,17 @@ QDir::Filters FolderForm::getFilterFlags() const
     return m_folderModel->filter();
 }
 
-void FolderForm::setSortSettings(SectionType sectionType, SortDirsType dirsType, bool dotFirst, Qt::CaseSensitivity caseSensitivity, Qt::SortOrder order)
+void FolderForm::setSortSettings(SectionType sectionType,
+                                 SortDirsType dirsType,
+                                 bool dotFirst,
+                                 Qt::CaseSensitivity caseSensitivity,
+                                 Qt::SortOrder order)
 {
     m_folderModel->setSortSectionType(sectionType);
     m_folderModel->setSortDirsType(dirsType);
     m_folderModel->setSortDotFirst(dotFirst);
     m_folderModel->setSortCaseSensitivity(caseSensitivity);
     m_folderModel->setSortOrder(order);
-
-    refresh();
 }
 
 SectionType FolderForm::getSortSectionType() const

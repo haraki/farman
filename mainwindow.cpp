@@ -72,6 +72,7 @@ void MainWindow::initialize()
     }
 
     updateSettings();
+    doubleFolderPanel->refresh();
 
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
 }
@@ -328,6 +329,7 @@ void MainWindow::on_actionPreferences_triggered()
     if(dialog.exec() == QDialog::Accepted)
     {
         updateSettings();
+        doubleFolderPanel->refresh();
     }
 }
 
@@ -457,7 +459,6 @@ void MainWindow::updateSettings()
     if(doubleFolderPanel != Q_NULLPTR)
     {
         doubleFolderPanel->updateSettings();
-        doubleFolderPanel->refresh();
     }
 }
 
