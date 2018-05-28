@@ -45,8 +45,6 @@ private Q_SLOTS:
 
     void onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType);
 
-    void onOutputConsole(const QString& consoleString);
-
 private:
     static File* s_instance;
 };

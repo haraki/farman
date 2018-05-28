@@ -3,8 +3,6 @@
 #include <QDesktopServices>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "folderview.h"
-#include "foldermodel.h"
 #include "folderform.h"
 #include "doublefolderpanel.h"
 #include "settings.h"
@@ -48,10 +46,6 @@ MainWindow::~MainWindow()
 void MainWindow::initialize()
 {
     File::create(this);
-    connect(File::getInstance(),
-            SIGNAL(outputConsole(const QString)),
-            this,
-            SLOT(onOutputConsole(const QString)));
 
     DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ui->mainWidget);
 

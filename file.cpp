@@ -5,6 +5,7 @@
 #include "overwritedialog.h"
 #include "workingdialog.h"
 #include "settings.h"
+#include "mainwindow.h"
 
 namespace Farman
 {
@@ -26,6 +27,10 @@ File* File::getInstance()
 File::File(QObject *parent/* = Q_NULLPTR*/) :
     QObject(parent)
 {
+    connect(this,
+            SIGNAL(outputConsole(const QString)),
+            MainWindow::getInstance(),
+            SLOT(onOutputConsole(const QString)));
 }
 
 File::~File()
@@ -38,7 +43,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
 
     connect(copyWorker,
             SIGNAL(outputConsole(const QString)),
-            this,
+            MainWindow::getInstance(),
             SLOT(onOutputConsole(const QString)));
     connect(copyWorker,
             SIGNAL(finished(int)),
@@ -71,7 +76,7 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
 
     connect(copyWorker,
             SIGNAL(outputConsole(const QString)),
-            this,
+            MainWindow::getInstance(),
             SLOT(onOutputConsole(const QString)));
     connect(copyWorker,
             SIGNAL(finished(int)),
@@ -104,7 +109,7 @@ bool File::removeFile(const QStringList& paths)
 
     connect(worker,
             SIGNAL(outputConsole(const QString)),
-            this,
+            MainWindow::getInstance(),
             SLOT(onOutputConsole(const QString)));
     connect(worker,
             SIGNAL(finished(int)),
@@ -306,11 +311,6 @@ void File::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFile
             copyWorker->cancelConfirmOverwrite();
         }
     }
-}
-
-void File::onOutputConsole(const QString& consoleString)
-{
-    emitOutputConsole(consoleString);
 }
 
 }           // namespace Farman
