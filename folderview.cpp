@@ -133,7 +133,7 @@ void FolderView::onDoubleClicked(const QModelIndex& index)
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
 
-    QString path = folderModel->filePath(index);
+    const QString path = folderModel->fileInfo(index).absoluteFilePath();
 
     emitOpen(path);
 
@@ -169,7 +169,7 @@ void FolderView::keyPressEvent(QKeyEvent *e)
         FolderModel* folderModel = qobject_cast<FolderModel*>(model());
         Q_ASSERT(folderModel);
 
-        const QString path = folderModel->filePath(currentIndex());
+        const QString path = folderModel->fileInfo(currentIndex()).absoluteFilePath();
         if(e->modifiers() & Qt::ShiftModifier)
         {
             emitOpenWithApp(path);
