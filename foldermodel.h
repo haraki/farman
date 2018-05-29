@@ -23,7 +23,7 @@ public:
     ~FolderModel();
 
     void setFont(const QFont& font);
-    void setBrushes(const QMap<BrushType, QBrush>& brushes);
+    void initBrushes(const QMap<ColorRoleType, QColor>& colors);
 
     using QSortFilterProxyModel::index;
     QModelIndex index(const QString &path, int column = 0) const;
@@ -117,7 +117,7 @@ private:
 
     QBrush getTextBrush(const QModelIndex& index) const;
     QBrush getBackgroundBrush(const QModelIndex& index) const;
-    QBrush getBrush(BrushType brushType) const;
+    QBrush getBrush(ColorRoleType colorRole) const;
 
     void emitRootPathChanged(const QString &newPath);
     void emitFileRenamed(const QString &path, const QString &oldName, const QString &newName);
@@ -129,7 +129,7 @@ private:
     Qt::SortOrder m_sortOrder;
 
     QFont m_font;
-    QMap<BrushType, QBrush> m_brushes;
+    QMap<ColorRoleType, QBrush> m_brushes;
 
     QItemSelectionModel* m_selectionModel;
 };

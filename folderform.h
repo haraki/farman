@@ -30,7 +30,11 @@ public:
                         QWidget *parent = Q_NULLPTR);
     ~FolderForm();
 
-    void updateSettings();
+    void setAppearance(const QFont& viewFont,
+                       const QFont& pathFont,
+                       const QMap<ColorRoleType, QColor>& colors,
+                       const QColor& pathColor,
+                       const QColor& pathBgColor);
 
     void setFilterFlags(QDir::Filters filterFlags);
     QDir::Filters getFilterFlags() const;
@@ -76,8 +80,6 @@ private Q_SLOTS:
     void emitFocusChanged(bool inFocus);
 
 private:
-    void initFont();
-    void initPalette();
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
     int getTotalColumnWidth(int withOutColumn = -1);

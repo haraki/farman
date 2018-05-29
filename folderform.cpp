@@ -6,7 +6,6 @@
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
-#include "settings.h"
 
 namespace Farman
 {
@@ -54,58 +53,6 @@ FolderForm::~FolderForm()
     delete ui;
 }
 
-void FolderForm::updateSettings()
-{
-    initFont();
-    initPalette();
-
-    m_folderModel->setFont(QFont(Settings::getInstance()->getFontSetting("folderView")));
-
-    auto createBrush = [](const QString& colorSettingType)
-    {
-        return QBrush(Settings::getInstance()->getColorSetting(colorSettingType));
-    };
-
-    QMap<BrushType, QBrush> brushes;
-
-    brushes[BrushType::Normal]              = createBrush("folderView_normal");
-    brushes[BrushType::Normal_Selected]     = createBrush("folderView_normal_selected");
-    brushes[BrushType::Folder]              = createBrush("folderView_folder");
-    brushes[BrushType::Folder_Selected]     = createBrush("folderView_folder_selected");
-    brushes[BrushType::ReadOnly]            = createBrush("folderView_readOnly");
-    brushes[BrushType::ReadOnly_Selected]   = createBrush("folderView_readOnly_selected");
-    brushes[BrushType::Hidden]              = createBrush("folderView_hidden");
-    brushes[BrushType::Hidden_Selected]     = createBrush("folderView_hidden_selected");
-    brushes[BrushType::System]              = createBrush("folderView_system");
-    brushes[BrushType::System_Selected]     = createBrush("folderView_system_selected");
-
-    brushes[BrushType::Background]          = createBrush("folderView_background");
-    brushes[BrushType::Selected_Background] = createBrush("folderView_selected_background");
-
-    m_folderModel->setBrushes(brushes);
-}
-
-void FolderForm::initFont()
-{
-    ui->folderPathEdit->setFont(Settings::getInstance()->getFontSetting("folderPath"));
-}
-
-void FolderForm::initPalette()
-{
-    QPalette pal;
-
-    pal = ui->folderView->palette();
-    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("folderView_background"));
-    ui->folderView->setAutoFillBackground(true);
-    ui->folderView->setPalette(pal);
-
-    pal = ui->folderPathEdit->palette();
-    pal.setColor(QPalette::Text, Settings::getInstance()->getColorSetting("folderPath_text"));
-    pal.setColor(QPalette::Base, Settings::getInstance()->getColorSetting("folderPath_background"));
-    ui->folderPathEdit->setAutoFillBackground(true);
-    ui->folderPathEdit->setPalette(pal);
-}
-
 bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 {
     Q_UNUSED(watched);
@@ -128,6 +75,32 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
     }
 
     return ret;
+}
+
+void FolderForm::setAppearance(const QFont& viewFont,
+                               const QFont& pathFont,
+                               const QMap<ColorRoleType, QColor>& colors,
+                               const QColor& pathColor,
+                               const QColor& pathBgColor)
+{
+    m_folderModel->setFont(viewFont);
+
+    ui->folderPathEdit->setFont(pathFont);
+
+    m_folderModel->initBrushes(colors);
+
+    QPalette pal;
+
+    pal = ui->folderView->palette();
+    pal.setColor(QPalette::Base, colors[ColorRoleType::Background]);
+    ui->folderView->setAutoFillBackground(true);
+    ui->folderView->setPalette(pal);
+
+    pal = ui->folderPathEdit->palette();
+    pal.setColor(QPalette::Text, pathColor);
+    pal.setColor(QPalette::Base, pathBgColor);
+    ui->folderPathEdit->setAutoFillBackground(true);
+    ui->folderPathEdit->setPalette(pal);
 }
 
 void FolderForm::setFilterFlags(QDir::Filters filterFlags)

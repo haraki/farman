@@ -178,16 +178,40 @@ void DoubleFolderPanel::closeEvent(QCloseEvent* e)
 
 void DoubleFolderPanel::updateSettings()
 {
+    const QFont viewFont = Settings::getInstance()->getFontSetting("folderView");
+
+    QMap<ColorRoleType, QColor> colors;
+
+    colors[ColorRoleType::Normal]              = Settings::getInstance()->getColorSetting("folderView_normal");
+    colors[ColorRoleType::Normal_Selected]     = Settings::getInstance()->getColorSetting("folderView_normal_selected");
+    colors[ColorRoleType::Folder]              = Settings::getInstance()->getColorSetting("folderView_folder");
+    colors[ColorRoleType::Folder_Selected]     = Settings::getInstance()->getColorSetting("folderView_folder_selected");
+    colors[ColorRoleType::ReadOnly]            = Settings::getInstance()->getColorSetting("folderView_readOnly");
+    colors[ColorRoleType::ReadOnly_Selected]   = Settings::getInstance()->getColorSetting("folderView_readOnly_selected");
+    colors[ColorRoleType::Hidden]              = Settings::getInstance()->getColorSetting("folderView_hidden");
+    colors[ColorRoleType::Hidden_Selected]     = Settings::getInstance()->getColorSetting("folderView_hidden_selected");
+    colors[ColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_system");
+    colors[ColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_system_selected");
+
+    colors[ColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_background");
+    colors[ColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_selected_background");
+
+    const QFont pathFont = Settings::getInstance()->getFontSetting("folderPath");
+
+    const QColor pathColor = Settings::getInstance()->getColorSetting("folderPath_text");
+
+    const QColor pathBgColor = Settings::getInstance()->getColorSetting("folderPath_background");
+
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR)
     {
-        activeForm->updateSettings();
+        activeForm->setAppearance(viewFont, pathFont, colors, pathColor, pathBgColor);
     }
 
     FolderForm* inactiveForm = getInactiveFolderForm();
     if(inactiveForm != Q_NULLPTR)
     {
-        inactiveForm->updateSettings();
+        inactiveForm->setAppearance(viewFont, pathFont, colors, pathColor, pathBgColor);
     }
 }
 

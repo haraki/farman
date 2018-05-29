@@ -68,7 +68,7 @@ enum class SortDirsType : int
     SortDirsTypeNum
 };
 
-enum class BrushType : int
+enum class ColorRoleType : int
 {
     Unknown = -1,
 
@@ -86,7 +86,7 @@ enum class BrushType : int
     Background,
     Selected_Background,
 
-    BrushTypeNum
+    ColorRoleTypeNum
 };
 
 const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;

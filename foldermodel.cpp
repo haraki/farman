@@ -516,44 +516,44 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
     {
         if(isSelected(index))
         {
-            ret = getBrush(BrushType::Hidden_Selected);
+            ret = getBrush(ColorRoleType::Hidden_Selected);
         }
         else
         {
-            ret = getBrush(BrushType::Hidden);
+            ret = getBrush(ColorRoleType::Hidden);
         }
     }
     else if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
     {
         if(isSelected(index))
         {
-            ret = getBrush(BrushType::ReadOnly_Selected);
+            ret = getBrush(ColorRoleType::ReadOnly_Selected);
         }
         else
         {
-            ret = getBrush(BrushType::ReadOnly);
+            ret = getBrush(ColorRoleType::ReadOnly);
         }
     }
     else if(fileInfo(index).isDir())
     {
         if(isSelected(index))
         {
-            ret = getBrush(BrushType::Folder_Selected);
+            ret = getBrush(ColorRoleType::Folder_Selected);
         }
         else
         {
-            ret = getBrush(BrushType::Folder);
+            ret = getBrush(ColorRoleType::Folder);
         }
     }
     else
     {
         if(isSelected(index))
         {
-            ret = getBrush(BrushType::Normal_Selected);
+            ret = getBrush(ColorRoleType::Normal_Selected);
         }
         else
         {
-            ret = getBrush(BrushType::Normal);
+            ret = getBrush(ColorRoleType::Normal);
         }
     }
 
@@ -566,21 +566,21 @@ QBrush FolderModel::getBackgroundBrush(const QModelIndex& index) const
 
     if(isSelected(index))
     {
-        ret = getBrush(BrushType::Selected_Background);
+        ret = getBrush(ColorRoleType::Selected_Background);
     }
     else
     {
-        ret = getBrush(BrushType::Background);
+        ret = getBrush(ColorRoleType::Background);
     }
 
     return ret;
 }
 
-QBrush FolderModel::getBrush(BrushType brushType) const
+QBrush FolderModel::getBrush(ColorRoleType colorRole) const
 {
     QBrush ret;
 
-    QMap<BrushType, QBrush>::const_iterator itr = m_brushes.find(brushType);
+    QMap<ColorRoleType, QBrush>::const_iterator itr = m_brushes.find(colorRole);
     if(itr != m_brushes.end())
     {
         ret = *itr;
@@ -594,9 +594,14 @@ void FolderModel::setFont(const QFont& font)
     m_font = font;
 }
 
-void FolderModel::setBrushes(const QMap<BrushType, QBrush>& brushes)
+void FolderModel::initBrushes(const QMap<ColorRoleType, QColor>& colors)
 {
-    m_brushes = brushes;
+    m_brushes.clear();
+
+    for(auto colorRole : colors.keys())
+    {
+        m_brushes[colorRole] = QBrush(colors[colorRole]);
+    }
 }
 
 bool FolderModel::isSelected(const QModelIndex& index) const
