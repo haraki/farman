@@ -6,7 +6,6 @@
 
 class QWidget;
 class QString;
-class QMimeDatabase;
 
 namespace Farman
 {

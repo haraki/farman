@@ -30,15 +30,6 @@ ViewerDispatcher* ViewerDispatcher::getInstance()
 
 ViewerDispatcher::ViewerDispatcher()
 {
-    for(auto mimeType : QMimeDatabase().allMimeTypes())
-    {
-        qDebug() << mimeType.name() << ", " << mimeType.suffixes();
-    }
-
-    for(auto format : QImageReader::supportedMimeTypes())
-    {
-        qDebug() << format;
-    }
 }
 
 ViewerDispatcher::~ViewerDispatcher()

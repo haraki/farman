@@ -6,7 +6,6 @@
 #include <QBuffer>
 #include <QMovie>
 #include <QGraphicsProxyWidget>
-#include <QMimeDatabase>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
 #include "settings.h"
