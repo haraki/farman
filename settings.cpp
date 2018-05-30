@@ -63,24 +63,24 @@ void Settings::initialize()
     m_rightFolderPath = value("main/rightFolderPath", QString("")).toString();
 
     // Left side Sort settings
-    m_leftSortSectionType = getSortSectionType("left");
-    m_leftSortDirsType = getSortDirsType("left");
-    m_leftSortDotFirst = getSortDotFirst("left");
-    m_leftSortCaseSensitivity = getSortCaseSensitivity("left");
-    m_leftSortOrder = getSortOrder("left");
+    m_leftSortSectionType = getValueSortSectionType("left");
+    m_leftSortDirsType = getValueSortDirsType("left");
+    m_leftSortDotFirst = getValueSortDotFirst("left");
+    m_leftSortCaseSensitivity = getValueSortCaseSensitivity("left");
+    m_leftSortOrder = getValueSortOrder("left");
 
     // Right side Sort settings
-    m_rightSortSectionType = getSortSectionType("right");
-    m_rightSortDirsType = getSortDirsType("right");
-    m_rightSortDotFirst = getSortDotFirst("right");
-    m_rightSortCaseSensitivity = getSortCaseSensitivity("right");
-    m_rightSortOrder = getSortOrder("right");
+    m_rightSortSectionType = getValueSortSectionType("right");
+    m_rightSortDirsType = getValueSortDirsType("right");
+    m_rightSortDotFirst = getValueSortDotFirst("right");
+    m_rightSortCaseSensitivity = getValueSortCaseSensitivity("right");
+    m_rightSortOrder = getValueSortOrder("right");
 
     // Left side Filter settings
-    m_leftFilterSettings = getFilterSettings("left");
+    m_leftFilterSettings = getValueFilterSettings("left");
 
     // Right side Filter settings
-    m_rightFilterSettings = getFilterSettings("right");
+    m_rightFilterSettings = getValueFilterSettings("right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = value("main/dragAndDropBehaviorType", "select").toString();
@@ -102,11 +102,10 @@ void Settings::initialize()
     // Confirm quit
     m_confirmQuit = value("main/confirmQuit", true).toBool();
 
-
     // Color settings
     for(auto colorSettingKey : m_colorSettings.keys())
     {
-        m_colorSettings[colorSettingKey] = getColorSettingParam("main/color/" + colorSettingKey, m_defaultColorSettings[colorSettingKey]);
+        m_colorSettings[colorSettingKey] = getValueColorSetting("main/color/" + colorSettingKey, m_defaultColorSettings[colorSettingKey]);
     }
 
     // Font settings
@@ -203,24 +202,24 @@ void Settings::flush()
     setValue("main/rightFolderPath", m_rightFolderPath);
 
     // Left side Sort settings
-    setSortSectionType(m_leftSortSectionType, "left");
-    setSortDirsType(m_leftSortDirsType, "left");
-    setSortDotFirst(m_leftSortDotFirst, "left");
-    setSortCaseSensitivity(m_leftSortCaseSensitivity, "left");
-    setSortOrder(m_leftSortOrder, "left");
+    setValueSortSectionType(m_leftSortSectionType, "left");
+    setValueSortDirsType(m_leftSortDirsType, "left");
+    setValueSortDotFirst(m_leftSortDotFirst, "left");
+    setValueSortCaseSensitivity(m_leftSortCaseSensitivity, "left");
+    setValueSortOrder(m_leftSortOrder, "left");
 
     // Right side Sort settings
-    setSortSectionType(m_rightSortSectionType, "right");
-    setSortDirsType(m_rightSortDirsType, "right");
-    setSortDotFirst(m_rightSortDotFirst, "right");
-    setSortCaseSensitivity(m_rightSortCaseSensitivity, "right");
-    setSortOrder(m_rightSortOrder, "right");
+    setValueSortSectionType(m_rightSortSectionType, "right");
+    setValueSortDirsType(m_rightSortDirsType, "right");
+    setValueSortDotFirst(m_rightSortDotFirst, "right");
+    setValueSortCaseSensitivity(m_rightSortCaseSensitivity, "right");
+    setValueSortOrder(m_rightSortOrder, "right");
 
     // Left side Filter settings
-    setFilterSettings(m_leftFilterSettings, "left");
+    setValueFilterSettings(m_leftFilterSettings, "left");
 
     // Right side Filter settings
-    setFilterSettings(m_rightFilterSettings, "right");
+    setValueFilterSettings(m_rightFilterSettings, "right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Copy) ? "copy" :
@@ -289,7 +288,7 @@ void Settings::flush()
     }
 }
 
-QColor Settings::getColorSettingParam(const QString& key, const QColor& defColor)
+QColor Settings::getValueColorSetting(const QString& key, const QColor& defColor)
 {
     QString colorSettingString = value(key).toString();
     if(colorSettingString.length() > 0 && QColor::isValidColor(colorSettingString))
@@ -338,7 +337,7 @@ void Settings::setFontSetting(const QString& fontSettingType, const QFont& font)
     m_fontSettings[fontSettingType] = font;
 }
 
-SectionType Settings::getSortSectionType(const QString& prefix)
+SectionType Settings::getValueSortSectionType(const QString& prefix)
 {
     SectionType ret = SectionType::FileName;
 
@@ -351,7 +350,7 @@ SectionType Settings::getSortSectionType(const QString& prefix)
     return ret;
 }
 
-SortDirsType Settings::getSortDirsType(const QString& prefix)
+SortDirsType Settings::getValueSortDirsType(const QString& prefix)
 {
     SortDirsType ret = SortDirsType::NoSpecify;
 
@@ -363,12 +362,12 @@ SortDirsType Settings::getSortDirsType(const QString& prefix)
     return ret;
 }
 
-bool Settings::getSortDotFirst(const QString& prefix)
+bool Settings::getValueSortDotFirst(const QString& prefix)
 {
     return value("main/" + prefix + "SortDotFirst", true).toBool();
 }
 
-Qt::CaseSensitivity Settings::getSortCaseSensitivity(const QString& prefix)
+Qt::CaseSensitivity Settings::getValueSortCaseSensitivity(const QString& prefix)
 {
     Qt::CaseSensitivity ret = Qt::CaseSensitive;
 
@@ -379,7 +378,7 @@ Qt::CaseSensitivity Settings::getSortCaseSensitivity(const QString& prefix)
     return ret;
 }
 
-Qt::SortOrder Settings::getSortOrder(const QString& prefix)
+Qt::SortOrder Settings::getValueSortOrder(const QString& prefix)
 {
     Qt::SortOrder ret = Qt::AscendingOrder;
 
@@ -390,7 +389,7 @@ Qt::SortOrder Settings::getSortOrder(const QString& prefix)
     return ret;
 }
 
-void Settings::setSortSectionType(SectionType sectionType, const QString& prefix)
+void Settings::setValueSortSectionType(SectionType sectionType, const QString& prefix)
 {
     QString sortTypeValue = (sectionType == SectionType::LastModified) ? "lastModified" :
                             (sectionType == SectionType::FileSize) ? "size" :
@@ -399,7 +398,7 @@ void Settings::setSortSectionType(SectionType sectionType, const QString& prefix
     setValue("main/" + prefix + "SortType", sortTypeValue);
 }
 
-void Settings::setSortDirsType(SortDirsType dirsType, const QString& prefix)
+void Settings::setValueSortDirsType(SortDirsType dirsType, const QString& prefix)
 {
     QString sortDirsValue = (dirsType == SortDirsType::First) ? "first" :
                             (dirsType == SortDirsType::Last) ? "last" :
@@ -407,26 +406,26 @@ void Settings::setSortDirsType(SortDirsType dirsType, const QString& prefix)
     setValue("main/" + prefix + "SortDirs", sortDirsValue);
 }
 
-void Settings::setSortDotFirst(bool dotFirst, const QString& prefix)
+void Settings::setValueSortDotFirst(bool dotFirst, const QString& prefix)
 {
     setValue("main/" + prefix + "SortDotFirst", dotFirst);
 }
 
-void Settings::setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix)
+void Settings::setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix)
 {
     QString sortCaseValue = (caseSensitivity == Qt::CaseInsensitive) ? "insensitive" :
                                                                        "sensitive";
     setValue("main/" + prefix + "SortCase", sortCaseValue);
 }
 
-void Settings::setSortOrder(Qt::SortOrder order, const QString& prefix)
+void Settings::setValueSortOrder(Qt::SortOrder order, const QString& prefix)
 {
     QString sortOrderValue = (order == Qt::DescendingOrder) ? "desc" :
                                                               "asc";
     setValue("main/" + prefix + "SortOrder", sortOrderValue);
 }
 
-QDir::Filters Settings::getFilterSettings(const QString& prefix)
+QDir::Filters Settings::getValueFilterSettings(const QString& prefix)
 {
     QDir::Filters ret = FIX_FILTER_FLAGS;
 
@@ -443,7 +442,7 @@ QDir::Filters Settings::getFilterSettings(const QString& prefix)
     return ret;
 }
 
-void Settings::setFilterSettings(QDir::Filters filterSettings, const QString& prefix)
+void Settings::setValueFilterSettings(QDir::Filters filterSettings, const QString& prefix)
 {
     bool filterHiddenValue = (filterSettings & QDir::Filter::Hidden) ? true : false;
     setValue("main/" + prefix + "FilterHidden", filterHiddenValue);

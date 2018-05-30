@@ -134,21 +134,21 @@ private:
 
     void initialize();
 
-    SectionType getSortSectionType(const QString& prefix);
-    SortDirsType getSortDirsType(const QString& prefix);
-    bool getSortDotFirst(const QString& prefix);
-    Qt::CaseSensitivity getSortCaseSensitivity(const QString& prefix);
-    Qt::SortOrder getSortOrder(const QString& prefix);
-    void setSortSectionType(SectionType sectionType, const QString& prefix);
-    void setSortDirsType(SortDirsType dirsType, const QString& prefix);
-    void setSortDotFirst(bool dotFirst, const QString& prefix);
-    void setSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
-    void setSortOrder(Qt::SortOrder order, const QString& prefix);
+    QColor getValueColorSetting(const QString& key, const QColor& defColor);
 
-    QDir::Filters getFilterSettings(const QString& prefix);
-    void setFilterSettings(QDir::Filters filterSettings, const QString& prefix);
+    SectionType getValueSortSectionType(const QString& prefix);
+    SortDirsType getValueSortDirsType(const QString& prefix);
+    bool getValueSortDotFirst(const QString& prefix);
+    Qt::CaseSensitivity getValueSortCaseSensitivity(const QString& prefix);
+    Qt::SortOrder getValueSortOrder(const QString& prefix);
+    void setValueSortSectionType(SectionType sectionType, const QString& prefix);
+    void setValueSortDirsType(SortDirsType dirsType, const QString& prefix);
+    void setValueSortDotFirst(bool dotFirst, const QString& prefix);
+    void setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
+    void setValueSortOrder(Qt::SortOrder order, const QString& prefix);
 
-    QColor getColorSettingParam(const QString& key, const QColor& defColor);
+    QDir::Filters getValueFilterSettings(const QString& prefix);
+    void setValueFilterSettings(QDir::Filters filterSettings, const QString& prefix);
 
     static Settings* s_instance;
 
