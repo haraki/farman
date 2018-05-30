@@ -57,9 +57,11 @@ protected Q_SLOTS:
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
-    void setActiveFolderForm(const QString& objectName);
 
     void emitStatusChanged(const QString& statusString);
+
+    void setPaneMode(PaneMode paneMode);
+    void setActiveFolderForm(const QString& objectName);
 
     Ui::DoubleFolderPanel *ui;
 

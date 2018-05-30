@@ -41,36 +41,12 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         l_path = QDir::currentPath();
     }
 
-    QString r_path = QDir::homePath();
-    FolderAtStartup r_folderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
-    if(r_folderAtStartup == FolderAtStartup::LastTime || r_folderAtStartup == FolderAtStartup::Fixed)
-    {
-        r_path = Settings::getInstance()->getRightFolderPath();
-    }
-    if(!QDir(r_path).exists())
-    {
-        r_path = QDir::currentPath();
-    }
-
+    QDir::Filters l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
     SectionType l_sortSectionType = Settings::getInstance()->getLeftSortSectionType();
     SortDirsType l_sortDirsType = Settings::getInstance()->getLeftSortDirsType();
     bool l_sortDotFirst = Settings::getInstance()->getLeftSortDotFirst();
     Qt::CaseSensitivity l_sortCaseSensitivity = Settings::getInstance()->getLeftSortCaseSensitivity();
     Qt::SortOrder l_sortOrder = Settings::getInstance()->getLeftSortOrder();
-
-    SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
-    SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
-    bool r_sortDotFirst = Settings::getInstance()->getRightSortDotFirst();
-    Qt::CaseSensitivity r_sortCaseSensitivity = Settings::getInstance()->getRightSortCaseSensitivity();
-    Qt::SortOrder r_sortOrder = Settings::getInstance()->getRightSortOrder();
-
-    QDir::Filters l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
-    QDir::Filters r_filterFlags = Settings::getInstance()->getRightFilterSettings();
-
-    connect(this,
-            SIGNAL(statusChanged(const QString&)),
-            MainWindow::getInstance(),
-            SLOT(onStatusChanged(const QString&)));
 
     QVBoxLayout* l_vLayout = new QVBoxLayout();
     l_vLayout->setSpacing(6);
@@ -96,6 +72,24 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     {
         l_folderView->installEventFilter(this);
     }
+
+    QString r_path = QDir::homePath();
+    FolderAtStartup r_folderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
+    if(r_folderAtStartup == FolderAtStartup::LastTime || r_folderAtStartup == FolderAtStartup::Fixed)
+    {
+        r_path = Settings::getInstance()->getRightFolderPath();
+    }
+    if(!QDir(r_path).exists())
+    {
+        r_path = QDir::currentPath();
+    }
+
+    QDir::Filters r_filterFlags = Settings::getInstance()->getRightFilterSettings();
+    SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
+    SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
+    bool r_sortDotFirst = Settings::getInstance()->getRightSortDotFirst();
+    Qt::CaseSensitivity r_sortCaseSensitivity = Settings::getInstance()->getRightSortCaseSensitivity();
+    Qt::SortOrder r_sortOrder = Settings::getInstance()->getRightSortOrder();
 
     QVBoxLayout* r_vLayout = new QVBoxLayout();
     r_vLayout->setSpacing(6);
@@ -139,9 +133,14 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             this,
             SLOT(onRightFocusChanged(bool)));
 
+    connect(this,
+            SIGNAL(statusChanged(const QString&)),
+            MainWindow::getInstance(),
+            SLOT(onStatusChanged(const QString&)));
+
     setActiveFolderForm(m_activeFolderFormName);
 
-    onSetPaneMode(paneMode);
+    setPaneMode(paneMode);
 }
 
 DoubleFolderPanel::~DoubleFolderPanel()
@@ -287,34 +286,12 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 
 void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)
 {
-    m_paneMode = paneMode;
     Settings::getInstance()->setPaneMode(paneMode);
 
-    switch(paneMode)
-    {
-    case PaneMode::Single:
-        if(getActiveFolderForm()->objectName() == "l_folderForm")
-        {
-            ui->leftPanel->setVisible(true);
-            ui->rightPanel->setVisible(false);
-        }
-        else
-        {
-            ui->leftPanel->setVisible(false);
-            ui->rightPanel->setVisible(true);
-        }
 
-        break;
+    setPaneMode(paneMode);
 
-    case PaneMode::Dual:
-        ui->leftPanel->setVisible(true);
-        ui->rightPanel->setVisible(true);
-
-        break;
-
-    default:
-        break;
-    }
+    refresh();
 }
 
 void DoubleFolderPanel::onChangeSortSettings()
@@ -647,6 +624,37 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 {
     emit statusChanged(statusString);
+}
+
+void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
+{
+    m_paneMode = paneMode;
+
+    switch(paneMode)
+    {
+    case PaneMode::Single:
+        if(getActiveFolderForm()->objectName() == "l_folderForm")
+        {
+            ui->leftPanel->setVisible(true);
+            ui->rightPanel->setVisible(false);
+        }
+        else
+        {
+            ui->leftPanel->setVisible(false);
+            ui->rightPanel->setVisible(true);
+        }
+
+        break;
+
+    case PaneMode::Dual:
+        ui->leftPanel->setVisible(true);
+        ui->rightPanel->setVisible(true);
+
+        break;
+
+    default:
+        break;
+    }
 }
 
 void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
