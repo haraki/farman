@@ -61,13 +61,12 @@ private:
     void emitStatusChanged(const QString& statusString);
 
     void setPaneMode(PaneMode paneMode);
-    void setActiveFolderForm(const QString& objectName);
+    void setActivePane(PaneType pane);
 
     Ui::DoubleFolderPanel *ui;
 
     PaneMode m_paneMode;
-
-    QString m_activeFolderFormName;
+    PaneType m_activePane;
 };
 
 }           // namespace Farman

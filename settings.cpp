@@ -44,9 +44,12 @@ void Settings::initialize()
                                                                         PositionAtStartup::Default;
     m_positionAtStartup = value("main/positionAtStartup", QPoint(0, 0)).toPoint();
 
-    // Pane mode
+    // Pane
     QString paneModeValue = value("main/paneMode", "dual").toString();
     m_paneMode = (paneModeValue == "single") ? PaneMode::Single : PaneMode::Dual;
+
+    QString activePaneValue = value("main/activePane", "left").toString();
+    m_activePane = (activePaneValue == "right") ? PaneType::Right : PaneType::Left;
 
     // Folder at startup(Left)
     QString leftFolderAtStartupValue = value("main/leftFolderAtStartup", "default").toString();
@@ -182,10 +185,14 @@ void Settings::flush()
     setValue("main/positionAtStartupType", positionAtStartupTypeValue);
     setValue("main/positionAtStartup", m_positionAtStartup);
 
-    // Pane mode
+    // Pane
     QString paneModeValue = (m_paneMode == PaneMode::Single) ? "single"
                                                              : "dual";
     setValue("main/paneMode", paneModeValue);
+
+    QString activePaneValue = (m_activePane == PaneType::Right) ? "right"
+                                                                : "left";
+    setValue("main/activePane", activePaneValue);
 
     // Folder at startup(Left)
     QString leftFolderAtStartupValue = (m_leftFolderAtStartup == FolderAtStartup::LastTime) ? "lastTime" :

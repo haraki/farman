@@ -24,11 +24,12 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
     , m_paneMode(PaneMode::Default)
-    , m_activeFolderFormName("l_folderForm")
+    , m_activePane(PaneType::Default)
 {
     ui->setupUi(this);
 
     PaneMode paneMode = Settings::getInstance()->getPaneMode();
+    PaneType activePane = Settings::getInstance()->getActivePane();
 
     QString l_path = QDir::homePath();
     FolderAtStartup l_folderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
@@ -138,8 +139,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             MainWindow::getInstance(),
             SLOT(onStatusChanged(const QString&)));
 
-    setActiveFolderForm(m_activeFolderFormName);
-
+    setActivePane(activePane);
     setPaneMode(paneMode);
 }
 
@@ -240,13 +240,13 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
             switch(key)
             {
             case Qt::Key_Left:
-                if(m_paneMode == PaneMode::Single || activeForm->objectName() == "l_folderForm")
+                if(m_paneMode == PaneMode::Single || m_activePane == PaneType::Left)
                 {
                     activeForm->onGoToParentDir();
                 }
                 else
                 {
-                    setActiveFolderForm("l_folderForm");
+                    setActivePane(PaneType::Left);
                 }
 
                 ret = true;
@@ -256,13 +256,13 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
             case Qt::Key_Right:
                 if(m_paneMode == PaneMode::Dual)
                 {
-                    if(activeForm->objectName() == "r_folderForm")
+                    if(m_activePane == PaneType::Right)
                     {
                         activeForm->onGoToParentDir();
                     }
                     else
                     {
-                        setActiveFolderForm("r_folderForm");
+                        setActivePane(PaneType::Right);
                     }
                 }
 
@@ -287,7 +287,6 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)
 {
     Settings::getInstance()->setPaneMode(paneMode);
-
 
     setPaneMode(paneMode);
 
@@ -657,9 +656,9 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
     }
 }
 
-void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
+void DoubleFolderPanel::setActivePane(PaneType pane)
 {
-    FolderForm* folderForm = findChild<FolderForm*>(objectName);
+    FolderForm* folderForm = findChild<FolderForm*>((pane == PaneType::Left) ? "l_folderForm" : "r_folderForm");
     if(folderForm != Q_NULLPTR)
     {
         FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
@@ -668,43 +667,20 @@ void DoubleFolderPanel::setActiveFolderForm(const QString& objectName)
             folderView->setFocus();
         }
 
-        m_activeFolderFormName = objectName;
+        m_activePane = pane;
+
+        Settings::getInstance()->setActivePane(pane);
     }
 }
 
 FolderForm* DoubleFolderPanel::getActiveFolderForm()
 {
-    QWidget* fw = focusWidget();
-    if(fw == Q_NULLPTR)
-    {
-        return Q_NULLPTR;
-    }
-
-    if(fw->objectName() != "folderView")
-    {
-        return Q_NULLPTR;
-    }
-
-    return qobject_cast<FolderForm*>(fw->parent());
+    return findChild<FolderForm*>((m_activePane == PaneType::Left) ? "l_folderForm" : "r_folderForm");
 }
 
 FolderForm* DoubleFolderPanel::getInactiveFolderForm()
 {
-    FolderForm* inactiveForm = Q_NULLPTR;
-    FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
-    {
-        if(activeForm->objectName() == "r_folderForm")
-        {
-            inactiveForm = findChild<FolderForm*>("l_folderForm");
-        }
-        else
-        {
-            inactiveForm = findChild<FolderForm*>("r_folderForm");
-        }
-    }
-
-    return inactiveForm;
+    return findChild<FolderForm*>((m_activePane == PaneType::Left) ? "r_folderForm" : "l_folderForm");
 }
 
 FolderForm* DoubleFolderPanel::getLeftFolderForm()
@@ -738,7 +714,7 @@ void DoubleFolderPanel::setVisible(bool visible)
 
     if(visible)
     {
-        setActiveFolderForm(m_activeFolderFormName);
+        setActivePane(m_activePane);
     }
 }
 

@@ -47,6 +47,16 @@ enum class PaneMode : int
     Default = PaneMode::Dual,
 };
 
+enum class PaneType : int
+{
+    Left = 0,
+    Right = 1,
+
+    PaneTypeNum,
+
+    Default = PaneType::Left,
+};
+
 enum class SectionType : int
 {
     Unknown = -1,

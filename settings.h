@@ -38,6 +38,9 @@ public:
     PaneMode getPaneMode() { return m_paneMode; }
     void setPaneMode(PaneMode paneMode) { m_paneMode = paneMode; }
 
+    PaneType getActivePane() { return m_activePane; }
+    void setActivePane(PaneType pane) { m_activePane = pane; }
+
     FolderAtStartup getLeftFolderAtStartup() { return m_leftFolderAtStartup; }
     void setLeftFolderAtStartup(FolderAtStartup leftFolderAtStartup) { m_leftFolderAtStartup = leftFolderAtStartup; }
 
@@ -158,7 +161,8 @@ private:
     PositionAtStartup m_positionAtStartupType = PositionAtStartup::Default;
     QPoint m_positionAtStartup = QPoint(0, 0);
 
-    PaneMode m_paneMode = PaneMode::Dual;
+    PaneMode m_paneMode = PaneMode::Default;
+    PaneType m_activePane = PaneType::Default;
 
     FolderAtStartup m_leftFolderAtStartup = FolderAtStartup::Default;
     QString m_leftFolderPath = "";
