@@ -99,6 +99,26 @@ enum class ColorRoleType : int
     ColorRoleTypeNum
 };
 
+enum class FileSizeFormatType : int
+{
+    SI,                     // QLocale::FileSizeSIFormat
+    IEC,                    // QLocale::FileSizeIecFormat
+    Detail,
+
+    FileSizeFormatTypeNum,
+
+    Default = FileSizeFormatType::SI,
+};
+
+enum class DateFormatType : int
+{
+    Default,                // Qt::TextDate
+    ISO,                    // Qt::ISODate
+    Original,
+
+    DateFormatTypeNum,
+};
+
 const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
 const QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
 

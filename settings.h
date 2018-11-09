@@ -102,6 +102,30 @@ public:
     bool getConfirmQuit() { return m_confirmQuit; }
     void setConfirmQuit(bool confirmQuit) { m_confirmQuit = confirmQuit; }
 
+    FileSizeFormatType getSinglePaneFileSizeFormatType() { return m_singlePaneFileSizeFormatType; }
+    void setSinglePaneFileSizeFormatType(FileSizeFormatType formatType) { m_singlePaneFileSizeFormatType = formatType; }
+
+    bool getSinglePaneFileSizeDetailCommaEnable() { return m_singlePaneFileSizeDetailCommaEnable; }
+    void setSinglePaneFileSizeDetailCommaEnable(bool enable) { m_singlePaneFileSizeDetailCommaEnable = enable; }
+
+    DateFormatType getSinglePaneDateFormatType() { return m_singlePaneDateFormatType; }
+    void setSinglePaneDateFormatType(DateFormatType formatType) { m_singlePaneDateFormatType = formatType; }
+
+    QString getSinglePaneDateFormatOriginalString() { return m_singlePaneDateFormatOriginalString; }
+    void setSinglePaneDateFormatOriginalString(const QString& str) { m_singlePaneDateFormatOriginalString = str; }
+
+    FileSizeFormatType getDualPaneFileSizeFormatType() { return m_dualPaneFileSizeFormatType; }
+    void setDualPaneFileSizeFormatType(FileSizeFormatType formatType) { m_dualPaneFileSizeFormatType = formatType; }
+
+    bool getDualPaneFileSizeDetailCommaEnable() { return m_dualPaneFileSizeDetailCommaEnable; }
+    void setDualPaneFileSizeDetailCommaEnable(bool enable) { m_dualPaneFileSizeDetailCommaEnable = enable; }
+
+    DateFormatType getDualPaneDateFormatType() { return m_dualPaneDateFormatType; }
+    void setDualPaneDateFormatType(DateFormatType formatType) { m_dualPaneDateFormatType = formatType; }
+
+    QString getDualPaneDateFormatOriginalString() { return m_dualPaneDateFormatOriginalString; }
+    void setDualPaneDateFormatOriginalString(const QString& str) { m_dualPaneDateFormatOriginalString = str; }
+
     QColor getColorSetting(const QString& colorSettingType);
     void setColorSetting(const QString& colorSettingType, const QColor& color);
 
@@ -194,6 +218,18 @@ private:
     bool m_moveCursorOpenViewer = false;
 
     bool m_confirmQuit = true;
+
+    FileSizeFormatType m_singlePaneFileSizeFormatType = FileSizeFormatType::Default;
+    bool m_singlePaneFileSizeDetailCommaEnable = false;
+
+    FileSizeFormatType m_dualPaneFileSizeFormatType = FileSizeFormatType::Default;
+    bool m_dualPaneFileSizeDetailCommaEnable = false;
+
+    DateFormatType m_singlePaneDateFormatType = DateFormatType::Default;
+    QString m_singlePaneDateFormatOriginalString = "yyyy-MM-dd HH:mm:ss";
+
+    DateFormatType m_dualPaneDateFormatType = DateFormatType::Default;
+    QString m_dualPaneDateFormatOriginalString = "yyyy-MM-dd HH:mm:ss";
 
     const QMap<QString, QColor> m_defaultColorSettings =
     {

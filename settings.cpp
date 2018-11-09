@@ -105,6 +105,34 @@ void Settings::initialize()
     // Confirm quit
     m_confirmQuit = value("main/confirmQuit", true).toBool();
 
+    // File size format (Single pane)
+    QString singlePaneFileSizeFormatTypeValue = value("main/singlePaneFileSizeFormatType", "si").toString();
+    m_singlePaneFileSizeFormatType = (singlePaneFileSizeFormatTypeValue == "iec") ? FileSizeFormatType::IEC :
+                                     (singlePaneFileSizeFormatTypeValue == "detail") ? FileSizeFormatType::Detail :
+                                                                                       FileSizeFormatType::SI;
+    m_singlePaneFileSizeDetailCommaEnable = value("main/singlePaneFileSizeDetailCommaEnable", false).toBool();
+
+    // File size format (Dual pane)
+    QString dualPaneFileSizeFormatTypeValue = value("main/dualPaneFileSizeFormatType", "si").toString();
+    m_dualPaneFileSizeFormatType = (dualPaneFileSizeFormatTypeValue == "iec") ? FileSizeFormatType::IEC :
+                                   (dualPaneFileSizeFormatTypeValue == "detail") ? FileSizeFormatType::Detail :
+                                                                                   FileSizeFormatType::SI;
+    m_dualPaneFileSizeDetailCommaEnable = value("main/dualPaneFileSizeDetailCommaEnable", false).toBool();
+
+    // Date format (Single pane)
+    QString singlePaneDateFormatTypeValue = value("main/singlePaneDateFormatType", "default").toString();
+    m_singlePaneDateFormatType = (singlePaneDateFormatTypeValue == "iso") ? DateFormatType::ISO :
+                                 (singlePaneDateFormatTypeValue == "original") ? DateFormatType::Original :
+                                                                                 DateFormatType::Default;
+    m_singlePaneDateFormatOriginalString = value("main/singlePaneDateFormatOriginalString", "yyyy-MM-dd HH:mm:ss").toString();
+
+    // Date format (Dual pane)
+    QString dualPaneDateFormatTypeValue = value("main/dualPaneDateFormatType", "default").toString();
+    m_dualPaneDateFormatType = (dualPaneDateFormatTypeValue == "iso") ? DateFormatType::ISO :
+                               (dualPaneDateFormatTypeValue == "original") ? DateFormatType::Original :
+                                                                             DateFormatType::Default;
+    m_dualPaneDateFormatOriginalString = value("main/dualPaneDateFormatOriginalString", "yyyy-MM-dd HH:mm:ss").toString();
+
     // Color settings
     for(auto colorSettingKey : m_colorSettings.keys())
     {
@@ -247,6 +275,34 @@ void Settings::flush()
 
     // Confirm at quit
     setValue("main/confirmQuit", m_confirmQuit);
+
+    // Data size format (Single pane)
+    QString singlePaneFileSizeFormatTypeValue = (m_singlePaneFileSizeFormatType == FileSizeFormatType::IEC) ? "iec" :
+                                                (m_singlePaneFileSizeFormatType == FileSizeFormatType::Detail) ? "detail" :
+                                                                                                                 "si";
+    setValue("main/singlePaneFileSizeFormatType", singlePaneFileSizeFormatTypeValue);
+    setValue("main/singlePaneFileSizeDetailCommaEnable", m_singlePaneFileSizeDetailCommaEnable);
+
+    // Data size format (Dual pane)
+    QString dualPaneFileSizeFormatTypeValue = (m_dualPaneFileSizeFormatType == FileSizeFormatType::IEC) ? "iec" :
+                                              (m_dualPaneFileSizeFormatType == FileSizeFormatType::Detail) ? "detail" :
+                                                                                                             "si";
+    setValue("main/dualPaneFileSizeFormatType", dualPaneFileSizeFormatTypeValue);
+    setValue("main/dualPaneFileSizeDetailCommaEnable", m_dualPaneFileSizeDetailCommaEnable);
+
+    // Date format (Single pane)
+    QString singlePaneDateFormatTypeValue = (m_singlePaneDateFormatType == DateFormatType::ISO) ? "iso" :
+                                            (m_singlePaneDateFormatType == DateFormatType::Original) ? "original" :
+                                                                                                       "default";
+    setValue("main/singlePaneDateFormatType", singlePaneDateFormatTypeValue);
+    setValue("main/singlePaneDateFormatOriginalString", m_singlePaneDateFormatOriginalString);
+
+    // Date format (Dual pane)
+    QString dualPaneDateFormatTypeValue = (m_dualPaneDateFormatType == DateFormatType::ISO) ? "iso" :
+                                          (m_dualPaneDateFormatType == DateFormatType::Original) ? "original" :
+                                                                                                   "default";
+    setValue("main/dualPaneDateFormatType", dualPaneDateFormatTypeValue);
+    setValue("main/dualPaneDateFormatOriginalString", m_dualPaneDateFormatOriginalString);
 
     // Color settings
     for(auto colorSettingKey : m_colorSettings.keys())
