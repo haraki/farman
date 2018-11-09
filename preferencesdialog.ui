@@ -466,7 +466,11 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="singlePaneFileSizeExampleLineEdit"/>
+                <widget class="QLineEdit" name="singlePaneFileSizeExampleLineEdit">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -533,7 +537,11 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="singlePaneDateExampleLineEdit"/>
+                <widget class="QLineEdit" name="singlePaneDateExampleLineEdit">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -613,7 +621,11 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="dualPaneFileSizeExampleLineEdit"/>
+                <widget class="QLineEdit" name="dualPaneFileSizeExampleLineEdit">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -680,7 +692,11 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="dualPaneDateExampleLineEdit"/>
+                <widget class="QLineEdit" name="dualPaneDateExampleLineEdit">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
