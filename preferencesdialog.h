@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QFont>
 #include <QColor>
+#include "types.h"
 
 namespace Ui {
 class PreferencesDialog;
@@ -41,6 +42,23 @@ private slots:
     void on_rightFolderLastTimeRadioButton_clicked();
     void on_rightFolderFixedRadioButton_clicked();
     void on_rightFolderSelectButton_clicked();
+
+    void on_singlePaneFileSizeSIRadioButton_clicked();
+    void on_singlePaneFileSizeIecRadioButton_clicked();
+    void on_singlePaneFileSizeDetailRadioButton_clicked();
+    void on_singlePaneFileSizeCommaCheckBox_stateChanged(int arg1);
+    void on_singlePaneDateDefaultRadioButton_clicked();
+    void on_singlePaneDateISORadioButton_clicked();
+    void on_singlePaneDateOriginalRadioButton_clicked();
+    void on_singlePaneDateOriginalLineEdit_textChanged(const QString &arg1);
+    void on_dualPaneFileSizeSIRadioButton_clicked();
+    void on_dualPaneFileSizeIecRadioButton_clicked();
+    void on_dualPaneFileSizeDetailRadioButton_clicked();
+    void on_dualPaneFileSizeCommaCheckBox_stateChanged(int arg1);
+    void on_dualPaneDateDefaultRadioButton_clicked();
+    void on_dualPaneDateISORadioButton_clicked();
+    void on_dualPaneDateOriginalRadioButton_clicked();
+    void on_dualPaneDateOriginalLineEdit_textChanged(const QString &arg1);
 
     void on_folderViewFontFontPushButton_clicked();
 
@@ -91,6 +109,9 @@ private slots:
     void on_buttonBox_accepted();
 
 private:
+    void setFileSizeExample(FileSizeFormatType fileSizeFormatType, bool comma, QLineEdit* exampleLineEdit);
+    void setDateExample(DateFormatType dataFormatType, const QString& orgFormat, QLineEdit* exampleLineEdit);
+
     void setAppearanceFontAndColorOption();
     void setViewerFontAndColorOption();
 

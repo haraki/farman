@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QDateTime>
 #include <QDebug>
 #include "preferencesdialog.h"
 #include "ui_preferencesdialog.h"
@@ -19,6 +20,8 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
+
+    // General
 
     SizeAtStartup sizeAtStartupType = Settings::getInstance()->getSizeAtStartupType();
     if(sizeAtStartupType == SizeAtStartup::Fixed)
@@ -162,12 +165,106 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
 
     ui->confirmQuitCheckBox->setChecked(Settings::getInstance()->getConfirmQuit());
 
+    // Folder View
+
+    FileSizeFormatType singlePaneFileSizeFormatType = Settings::getInstance()->getSinglePaneFileSizeFormatType();
+    if(singlePaneFileSizeFormatType == FileSizeFormatType::IEC)
+    {
+        ui->singlePaneFileSizeIecRadioButton->setChecked(true);
+        ui->singlePaneFileSizeCommaCheckBox->setEnabled(false);
+    }
+    else if(singlePaneFileSizeFormatType == FileSizeFormatType::Detail)
+    {
+        ui->singlePaneFileSizeDetailRadioButton->setChecked(true);
+        ui->singlePaneFileSizeCommaCheckBox->setEnabled(true);
+    }
+    else
+    {
+        ui->singlePaneFileSizeSIRadioButton->setChecked(true);
+        ui->singlePaneFileSizeCommaCheckBox->setEnabled(false);
+    }
+
+    bool singlePaneFileSizeDetailComma = Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable();
+    ui->singlePaneFileSizeCommaCheckBox->setChecked(singlePaneFileSizeDetailComma);
+
+    setFileSizeExample(singlePaneFileSizeFormatType, singlePaneFileSizeDetailComma, ui->singlePaneFileSizeExampleLineEdit);
+
+    DateFormatType singlePaneDateFormatType = Settings::getInstance()->getSinglePaneDateFormatType();
+    if(singlePaneDateFormatType == DateFormatType::ISO)
+    {
+        ui->singlePaneDateISORadioButton->setChecked(true);
+        ui->singlePaneDateOriginalLineEdit->setEnabled(false);
+    }
+    else if(singlePaneDateFormatType == DateFormatType::Original)
+    {
+        ui->singlePaneDateOriginalRadioButton->setChecked(true);
+        ui->singlePaneDateOriginalLineEdit->setEnabled(true);
+    }
+    else
+    {
+        ui->singlePaneDateDefaultRadioButton->setChecked(true);
+        ui->singlePaneDateOriginalLineEdit->setEnabled(false);
+    }
+
+    QString singlePaneFormatOriginal = Settings::getInstance()->getSinglePaneDateFormatOriginalString();
+    ui->singlePaneDateOriginalLineEdit->setText(singlePaneFormatOriginal);
+
+    setDateExample(singlePaneDateFormatType, singlePaneFormatOriginal, ui->singlePaneDateExampleLineEdit);
+
+    FileSizeFormatType dualPaneFileSizeFormatType = Settings::getInstance()->getDualPaneFileSizeFormatType();
+    if(dualPaneFileSizeFormatType == FileSizeFormatType::IEC)
+    {
+        ui->dualPaneFileSizeIecRadioButton->setChecked(true);
+        ui->dualPaneFileSizeCommaCheckBox->setEnabled(false);
+    }
+    else if(dualPaneFileSizeFormatType == FileSizeFormatType::Detail)
+    {
+        ui->dualPaneFileSizeDetailRadioButton->setChecked(true);
+        ui->dualPaneFileSizeCommaCheckBox->setEnabled(true);
+    }
+    else
+    {
+        ui->dualPaneFileSizeSIRadioButton->setChecked(true);
+        ui->dualPaneFileSizeCommaCheckBox->setEnabled(false);
+    }
+
+    bool dualPaneFileSizeDetailComma = Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable();
+    ui->dualPaneFileSizeCommaCheckBox->setChecked(dualPaneFileSizeDetailComma);
+
+    setFileSizeExample(dualPaneFileSizeFormatType, dualPaneFileSizeDetailComma, ui->dualPaneFileSizeExampleLineEdit);
+
+    DateFormatType dualPaneDateFormatType = Settings::getInstance()->getDualPaneDateFormatType();
+    if(dualPaneDateFormatType == DateFormatType::ISO)
+    {
+        ui->dualPaneDateISORadioButton->setChecked(true);
+        ui->dualPaneDateOriginalLineEdit->setEnabled(false);
+    }
+    else if(dualPaneDateFormatType == DateFormatType::Original)
+    {
+        ui->dualPaneDateOriginalRadioButton->setChecked(true);
+        ui->dualPaneDateOriginalLineEdit->setEnabled(true);
+    }
+    else
+    {
+        ui->dualPaneDateDefaultRadioButton->setChecked(true);
+        ui->dualPaneDateOriginalLineEdit->setEnabled(false);
+    }
+
+    QString dualPaneFormatOriginal = Settings::getInstance()->getDualPaneDateFormatOriginalString();
+    ui->dualPaneDateOriginalLineEdit->setText(dualPaneFormatOriginal);
+
+    setDateExample(dualPaneDateFormatType, dualPaneFormatOriginal, ui->dualPaneDateExampleLineEdit);
+
+    // Appearance
+
     m_fontSettings = Settings::getInstance()->getFontSettings();
     m_colorSettings = Settings::getInstance()->getColorSettings();
 
     ui->folderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
 
     setAppearanceFontAndColorOption();
+
+    // Viewer
 
     ui->imageViewerFitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
 
@@ -296,6 +393,114 @@ void PreferencesDialog::on_rightFolderSelectButton_clicked()
     {
         ui->rightFolderPathLineEdit->setText(dirPath);
     }
+}
+
+void PreferencesDialog::on_singlePaneFileSizeSIRadioButton_clicked()
+{
+    ui->singlePaneFileSizeCommaCheckBox->setEnabled(false);
+    setFileSizeExample(FileSizeFormatType::SI, ui->singlePaneFileSizeCommaCheckBox->isChecked(), ui->singlePaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneFileSizeIecRadioButton_clicked()
+{
+    ui->singlePaneFileSizeCommaCheckBox->setEnabled(false);
+    setFileSizeExample(FileSizeFormatType::IEC, ui->singlePaneFileSizeCommaCheckBox->isChecked(), ui->singlePaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneFileSizeDetailRadioButton_clicked()
+{
+    ui->singlePaneFileSizeCommaCheckBox->setEnabled(true);
+    setFileSizeExample(FileSizeFormatType::Detail, ui->singlePaneFileSizeCommaCheckBox->isChecked(), ui->singlePaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneFileSizeCommaCheckBox_stateChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+
+    FileSizeFormatType fileSizeFormatType = ui->singlePaneFileSizeIecRadioButton->isChecked() ? FileSizeFormatType::IEC :
+                                            ui->singlePaneFileSizeDetailRadioButton->isChecked() ? FileSizeFormatType::Detail :
+                                                                                                   FileSizeFormatType::Default;
+
+    setFileSizeExample(fileSizeFormatType, ui->singlePaneFileSizeCommaCheckBox->isChecked(), ui->singlePaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneDateDefaultRadioButton_clicked()
+{
+    ui->singlePaneDateOriginalLineEdit->setEnabled(false);
+    setDateExample(DateFormatType::Default, ui->singlePaneDateOriginalLineEdit->text(), ui->singlePaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneDateISORadioButton_clicked()
+{
+    ui->singlePaneDateOriginalLineEdit->setEnabled(false);
+    setDateExample(DateFormatType::ISO, ui->singlePaneDateOriginalLineEdit->text(), ui->singlePaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneDateOriginalRadioButton_clicked()
+{
+    ui->singlePaneDateOriginalLineEdit->setEnabled(true);
+    setDateExample(DateFormatType::Original, ui->singlePaneDateOriginalLineEdit->text(), ui->singlePaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_singlePaneDateOriginalLineEdit_textChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+
+    setDateExample(DateFormatType::Original, ui->singlePaneDateOriginalLineEdit->text(), ui->singlePaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneFileSizeSIRadioButton_clicked()
+{
+    ui->dualPaneFileSizeCommaCheckBox->setEnabled(false);
+    setFileSizeExample(FileSizeFormatType::SI, ui->dualPaneFileSizeCommaCheckBox->isChecked(), ui->dualPaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneFileSizeIecRadioButton_clicked()
+{
+    ui->dualPaneFileSizeCommaCheckBox->setEnabled(false);
+    setFileSizeExample(FileSizeFormatType::IEC, ui->dualPaneFileSizeCommaCheckBox->isChecked(), ui->dualPaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneFileSizeDetailRadioButton_clicked()
+{
+    ui->dualPaneFileSizeCommaCheckBox->setEnabled(true);
+    setFileSizeExample(FileSizeFormatType::Detail, ui->dualPaneFileSizeCommaCheckBox->isChecked(), ui->dualPaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneFileSizeCommaCheckBox_stateChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+
+    FileSizeFormatType fileSizeFormatType = ui->dualPaneFileSizeIecRadioButton->isChecked() ? FileSizeFormatType::IEC :
+                                            ui->dualPaneFileSizeDetailRadioButton->isChecked() ? FileSizeFormatType::Detail :
+                                                                                                 FileSizeFormatType::Default;
+
+    setFileSizeExample(fileSizeFormatType, ui->dualPaneFileSizeCommaCheckBox->isChecked(), ui->dualPaneFileSizeExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneDateDefaultRadioButton_clicked()
+{
+    ui->dualPaneDateOriginalLineEdit->setEnabled(false);
+    setDateExample(DateFormatType::Default, ui->dualPaneDateOriginalLineEdit->text(), ui->dualPaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneDateISORadioButton_clicked()
+{
+    ui->dualPaneDateOriginalLineEdit->setEnabled(false);
+    setDateExample(DateFormatType::ISO, ui->dualPaneDateOriginalLineEdit->text(), ui->dualPaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneDateOriginalRadioButton_clicked()
+{
+    ui->dualPaneDateOriginalLineEdit->setEnabled(true);
+    setDateExample(DateFormatType::Original, ui->dualPaneDateOriginalLineEdit->text(), ui->dualPaneDateExampleLineEdit);
+}
+
+void PreferencesDialog::on_dualPaneDateOriginalLineEdit_textChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
+
+    setDateExample(DateFormatType::Original, ui->dualPaneDateOriginalLineEdit->text(), ui->dualPaneDateExampleLineEdit);
 }
 
 void PreferencesDialog::on_folderViewFontFontPushButton_clicked()
@@ -629,6 +834,54 @@ void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::setFileSizeExample(FileSizeFormatType fileSizeFormatType, bool comma, QLineEdit* exampleLineEdit)
+{
+    Q_ASSERT(exampleLineEdit);
+
+    const int exampleSize = 1234567;
+    QString exampleStr = "";
+
+    if(fileSizeFormatType == FileSizeFormatType::Detail)
+    {
+        exampleStr = (comma) ? QLocale(QLocale::English).toString(exampleSize) : QString::number(exampleSize);
+    }
+    else
+    {
+        exampleStr = QLocale().formattedDataSize(exampleSize, 2,
+                                                 (fileSizeFormatType == FileSizeFormatType::IEC) ? QLocale::DataSizeIecFormat :
+                                                                                                   QLocale::DataSizeSIFormat);
+    }
+
+    exampleLineEdit->setText(exampleStr);
+
+    repaint();
+}
+
+void PreferencesDialog::setDateExample(DateFormatType dataFormatType, const QString& orgFormat, QLineEdit* exampleLineEdit)
+{
+    Q_ASSERT(exampleLineEdit);
+
+    const QDateTime exampleDateTime = QDateTime::fromString("2001-01-23T12:34:56", Qt::ISODate);
+    QString exampleStr = "";
+
+    if(dataFormatType == DateFormatType::ISO)
+    {
+        exampleStr = exampleDateTime.toString(Qt::ISODate);
+    }
+    else if(dataFormatType == DateFormatType::Original)
+    {
+        exampleStr = exampleDateTime.toString(orgFormat);
+    }
+    else
+    {
+        exampleStr = exampleDateTime.toString(Qt::TextDate);
+    }
+
+    exampleLineEdit->setText(exampleStr);
+
+    repaint();
+}
+
 void PreferencesDialog::setAppearanceFontAndColorOption()
 {
     QFont font;
@@ -761,6 +1014,8 @@ bool PreferencesDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFon
 
 void PreferencesDialog::on_buttonBox_accepted()
 {
+    // General
+
     if(ui->sizeFixedRadioButton->isChecked())
     {
         Settings::getInstance()->setSizeAtStartupType(SizeAtStartup::Fixed);
@@ -848,10 +1103,76 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setConfirmQuit(ui->confirmQuitCheckBox->isChecked());
 
+    // FolderView
+
+    if(ui->singlePaneFileSizeIecRadioButton->isChecked())
+    {
+        Settings::getInstance()->setSinglePaneFileSizeFormatType(FileSizeFormatType::IEC);
+    }
+    else if(ui->singlePaneFileSizeDetailRadioButton->isChecked())
+    {
+        Settings::getInstance()->setSinglePaneFileSizeFormatType(FileSizeFormatType::Detail);
+    }
+    else
+    {
+        Settings::getInstance()->setSinglePaneFileSizeFormatType(FileSizeFormatType::SI);
+    }
+
+    Settings::getInstance()->setSinglePaneFileSizeDetailCommaEnable(ui->singlePaneFileSizeCommaCheckBox->isChecked());
+
+    if(ui->singlePaneDateISORadioButton->isChecked())
+    {
+        Settings::getInstance()->setSinglePaneDateFormatType(DateFormatType::ISO);
+    }
+    else if(ui->singlePaneDateOriginalRadioButton->isChecked())
+    {
+        Settings::getInstance()->setSinglePaneDateFormatType(DateFormatType::Original);
+    }
+    else
+    {
+        Settings::getInstance()->setSinglePaneDateFormatType(DateFormatType::Default);
+    }
+
+    Settings::getInstance()->setSinglePaneDateFormatOriginalString(ui->singlePaneDateOriginalLineEdit->text());
+
+    if(ui->dualPaneFileSizeIecRadioButton->isChecked())
+    {
+        Settings::getInstance()->setDualPaneFileSizeFormatType(FileSizeFormatType::IEC);
+    }
+    else if(ui->dualPaneFileSizeDetailRadioButton->isChecked())
+    {
+        Settings::getInstance()->setDualPaneFileSizeFormatType(FileSizeFormatType::Detail);
+    }
+    else
+    {
+        Settings::getInstance()->setDualPaneFileSizeFormatType(FileSizeFormatType::SI);
+    }
+
+    Settings::getInstance()->setDualPaneFileSizeDetailCommaEnable(ui->dualPaneFileSizeCommaCheckBox->isChecked());
+
+    if(ui->dualPaneDateISORadioButton->isChecked())
+    {
+        Settings::getInstance()->setDualPaneDateFormatType(DateFormatType::ISO);
+    }
+    else if(ui->dualPaneDateOriginalRadioButton->isChecked())
+    {
+        Settings::getInstance()->setDualPaneDateFormatType(DateFormatType::Original);
+    }
+    else
+    {
+        Settings::getInstance()->setDualPaneDateFormatType(DateFormatType::Default);
+    }
+
+    Settings::getInstance()->setDualPaneDateFormatOriginalString(ui->dualPaneDateOriginalLineEdit->text());
+
+    // Appearance
+
     Settings::getInstance()->setFontSettings(m_fontSettings);
     Settings::getInstance()->setColorSettings(m_colorSettings);
 
     Settings::getInstance()->setCursorWidth(ui->folderViewCursorWidthSpinBox->value());
+
+    // Viewer
 
     Settings::getInstance()->setImageViewerFitInView(ui->imageViewerFitInViewCheckBox->isChecked());
 
