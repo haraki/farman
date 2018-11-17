@@ -5,6 +5,7 @@
 #include <QItemSelectionModel>
 #include <QFileIconProvider>
 #include "foldermodel.h"
+#include "settings.h"
 #include "types.h"
 
 namespace Farman
@@ -186,12 +187,49 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             }
             else
             {
-                ret = fi.size();
+                PaneMode paneMode = Settings::getInstance()->getPaneMode();
+                FileSizeFormatType formatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
+                                                                                 Settings::getInstance()->getDualPaneFileSizeFormatType();
+                if(formatType == FileSizeFormatType::Detail)
+                {
+                    bool comma = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable() :
+                                                                  Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable();
+
+                    ret = (comma) ? QLocale(QLocale::English).toString(fi.size()) : QString::number(fi.size());
+                }
+                else
+                {
+                    ret = QLocale().formattedDataSize(fi.size(), 2,
+                                                      (formatType == FileSizeFormatType::IEC) ? QLocale::DataSizeIecFormat :
+                                                                                                QLocale::DataSizeSIFormat);
+                }
             }
             break;
         case SectionType::LastModified:
-            ret = fi.lastModified().toString("yyyy-MM-dd HH:mm:ss");
+        {
+            PaneMode paneMode = Settings::getInstance()->getPaneMode();
+            DateFormatType formatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatType() :
+                                                                         Settings::getInstance()->getDualPaneDateFormatType();
+            switch(formatType)
+            {
+            case DateFormatType::ISO:
+                ret = fi.lastModified().toString(Qt::ISODate);
+                break;
+            case DateFormatType::Original:
+            {
+                QString orgFormat = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatOriginalString() :
+                                                                     Settings::getInstance()->getDualPaneDateFormatOriginalString();
+
+                ret = fi.lastModified().toString(orgFormat);
+                break;
+            }
+            case DateFormatType::Default:
+            default:
+                ret = fi.lastModified().toString(Qt::TextDate);
+                break;
+            }
             break;
+        }
         default:
             break;
         }
