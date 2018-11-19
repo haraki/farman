@@ -291,6 +291,8 @@ void PreferencesDialog::on_sizeDefaultRadioButton_clicked()
     ui->sizeWidthLineEdit->setEnabled(false);
     ui->sizeHeightLabel->setEnabled(false);
     ui->sizeHeightLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_sizeLastTimeRadioButton_clicked()
@@ -299,6 +301,8 @@ void PreferencesDialog::on_sizeLastTimeRadioButton_clicked()
     ui->sizeWidthLineEdit->setEnabled(false);
     ui->sizeHeightLabel->setEnabled(false);
     ui->sizeHeightLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_sizeFixedRadioButton_clicked()
@@ -307,6 +311,8 @@ void PreferencesDialog::on_sizeFixedRadioButton_clicked()
     ui->sizeWidthLineEdit->setEnabled(true);
     ui->sizeHeightLabel->setEnabled(true);
     ui->sizeHeightLineEdit->setEnabled(true);
+
+    repaint();
 }
 
 void PreferencesDialog::on_positionDefaultRadioButton_clicked()
@@ -315,6 +321,8 @@ void PreferencesDialog::on_positionDefaultRadioButton_clicked()
     ui->positionXLineEdit->setEnabled(false);
     ui->positionYLabel->setEnabled(false);
     ui->positionYLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_positionLastTimeRadioButton_clicked()
@@ -323,6 +331,8 @@ void PreferencesDialog::on_positionLastTimeRadioButton_clicked()
     ui->positionXLineEdit->setEnabled(false);
     ui->positionYLabel->setEnabled(false);
     ui->positionYLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_positionFixedRadioButton_clicked()
@@ -331,42 +341,56 @@ void PreferencesDialog::on_positionFixedRadioButton_clicked()
     ui->positionXLineEdit->setEnabled(true);
     ui->positionYLabel->setEnabled(true);
     ui->positionYLineEdit->setEnabled(true);
+
+    repaint();
 }
 
 void PreferencesDialog::on_leftFolderDefaultRadioButton_clicked()
 {
     ui->leftFolderSelectButton->setEnabled(false);
     ui->leftFolderPathLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_leftFolderLastTimeRadioButton_clicked()
 {
     ui->leftFolderSelectButton->setEnabled(false);
     ui->leftFolderPathLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_leftFolderFixedRadioButton_clicked()
 {
     ui->leftFolderSelectButton->setEnabled(true);
     ui->leftFolderPathLineEdit->setEnabled(true);
+
+    repaint();
 }
 
 void PreferencesDialog::on_rightFolderDefaultRadioButton_clicked()
 {
     ui->rightFolderSelectButton->setEnabled(false);
     ui->rightFolderPathLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_rightFolderLastTimeRadioButton_clicked()
 {
     ui->rightFolderSelectButton->setEnabled(false);
     ui->rightFolderPathLineEdit->setEnabled(false);
+
+    repaint();
 }
 
 void PreferencesDialog::on_rightFolderFixedRadioButton_clicked()
 {
     ui->rightFolderSelectButton->setEnabled(true);
     ui->rightFolderPathLineEdit->setEnabled(true);
+
+    repaint();
 }
 
 void PreferencesDialog::on_leftFolderSelectButton_clicked()
