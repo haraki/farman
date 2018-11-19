@@ -9,3 +9,4 @@ moc_*.cpp
 ui_*.h
 debug
 release
+moc_predefs.h
