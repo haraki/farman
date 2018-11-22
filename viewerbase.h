@@ -17,7 +17,7 @@ class ViewerBase : public QWidget
     Q_OBJECT
 public:
     explicit ViewerBase(const QString& filePath, QWidget *parent = Q_NULLPTR);
-    virtual ~ViewerBase();
+    virtual ~ViewerBase() Q_DECL_OVERRIDE;
 
     virtual int start();
 

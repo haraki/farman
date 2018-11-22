@@ -16,8 +16,8 @@ class FilterDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FilterDialog(QDir::Filters filterFlags, QWidget *parent = 0);
-    ~FilterDialog();
+    explicit FilterDialog(QDir::Filters filterFlags, QWidget *parent = Q_NULLPTR);
+    ~FilterDialog() Q_DECL_OVERRIDE;
 
     QDir::Filters getFilterFlags();
 

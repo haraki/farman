@@ -15,7 +15,7 @@ class FolderView : public QTableView
 
 public:
     explicit FolderView(QWidget *parent = Q_NULLPTR);
-    virtual ~FolderView();
+    virtual ~FolderView() Q_DECL_OVERRIDE;
 
     using QTableView::setModel;
     void setModel(FolderModel *folderModel);

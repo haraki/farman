@@ -16,7 +16,7 @@ class TextViewer : public ViewerBase
 
 public:
     explicit TextViewer(const QString& filePath, QWidget *parent = Q_NULLPTR);
-    ~TextViewer();
+    ~TextViewer() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void on_encodeComboBox_activated(int index);

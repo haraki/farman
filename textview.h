@@ -17,7 +17,7 @@ class TextView : public QPlainTextEdit
 
 public:
     explicit TextView(QWidget *parent = Q_NULLPTR);
-    ~TextView();
+    ~TextView() Q_DECL_OVERRIDE;
 
     bool getVisibleLineNumberArea();
     void setVisibleLineNumberArea(bool visible);

@@ -28,7 +28,7 @@ public:
                         Qt::CaseSensitivity sortCaseSensitivity,
                         Qt::SortOrder sortOrder,
                         QWidget *parent = Q_NULLPTR);
-    ~FolderForm();
+    ~FolderForm() Q_DECL_OVERRIDE;
 
     void setAppearance(const QFont& viewFont,
                        const QFont& pathFont,

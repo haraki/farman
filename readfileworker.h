@@ -15,7 +15,7 @@ class ReadFileWorker : public Worker
 
 public:
     ReadFileWorker(const QString& filePath, QByteArray* buffer, QObject *parent = Q_NULLPTR);
-    ~ReadFileWorker();
+    ~ReadFileWorker() Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     void run() Q_DECL_OVERRIDE;

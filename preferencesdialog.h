@@ -25,7 +25,7 @@ public:
                                const QString& leftDirPath,
                                const QString& rightDirPath,
                                QWidget *parent = Q_NULLPTR);
-    ~PreferencesDialog();
+    ~PreferencesDialog() Q_DECL_OVERRIDE;
 
 private slots:
     void on_sizeDefaultRadioButton_clicked();

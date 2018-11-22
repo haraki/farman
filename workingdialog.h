@@ -17,8 +17,8 @@ class WorkingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit WorkingDialog(Worker* worker, bool autoClose, QWidget *parent = 0);
-    virtual ~WorkingDialog();
+    explicit WorkingDialog(Worker* worker, bool autoClose, QWidget *parent = Q_NULLPTR);
+    virtual ~WorkingDialog() Q_DECL_OVERRIDE;
 
     bool getAutoClose();
 

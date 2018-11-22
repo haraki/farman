@@ -20,7 +20,7 @@ class FolderModel : public QSortFilterProxyModel
 
 public:
     explicit FolderModel(QObject *parent = Q_NULLPTR);
-    ~FolderModel();
+    ~FolderModel() Q_DECL_OVERRIDE;
 
     void setFont(const QFont& font);
     void initBrushes(const QMap<ColorRoleType, QColor>& colors);

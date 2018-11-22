@@ -39,7 +39,7 @@ private slots:
     void on_dstFolderPathSelectButton_clicked();
 
 private:
-    explicit FileOperationDialog(QWidget *parent = 0);
+    explicit FileOperationDialog(QWidget *parent = Q_NULLPTR);
 
     Ui::FileOperationDialog *ui;
 };

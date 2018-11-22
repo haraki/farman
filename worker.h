@@ -14,7 +14,7 @@ class Worker : public QObject
 {
     Q_OBJECT
 public:
-    explicit Worker(QObject *parent = 0);
+    explicit Worker(QObject *parent = Q_NULLPTR);
     virtual ~Worker() = default;
     void exec();
 

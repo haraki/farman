@@ -26,7 +26,7 @@ class ImageViewer : public ViewerBase
 
 public:
     explicit ImageViewer(const QString& filePath, QWidget *parent = Q_NULLPTR);
-    ~ImageViewer();
+    ~ImageViewer() Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void on_fitInViewCheckBox_stateChanged(int arg1);

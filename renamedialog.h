@@ -16,7 +16,7 @@ class RenameDialog : public QDialog
 
 public:
     explicit RenameDialog(const QString& currentName, QWidget *parent = Q_NULLPTR);
-    ~RenameDialog();
+    ~RenameDialog() Q_DECL_OVERRIDE;
 
     QString getNewName() const;
 

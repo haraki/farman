@@ -33,7 +33,7 @@ public Q_SLOTS:
 
 private:
     explicit MainWindow(QWidget *parent = Q_NULLPTR);
-    ~MainWindow();
+    ~MainWindow() Q_DECL_OVERRIDE;
 
     void initialize();
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;

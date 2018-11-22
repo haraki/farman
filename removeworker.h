@@ -15,8 +15,8 @@ class RemoveWorker : public Worker
     Q_OBJECT
 
 public:
-    explicit RemoveWorker(const QStringList& paths, QObject *parent = 0);
-    ~RemoveWorker();
+    explicit RemoveWorker(const QStringList& paths, QObject *parent = Q_NULLPTR);
+    ~RemoveWorker() Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     void run() Q_DECL_OVERRIDE;

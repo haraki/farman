@@ -21,7 +21,7 @@ class DoubleFolderPanel : public QWidget
 
 public:
     explicit DoubleFolderPanel(QWidget* parent = Q_NULLPTR);
-    ~DoubleFolderPanel();
+    ~DoubleFolderPanel() Q_DECL_OVERRIDE;
 
     void closeEvent(QCloseEvent* e) Q_DECL_OVERRIDE;
 

@@ -16,8 +16,8 @@ class CopyWorker : public Worker
     Q_OBJECT
 
 public:
-    explicit CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool moveMode, QObject *parent = 0);
-    ~CopyWorker();
+    explicit CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool moveMode, QObject *parent = Q_NULLPTR);
+    ~CopyWorker() Q_DECL_OVERRIDE;
 
     void finishConfirmOverwrite(OverwriteMethodType methodType, bool methodTypeKeep, const QString& renameFileName);
     void cancelConfirmOverwrite();

@@ -23,7 +23,7 @@ public:
                         Qt::CaseSensitivity caseSensitivity,
                         Qt::SortOrder order,
                         QWidget *parent = Q_NULLPTR);
-    ~SortDialog();
+    ~SortDialog() Q_DECL_OVERRIDE;
 
     SectionType getSortSectionType();
     SortDirsType getSortDirsType();

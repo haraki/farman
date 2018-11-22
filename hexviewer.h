@@ -16,7 +16,7 @@ class HexViewer : public ViewerBase
 
 public:
     explicit HexViewer(const QString& filePath, QWidget *parent = Q_NULLPTR);
-    ~HexViewer();
+    ~HexViewer() Q_DECL_OVERRIDE;
 
     int start() Q_DECL_OVERRIDE;
 

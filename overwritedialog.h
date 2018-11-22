@@ -22,7 +22,7 @@ public:
                              const QString& dstFilePath,
                              OverwriteMethodType methodType,
                              QWidget *parent = Q_NULLPTR);
-    ~OverwriteDialog();
+    ~OverwriteDialog() Q_DECL_OVERRIDE;
 
     OverwriteMethodType getMethodType() const;
     QString getRenameFileName() const;
