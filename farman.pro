@@ -8,8 +8,6 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-QMAKE_MAC_SDK = macosx10.14
-
 TARGET = farman
 TEMPLATE = app
 INCLUDEPATH += ./QHexView/include
