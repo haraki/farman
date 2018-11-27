@@ -10,6 +10,7 @@ class QProgressDialog;
 namespace Farman
 {
 
+class MainWindow;
 class ReadFileWorker;
 
 class ViewerBase : public QWidget
@@ -19,7 +20,7 @@ public:
     explicit ViewerBase(const QString& filePath, QWidget *parent = Q_NULLPTR);
     virtual ~ViewerBase() Q_DECL_OVERRIDE;
 
-    virtual int start();
+    virtual int start(MainWindow* mainWindow);
 
 Q_SIGNALS:
     void closeViewer(const QString& viewerName);

@@ -15,18 +15,15 @@ class ViewerBase;
 class ViewerDispatcher
 {
 public:
-    static void create();
-    static ViewerDispatcher* getInstance();
+    explicit ViewerDispatcher(QWidget* parent);
+    ~ViewerDispatcher();
 
     int initialize();
 
-    ViewerBase* dispatcher(const QString& filePath, ViewerType viewerType, QWidget* parent = Q_NULLPTR);
+    ViewerBase* dispatcher(const QString& filePath, ViewerType viewerType);
 
 private:
-    explicit ViewerDispatcher();
-    ~ViewerDispatcher();
-
-    static ViewerDispatcher* s_instance;
+    QWidget* m_parent;
 
     QMap<QString, ViewerType> m_viewerTypeSettings;
 };

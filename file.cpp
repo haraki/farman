@@ -10,27 +10,10 @@
 namespace Farman
 {
 
-File* File::s_instance = Q_NULLPTR;
-
-void File::create(QObject *parent/* = Q_NULLPTR*/)
+File::File(MainWindow* mainWindow)
+    : QObject()
+    , m_mainWindow(mainWindow)
 {
-    Q_ASSERT(s_instance == Q_NULLPTR);
-    s_instance = new File(parent);
-    Q_ASSERT(s_instance != Q_NULLPTR);
-}
-
-File* File::getInstance()
-{
-    return s_instance;
-}
-
-File::File(QObject *parent/* = Q_NULLPTR*/) :
-    QObject(parent)
-{
-    connect(this,
-            SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onOutputConsole(const QString)));
 }
 
 File::~File()
@@ -43,7 +26,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
 
     connect(copyWorker,
             SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
+            m_mainWindow,
             SLOT(onOutputConsole(const QString)));
     connect(copyWorker,
             SIGNAL(finished(int)),
@@ -58,7 +41,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseCopy(), qobject_cast<QWidget*>(parent()));
+    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseCopy(), m_mainWindow);
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseCopy(dialog.getAutoClose());
 
@@ -76,7 +59,7 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
 
     connect(copyWorker,
             SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
+            m_mainWindow,
             SLOT(onOutputConsole(const QString)));
     connect(copyWorker,
             SIGNAL(finished(int)),
@@ -91,7 +74,7 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseMove(), qobject_cast<QWidget*>(parent()));
+    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseMove(), m_mainWindow);
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseMove(dialog.getAutoClose());
 
@@ -109,7 +92,7 @@ bool File::removeFile(const QStringList& paths)
 
     connect(worker,
             SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
+            m_mainWindow,
             SLOT(onOutputConsole(const QString)));
     connect(worker,
             SIGNAL(finished(int)),
@@ -120,7 +103,7 @@ bool File::removeFile(const QStringList& paths)
             this,
             SLOT(onRemoveFileError(QString)));
 
-    WorkingDialog dialog(worker, Settings::getInstance()->getAutoDialogCloseRemove(), qobject_cast<QWidget*>(parent()));
+    WorkingDialog dialog(worker, Settings::getInstance()->getAutoDialogCloseRemove(), m_mainWindow);
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseRemove(dialog.getAutoClose());
 
@@ -266,34 +249,67 @@ void File::emitOutputConsole(const QString& consoleString)
     emit outputConsole(consoleString);
 }
 
+void File::onCopyFile(const QStringList& srcPaths, const QString& dstPath)
+{
+    copyFile(srcPaths, dstPath);
+}
+
+void File::onMoveFile(const QStringList& srcPaths, const QString& dstPath)
+{
+    moveFile(srcPaths, dstPath);
+}
+
+void File::onRemoveFile(const QStringList& paths)
+{
+    removeFile(paths);
+}
+
+void File::onMakeDirectory(const QString& path, const QString& dirName)
+{
+    makeDirectory(path, dirName);
+}
+
+void File::onRenameFile(const QString& path, const QString& oldName, const QString& newName)
+{
+    renameFile(path, oldName, newName);
+}
+
+void File::onChangeFileAttributes(const QString& path,
+                                  const QFile::Permissions& newPermissions,
+                                  const QDateTime& newCreated,
+                                  const QDateTime& newLastModified)
+{
+    changeFileAttributes(path, newPermissions, newCreated, newLastModified);
+}
+
 void File::onCopyFileFinished(int result)
 {
-    qDebug() << "DoubleFolderPanel::onCopyFileFinished : result : " << result;
+    qDebug() << "onCopyFileFinished : result : " << result;
 }
 
 void File::onCopyFileError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onCopyFileError : err : " << err;
+    qDebug() << "onCopyFileError : err : " << err;
 }
 
 void File::onMoveFileFinished(int result)
 {
-    qDebug() << "DoubleFolderPanel::onMoveFileFinished : result : " << result;
+    qDebug() << "onMoveFileFinished : result : " << result;
 }
 
 void File::onMoveFileError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onMoveFileError : err : " << err;
+    qDebug() << "onMoveFileError : err : " << err;
 }
 
 void File::onRemoveFileFinished(int result)
 {
-    qDebug() << "DoubleFolderPanel::onRemoveFileFinished : result : " << result;
+    qDebug() << "onRemoveFileFinished : result : " << result;
 }
 
 void File::onRemoveFileError(const QString& err)
 {
-    qDebug() << "DoubleFolderPanel::onRemoveFileError : err : " << err;
+    qDebug() << "onRemoveFileError : err : " << err;
 }
 
 void File::onConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType)

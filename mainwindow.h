@@ -15,27 +15,26 @@ class MainWindow;
 namespace Farman
 {
 
+class File;
+class ViewerDispatcher;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    static void create();
-    static MainWindow* getInstance();
+    explicit MainWindow(QWidget *parent = Q_NULLPTR);
+    ~MainWindow() Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
-    void onOpen(ViewerType viewerType);
-    void onOpen(const QString& path, ViewerType viewerType = ViewerType::Auto);
+    void onOpenFile(ViewerType viewerType);
+    void onOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
     void onCloseViewer(const QString& viewerName);
     void onOpenWithApp(const QString& path);
     void onStatusChanged(const QString& statusString);
     void onOutputConsole(const QString& consoleString);
 
 private:
-    explicit MainWindow(QWidget *parent = Q_NULLPTR);
-    ~MainWindow() Q_DECL_OVERRIDE;
-
-    void initialize();
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
     void initFont();
@@ -64,9 +63,10 @@ private Q_SLOTS:
     void on_actionAttributes_triggered();
 
 private:
-    static MainWindow* s_instance;
-
     Ui::MainWindow *ui;
+
+    File* m_file;
+    ViewerDispatcher* m_viewerDispatcher;
 
     QStringList m_nameFilters;
 };

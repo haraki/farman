@@ -16,10 +16,6 @@ ViewerBase::ViewerBase(const QString& filePath, QWidget *parent/* = Q_NULLPTR*/)
     m_worker(Q_NULLPTR),
     m_progressDialog(Q_NULLPTR)
 {
-    connect(this,
-            SIGNAL(closeViewer(const QString)),
-            MainWindow::getInstance(),
-            SLOT(onCloseViewer(const QString)));
 }
 
 ViewerBase::~ViewerBase()
@@ -29,7 +25,7 @@ ViewerBase::~ViewerBase()
     delete m_progressDialog;
 }
 
-int ViewerBase::start()
+int ViewerBase::start(MainWindow* mainWindow)
 {
     m_buffer.clear();
 
@@ -52,7 +48,7 @@ int ViewerBase::start()
 
     connect(m_worker,
             SIGNAL(outputConsole(const QString)),
-            MainWindow::getInstance(),
+            mainWindow,
             SLOT(onOutputConsole(const QString)));
     connect(m_worker,
             SIGNAL(start(int,int)),

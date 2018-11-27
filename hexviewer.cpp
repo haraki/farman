@@ -45,8 +45,10 @@ void HexViewer::initPalette()
     ui->hexView->setAddressAreaPalette(pal);
 }
 
-int HexViewer::start()
+int HexViewer::start(MainWindow* mainWindow)
 {
+    Q_UNUSED(mainWindow);
+
     return setData();
 }
 

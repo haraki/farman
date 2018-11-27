@@ -14,40 +14,63 @@
 namespace Farman
 {
 
-MainWindow* MainWindow::s_instance = Q_NULLPTR;
-
-void MainWindow::create()
-{
-    Q_ASSERT(s_instance == Q_NULLPTR);
-    s_instance = new MainWindow();
-    Q_ASSERT(s_instance != Q_NULLPTR);
-    s_instance->initialize();
-    s_instance->show();
-}
-
-MainWindow* MainWindow::getInstance()
-{
-    return s_instance;
-}
-
 MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_file(Q_NULLPTR)
+    , m_viewerDispatcher(Q_NULLPTR)
     , m_nameFilters()
 {
     ui->setupUi(this);
-}
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::initialize()
-{
-    File::create(this);
+    m_file = new File(this);
+    m_viewerDispatcher = new ViewerDispatcher(ui->mainWidget);
 
     DoubleFolderPanel* doubleFolderPanel = new DoubleFolderPanel(ui->mainWidget);
+
+    connect(m_file,
+            SIGNAL(outputConsole(const QString)),
+            this,
+            SLOT(onOutputConsole(const QString)));
+
+    connect(doubleFolderPanel,
+            SIGNAL(statusChanged(const QString&)),
+            this,
+            SLOT(onStatusChanged(const QString&)));
+
+    connect(doubleFolderPanel,
+            SIGNAL(openFile(const QString&, ViewerType)),
+            this,
+            SLOT(onOpenFile(const QString&, ViewerType)));
+    connect(doubleFolderPanel,
+            SIGNAL(openWithApp(const QString&)),
+            this,
+            SLOT(onOpenWithApp(const QString&)));
+
+    connect(doubleFolderPanel,
+            SIGNAL(copyFile(const QStringList&, const QString&)),
+            m_file,
+            SLOT(onCopyFile(const QStringList&, const QString&)));
+    connect(doubleFolderPanel,
+            SIGNAL(moveFile(const QStringList&, const QString&)),
+            m_file,
+            SLOT(onMoveFile(const QStringList&, const QString&)));
+    connect(doubleFolderPanel,
+            SIGNAL(removeFile(const QStringList&)),
+            m_file,
+            SLOT(onRemoveFile(const QStringList&)));
+    connect(doubleFolderPanel,
+            SIGNAL(makeDirectory(const QString&, const QString&)),
+            m_file,
+            SLOT(onMakeDirectory(const QString&, const QString&)));
+    connect(doubleFolderPanel,
+            SIGNAL(renameFile(const QString&, const QString&, const QString&)),
+            m_file,
+            SLOT(onRenameFile(const QString&, const QString&, const QString&)));
+    connect(doubleFolderPanel,
+            SIGNAL(changeFileAttributes(const QString&, const QFile::Permissions&, const QDateTime&, const QDateTime&)),
+            m_file,
+            SLOT(onChangeFileAttributes(const QString&, const QFile::Permissions&, const QDateTime&, const QDateTime&)));
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
@@ -69,6 +92,17 @@ void MainWindow::initialize()
     doubleFolderPanel->refresh();
 
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
+}
+
+MainWindow::~MainWindow()
+{
+    delete m_viewerDispatcher;
+    m_viewerDispatcher = Q_NULLPTR;
+
+    delete m_file;
+    m_file = Q_NULLPTR;
+
+    delete ui;
 }
 
 void MainWindow::initFont()
@@ -123,9 +157,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::onOpen(ViewerType viewerType)
+void MainWindow::onOpenFile(ViewerType viewerType)
 {
-    qDebug() << "MainWindow::onOpen()";
+    qDebug() << "MainWindow::onOpenFile()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel == Q_NULLPTR)
@@ -141,10 +175,10 @@ void MainWindow::onOpen(ViewerType viewerType)
 
     QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
 
-    onOpen(path, viewerType);
+    onOpenFile(path, viewerType);
 }
 
-void MainWindow::onOpen(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
+void MainWindow::onOpenFile(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
 {
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel == Q_NULLPTR)
@@ -176,11 +210,16 @@ void MainWindow::onOpen(const QString& path, ViewerType viewerType/* = ViewerTyp
         return;
     }
 
-    ViewerBase* viewer = ViewerDispatcher::getInstance()->dispatcher(path, viewerType, ui->mainWidget);
+    ViewerBase* viewer = m_viewerDispatcher->dispatcher(path, viewerType);
     if(viewer == Q_NULLPTR)
     {
         return;
     }
+
+    connect(viewer,
+            SIGNAL(closeViewer(const QString)),
+            this,
+            SLOT(onCloseViewer(const QString)));
 
     // 余計な操作ができないよう、ビュアー時はメニューは無効化
     ui->menuBar->setEnabled(false);
@@ -190,7 +229,7 @@ void MainWindow::onOpen(const QString& path, ViewerType viewerType/* = ViewerTyp
 
     doubleFolderPanel->setVisible(false);
 
-    viewer->start();
+    viewer->start(this);
 }
 
 void MainWindow::onCloseViewer(const QString& viewerObjectName)
@@ -251,7 +290,7 @@ void MainWindow::on_actionOpen_triggered()
 {
     qDebug() << "MainWindow::on_actionOpen_triggered()";
 
-    onOpen(ViewerType::Auto);
+    onOpenFile(ViewerType::Auto);
 }
 
 void MainWindow::on_actionOpenWithApp_triggered()
@@ -279,21 +318,21 @@ void MainWindow::on_actionOpenWithTextViewer_triggered()
 {
     qDebug() << "MainWindow::on_actionOpenWithTextViewer_triggered()";
 
-    onOpen(ViewerType::Text);
+    onOpenFile(ViewerType::Text);
 }
 
 void MainWindow::on_actionOpenWithHexViewer_triggered()
 {
     qDebug() << "MainWindow::on_actionOpenWithHexViewer_triggered()";
 
-    onOpen(ViewerType::Hex);
+    onOpenFile(ViewerType::Hex);
 }
 
 void MainWindow::on_actionOpenWithImageViewer_triggered()
 {
     qDebug() << "MainWindow::on_actionOpenWithImageViewer_triggered()";
 
-    onOpen(ViewerType::Image);
+    onOpenFile(ViewerType::Image);
 }
 
 void MainWindow::on_actionPreferences_triggered()

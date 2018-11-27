@@ -1,5 +1,4 @@
-﻿#include <QMainWindow>
-#include <QFileDialog>
+﻿#include <QFileDialog>
 #include <QColorDialog>
 #include <QFontDialog>
 #include <QDateTime>

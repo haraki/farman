@@ -14,21 +14,8 @@
 namespace Farman
 {
 
-ViewerDispatcher* ViewerDispatcher::s_instance = Q_NULLPTR;
-
-void ViewerDispatcher::create()
-{
-    s_instance = new ViewerDispatcher();
-
-    s_instance->initialize();
-}
-
-ViewerDispatcher* ViewerDispatcher::getInstance()
-{
-    return s_instance;
-}
-
-ViewerDispatcher::ViewerDispatcher()
+ViewerDispatcher::ViewerDispatcher(QWidget* parent)
+    : m_parent(parent)
 {
 }
 
@@ -87,7 +74,7 @@ int ViewerDispatcher::initialize()
     return 0;
 }
 
-ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, ViewerType viewerType, QWidget* parent/* = Q_NULLPTR*/)
+ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, ViewerType viewerType)
 {
     QMimeType mimeType = QMimeDatabase().mimeTypeForFile(filePath);
     qDebug() << "mimeType : " << mimeType.name();
@@ -125,19 +112,19 @@ ViewerBase* ViewerDispatcher::dispatcher(const QString& filePath, ViewerType vie
     {
         qDebug() << "create Image viewer.";
 
-        return new ImageViewer(filePath, parent);
+        return new ImageViewer(filePath, m_parent);
     }
     else if(viewerType == ViewerType::Text)
     {
         qDebug() << "create Text viewer.";
 
-        return new TextViewer(filePath, parent);
+        return new TextViewer(filePath, m_parent);
     }
     else if(viewerType == ViewerType::Hex)
     {
         qDebug() << "create Hex viewer.";
 
-        return new HexViewer(filePath, parent);
+        return new HexViewer(filePath, m_parent);
     }
 
     return Q_NULLPTR;

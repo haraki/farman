@@ -11,7 +11,6 @@
 #include "sortdialog.h"
 #include "filterdialog.h"
 #include "renamedialog.h"
-#include "mainwindow.h"
 #include "settings.h"
 #include "fileoperationdialog.h"
 #include "fileattributesdialog.h"
@@ -72,6 +71,23 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     if(l_folderView != Q_NULLPTR)
     {
         l_folderView->installEventFilter(this);
+
+        connect(l_folderView,
+                SIGNAL(open(const QString&)),
+                this,
+                SLOT(onOpenFile(const QString&)));
+        connect(l_folderView,
+                SIGNAL(openWithApp(const QString&)),
+                this,
+                SLOT(onOpenWithApp(const QString&)));
+        connect(l_folderView,
+                SIGNAL(copyFile(const QStringList&, const QString&)),
+                this,
+                SLOT(onCopyFile(const QStringList&, const QString&)));
+        connect(l_folderView,
+                SIGNAL(moveFile(const QStringList&, const QString&)),
+                this,
+                SLOT(onMoveFile(const QStringList&, const QString&)));
     }
 
     QString r_path = QDir::homePath();
@@ -115,6 +131,23 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     if(r_folderView != Q_NULLPTR)
     {
         r_folderView->installEventFilter(this);
+
+        connect(r_folderView,
+                SIGNAL(open(const QString&)),
+                this,
+                SLOT(onOpenFile(const QString&)));
+        connect(r_folderView,
+                SIGNAL(openWithApp(const QString&)),
+                this,
+                SLOT(onOpenWithApp(const QString&)));
+        connect(r_folderView,
+                SIGNAL(copyFile(const QStringList&, const QString&)),
+                this,
+                SLOT(onCopyFile(const QStringList&, const QString&)));
+        connect(r_folderView,
+                SIGNAL(moveFile(const QStringList&, const QString&)),
+                this,
+                SLOT(onMoveFile(const QStringList&, const QString&)));
     }
 
     connect(l_folderForm,
@@ -133,11 +166,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             SIGNAL(focusChanged(bool)),
             this,
             SLOT(onRightFocusChanged(bool)));
-
-    connect(this,
-            SIGNAL(statusChanged(const QString&)),
-            MainWindow::getInstance(),
-            SLOT(onStatusChanged(const QString&)));
 
     setActivePane(activePane);
     setPaneMode(paneMode);
@@ -304,7 +332,7 @@ void DoubleFolderPanel::onChangeSortSettings()
         Qt::CaseSensitivity caseSensitivity = activeForm->getSortCaseSensitivity();
         Qt::SortOrder order = activeForm->getSortOrder();
 
-        SortDialog dialog(sectionType, dirsType, dotFirst, caseSensitivity, order, this);
+        SortDialog dialog(sectionType, dirsType, dotFirst, caseSensitivity, order, parentWidget());
         if(dialog.exec())
         {
             sectionType = dialog.getSortSectionType();
@@ -343,7 +371,7 @@ void DoubleFolderPanel::onChangeFilterSettings()
     {
         QDir::Filters filterFlags = activeForm->getFilterFlags();
 
-        FilterDialog dialog(filterFlags, this);
+        FilterDialog dialog(filterFlags, parentWidget());
         if(dialog.exec())
         {
             filterFlags = dialog.getFilterFlags();
@@ -388,7 +416,7 @@ void DoubleFolderPanel::onCopy()
                                activeForm->getCurrentDirPath(),
                                selectedFileInfoList,
                                inactiveForm->getCurrentDirPath(),
-                               this->parentWidget());
+                               parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
@@ -401,7 +429,7 @@ void DoubleFolderPanel::onCopy()
         srcPaths.push_back(fileInfo.absoluteFilePath());
     }
 
-    File::getInstance()->copyFile(srcPaths, dstDirPath);
+    emitCopyFile(srcPaths, dstDirPath);
 }
 
 void DoubleFolderPanel::onMove()
@@ -430,7 +458,7 @@ void DoubleFolderPanel::onMove()
                                activeForm->getCurrentDirPath(),
                                selectedFileInfoList,
                                inactiveForm->getCurrentDirPath(),
-                               this->parentWidget());
+                               parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
@@ -443,7 +471,7 @@ void DoubleFolderPanel::onMove()
         srcPaths.push_back(fileInfo.absoluteFilePath());
     }
 
-    File::getInstance()->moveFile(srcPaths, dstDirPath);
+    emitMoveFile(srcPaths, dstDirPath);
 }
 
 void DoubleFolderPanel::onRemove()
@@ -466,7 +494,7 @@ void DoubleFolderPanel::onRemove()
                                activeForm->getCurrentDirPath(),
                                selectedFileInfoList,
                                "",
-                               this->parentWidget());
+                               parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
@@ -478,7 +506,7 @@ void DoubleFolderPanel::onRemove()
         paths.push_back(fileInfo.absoluteFilePath());
     }
 
-    File::getInstance()->removeFile(paths);
+    emitRemoveFile(paths);
 }
 
 void DoubleFolderPanel::onMakeDirectory()
@@ -492,7 +520,7 @@ void DoubleFolderPanel::onMakeDirectory()
     }
 
     bool ok = false;
-    QString dirName = QInputDialog::getText(this->parentWidget(),
+    QString dirName = QInputDialog::getText(parentWidget(),
                                             tr("Make directory"),
                                             tr("Directory name:"),
                                             QLineEdit::Normal, QString(), &ok);
@@ -503,7 +531,7 @@ void DoubleFolderPanel::onMakeDirectory()
         return;
     }
 
-    File::getInstance()->makeDirectory(activeForm->getCurrentDirPath(), dirName);
+    emitMakeDirectory(activeForm->getCurrentDirPath(), dirName);
 }
 
 void DoubleFolderPanel::onRename()
@@ -522,17 +550,14 @@ void DoubleFolderPanel::onRename()
         return;
     }
 
-    RenameDialog dialog(oldName);
+    RenameDialog dialog(oldName, parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
     QString newName = dialog.getNewName();
-    if(!File::getInstance()->renameFile(activeForm->getCurrentDirPath(), oldName, newName))
-    {
-        return;
-    }
+    emitRenameFile(activeForm->getCurrentDirPath(), oldName, newName);
 
     activeForm->setCursor(newName);
 }
@@ -558,16 +583,17 @@ void DoubleFolderPanel::onAttributes()
     FileAttributesDialog dialog(fileInfo,
                                 file.permissions(),
                                 file.fileTime(QFile::FileBirthTime),
-                                file.fileTime(QFile::FileModificationTime));
+                                file.fileTime(QFile::FileModificationTime),
+                                parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
-    File::getInstance()->changeFileAttributes(fileInfo.absoluteFilePath(),
-                                              dialog.getPermissions(),
-                                              dialog.getCreated(),
-                                              dialog.getLastModified());
+    emitChangeFileAttributes(fileInfo.absoluteFilePath(),
+                             dialog.getPermissions(),
+                             dialog.getCreated(),
+                             dialog.getLastModified());
 }
 
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
@@ -620,9 +646,80 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
     }
 }
 
+void DoubleFolderPanel::onOpenFile(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
+{
+    qDebug() << "DoubleFolderPanel::onOpenFile : path : " << path;
+
+    emitOpenFile(path, viewerType);
+}
+
+void DoubleFolderPanel::onOpenWithApp(const QString& path)
+{
+    qDebug() << "DoubleFolderPanel::onOpenWithApp : path : " << path;
+
+    emitOpenWithApp(path);
+}
+
+void DoubleFolderPanel::onCopyFile(const QStringList& srcPaths, const QString& dstPath)
+{
+    qDebug() << "DoubleFolderPanel::onCopyFile";
+
+    emitCopyFile(srcPaths, dstPath);
+}
+
+void DoubleFolderPanel::onMoveFile(const QStringList& srcPaths, const QString& dstPath)
+{
+    qDebug() << "DoubleFolderPanel::onMoveFile";
+
+    emitMoveFile(srcPaths, dstPath);
+}
+
 void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
 {
     emit statusChanged(statusString);
+}
+
+void DoubleFolderPanel::emitOpenFile(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
+{
+    emit openFile(path, viewerType);
+}
+
+void DoubleFolderPanel::emitOpenWithApp(const QString& path)
+{
+    emit openWithApp(path);
+}
+
+void DoubleFolderPanel::emitCopyFile(const QStringList& srcPaths, const QString& dstPath)
+{
+    emit copyFile(srcPaths, dstPath);
+}
+
+void DoubleFolderPanel::emitMoveFile(const QStringList& srcPaths, const QString& dstPath)
+{
+    emit moveFile(srcPaths, dstPath);
+}
+
+void DoubleFolderPanel::emitRemoveFile(const QStringList& paths)
+{
+    emit removeFile(paths);
+}
+
+void DoubleFolderPanel::emitMakeDirectory(const QString& path, const QString& dirName)
+{
+    emit makeDirectory(path, dirName);
+}
+
+void DoubleFolderPanel::emitRenameFile(const QString& path, const QString& oldName, const QString& newName)
+{
+    emit renameFile(path, oldName, newName);
+}
+
+void DoubleFolderPanel::emitChangeFileAttributes(const QString& path,
+                                                 const QFile::Permissions& newPermissions,
+                                                 const QDateTime& newCreated,
+                                                 const QDateTime& newLastModified)
+{
+    emit changeFileAttributes(path, newPermissions, newCreated, newLastModified);
 }
 
 void DoubleFolderPanel::setPaneMode(PaneMode paneMode)

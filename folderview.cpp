@@ -8,7 +8,6 @@
 #include "folderview.h"
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
-#include "mainwindow.h"
 #include "file.h"
 #include "settings.h"
 #include "types.h"
@@ -25,14 +24,6 @@ FolderView::FolderView(QWidget *parent/* = Q_NULLPTR*/)
             SIGNAL(doubleClicked(const QModelIndex&)),
             this,
             SLOT(onDoubleClicked(const QModelIndex&)));
-    connect(this,
-            SIGNAL(open(const QString&)),
-            MainWindow::getInstance(),
-            SLOT(onOpen(const QString&)));
-    connect(this,
-            SIGNAL(openWithApp(const QString&)),
-            MainWindow::getInstance(),
-            SLOT(onOpenWithApp(const QString&)));
 }
 
 FolderView::~FolderView()
@@ -312,11 +303,11 @@ void FolderView::dropEvent(QDropEvent *e)
 
         if(behaviorType == DragAndDropBehaviorType::Copy)
         {
-            File::getInstance()->copyFile(srcPaths, dstDirPath);
+            emitCopyFile(srcPaths, dstDirPath);
         }
         else if(behaviorType == DragAndDropBehaviorType::Move)
         {
-            File::getInstance()->moveFile(srcPaths, dstDirPath);
+            emitMoveFile(srcPaths, dstDirPath);
         }
 
         e->accept();
@@ -331,6 +322,16 @@ void FolderView::emitOpen(const QString& path)
 void FolderView::emitOpenWithApp(const QString& path)
 {
     emit openWithApp(path);
+}
+
+void FolderView::emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath)
+{
+    emit copyFile(srcPaths, dstDirPath);
+}
+
+void FolderView::emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath)
+{
+    emit moveFile(srcPaths, dstDirPath);
 }
 
 }           // namespace Farman

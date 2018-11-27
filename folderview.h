@@ -33,6 +33,8 @@ public:
 Q_SIGNALS:
     void open(const QString&);
     void openWithApp(const QString&);
+    void copyFile(const QStringList& srcPaths, const QString& dstDirPath);
+    void moveFile(const QStringList& srcPaths, const QString& dstDirPath);
 
 private Q_SLOTS:
     void onDoubleClicked(const QModelIndex&);
@@ -46,6 +48,8 @@ private:
 
     void emitOpen(const QString& path);
     void emitOpenWithApp(const QString& path);
+    void emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath);
+    void emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath);
 };
 
 }           // namespace Farman

@@ -10,6 +10,8 @@ class HexViewer;
 namespace Farman
 {
 
+class MainWindow;
+
 class HexViewer : public ViewerBase
 {
     Q_OBJECT
@@ -18,7 +20,7 @@ public:
     explicit HexViewer(const QString& filePath, QWidget *parent = Q_NULLPTR);
     ~HexViewer() Q_DECL_OVERRIDE;
 
-    int start() Q_DECL_OVERRIDE;
+    int start(MainWindow* mainWindow) Q_DECL_OVERRIDE;
 
     const QPalette& getAddressAreaPalette() const;
     void setAddressAreaPalette(const QPalette& palette);
