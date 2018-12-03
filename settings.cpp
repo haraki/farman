@@ -15,6 +15,13 @@ void Settings::create()
     s_instance->initialize();
 }
 
+void Settings::destroy()
+{
+    delete s_instance;
+
+    s_instance = Q_NULLPTR;
+}
+
 Settings* Settings::getInstance()
 {
     return s_instance;

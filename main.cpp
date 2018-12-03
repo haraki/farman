@@ -6,6 +6,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName("MASHSOFT");
 
+    int ret = 0;
+
     QApplication a(argc, argv);
 
     Farman::Settings::create();
@@ -13,5 +15,9 @@ int main(int argc, char *argv[])
     Farman::MainWindow w;
     w.show();
 
-    return a.exec();
+    ret = a.exec();
+
+    Farman::Settings::destroy();
+
+    return ret;
 }

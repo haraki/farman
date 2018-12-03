@@ -19,7 +19,11 @@ class Settings : public QSettings
 
 public:
     static void create();
+    static void destroy();
+
     static Settings* getInstance();
+
+    void initialize();
 
     void flush();
 
@@ -158,8 +162,6 @@ public:
 
 private:
     Settings();
-
-    void initialize();
 
     QColor getValueColorSetting(const QString& key, const QColor& defColor);
 
