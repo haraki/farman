@@ -42,6 +42,7 @@ private slots:
     void on_rightFolderLastTimeRadioButton_clicked();
     void on_rightFolderFixedRadioButton_clicked();
     void on_rightFolderSelectButton_clicked();
+    void on_initializeSettingsPushButton_clicked();
 
     void on_singlePaneFileSizeSIRadioButton_clicked();
     void on_singlePaneFileSizeIecRadioButton_clicked();
@@ -109,6 +110,11 @@ private slots:
     void on_buttonBox_accepted();
 
 private:
+    void initialize(const QSize& mainWindowSize,
+                    const QPoint& mainWindowPos,
+                    const QString& leftDirPath,
+                    const QString& rightDirPath);
+
     void setFileSizeExample(FileSizeFormatType fileSizeFormatType, bool comma, QLineEdit* exampleLineEdit);
     void setDateExample(DateFormatType dataFormatType, const QString& orgFormat, QLineEdit* exampleLineEdit);
 

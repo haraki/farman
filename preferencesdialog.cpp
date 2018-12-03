@@ -3,6 +3,7 @@
 #include <QFontDialog>
 #include <QDateTime>
 #include <QDebug>
+#include <QMessageBox>
 #include "preferencesdialog.h"
 #include "ui_preferencesdialog.h"
 #include "settings.h"
@@ -20,6 +21,14 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
 {
     ui->setupUi(this);
 
+    initialize(mainWindowSize, mainWindowPos, leftDirPath, rightDirPath);
+}
+
+void PreferencesDialog::initialize(const QSize& mainWindowSize,
+                                   const QPoint& mainWindowPos,
+                                   const QString& leftDirPath,
+                                   const QString& rightDirPath)
+{
     // General
 
     SizeAtStartup sizeAtStartupType = Settings::getInstance()->getSizeAtStartupType();
@@ -416,6 +425,23 @@ void PreferencesDialog::on_rightFolderSelectButton_clicked()
     {
         ui->rightFolderPathLineEdit->setText(dirPath);
     }
+}
+
+void PreferencesDialog::on_initializeSettingsPushButton_clicked()
+{
+    if(QMessageBox::question(this, tr("Confirm"), tr("initialize settings?")) != QMessageBox::Yes)
+    {
+        return;
+    }
+
+    Settings::getInstance()->clear();
+    Settings::getInstance()->initialize();
+
+    initialize(QSize(ui->sizeWidthLineEdit->text().toInt(), ui->sizeHeightLineEdit->text().toInt()),
+               QPoint(ui->positionXLineEdit->text().toInt(), ui->positionYLineEdit->text().toInt()),
+               ui->leftFolderPathLineEdit->text(), ui->rightFolderPathLineEdit->text());
+
+    repaint();
 }
 
 void PreferencesDialog::on_singlePaneFileSizeSIRadioButton_clicked()

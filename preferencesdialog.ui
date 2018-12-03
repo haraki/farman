@@ -355,7 +355,28 @@
          </layout>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="5" column="0" colspan="2">
+        <widget class="QCheckBox" name="confirmQuitCheckBox">
+         <property name="text">
+          <string>Confirm quit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QCheckBox" name="moveCursorOpenViewerCheckBox">
+         <property name="text">
+          <string>Move the cursor to the next, after open the viewer with Enter key</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QCheckBox" name="allowCursorAroundCheckBox">
+         <property name="text">
+          <string>Allow cursor around</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
         <spacer name="generalVerticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -368,24 +389,10 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QCheckBox" name="allowCursorAroundCheckBox">
+       <item row="6" column="0">
+        <widget class="QPushButton" name="initializeSettingsPushButton">
          <property name="text">
-          <string>Allow cursor around</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QCheckBox" name="moveCursorOpenViewerCheckBox">
-         <property name="text">
-          <string>Move the cursor to the next, after open the viewer with Enter key</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QCheckBox" name="confirmQuitCheckBox">
-         <property name="text">
-          <string>Confirm quit</string>
+          <string>Initialize Settings</string>
          </property>
         </widget>
        </item>
