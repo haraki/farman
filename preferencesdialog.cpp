@@ -1056,7 +1056,7 @@ bool PreferencesDialog::showChooseColorDialog(const QColor& oldColor, QColor& ne
 bool PreferencesDialog::showChooseFontDialog(const QFont& oldFont, QFont& newFont)
 {
     bool ok = false;
-    newFont = QFontDialog::getFont(&ok, oldFont, this, tr("Choose font"));
+    newFont = QFontDialog::getFont(&ok, oldFont, this, tr("Choose font"), QFontDialog::DontUseNativeDialog);    // macOS だと NativeDialog でフォント変更できない(Qt 5.11)
 
     return ok;
 }
