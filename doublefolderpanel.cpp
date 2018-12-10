@@ -755,6 +755,10 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
 
 void DoubleFolderPanel::setActivePane(PaneType pane)
 {
+    m_activePane = pane;
+
+    Settings::getInstance()->setActivePane(pane);
+
     FolderForm* folderForm = findChild<FolderForm*>((pane == PaneType::Left) ? "l_folderForm" : "r_folderForm");
     if(folderForm != Q_NULLPTR)
     {
@@ -763,10 +767,6 @@ void DoubleFolderPanel::setActivePane(PaneType pane)
         {
             folderView->setFocus();
         }
-
-        m_activePane = pane;
-
-        Settings::getInstance()->setActivePane(pane);
     }
 }
 
