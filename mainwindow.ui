@@ -215,6 +215,9 @@
    <property name="text">
     <string>Preferences...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
   </action>
   <action name="actionOpen">
    <property name="text">
