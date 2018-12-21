@@ -41,7 +41,8 @@ private:
     void initPalette();
 
     void updateSettings();
-    void openCurrentFile(ViewerType viewerType = ViewerType::Auto);
+
+    void about();
 
 private Q_SLOTS:
     void on_actionOpen_triggered();
@@ -61,6 +62,7 @@ private Q_SLOTS:
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
     void on_actionAttributes_triggered();
+    void on_actionAbout_triggered();
 
 private:
     Ui::MainWindow *ui;

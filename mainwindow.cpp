@@ -1,6 +1,7 @@
 ﻿#include <QDebug>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "folderform.h"
@@ -483,6 +484,13 @@ void MainWindow::on_actionAttributes_triggered()
     }
 }
 
+void MainWindow::on_actionAbout_triggered()
+{
+    qDebug() << "MainWindow::on_actionAbout_triggered()";
+
+    about();
+}
+
 void MainWindow::updateSettings()
 {
     initFont();
@@ -493,6 +501,16 @@ void MainWindow::updateSettings()
     {
         doubleFolderPanel->updateSettings();
     }
+}
+
+void MainWindow::about()
+{
+    QMessageBox::about(this,
+                       tr("About farman"),
+                       tr("<font size = '+8'>farman</font>") +
+                       tr("<p>Version ") + APP_VERSION + "</p>" +
+                       tr("<p>Copyright 2018 MASHSOFT All right reserved.</p>"));
+
 }
 
 }           // namespace Farman

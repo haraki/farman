@@ -10,6 +10,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = farman
 TEMPLATE = app
+
+VERSION = 0.5.0
+
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 INCLUDEPATH += ./QHexView/include
 
 SOURCES += main.cpp\
