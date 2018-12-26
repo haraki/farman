@@ -128,7 +128,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
     if(Settings::getInstance()->getConfirmQuit())
     {
-        if(QMessageBox::question(this, tr("Confirm"), tr("quit?")) != QMessageBox::Yes)
+        if(QMessageBox::question(this, tr("Quit"), tr("Are you sure want to quit?")) != QMessageBox::Yes)
         {
             event->ignore();
             return;
