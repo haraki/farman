@@ -484,6 +484,22 @@ void MainWindow::on_actionAttributes_triggered()
     }
 }
 
+void MainWindow::on_actionConsole_triggered(bool checked)
+{
+    qDebug() << "MainWindow::on_actionConsole_triggered : " << checked;
+
+    ui->consoleDockWidget->blockSignals(true);          // visibilityChanged が発生するため、一旦シグナルをブロックする
+    ui->consoleDockWidget->setVisible(checked);
+    ui->consoleDockWidget->blockSignals(false);
+}
+
+void MainWindow::on_consoleDockWidget_visibilityChanged(bool visible)
+{
+    qDebug() << "MainWindow::on_consoleDockWidget_visibilityChanged : " << visible;
+
+    ui->actionConsole->setChecked(visible);
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
     qDebug() << "MainWindow::on_actionAbout_triggered()";

@@ -98,8 +98,6 @@
     <addaction name="actionOpenWithHexViewer"/>
     <addaction name="actionOpenWithImageViewer"/>
     <addaction name="separator"/>
-    <addaction name="actionPreferences"/>
-    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -110,9 +108,17 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuOption">
+    <property name="title">
+     <string>Option</string>
+    </property>
+    <addaction name="actionPreferences"/>
+    <addaction name="actionConsole"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuOperation"/>
+   <addaction name="menuOption"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionSinglePane">
@@ -271,6 +277,17 @@
   <action name="actionAbout">
    <property name="text">
     <string>About...</string>
+   </property>
+  </action>
+  <action name="actionConsole">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Console</string>
    </property>
   </action>
  </widget>

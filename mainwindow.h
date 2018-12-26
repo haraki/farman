@@ -62,6 +62,8 @@ private Q_SLOTS:
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
     void on_actionAttributes_triggered();
+    void on_actionConsole_triggered(bool checked);
+    void on_consoleDockWidget_visibilityChanged(bool visible);
     void on_actionAbout_triggered();
 
 private:
