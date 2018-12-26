@@ -145,6 +145,9 @@ public:
     int getCursorWidth() { return m_cursorWidth; }
     void setCursorWidth(int cursorWidth) { m_cursorWidth = cursorWidth; }
 
+    bool getConsoleVisible() { return m_consoleVisible; }
+    void setConsoleVisible(bool visible) { m_consoleVisible = visible; }
+
     bool getImageViewerFitInView() { return m_imageViewerFitInView; }
     void setImageViewerFitInView(bool fitInView) { m_imageViewerFitInView = fitInView; }
 
@@ -300,6 +303,8 @@ private:
     QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;
 
     int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
+
+    bool m_consoleVisible = true;
 
     bool m_imageViewerFitInView = true;
     ImageViewerBGType m_imageViewerBGType = ImageViewerBGType::Checkered;

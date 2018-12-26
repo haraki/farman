@@ -89,6 +89,9 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
         this->move(pos);
     }
 
+    ui->actionConsole->setChecked(Settings::getInstance()->getConsoleVisible());
+    setVisibleConsole(Settings::getInstance()->getConsoleVisible());
+
     updateSettings();
     doubleFolderPanel->refresh();
 
@@ -488,9 +491,7 @@ void MainWindow::on_actionConsole_triggered(bool checked)
 {
     qDebug() << "MainWindow::on_actionConsole_triggered : " << checked;
 
-    ui->consoleDockWidget->blockSignals(true);          // visibilityChanged が発生するため、一旦シグナルをブロックする
-    ui->consoleDockWidget->setVisible(checked);
-    ui->consoleDockWidget->blockSignals(false);
+    setVisibleConsole(checked);
 }
 
 void MainWindow::on_consoleDockWidget_visibilityChanged(bool visible)
@@ -517,6 +518,15 @@ void MainWindow::updateSettings()
     {
         doubleFolderPanel->updateSettings();
     }
+}
+
+void MainWindow::setVisibleConsole(bool visible)
+{
+    ui->consoleDockWidget->blockSignals(true);          // visibilityChanged が発生するため、一旦シグナルをブロックする
+    ui->consoleDockWidget->setVisible(visible);
+    ui->consoleDockWidget->blockSignals(false);
+
+    Settings::getInstance()->setConsoleVisible(visible);
 }
 
 void MainWindow::about()

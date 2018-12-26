@@ -42,6 +42,7 @@ private:
 
     void updateSettings();
 
+    void setVisibleConsole(bool visible);
     void about();
 
 private Q_SLOTS:

@@ -164,6 +164,9 @@ void Settings::initialize()
     // Cursor width
     m_cursorWidth = value("main/cursorWidth", QString("%1").arg(DEFAULT_CURSOR_WIDTH)).toInt();
 
+    // Console visible
+    m_consoleVisible = value("main/consoleVisible", true).toBool();
+
     // ImageViewer
     {
         // Fit in view
@@ -327,6 +330,9 @@ void Settings::flush()
 
     // Cursor width
     setValue("main/cursorWidth", m_cursorWidth);
+
+    // Console visible
+    setValue("main/consoleVisible", m_consoleVisible);
 
     // Image Viewer
     {
