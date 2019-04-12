@@ -1703,6 +1703,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>tabWidget</tabstop>
   <tabstop>sizeDefaultRadioButton</tabstop>
   <tabstop>sizeLastTimeRadioButton</tabstop>
   <tabstop>sizeFixedRadioButton</tabstop>
@@ -1795,7 +1796,6 @@
   <tabstop>imageViewerFitInViewCheckBox</tabstop>
   <tabstop>imageViewerBGTypeComboBox</tabstop>
   <tabstop>imageViewerBGColorPushButton</tabstop>
-  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
  <connections>
