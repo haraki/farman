@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>413</width>
-    <height>468</height>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -176,7 +176,7 @@
       <item row="2" column="0" colspan="2">
        <widget class="QRadioButton" name="methodSkipRadioButton">
         <property name="text">
-         <string>Skip</string>
+         <string>Skip(&amp;S)</string>
         </property>
        </widget>
       </item>
@@ -190,14 +190,14 @@
       <item row="0" column="0" colspan="2">
        <widget class="QRadioButton" name="methodOverwriteRadioButton">
         <property name="text">
-         <string>Overwrite</string>
+         <string>Overwrite(&amp;O)</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
        <widget class="QRadioButton" name="methodRenameRadioButton">
         <property name="text">
-         <string>Rename</string>
+         <string>Rename(&amp;R)</string>
         </property>
        </widget>
       </item>
@@ -220,7 +220,7 @@
       <item row="1" column="0" colspan="2">
        <widget class="QRadioButton" name="methodOverwriteIfNewerRadioButton">
         <property name="text">
-         <string>Overwrite if newer</string>
+         <string>Overwrite if newer(&amp;N)</string>
         </property>
        </widget>
       </item>
@@ -230,7 +230,7 @@
    <item>
     <widget class="QCheckBox" name="keepSetting">
      <property name="text">
-      <string>Keep setting.</string>
+      <string>Keep setting.(&amp;K)</string>
      </property>
     </widget>
    </item>

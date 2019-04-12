@@ -64,12 +64,12 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>View(&amp;V)</string>
     </property>
     <addaction name="actionSinglePane"/>
     <addaction name="actionDualPane"/>
@@ -79,7 +79,7 @@
    </widget>
    <widget class="QMenu" name="menuOperation">
     <property name="title">
-     <string>Operation</string>
+     <string>Operation(&amp;O)</string>
     </property>
     <addaction name="actionCopy"/>
     <addaction name="actionMove"/>
@@ -90,7 +90,7 @@
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>File(&amp;F)</string>
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenWithApp"/>
@@ -102,7 +102,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>Help(&amp;H)</string>
     </property>
     <addaction name="actionHelp"/>
     <addaction name="separator"/>
@@ -110,7 +110,7 @@
    </widget>
    <widget class="QMenu" name="menuOption">
     <property name="title">
-     <string>Option</string>
+     <string>Option(&amp;P)</string>
     </property>
     <addaction name="actionPreferences"/>
     <addaction name="actionConsole"/>
@@ -123,7 +123,7 @@
   </widget>
   <action name="actionSinglePane">
    <property name="text">
-    <string>Single Pane</string>
+    <string>Single Pane(&amp;1)</string>
    </property>
    <property name="toolTip">
     <string>Single Pane</string>
@@ -134,7 +134,7 @@
   </action>
   <action name="actionDualPane">
    <property name="text">
-    <string>Dual Pane</string>
+    <string>Dual Pane(&amp;2)</string>
    </property>
    <property name="toolTip">
     <string>Dual Pane</string>
@@ -145,7 +145,7 @@
   </action>
   <action name="actionSortSettings">
    <property name="text">
-    <string>Sort Settings...</string>
+    <string>Sort Settings(&amp;S)...</string>
    </property>
    <property name="shortcut">
     <string>S</string>
@@ -153,7 +153,7 @@
   </action>
   <action name="actionFilterSettings">
    <property name="text">
-    <string>Filter Settings...</string>
+    <string>Filter Settings.(&amp;F)..</string>
    </property>
    <property name="shortcut">
     <string>F</string>
@@ -161,7 +161,7 @@
   </action>
   <action name="actionCopy">
    <property name="text">
-    <string>Copy...</string>
+    <string>Copy(&amp;C)...</string>
    </property>
    <property name="shortcut">
     <string>C</string>
@@ -169,7 +169,7 @@
   </action>
   <action name="actionMove">
    <property name="text">
-    <string>Move...</string>
+    <string>Move(&amp;M)...</string>
    </property>
    <property name="shortcut">
     <string>M</string>
@@ -177,7 +177,7 @@
   </action>
   <action name="actionRemove">
    <property name="text">
-    <string>Remove...</string>
+    <string>Remove(&amp;D)...</string>
    </property>
    <property name="shortcut">
     <string>D</string>
@@ -185,7 +185,7 @@
   </action>
   <action name="actionMakeDirectory">
    <property name="text">
-    <string>Make directory...</string>
+    <string>Make directory(&amp;K)...</string>
    </property>
    <property name="shortcut">
     <string>K</string>
@@ -193,7 +193,7 @@
   </action>
   <action name="actionRename">
    <property name="text">
-    <string>Rename...</string>
+    <string>Rename(&amp;R)...</string>
    </property>
    <property name="shortcut">
     <string>R</string>
@@ -201,7 +201,7 @@
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit...</string>
+    <string>Quit(&amp;X)...</string>
    </property>
    <property name="shortcut">
     <string>Esc</string>
@@ -209,7 +209,7 @@
   </action>
   <action name="actionOpenWithApp">
    <property name="text">
-    <string>Open With Application</string>
+    <string>Open With Application(&amp;A)</string>
    </property>
    <property name="toolTip">
     <string>Open With Application</string>
@@ -220,7 +220,7 @@
   </action>
   <action name="actionAttributes">
    <property name="text">
-    <string>Attributes...</string>
+    <string>Attributes(&amp;A)...</string>
    </property>
    <property name="shortcut">
     <string>A</string>
@@ -228,7 +228,7 @@
   </action>
   <action name="actionPreferences">
    <property name="text">
-    <string>Preferences...</string>
+    <string>Preferences(&amp;P)...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
@@ -236,7 +236,7 @@
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open</string>
+    <string>Open(&amp;O)</string>
    </property>
    <property name="shortcut">
     <string>Return</string>
@@ -244,7 +244,7 @@
   </action>
   <action name="actionOpenWithTextViewer">
    <property name="text">
-    <string>Open With TextViewer</string>
+    <string>Open With TextViewer(&amp;T)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
@@ -252,7 +252,7 @@
   </action>
   <action name="actionOpenWithHexViewer">
    <property name="text">
-    <string>Open With HexViewer</string>
+    <string>Open With HexViewer(&amp;H)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
@@ -260,7 +260,7 @@
   </action>
   <action name="actionOpenWithImageViewer">
    <property name="text">
-    <string>Open With ImageViewer</string>
+    <string>Open With ImageViewer(&amp;I)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
@@ -271,12 +271,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Help...</string>
+    <string>Help(&amp;H)...</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About...</string>
+    <string>About(&amp;A)...</string>
    </property>
   </action>
   <action name="actionConsole">
@@ -287,7 +287,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Console</string>
+    <string>Console(&amp;C)</string>
    </property>
   </action>
  </widget>

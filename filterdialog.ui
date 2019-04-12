@@ -42,7 +42,7 @@
     <enum>Qt::StrongFocus</enum>
    </property>
    <property name="text">
-    <string>Show hidden files</string>
+    <string>Show hidden files(&amp;H)</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="showSystemCheckBox">
@@ -58,7 +58,7 @@
     <enum>Qt::StrongFocus</enum>
    </property>
    <property name="text">
-    <string>Show system files</string>
+    <string>Show system files(&amp;S)</string>
    </property>
   </widget>
  </widget>
