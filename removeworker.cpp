@@ -24,6 +24,8 @@ void RemoveWorker::run()
 {
     qDebug() << "start RemoveWorker::run()";
 
+    emitProcess(tr("Preparing remove..."));
+
     emitStart(0, m_paths.size());
 
     int progress = 0;
