@@ -147,13 +147,19 @@
    <property name="text">
     <string>Sort Settings(&amp;S)...</string>
    </property>
+   <property name="toolTip">
+    <string>Sort Settings</string>
+   </property>
    <property name="shortcut">
     <string>S</string>
    </property>
   </action>
   <action name="actionFilterSettings">
    <property name="text">
-    <string>Filter Settings.(&amp;F)..</string>
+    <string>Filter Settings(&amp;F)...</string>
+   </property>
+   <property name="toolTip">
+    <string>Filter Settings</string>
    </property>
    <property name="shortcut">
     <string>F</string>
@@ -163,6 +169,9 @@
    <property name="text">
     <string>Copy(&amp;C)...</string>
    </property>
+   <property name="toolTip">
+    <string>Copy</string>
+   </property>
    <property name="shortcut">
     <string>C</string>
    </property>
@@ -170,6 +179,9 @@
   <action name="actionMove">
    <property name="text">
     <string>Move(&amp;M)...</string>
+   </property>
+   <property name="toolTip">
+    <string>Move</string>
    </property>
    <property name="shortcut">
     <string>M</string>
@@ -179,6 +191,9 @@
    <property name="text">
     <string>Remove(&amp;D)...</string>
    </property>
+   <property name="toolTip">
+    <string>Remove</string>
+   </property>
    <property name="shortcut">
     <string>D</string>
    </property>
@@ -186,6 +201,9 @@
   <action name="actionMakeDirectory">
    <property name="text">
     <string>Make directory(&amp;K)...</string>
+   </property>
+   <property name="toolTip">
+    <string>Make directory</string>
    </property>
    <property name="shortcut">
     <string>K</string>
@@ -195,6 +213,9 @@
    <property name="text">
     <string>Rename(&amp;R)...</string>
    </property>
+   <property name="toolTip">
+    <string>Rename</string>
+   </property>
    <property name="shortcut">
     <string>R</string>
    </property>
@@ -202,6 +223,9 @@
   <action name="actionQuit">
    <property name="text">
     <string>Quit(&amp;X)...</string>
+   </property>
+   <property name="toolTip">
+    <string>Quit</string>
    </property>
    <property name="shortcut">
     <string>Esc</string>
@@ -222,6 +246,9 @@
    <property name="text">
     <string>Attributes(&amp;A)...</string>
    </property>
+   <property name="toolTip">
+    <string>Attributes</string>
+   </property>
    <property name="shortcut">
     <string>A</string>
    </property>
@@ -229,6 +256,9 @@
   <action name="actionPreferences">
    <property name="text">
     <string>Preferences(&amp;P)...</string>
+   </property>
+   <property name="toolTip">
+    <string>Preferences</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
@@ -238,6 +268,9 @@
    <property name="text">
     <string>Open(&amp;O)</string>
    </property>
+   <property name="toolTip">
+    <string>Open</string>
+   </property>
    <property name="shortcut">
     <string>Return</string>
    </property>
@@ -245,6 +278,9 @@
   <action name="actionOpenWithTextViewer">
    <property name="text">
     <string>Open With TextViewer(&amp;T)</string>
+   </property>
+   <property name="toolTip">
+    <string>Open With TextViewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
@@ -254,6 +290,9 @@
    <property name="text">
     <string>Open With HexViewer(&amp;H)</string>
    </property>
+   <property name="toolTip">
+    <string>Open With HexViewer</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
    </property>
@@ -261,6 +300,9 @@
   <action name="actionOpenWithImageViewer">
    <property name="text">
     <string>Open With ImageViewer(&amp;I)</string>
+   </property>
+   <property name="toolTip">
+    <string>Open With ImageViewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
@@ -273,10 +315,16 @@
    <property name="text">
     <string>Help(&amp;H)...</string>
    </property>
+   <property name="toolTip">
+    <string>Help</string>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About(&amp;A)...</string>
+   </property>
+   <property name="toolTip">
+    <string>About</string>
    </property>
   </action>
   <action name="actionConsole">
@@ -288,6 +336,9 @@
    </property>
    <property name="text">
     <string>Console(&amp;C)</string>
+   </property>
+   <property name="toolTip">
+    <string>Console</string>
    </property>
   </action>
  </widget>
