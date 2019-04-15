@@ -233,10 +233,10 @@
   </action>
   <action name="actionOpenWithApp">
    <property name="text">
-    <string>Open With Application(&amp;A)</string>
+    <string>Open with Application(&amp;A)</string>
    </property>
    <property name="toolTip">
-    <string>Open With Application</string>
+    <string>Open with Application</string>
    </property>
    <property name="shortcut">
     <string>Shift+Return</string>
@@ -277,10 +277,10 @@
   </action>
   <action name="actionOpenWithTextViewer">
    <property name="text">
-    <string>Open With TextViewer(&amp;T)</string>
+    <string>Open with Text Viewer(&amp;T)</string>
    </property>
    <property name="toolTip">
-    <string>Open With TextViewer</string>
+    <string>Open with Text Viewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
@@ -288,10 +288,10 @@
   </action>
   <action name="actionOpenWithHexViewer">
    <property name="text">
-    <string>Open With HexViewer(&amp;H)</string>
+    <string>Open with Hex Viewer(&amp;H)</string>
    </property>
    <property name="toolTip">
-    <string>Open With HexViewer</string>
+    <string>Open with Hex Viewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
@@ -299,10 +299,10 @@
   </action>
   <action name="actionOpenWithImageViewer">
    <property name="text">
-    <string>Open With ImageViewer(&amp;I)</string>
+    <string>Open with Image Viewer(&amp;I)</string>
    </property>
    <property name="toolTip">
-    <string>Open With ImageViewer</string>
+    <string>Open with Image Viewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
