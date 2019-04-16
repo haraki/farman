@@ -38,13 +38,6 @@
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item>
-      <widget class="QToolButton" name="folderSelectButton">
-       <property name="text">
-        <string>...</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLineEdit" name="folderPathEdit">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
@@ -54,6 +47,13 @@
        </property>
        <property name="readOnly">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="folderSelectButton">
+       <property name="text">
+        <string>...</string>
        </property>
       </widget>
      </item>
@@ -107,7 +107,7 @@
       <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderDefaultSectionSize">
-      <number>21</number>
+      <number>24</number>
      </attribute>
     </widget>
    </item>
@@ -122,7 +122,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>folderView</tabstop>
-  <tabstop>folderSelectButton</tabstop>
   <tabstop>folderPathEdit</tabstop>
  </tabstops>
  <resources/>

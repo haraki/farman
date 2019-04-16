@@ -33,8 +33,19 @@
           <property name="spacing">
            <number>8</number>
           </property>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="leftFolderPathLineEdit"/>
+          <item row="1" column="0" colspan="3">
+           <widget class="QRadioButton" name="leftFolderLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QRadioButton" name="leftFolderDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
           </item>
           <item row="3" column="0">
            <spacer name="leftFolderHorizontalSpacer">
@@ -52,12 +63,8 @@
             </property>
            </spacer>
           </item>
-          <item row="3" column="1">
-           <widget class="QToolButton" name="leftFolderSelectButton">
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="leftFolderPathLineEdit"/>
           </item>
           <item row="2" column="0" colspan="3">
            <widget class="QRadioButton" name="leftFolderFixedRadioButton">
@@ -66,17 +73,10 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="3">
-           <widget class="QRadioButton" name="leftFolderLastTimeRadioButton">
+          <item row="3" column="3">
+           <widget class="QToolButton" name="leftFolderSelectButton">
             <property name="text">
-             <string>Same as last time</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="3">
-           <widget class="QRadioButton" name="leftFolderDefaultRadioButton">
-            <property name="text">
-             <string>Default</string>
+             <string>...</string>
             </property>
            </widget>
           </item>
@@ -92,10 +92,17 @@
           <property name="spacing">
            <number>8</number>
           </property>
-          <item row="3" column="1">
-           <widget class="QToolButton" name="rightFolderSelectButton">
+          <item row="2" column="0" colspan="3">
+           <widget class="QRadioButton" name="rightFolderFixedRadioButton">
             <property name="text">
-             <string>...</string>
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="3">
+           <widget class="QRadioButton" name="rightFolderLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
             </property>
            </widget>
           </item>
@@ -115,27 +122,20 @@
             </property>
            </spacer>
           </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="rightFolderPathLineEdit"/>
-          </item>
-          <item row="2" column="0" colspan="3">
-           <widget class="QRadioButton" name="rightFolderFixedRadioButton">
-            <property name="text">
-             <string>Fixed</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="3">
-           <widget class="QRadioButton" name="rightFolderLastTimeRadioButton">
-            <property name="text">
-             <string>Same as last time</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0" colspan="3">
            <widget class="QRadioButton" name="rightFolderDefaultRadioButton">
             <property name="text">
              <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="rightFolderPathLineEdit"/>
+          </item>
+          <item row="3" column="3">
+           <widget class="QToolButton" name="rightFolderSelectButton">
+            <property name="text">
+             <string>...</string>
             </property>
            </widget>
           </item>
@@ -1717,12 +1717,10 @@
   <tabstop>leftFolderDefaultRadioButton</tabstop>
   <tabstop>leftFolderLastTimeRadioButton</tabstop>
   <tabstop>leftFolderFixedRadioButton</tabstop>
-  <tabstop>leftFolderSelectButton</tabstop>
   <tabstop>leftFolderPathLineEdit</tabstop>
   <tabstop>rightFolderDefaultRadioButton</tabstop>
   <tabstop>rightFolderLastTimeRadioButton</tabstop>
   <tabstop>rightFolderFixedRadioButton</tabstop>
-  <tabstop>rightFolderSelectButton</tabstop>
   <tabstop>rightFolderPathLineEdit</tabstop>
   <tabstop>confirmQuitCheckBox</tabstop>
   <tabstop>initializeSettingsPushButton</tabstop>
