@@ -57,6 +57,9 @@ public:
     QString getRightFolderPath() { return m_rightFolderPath; }
     void setRightFolderPath(const QString& rightFolderPath) { m_rightFolderPath = rightFolderPath; }
 
+    QString getTextEditorPath() { return m_textEditorPath; }
+    void setTextEditorPath(const QString& textEditorPath) { m_textEditorPath = textEditorPath; }
+
     SectionType getLeftSortSectionType() { return m_leftSortSectionType; }
     SortDirsType getLeftSortDirsType() { return m_leftSortDirsType; }
     bool getLeftSortDotFirst() { return m_leftSortDotFirst; }
@@ -197,6 +200,8 @@ private:
     QString m_leftFolderPath = "";
     FolderAtStartup m_rightFolderAtStartup = FolderAtStartup::Default;
     QString m_rightFolderPath = "";
+
+    QString m_textEditorPath = "";
 
     SectionType m_leftSortSectionType = SectionType::FileName;
     SortDirsType m_leftSortDirsType = SortDirsType::NoSpecify;

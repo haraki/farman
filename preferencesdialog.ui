@@ -23,7 +23,157 @@
       <attribute name="title">
        <string>General(&amp;G)</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout" columnstretch="1,1">
+      <layout class="QGridLayout" name="gridLayout_21" columnstretch="1,1">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="sizeAtStartupGroupBox">
+         <property name="title">
+          <string>Size at startup(&amp;S)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="7" column="3">
+           <widget class="QLabel" name="sizeHeightLabel">
+            <property name="text">
+             <string>Height:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="sizeWidthLabel">
+            <property name="text">
+             <string>Width:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="4">
+           <widget class="QLineEdit" name="sizeHeightLineEdit"/>
+          </item>
+          <item row="7" column="0">
+           <spacer name="sizeHorizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="sizeWidthLineEdit"/>
+          </item>
+          <item row="2" column="0" colspan="5">
+           <widget class="QRadioButton" name="sizeLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="5">
+           <widget class="QRadioButton" name="sizeFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="5">
+           <widget class="QRadioButton" name="sizeDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="positionAtStartupGroupBox">
+         <property name="title">
+          <string>Position at startup(&amp;P)</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="3" column="1">
+           <widget class="QLabel" name="positionXLabel">
+            <property name="text">
+             <string>X:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QLineEdit" name="positionYLineEdit"/>
+          </item>
+          <item row="3" column="0">
+           <spacer name="positionHorizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="positionYLabel">
+            <property name="text">
+             <string>Y:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="positionXLineEdit"/>
+          </item>
+          <item row="0" column="0" colspan="5">
+           <widget class="QRadioButton" name="positionDefaultRadioButton">
+            <property name="text">
+             <string>Default</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="5">
+           <widget class="QRadioButton" name="positionLastTimeRadioButton">
+            <property name="text">
+             <string>Same as last time</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="5">
+           <widget class="QRadioButton" name="positionFixedRadioButton">
+            <property name="text">
+             <string>Fixed</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="leftFolderAtStartupGroupBox">
          <property name="title">
@@ -142,157 +292,7 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QGroupBox" name="positionAtStartupGroupBox">
-         <property name="title">
-          <string>Position at startup(&amp;P)</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <property name="spacing">
-           <number>8</number>
-          </property>
-          <item row="3" column="1">
-           <widget class="QLabel" name="positionXLabel">
-            <property name="text">
-             <string>X:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="4">
-           <widget class="QLineEdit" name="positionYLineEdit"/>
-          </item>
-          <item row="3" column="0">
-           <spacer name="positionHorizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="3" column="3">
-           <widget class="QLabel" name="positionYLabel">
-            <property name="text">
-             <string>Y:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="positionXLineEdit"/>
-          </item>
-          <item row="0" column="0" colspan="5">
-           <widget class="QRadioButton" name="positionDefaultRadioButton">
-            <property name="text">
-             <string>Default</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="5">
-           <widget class="QRadioButton" name="positionLastTimeRadioButton">
-            <property name="text">
-             <string>Same as last time</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="5">
-           <widget class="QRadioButton" name="positionFixedRadioButton">
-            <property name="text">
-             <string>Fixed</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="sizeAtStartupGroupBox">
-         <property name="title">
-          <string>Size at startup(&amp;S)</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <property name="spacing">
-           <number>8</number>
-          </property>
-          <item row="7" column="3">
-           <widget class="QLabel" name="sizeHeightLabel">
-            <property name="text">
-             <string>Height:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="sizeWidthLabel">
-            <property name="text">
-             <string>Width:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="4">
-           <widget class="QLineEdit" name="sizeHeightLineEdit"/>
-          </item>
-          <item row="7" column="0">
-           <spacer name="sizeHorizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="7" column="2">
-           <widget class="QLineEdit" name="sizeWidthLineEdit"/>
-          </item>
-          <item row="0" column="0" colspan="5">
-           <widget class="QRadioButton" name="sizeDefaultRadioButton">
-            <property name="text">
-             <string>Default</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="5">
-           <widget class="QRadioButton" name="sizeLastTimeRadioButton">
-            <property name="text">
-             <string>Same as last time</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="5">
-           <widget class="QRadioButton" name="sizeFixedRadioButton">
-            <property name="text">
-             <string>Fixed</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
+       <item row="3" column="0">
         <widget class="QCheckBox" name="confirmQuitCheckBox">
          <property name="text">
           <string>Confirm quit(&amp;Q)</string>
@@ -300,6 +300,13 @@
         </widget>
        </item>
        <item row="4" column="0">
+        <widget class="QPushButton" name="initializeSettingsPushButton">
+         <property name="text">
+          <string>Initialize Settings(&amp;I)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
         <spacer name="generalVerticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -312,11 +319,30 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="initializeSettingsPushButton">
-         <property name="text">
-          <string>Initialize Settings(&amp;I)</string>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="programPathGroupBox">
+         <property name="title">
+          <string>Program path</string>
          </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="textEditorPathLineEdit"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QToolButton" name="textEditorSelectButton">
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="textEditorLabel">
+            <property name="text">
+             <string>Text Editor</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -1722,8 +1748,6 @@
   <tabstop>rightFolderLastTimeRadioButton</tabstop>
   <tabstop>rightFolderFixedRadioButton</tabstop>
   <tabstop>rightFolderPathLineEdit</tabstop>
-  <tabstop>confirmQuitCheckBox</tabstop>
-  <tabstop>initializeSettingsPushButton</tabstop>
   <tabstop>folderViewFontFontPushButton</tabstop>
   <tabstop>folderViewFontNormalColorPushButton</tabstop>
   <tabstop>folderViewFontNormalSelectedColorPushButton</tabstop>

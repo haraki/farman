@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMessageBox>
+#include <QStandardPaths>
 #include "preferencesdialog.h"
 #include "ui_preferencesdialog.h"
 #include "settings.h"
@@ -148,6 +149,8 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
 
         ui->rightFolderPathLineEdit->setText(rightDirPath);
     }
+
+    ui->textEditorPathLineEdit->setText(Settings::getInstance()->getTextEditorPath());
 
     DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
     if(behaviorType == DragAndDropBehaviorType::Copy)
@@ -424,6 +427,40 @@ void PreferencesDialog::on_rightFolderSelectButton_clicked()
     if(!dirPath.isEmpty())
     {
         ui->rightFolderPathLineEdit->setText(dirPath);
+    }
+}
+
+void PreferencesDialog::on_textEditorSelectButton_clicked()
+{
+    QString appPath = ui->textEditorPathLineEdit->text();
+    QString dirPath = QFileInfo(appPath).absolutePath();
+
+    if(dirPath.isEmpty())
+    {
+#ifdef Q_OS_WIN
+        // Program Files フォルダのパスを取得するには環境変数 PROGRAMFILES から取得するしかない
+        // (QStandartPaths::standardLocations() では返されない)
+        // 参考 : https://doc.qt.io/qt-5/qstandardpaths.html#StandardLocation-enum
+        dirPath = getenv("PROGRAMFILES");
+#else
+        dirPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0);
+#endif
+    }
+
+    appPath = QFileDialog::getOpenFileName(this,
+                                           tr("Choose application."),
+                                           dirPath,
+#if defined(Q_OS_WIN)
+                                           tr("Applications (*.exe *.com *.bat *.pif);;All files (*)"));
+#elif defined(Q_OS_MAC)
+                                           tr("Applications (*.app);;All files (*)"));
+#else
+                                           tr("All files (*)"));
+#endif
+
+    if(!appPath.isEmpty())
+    {
+        ui->textEditorPathLineEdit->setText(appPath);
     }
 }
 
@@ -1128,6 +1165,8 @@ void PreferencesDialog::on_buttonBox_accepted()
     {
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
     }
+
+    Settings::getInstance()->setTextEditorPath(ui->textEditorPathLineEdit->text());
 
     if(ui->dragAndDropBehaviorCopyRadioButton->isChecked())
     {

@@ -72,6 +72,9 @@ void Settings::initialize()
                                                                       FolderAtStartup::Default;
     m_rightFolderPath = value("main/rightFolderPath", QString("")).toString();
 
+    // Program path
+    m_textEditorPath = value("main/textEditorPath", QString("")).toString();
+
     // Left side Sort settings
     m_leftSortSectionType = getValueSortSectionType("left");
     m_leftSortDirsType = getValueSortDirsType("left");
@@ -245,6 +248,9 @@ void Settings::flush()
                                                                                              "default";
     setValue("main/rightFolderAtStartup", rightFolderAtStartupValue);
     setValue("main/rightFolderPath", m_rightFolderPath);
+
+    // Program path
+    setValue("main/textEditorPath", m_textEditorPath);
 
     // Left side Sort settings
     setValueSortSectionType(m_leftSortSectionType, "left");
