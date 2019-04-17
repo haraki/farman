@@ -31,6 +31,7 @@ public Q_SLOTS:
     void onOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
     void onCloseViewer(const QString& viewerName);
     void onOpenWithApp(const QString& path);
+    void onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths);
     void onStatusChanged(const QString& statusString);
     void onOutputConsole(const QString& consoleString);
 
@@ -43,14 +44,16 @@ private:
     void updateSettings();
 
     void setVisibleConsole(bool visible);
+    bool launchExternalApp(const QString& command, const QString dirPath);
     void about();
 
 private Q_SLOTS:
     void on_actionOpen_triggered();
-    void on_actionOpenWithApp_triggered();
     void on_actionOpenWithTextViewer_triggered();
     void on_actionOpenWithHexViewer_triggered();
     void on_actionOpenWithImageViewer_triggered();
+    void on_actionOpenWithApp_triggered();
+    void on_actionOpenWithTextEditor_triggered();
     void on_actionPreferences_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();

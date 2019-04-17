@@ -31,8 +31,9 @@ public:
     void refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
 Q_SIGNALS:
-    void open(const QString&);
-    void openWithApp(const QString&);
+    void open(const QString& path);
+    void openWithApp(const QString& path);
+    void openWithTextEditor(const QString& dirPath, const QStringList& fileNames);
     void copyFile(const QStringList& srcPaths, const QString& dstDirPath);
     void moveFile(const QStringList& srcPaths, const QString& dstDirPath);
 
@@ -48,6 +49,7 @@ private:
 
     void emitOpen(const QString& path);
     void emitOpenWithApp(const QString& path);
+    void emitOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames);
     void emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath);
     void emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath);
 };

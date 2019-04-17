@@ -1,6 +1,7 @@
 ﻿#include <QDebug>
 #include <QMessageBox>
 #include <QDesktopServices>
+#include <QProcess>
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -47,6 +48,10 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             SIGNAL(openWithApp(const QString&)),
             this,
             SLOT(onOpenWithApp(const QString&)));
+    connect(doubleFolderPanel,
+            SIGNAL(openWithTextEditor(const QString&, const QStringList&)),
+            this,
+            SLOT(onOpenWithTextEditor(const QString&, const QStringList&)));
 
     connect(doubleFolderPanel,
             SIGNAL(copyFile(const QStringList&, const QString&)),
@@ -275,6 +280,24 @@ void MainWindow::onOpenWithApp(const QString& path)
     }
 }
 
+void MainWindow::onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths)
+{
+    qDebug() << "MainWindow::onOpenWithTextEditor()";
+
+    QString appPath = Settings::getInstance()->getTextEditorPath();
+
+#ifdef Q_OS_MAC
+    QString command = "open -a ";
+#else
+    QString command = "";
+#endif
+    command += "\"" + appPath + "\" " + filePaths.join(' ');
+
+    qDebug() << "dirPath : " << dirPath << ", filePaths : " << filePaths << ", command : " << command;
+
+    launchExternalApp(command, dirPath);
+}
+
 void MainWindow::onStatusChanged(const QString& statusString)
 {
     qDebug() << "MainWindow::onStatusChanged : " << statusString;
@@ -295,6 +318,27 @@ void MainWindow::on_actionOpen_triggered()
     qDebug() << "MainWindow::on_actionOpen_triggered()";
 
     onOpenFile(ViewerType::Auto);
+}
+
+void MainWindow::on_actionOpenWithTextViewer_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithTextViewer_triggered()";
+
+    onOpenFile(ViewerType::Text);
+}
+
+void MainWindow::on_actionOpenWithHexViewer_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithHexViewer_triggered()";
+
+    onOpenFile(ViewerType::Hex);
+}
+
+void MainWindow::on_actionOpenWithImageViewer_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithImageViewer_triggered()";
+
+    onOpenFile(ViewerType::Image);
 }
 
 void MainWindow::on_actionOpenWithApp_triggered()
@@ -318,25 +362,35 @@ void MainWindow::on_actionOpenWithApp_triggered()
     onOpenWithApp(path);
 }
 
-void MainWindow::on_actionOpenWithTextViewer_triggered()
+void MainWindow::on_actionOpenWithTextEditor_triggered()
 {
-    qDebug() << "MainWindow::on_actionOpenWithTextViewer_triggered()";
+    qDebug() << "MainWindow::on_actionOpenWithTextEditor_triggered()";
 
-    onOpenFile(ViewerType::Text);
-}
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
 
-void MainWindow::on_actionOpenWithHexViewer_triggered()
-{
-    qDebug() << "MainWindow::on_actionOpenWithHexViewer_triggered()";
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    if(activeFolderForm == Q_NULLPTR)
+    {
+        return;
+    }
 
-    onOpenFile(ViewerType::Hex);
-}
+    QList<QFileInfo> selectedFileInfoList = activeFolderForm->getSelectedFileInfoList();
+    if(selectedFileInfoList.size() == 0)
+    {
+        return;
+    }
 
-void MainWindow::on_actionOpenWithImageViewer_triggered()
-{
-    qDebug() << "MainWindow::on_actionOpenWithImageViewer_triggered()";
+    QStringList filePaths;
+    for(auto fileInfo : selectedFileInfoList)
+    {
+        filePaths.push_back(fileInfo.absoluteFilePath());
+    }
 
-    onOpenFile(ViewerType::Image);
+    onOpenWithTextEditor(activeFolderForm->getCurrentDirPath(), filePaths);
 }
 
 void MainWindow::on_actionPreferences_triggered()
@@ -527,6 +581,21 @@ void MainWindow::setVisibleConsole(bool visible)
     ui->consoleDockWidget->blockSignals(false);
 
     Settings::getInstance()->setConsoleVisible(visible);
+}
+
+bool MainWindow::launchExternalApp(const QString& command, const QString dirPath)
+{
+    QProcess process(this);
+    process.setWorkingDirectory(dirPath);
+
+    if(!process.startDetached(command))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Launch external application failed.") + "<br/>command : " + command);
+
+        return false;
+    }
+
+    return true;
 }
 
 void MainWindow::about()

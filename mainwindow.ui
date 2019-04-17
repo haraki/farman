@@ -93,10 +93,12 @@
      <string>File(&amp;F)</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionOpenWithApp"/>
     <addaction name="actionOpenWithTextViewer"/>
     <addaction name="actionOpenWithHexViewer"/>
     <addaction name="actionOpenWithImageViewer"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpenWithApp"/>
+    <addaction name="actionOpenWithTextEditor"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -339,6 +341,14 @@
    </property>
    <property name="toolTip">
     <string>Console</string>
+   </property>
+  </action>
+  <action name="actionOpenWithTextEditor">
+   <property name="text">
+    <string>Open with Text Editor</string>
+   </property>
+   <property name="shortcut">
+    <string>E</string>
    </property>
   </action>
  </widget>

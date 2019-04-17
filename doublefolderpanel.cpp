@@ -81,6 +81,10 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                 this,
                 SLOT(onOpenWithApp(const QString&)));
         connect(l_folderView,
+                SIGNAL(openWithTextEditor(const QString&, const QStringList&)),
+                this,
+                SLOT(onOpenWithTextEditor(const QString&, const QStringList&)));
+        connect(l_folderView,
                 SIGNAL(copyFile(const QStringList&, const QString&)),
                 this,
                 SLOT(onCopyFile(const QStringList&, const QString&)));
@@ -140,6 +144,10 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                 SIGNAL(openWithApp(const QString&)),
                 this,
                 SLOT(onOpenWithApp(const QString&)));
+        connect(r_folderView,
+                SIGNAL(openWithTextEditor(const QString&, const QStringList&)),
+                this,
+                SLOT(onOpenWithTextEditor(const QString&, const QStringList&)));
         connect(r_folderView,
                 SIGNAL(copyFile(const QStringList&, const QString&)),
                 this,
@@ -660,6 +668,13 @@ void DoubleFolderPanel::onOpenWithApp(const QString& path)
     emitOpenWithApp(path);
 }
 
+void DoubleFolderPanel::onOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames)
+{
+    qDebug() << "DoubleFolderPanel::onOpenWithTextEditor : dirPath : " << dirPath << ", fileNames : " << fileNames;
+
+    emitOpenWithTextEditor(dirPath, fileNames);
+}
+
 void DoubleFolderPanel::onCopyFile(const QStringList& srcPaths, const QString& dstPath)
 {
     qDebug() << "DoubleFolderPanel::onCopyFile";
@@ -687,6 +702,11 @@ void DoubleFolderPanel::emitOpenFile(const QString& path, ViewerType viewerType/
 void DoubleFolderPanel::emitOpenWithApp(const QString& path)
 {
     emit openWithApp(path);
+}
+
+void DoubleFolderPanel::emitOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames)
+{
+    emit openWithTextEditor(dirPath, fileNames);
 }
 
 void DoubleFolderPanel::emitCopyFile(const QStringList& srcPaths, const QString& dstPath)

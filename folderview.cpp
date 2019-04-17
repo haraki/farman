@@ -324,6 +324,11 @@ void FolderView::emitOpenWithApp(const QString& path)
     emit openWithApp(path);
 }
 
+void FolderView::emitOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames)
+{
+    emit openWithTextEditor(dirPath, fileNames);
+}
+
 void FolderView::emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath)
 {
     emit copyFile(srcPaths, dstDirPath);
