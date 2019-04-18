@@ -151,6 +151,7 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
     }
 
     ui->textEditorPathLineEdit->setText(Settings::getInstance()->getTextEditorPath());
+    ui->textEditorArgsLineEdit->setText(Settings::getInstance()->getTextEditorArgs());
 
     DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
     if(behaviorType == DragAndDropBehaviorType::Copy)
@@ -1167,6 +1168,7 @@ void PreferencesDialog::on_buttonBox_accepted()
     }
 
     Settings::getInstance()->setTextEditorPath(ui->textEditorPathLineEdit->text());
+    Settings::getInstance()->setTextEditorArgs(ui->textEditorArgsLineEdit->text());
 
     if(ui->dragAndDropBehaviorCopyRadioButton->isChecked())
     {

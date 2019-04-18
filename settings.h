@@ -59,6 +59,8 @@ public:
 
     QString getTextEditorPath() { return m_textEditorPath; }
     void setTextEditorPath(const QString& textEditorPath) { m_textEditorPath = textEditorPath; }
+    QString getTextEditorArgs() { return m_textEditorArgs; }
+    void setTextEditorArgs(const QString& textEditorArgs) { m_textEditorArgs = textEditorArgs; }
 
     SectionType getLeftSortSectionType() { return m_leftSortSectionType; }
     SortDirsType getLeftSortDirsType() { return m_leftSortDirsType; }
@@ -202,6 +204,7 @@ private:
     QString m_rightFolderPath = "";
 
     QString m_textEditorPath = "";
+    QString m_textEditorArgs = "";
 
     SectionType m_leftSortSectionType = SectionType::FileName;
     SortDirsType m_leftSortDirsType = SortDirsType::NoSpecify;

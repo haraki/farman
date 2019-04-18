@@ -285,13 +285,17 @@ void MainWindow::onOpenWithTextEditor(const QString& dirPath, const QStringList&
     qDebug() << "MainWindow::onOpenWithTextEditor()";
 
     QString appPath = Settings::getInstance()->getTextEditorPath();
+    QString args = Settings::getInstance()->getTextEditorArgs();
 
 #ifdef Q_OS_MAC
     QString command = "open -a ";
 #else
     QString command = "";
 #endif
-    command += "\"" + appPath + "\" " + filePaths.join(' ');
+    args.replace("$M", "\"" + filePaths.join("\" \"") + "\"");          // 複数ファイル
+    args.replace("$F", "\"" + filePaths.at(0) + "\"");                  // 最後に選択されたファイル or カーソルが指すファイル
+
+    command += "\"" + appPath + "\" " + args;
 
     qDebug() << "dirPath : " << dirPath << ", filePaths : " << filePaths << ", command : " << command;
 
