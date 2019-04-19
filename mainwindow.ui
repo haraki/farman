@@ -64,7 +64,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">
@@ -125,10 +125,10 @@
   </widget>
   <action name="actionSinglePane">
    <property name="text">
-    <string>Single Pane(&amp;1)</string>
+    <string>Single pane(&amp;1)</string>
    </property>
    <property name="toolTip">
-    <string>Single Pane</string>
+    <string>Single pane</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
@@ -136,10 +136,10 @@
   </action>
   <action name="actionDualPane">
    <property name="text">
-    <string>Dual Pane(&amp;2)</string>
+    <string>Dual pane(&amp;2)</string>
    </property>
    <property name="toolTip">
-    <string>Dual Pane</string>
+    <string>Dual pane</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
@@ -147,10 +147,10 @@
   </action>
   <action name="actionSortSettings">
    <property name="text">
-    <string>Sort Settings(&amp;S)...</string>
+    <string>Sort settings(&amp;S)...</string>
    </property>
    <property name="toolTip">
-    <string>Sort Settings</string>
+    <string>Sort settings</string>
    </property>
    <property name="shortcut">
     <string>S</string>
@@ -158,10 +158,10 @@
   </action>
   <action name="actionFilterSettings">
    <property name="text">
-    <string>Filter Settings(&amp;F)...</string>
+    <string>Filter settings(&amp;F)...</string>
    </property>
    <property name="toolTip">
-    <string>Filter Settings</string>
+    <string>Filter settings</string>
    </property>
    <property name="shortcut">
     <string>F</string>
@@ -279,10 +279,10 @@
   </action>
   <action name="actionOpenWithTextViewer">
    <property name="text">
-    <string>Open with Text Viewer(&amp;T)</string>
+    <string>Open with Text viewer(&amp;T)</string>
    </property>
    <property name="toolTip">
-    <string>Open with Text Viewer</string>
+    <string>Open with Text viewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
@@ -290,10 +290,10 @@
   </action>
   <action name="actionOpenWithHexViewer">
    <property name="text">
-    <string>Open with Hex Viewer(&amp;H)</string>
+    <string>Open with Hex viewer(&amp;H)</string>
    </property>
    <property name="toolTip">
-    <string>Open with Hex Viewer</string>
+    <string>Open with Hex viewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
@@ -301,10 +301,10 @@
   </action>
   <action name="actionOpenWithImageViewer">
    <property name="text">
-    <string>Open with Image Viewer(&amp;I)</string>
+    <string>Open with Image viewer(&amp;I)</string>
    </property>
    <property name="toolTip">
-    <string>Open with Image Viewer</string>
+    <string>Open with Image viewer</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
@@ -345,7 +345,7 @@
   </action>
   <action name="actionOpenWithTextEditor">
    <property name="text">
-    <string>Open with Text Editor</string>
+    <string>Open with Text editor(&amp;E)</string>
    </property>
    <property name="shortcut">
     <string>E</string>
