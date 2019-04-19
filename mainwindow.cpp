@@ -287,7 +287,7 @@ void MainWindow::onOpenWithTextEditor(const QString& dirPath, const QStringList&
     QString appPath = Settings::getInstance()->getTextEditorPath();
     QString args = Settings::getInstance()->getTextEditorArgs();
 
-    if(appPath.isEmpty() || args.isEmpty())
+    if(appPath.isEmpty())
     {
         if(QMessageBox::warning(this,
                                 tr("Error"),
