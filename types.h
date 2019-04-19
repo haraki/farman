@@ -160,6 +160,20 @@ enum class DragAndDropBehaviorType : int
     Default = DragAndDropBehaviorType::Select,
 };
 
+// 設定ダイアログのタブ
+enum class PreferencesDialogTabPage : int
+{
+    General     = 0,
+    Appearance  = 1,
+    FolderView  = 2,
+    Viewer      = 3,
+    ExternalApp = 4,
+
+    PreferencesDialogTabPageNum,
+
+    Default = PreferencesDialogTabPage::General,
+};
+
 }
 
 #endif // TYPES_H

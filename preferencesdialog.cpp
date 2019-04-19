@@ -16,11 +16,14 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
                                      const QPoint& mainWindowPos,
                                      const QString& leftDirPath,
                                      const QString& rightDirPath,
+                                     PreferencesDialogTabPage page/* = PreferencesDialogTabPage::Default*/,
                                      QWidget *parent/* = Q_NULLPTR */) :
     QDialog(parent),
     ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
+
+    ui->tabWidget->setCurrentIndex(static_cast<int>(page));
 
     initialize(mainWindowSize, mainWindowPos, leftDirPath, rightDirPath);
 }

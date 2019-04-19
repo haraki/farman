@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDialog>
 #include <qdir.h>
 #include "types.h"
 #include "doublefolderpanel.h"
@@ -44,7 +45,10 @@ private:
     void updateSettings();
 
     void setVisibleConsole(bool visible);
+
+    QDialog::DialogCode launchPreferencesDialog(PreferencesDialogTabPage page = PreferencesDialogTabPage::Default);
     bool launchExternalApp(const QString& command, const QString dirPath);
+
     void about();
 
 private Q_SLOTS:

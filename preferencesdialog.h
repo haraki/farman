@@ -24,6 +24,7 @@ public:
                                const QPoint& mainWindowPos,
                                const QString& leftDirPath,
                                const QString& rightDirPath,
+                               PreferencesDialogTabPage page = PreferencesDialogTabPage::Default,
                                QWidget *parent = Q_NULLPTR);
     ~PreferencesDialog() Q_DECL_OVERRIDE;
 

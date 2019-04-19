@@ -287,6 +287,19 @@ void MainWindow::onOpenWithTextEditor(const QString& dirPath, const QStringList&
     QString appPath = Settings::getInstance()->getTextEditorPath();
     QString args = Settings::getInstance()->getTextEditorArgs();
 
+    if(appPath.isEmpty() || args.isEmpty())
+    {
+        if(QMessageBox::warning(this,
+                                tr("Error"),
+                                tr("The external text editor has not been set.<br />Do you want to set it?"),
+                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+        {
+            launchPreferencesDialog(PreferencesDialogTabPage::ExternalApp);
+        }
+
+        return;
+    }
+
 #ifdef Q_OS_MAC
     QString command = "open -a ";
 #else
@@ -401,31 +414,7 @@ void MainWindow::on_actionPreferences_triggered()
 {
     qDebug() << "MainWindow::on_actionPreferences_triggered()";
 
-    QString leftDirPath = "";
-    QString rightDirPath = "";
-
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        FolderForm* l_folderForm = doubleFolderPanel->getLeftFolderForm();
-        if(l_folderForm != Q_NULLPTR)
-        {
-            leftDirPath = l_folderForm->getCurrentDirPath();
-        }
-
-        FolderForm* r_folderForm = doubleFolderPanel->getRightFolderForm();
-        if(r_folderForm != Q_NULLPTR)
-        {
-            rightDirPath = r_folderForm->getCurrentDirPath();
-        }
-    }
-
-    PreferencesDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, this);
-    if(dialog.exec() == QDialog::Accepted)
-    {
-        updateSettings();
-        doubleFolderPanel->refresh();
-    }
+    launchPreferencesDialog();
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -585,6 +574,38 @@ void MainWindow::setVisibleConsole(bool visible)
     ui->consoleDockWidget->blockSignals(false);
 
     Settings::getInstance()->setConsoleVisible(visible);
+}
+
+QDialog::DialogCode MainWindow::launchPreferencesDialog(PreferencesDialogTabPage page/* = PreferencesDialogTabPage::Default*/)
+{
+    QString leftDirPath = "";
+    QString rightDirPath = "";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        FolderForm* l_folderForm = doubleFolderPanel->getLeftFolderForm();
+        if(l_folderForm != Q_NULLPTR)
+        {
+            leftDirPath = l_folderForm->getCurrentDirPath();
+        }
+
+        FolderForm* r_folderForm = doubleFolderPanel->getRightFolderForm();
+        if(r_folderForm != Q_NULLPTR)
+        {
+            rightDirPath = r_folderForm->getCurrentDirPath();
+        }
+    }
+
+    PreferencesDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, page, this);
+    QDialog::DialogCode ret = static_cast<QDialog::DialogCode>(dialog.exec());
+    if(ret == QDialog::Accepted)
+    {
+        updateSettings();
+        doubleFolderPanel->refresh();
+    }
+
+    return ret;
 }
 
 bool MainWindow::launchExternalApp(const QString& command, const QString dirPath)
