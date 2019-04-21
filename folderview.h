@@ -49,7 +49,6 @@ private:
 
     void emitOpen(const QString& path);
     void emitOpenWithApp(const QString& path);
-    void emitOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames);
     void emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath);
     void emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath);
 };

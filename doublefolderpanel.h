@@ -71,7 +71,6 @@ protected Q_SLOTS:
 
     void onOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
     void onOpenWithApp(const QString& path);
-    void onOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames);
 
     void onCopyFile(const QStringList& srcPaths, const QString& dstPath);
     void onMoveFile(const QStringList& srcPaths, const QString& dstPath);
@@ -83,7 +82,6 @@ private:
 
     void emitOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
     void emitOpenWithApp(const QString& path);
-    void emitOpenWithTextEditor(const QString& dirPath, const QStringList& fileNames);
 
     void emitCopyFile(const QStringList& srcPaths, const QString& dstPath);
     void emitMoveFile(const QStringList& srcPaths, const QString& dstPath);
