@@ -521,7 +521,7 @@ void DoubleFolderPanel::onMakeDirectory()
 
     bool ok = false;
     QString dirName = QInputDialog::getText(parentWidget(),
-                                            tr("Make directory"),
+                                            tr("Make a new directory"),
                                             tr("Directory name:"),
                                             QLineEdit::Normal, QString(), &ok);
 

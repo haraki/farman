@@ -132,11 +132,14 @@ bool File::makeDirectory(const QString& path, const QString& dirName)
     if(!dir.mkdir(dirName))
     {
         // ディレクトリ作成失敗
-        emitOutputConsole(tr("Failed to make directory.\n"));
+        emitOutputConsole(tr("Failed to make a directory.\n"));
         return false;
     }
 
-    emitOutputConsole(tr("Made directory.\n"));
+    emitOutputConsole(tr("Made a directory.\n"));
+
+    return true;
+}
 
 bool File::createNewFile(const QString &path, const QString &fileName)
 {
