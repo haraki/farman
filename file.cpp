@@ -138,6 +138,35 @@ bool File::makeDirectory(const QString& path, const QString& dirName)
 
     emitOutputConsole(tr("Made directory.\n"));
 
+bool File::createNewFile(const QString &path, const QString &fileName)
+{
+    QDir dir(path);
+    QString absPath = dir.absoluteFilePath(fileName);
+
+    emitOutputConsole(QString("%1 ... ").arg(absPath));
+
+    if(dir.exists(fileName))
+    {
+        // 既に存在しているので何もしない
+        emitOutputConsole(tr("is exists.\n"));
+        return false;
+    }
+
+    QFile newFile(absPath);
+
+    if(!newFile.open(QIODevice::WriteOnly))
+    {
+        // ファイル作成失敗
+        emitOutputConsole(tr("Failed to create a new file.\n"));
+        return false;
+    }
+
+    newFile.close();
+
+    emitOutputConsole(tr("Created a new file.\n"));
+
+    emitCreateNewFileFinished(absPath);
+
     return true;
 }
 
@@ -244,6 +273,11 @@ bool File::changeFileAttributes(const QString& path,
     return true;
 }
 
+void File::emitCreateNewFileFinished(const QString& filePath)
+{
+    emit createNewFileFinished(filePath);
+}
+
 void File::emitOutputConsole(const QString& consoleString)
 {
     emit outputConsole(consoleString);
@@ -267,6 +301,11 @@ void File::onRemoveFile(const QStringList& paths)
 void File::onMakeDirectory(const QString& path, const QString& dirName)
 {
     makeDirectory(path, dirName);
+}
+
+void File::onCreateNewFile(const QString& path, const QString& fileName)
+{
+    createNewFile(path, fileName);
 }
 
 void File::onRenameFile(const QString& path, const QString& oldName, const QString& newName)
