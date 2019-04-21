@@ -534,6 +534,31 @@ void DoubleFolderPanel::onMakeDirectory()
     emitMakeDirectory(activeForm->getCurrentDirPath(), dirName);
 }
 
+void DoubleFolderPanel::onCreateNewFile()
+{
+    qDebug() << "DoubleFolderPanel::onCreateNewFile()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    bool ok = false;
+    QString fileName = QInputDialog::getText(this,
+                                             tr("Create a new file"),
+                                             tr("File name:"),
+                                             QLineEdit::Normal, QString(), &ok);
+
+    if(!ok || fileName.isEmpty())
+    {
+        // キャンセル
+        return;
+    }
+
+    emitCreateNewFile(activeForm->getCurrentDirPath(), fileName);
+}
+
 void DoubleFolderPanel::onRename()
 {
     qDebug() << "DoubleFolderPanel::onRename()";
@@ -707,6 +732,11 @@ void DoubleFolderPanel::emitRemoveFile(const QStringList& paths)
 void DoubleFolderPanel::emitMakeDirectory(const QString& path, const QString& dirName)
 {
     emit makeDirectory(path, dirName);
+}
+
+void DoubleFolderPanel::emitCreateNewFile(const QString& path, const QString& fileName)
+{
+    emit createNewFile(path, fileName);
 }
 
 void DoubleFolderPanel::emitRenameFile(const QString& path, const QString& oldName, const QString& newName)

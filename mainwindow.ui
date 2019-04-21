@@ -99,6 +99,7 @@
     <addaction name="separator"/>
     <addaction name="actionOpenWithApp"/>
     <addaction name="actionOpenWithTextEditor"/>
+    <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -347,8 +348,22 @@
    <property name="text">
     <string>Open with Text editor(&amp;E)</string>
    </property>
+   <property name="toolTip">
+    <string>Open with Text editor</string>
+   </property>
    <property name="shortcut">
     <string>E</string>
+   </property>
+  </action>
+  <action name="actionCreateNewFile">
+   <property name="text">
+    <string>Create a new file(&amp;N)</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new file</string>
+   </property>
+   <property name="shortcut">
+    <string>N</string>
    </property>
   </action>
  </widget>

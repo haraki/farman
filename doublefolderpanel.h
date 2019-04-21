@@ -43,6 +43,7 @@ public:
     void onMove();
     void onRemove();
     void onMakeDirectory();
+    void onCreateNewFile();
     void onRename();
     void onAttributes();
 
@@ -57,6 +58,7 @@ Q_SIGNALS:
     void moveFile(const QStringList& srcPaths, const QString& dstPath);
     void removeFile(const QStringList& paths);
     void makeDirectory(const QString& path, const QString& dirName);
+    void createNewFile(const QString& path, const QString& fileName);
     void renameFile(const QString& path, const QString& oldName, const QString& newName);
     void changeFileAttributes(const QString& path,
                               const QFile::Permissions& newPermissions,
@@ -87,6 +89,7 @@ private:
     void emitMoveFile(const QStringList& srcPaths, const QString& dstPath);
     void emitRemoveFile(const QStringList& paths);
     void emitMakeDirectory(const QString& path, const QString& dirName);
+    void emitCreateNewFile(const QString& path, const QString& fileName);
     void emitRenameFile(const QString& path, const QString& oldName, const QString& newName);
     void emitChangeFileAttributes(const QString& path,
                                   const QFile::Permissions& newPermissions,

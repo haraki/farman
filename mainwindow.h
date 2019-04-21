@@ -34,6 +34,7 @@ public Q_SLOTS:
     void onOpenWithApp(const QString& path);
     void onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths);
     void onStatusChanged(const QString& statusString);
+    void onCreateNewFileFinished(const QString& filePath);
     void onOutputConsole(const QString& consoleString);
 
 private:
@@ -58,6 +59,7 @@ private Q_SLOTS:
     void on_actionOpenWithImageViewer_triggered();
     void on_actionOpenWithApp_triggered();
     void on_actionOpenWithTextEditor_triggered();
+    void on_actionCreateNewFile_triggered();
     void on_actionPreferences_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();

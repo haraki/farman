@@ -3,6 +3,7 @@
 #include <QDesktopServices>
 #include <QProcess>
 #include <QMessageBox>
+#include <QInputDialog>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "folderform.h"
@@ -70,6 +71,10 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             m_file,
             SLOT(onMakeDirectory(const QString&, const QString&)));
     connect(doubleFolderPanel,
+            SIGNAL(createNewFile(const QString&, const QString&)),
+            m_file,
+            SLOT(onCreateNewFile(const QString&, const QString&)));
+    connect(doubleFolderPanel,
             SIGNAL(renameFile(const QString&, const QString&, const QString&)),
             m_file,
             SLOT(onRenameFile(const QString&, const QString&, const QString&)));
@@ -77,6 +82,11 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             SIGNAL(changeFileAttributes(const QString&, const QFile::Permissions&, const QDateTime&, const QDateTime&)),
             m_file,
             SLOT(onChangeFileAttributes(const QString&, const QFile::Permissions&, const QDateTime&, const QDateTime&)));
+
+    connect(m_file,
+            SIGNAL(createNewFileFinished(const QString&)),
+            this,
+            SLOT(onCreateNewFileFinished(const QString&)));
 
     ui->mainWidget->layout()->addWidget(doubleFolderPanel);
 
@@ -322,6 +332,16 @@ void MainWindow::onStatusChanged(const QString& statusString)
     statusBar()->showMessage(statusString);
 }
 
+void MainWindow::onCreateNewFileFinished(const QString& filePath)
+{
+    qDebug() << "MainWindow::onCreateNewFileFinished : " << filePath;
+
+    QStringList filePaths;
+    filePaths.push_back(filePath);
+
+    onOpenWithTextEditor(QFileInfo(filePath).absolutePath(), filePaths);
+}
+
 void MainWindow::onOutputConsole(const QString& consoleString)
 {
     qDebug() << "MainWindow::onOutputConsole : " << consoleString;
@@ -408,6 +428,17 @@ void MainWindow::on_actionOpenWithTextEditor_triggered()
     }
 
     onOpenWithTextEditor(activeFolderForm->getCurrentDirPath(), filePaths);
+}
+
+void MainWindow::on_actionCreateNewFile_triggered()
+{
+    qDebug() << "MainWindow::on_actionCreateNewFile_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onCreateNewFile();
+    }
 }
 
 void MainWindow::on_actionPreferences_triggered()
