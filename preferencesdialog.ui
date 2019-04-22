@@ -23,7 +23,7 @@
       <attribute name="title">
        <string>General(&amp;G)</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_21" columnstretch="1,0">
+      <layout class="QGridLayout" name="gridLayout_21" columnstretch="1,1">
        <item row="2" column="0">
         <widget class="QCheckBox" name="confirmQuitCheckBox">
          <property name="text">
