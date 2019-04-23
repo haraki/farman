@@ -1291,7 +1291,7 @@
       <attribute name="title">
        <string>Viewer(&amp;V)</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_10">
+      <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,1">
        <property name="spacing">
         <number>6</number>
        </property>
