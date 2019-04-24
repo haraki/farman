@@ -131,8 +131,16 @@ static const ImageViewerBGType DEFAULT_IMAGE_VIEWER_BG_TYPE = ImageViewerBGType:
 static const bool DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER = true;
 static const bool DEFAULT_TEXT_VIEWER_WORD_WRAP = false;
 
+#if defined(Q_OS_WIN)
 static const QString DEFAULT_TEXT_EDITOR_PATH = "";
 static const QString DEFAULT_TEXT_EDITOR_ARGS = "";
+#elif defined(Q_OS_MAC)
+static const QString DEFAULT_TEXT_EDITOR_PATH = "/Applications/TextEdit.app";
+static const QString DEFAULT_TEXT_EDITOR_ARGS = "$M";
+#else
+static const QString DEFAULT_TEXT_EDITOR_PATH = "";
+static const QString DEFAULT_TEXT_EDITOR_ARGS = "";
+#endif
 
 }           // namespace Farman
 
