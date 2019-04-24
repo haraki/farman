@@ -607,7 +607,7 @@ void MainWindow::setVisibleConsole(bool visible)
     Settings::getInstance()->setConsoleVisible(visible);
 }
 
-QDialog::DialogCode MainWindow::launchPreferencesDialog(PreferencesDialogTabPage page/* = PreferencesDialogTabPage::Default*/)
+QDialog::DialogCode MainWindow::launchPreferencesDialog(PreferencesDialogTabPage page/* = PreferencesDialogTabPage::General*/)
 {
     QString leftDirPath = "";
     QString rightDirPath = "";

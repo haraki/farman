@@ -51,6 +51,7 @@ SOURCES += main.cpp\
     file.cpp
 
 HEADERS  += mainwindow.h \
+    default_settings.h \
     folderform.h \
     folderviewstyleditemdelegate.h \
     foldermodel.h \

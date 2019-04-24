@@ -22,8 +22,8 @@ namespace Farman
 DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::DoubleFolderPanel)
-    , m_paneMode(PaneMode::Default)
-    , m_activePane(PaneType::Default)
+    , m_paneMode(DEFAULT_PANE_MODE)
+    , m_activePane(DEFAULT_ACTIVE_PANE)
 {
     ui->setupUi(this);
 

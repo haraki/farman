@@ -24,7 +24,7 @@ public:
                                const QPoint& mainWindowPos,
                                const QString& leftDirPath,
                                const QString& rightDirPath,
-                               PreferencesDialogTabPage page = PreferencesDialogTabPage::Default,
+                               PreferencesDialogTabPage page = PreferencesDialogTabPage::General,
                                QWidget *parent = Q_NULLPTR);
     ~PreferencesDialog() Q_DECL_OVERRIDE;
 
@@ -108,9 +108,9 @@ private slots:
 
     void on_imageViewerBGColorPushButton_clicked();
 
-    void on_buttonBox_accepted();
-
     void on_textEditorSelectButton_clicked();
+
+    void on_buttonBox_accepted();
 
 private:
     void initialize(const QSize& mainWindowSize,

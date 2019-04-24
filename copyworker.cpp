@@ -7,6 +7,7 @@
 #include <QThread>
 #include "copyworker.h"
 #include "workerresult.h"
+#include "default_settings.h"
 
 namespace Farman
 {
@@ -16,7 +17,7 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool
     , m_srcPaths(srcPaths)
     , m_dstPath(dstPath)
     , m_moveMode(moveMode)
-    , m_methodType(OverwriteMethodType::Default)
+    , m_methodType(DEFAULT_OVERWRITE_METHOD_TYPE)
     , m_methodTypeKeep(false)
     , m_renameFileName("")
 {

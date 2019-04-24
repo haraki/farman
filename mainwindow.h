@@ -47,7 +47,7 @@ private:
 
     void setVisibleConsole(bool visible);
 
-    QDialog::DialogCode launchPreferencesDialog(PreferencesDialogTabPage page = PreferencesDialogTabPage::Default);
+    QDialog::DialogCode launchPreferencesDialog(PreferencesDialogTabPage page = PreferencesDialogTabPage::General);
     bool launchExternalApp(const QString& command, const QString dirPath);
 
     void about();

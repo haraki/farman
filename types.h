@@ -43,8 +43,6 @@ enum class PaneMode : int
     Dual = 1,
 
     PaneModeNum,
-
-    Default = PaneMode::Dual,
 };
 
 enum class PaneType : int
@@ -53,8 +51,6 @@ enum class PaneType : int
     Right = 1,
 
     PaneTypeNum,
-
-    Default = PaneType::Left,
 };
 
 enum class SectionType : int
@@ -106,8 +102,6 @@ enum class FileSizeFormatType : int
     Detail,
 
     FileSizeFormatTypeNum,
-
-    Default = FileSizeFormatType::SI,
 };
 
 enum class DateFormatType : int
@@ -119,10 +113,7 @@ enum class DateFormatType : int
     DateFormatTypeNum,
 };
 
-const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
-const QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
-
-const int DEFAULT_CURSOR_WIDTH = 1;
+static const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
 
 // 同名ファイルが存在する場合の処理タイプ
 enum class OverwriteMethodType : int
@@ -133,8 +124,6 @@ enum class OverwriteMethodType : int
     Rename = 3,
 
     OverwriteMethodTypeNum,
-
-    Default = OverwriteMethodType::Overwrite,
 };
 
 // Viewer 種別
@@ -156,8 +145,6 @@ enum class DragAndDropBehaviorType : int
     Move   = 2,
 
     DragAndDropBehaviorTypeNum,
-
-    Default = DragAndDropBehaviorType::Select,
 };
 
 // 設定ダイアログのタブ
@@ -170,8 +157,6 @@ enum class PreferencesDialogTabPage : int
     ExternalApp = 4,
 
     PreferencesDialogTabPageNum,
-
-    Default = PreferencesDialogTabPage::General,
 };
 
 }

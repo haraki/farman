@@ -16,7 +16,7 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
                                      const QPoint& mainWindowPos,
                                      const QString& leftDirPath,
                                      const QString& rightDirPath,
-                                     PreferencesDialogTabPage page/* = PreferencesDialogTabPage::Default*/,
+                                     PreferencesDialogTabPage page/* = PreferencesDialogTabPage::General*/,
                                      QWidget *parent/* = Q_NULLPTR */) :
     QDialog(parent),
     ui(new Ui::PreferencesDialog)
@@ -153,9 +153,6 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
         ui->rightFolderPathLineEdit->setText(rightDirPath);
     }
 
-    ui->textEditorPathLineEdit->setText(Settings::getInstance()->getTextEditorPath());
-    ui->textEditorArgsLineEdit->setText(Settings::getInstance()->getTextEditorArgs());
-
     DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
     if(behaviorType == DragAndDropBehaviorType::Copy)
     {
@@ -291,6 +288,11 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
 
     ui->textViewerShowLineNumberCheckBox->setChecked(Settings::getInstance()->getTextViewerShowLineNumber());
     ui->textViewerWordWrapCheckBox->setChecked(Settings::getInstance()->getTextViewerWordWrap());
+
+    // External application
+
+    ui->textEditorPathLineEdit->setText(Settings::getInstance()->getTextEditorPath());
+    ui->textEditorArgsLineEdit->setText(Settings::getInstance()->getTextEditorArgs());
 
     setViewerFontAndColorOption();
 }
@@ -434,40 +436,6 @@ void PreferencesDialog::on_rightFolderSelectButton_clicked()
     }
 }
 
-void PreferencesDialog::on_textEditorSelectButton_clicked()
-{
-    QString appPath = ui->textEditorPathLineEdit->text();
-    QString dirPath = QFileInfo(appPath).absolutePath();
-
-    if(dirPath.isEmpty())
-    {
-#ifdef Q_OS_WIN
-        // Program Files フォルダのパスを取得するには環境変数 PROGRAMFILES から取得するしかない
-        // (QStandartPaths::standardLocations() では返されない)
-        // 参考 : https://doc.qt.io/qt-5/qstandardpaths.html#StandardLocation-enum
-        dirPath = getenv("PROGRAMFILES");
-#else
-        dirPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0);
-#endif
-    }
-
-    appPath = QFileDialog::getOpenFileName(this,
-                                           tr("Choose application."),
-                                           dirPath,
-#if defined(Q_OS_WIN)
-                                           tr("Applications (*.exe *.com *.bat *.pif);;All files (*)"));
-#elif defined(Q_OS_MAC)
-                                           tr("Applications (*.app);;All files (*)"));
-#else
-                                           tr("All files (*)"));
-#endif
-
-    if(!appPath.isEmpty())
-    {
-        ui->textEditorPathLineEdit->setText(appPath);
-    }
-}
-
 void PreferencesDialog::on_initializeSettingsPushButton_clicked()
 {
     if(QMessageBox::question(this, tr("Confirm"), tr("initialize settings?")) != QMessageBox::Yes)
@@ -507,9 +475,10 @@ void PreferencesDialog::on_singlePaneFileSizeCommaCheckBox_stateChanged(int arg1
 {
     Q_UNUSED(arg1);
 
-    FileSizeFormatType fileSizeFormatType = ui->singlePaneFileSizeIecRadioButton->isChecked() ? FileSizeFormatType::IEC :
+    FileSizeFormatType fileSizeFormatType = ui->singlePaneFileSizeSIRadioButton->isChecked()     ? FileSizeFormatType::SI :
+                                            ui->singlePaneFileSizeIecRadioButton->isChecked()    ? FileSizeFormatType::IEC :
                                             ui->singlePaneFileSizeDetailRadioButton->isChecked() ? FileSizeFormatType::Detail :
-                                                                                                   FileSizeFormatType::Default;
+                                                                                                   DEFAULT_SINGLE_PANE_FILE_SIZE_FORMAT_TYPE;
 
     setFileSizeExample(fileSizeFormatType, ui->singlePaneFileSizeCommaCheckBox->isChecked(), ui->singlePaneFileSizeExampleLineEdit);
 }
@@ -561,9 +530,10 @@ void PreferencesDialog::on_dualPaneFileSizeCommaCheckBox_stateChanged(int arg1)
 {
     Q_UNUSED(arg1);
 
-    FileSizeFormatType fileSizeFormatType = ui->dualPaneFileSizeIecRadioButton->isChecked() ? FileSizeFormatType::IEC :
+    FileSizeFormatType fileSizeFormatType = ui->dualPaneFileSizeSIRadioButton->isChecked()     ? FileSizeFormatType::SI :
+                                            ui->dualPaneFileSizeIecRadioButton->isChecked()    ? FileSizeFormatType::IEC :
                                             ui->dualPaneFileSizeDetailRadioButton->isChecked() ? FileSizeFormatType::Detail :
-                                                                                                 FileSizeFormatType::Default;
+                                                                                                 DEFAULT_DUAL_PANE_FILE_SIZE_FORMAT_TYPE;
 
     setFileSizeExample(fileSizeFormatType, ui->dualPaneFileSizeCommaCheckBox->isChecked(), ui->dualPaneFileSizeExampleLineEdit);
 }
@@ -924,6 +894,40 @@ void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_textEditorSelectButton_clicked()
+{
+    QString appPath = ui->textEditorPathLineEdit->text();
+    QString dirPath = QFileInfo(appPath).absolutePath();
+
+    if(dirPath.isEmpty())
+    {
+#ifdef Q_OS_WIN
+        // Program Files フォルダのパスを取得するには環境変数 PROGRAMFILES から取得するしかない
+        // (QStandartPaths::standardLocations() では返されない)
+        // 参考 : https://doc.qt.io/qt-5/qstandardpaths.html#StandardLocation-enum
+        dirPath = getenv("PROGRAMFILES");
+#else
+        dirPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0);
+#endif
+    }
+
+    appPath = QFileDialog::getOpenFileName(this,
+                                           tr("Choose application."),
+                                           dirPath,
+#if defined(Q_OS_WIN)
+                                           tr("Applications (*.exe *.com *.bat *.pif);;All files (*)"));
+#elif defined(Q_OS_MAC)
+                                           tr("Applications (*.app);;All files (*)"));
+#else
+                                           tr("All files (*)"));
+#endif
+
+    if(!appPath.isEmpty())
+    {
+        ui->textEditorPathLineEdit->setText(appPath);
+    }
+}
+
 void PreferencesDialog::setFileSizeExample(FileSizeFormatType fileSizeFormatType, bool comma, QLineEdit* exampleLineEdit)
 {
     Q_ASSERT(exampleLineEdit);
@@ -1170,9 +1174,6 @@ void PreferencesDialog::on_buttonBox_accepted()
         Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
     }
 
-    Settings::getInstance()->setTextEditorPath(ui->textEditorPathLineEdit->text());
-    Settings::getInstance()->setTextEditorArgs(ui->textEditorArgsLineEdit->text());
-
     if(ui->dragAndDropBehaviorCopyRadioButton->isChecked())
     {
         Settings::getInstance()->setDragAndDropBehaviorType(DragAndDropBehaviorType::Copy);
@@ -1276,6 +1277,11 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setTextViewerShowLineNumber(ui->textViewerShowLineNumberCheckBox->isChecked());
     Settings::getInstance()->setTextViewerWordWrap(ui->textViewerWordWrapCheckBox->isChecked());
+
+    // External application
+
+    Settings::getInstance()->setTextEditorPath(ui->textEditorPathLineEdit->text());
+    Settings::getInstance()->setTextEditorArgs(ui->textEditorArgsLineEdit->text());
 }
 
 }           // namespace Farman

@@ -9,6 +9,7 @@
 #include <QFont>
 #include <QPair>
 #include "types.h"
+#include "default_settings.h"
 
 namespace Farman
 {
@@ -56,11 +57,6 @@ public:
 
     QString getRightFolderPath() { return m_rightFolderPath; }
     void setRightFolderPath(const QString& rightFolderPath) { m_rightFolderPath = rightFolderPath; }
-
-    QString getTextEditorPath() { return m_textEditorPath; }
-    void setTextEditorPath(const QString& textEditorPath) { m_textEditorPath = textEditorPath; }
-    QString getTextEditorArgs() { return m_textEditorArgs; }
-    void setTextEditorArgs(const QString& textEditorArgs) { m_textEditorArgs = textEditorArgs; }
 
     SectionType getLeftSortSectionType() { return m_leftSortSectionType; }
     SortDirsType getLeftSortDirsType() { return m_leftSortDirsType; }
@@ -168,6 +164,11 @@ public:
     const QList<QString>& getTextViewerEncodeList() { return m_textViewerEncodeList; }
     void setTextViewerEncodeList(const QList<QString>& encodeList) { m_textViewerEncodeList = encodeList; }
 
+    QString getTextEditorPath() { return m_textEditorPath; }
+    void setTextEditorPath(const QString& textEditorPath) { m_textEditorPath = textEditorPath; }
+    QString getTextEditorArgs() { return m_textEditorArgs; }
+    void setTextEditorArgs(const QString& textEditorArgs) { m_textEditorArgs = textEditorArgs; }
+
 private:
     Settings();
 
@@ -189,138 +190,76 @@ private:
 
     static Settings* s_instance;
 
-    SizeAtStartup m_sizeAtStartupType = SizeAtStartup::Default;
-    QSize m_sizeAtStartup = QSize(0, 0);
+    SizeAtStartup m_sizeAtStartupType = DEFAULT_SIZE_AT_STARTUP_TYPE;
+    QSize m_sizeAtStartup = DEFAULT_SIZE_AT_STARTUP;
 
-    PositionAtStartup m_positionAtStartupType = PositionAtStartup::Default;
-    QPoint m_positionAtStartup = QPoint(0, 0);
+    PositionAtStartup m_positionAtStartupType = DEFAULT_POSITION_AT_STARTUP_TYPE;
+    QPoint m_positionAtStartup = DEFAULT_POSITION_AT_STARTUP;
 
-    PaneMode m_paneMode = PaneMode::Default;
-    PaneType m_activePane = PaneType::Default;
+    PaneMode m_paneMode = DEFAULT_PANE_MODE;
+    PaneType m_activePane = DEFAULT_ACTIVE_PANE;
 
-    FolderAtStartup m_leftFolderAtStartup = FolderAtStartup::Default;
-    QString m_leftFolderPath = "";
-    FolderAtStartup m_rightFolderAtStartup = FolderAtStartup::Default;
-    QString m_rightFolderPath = "";
+    FolderAtStartup m_leftFolderAtStartup = DEFAULT_FOLDER_AT_STARTUP_TYPE;
+    QString m_leftFolderPath = DEFAULT_FOLDER_PATH_AT_STARTUP;
+    FolderAtStartup m_rightFolderAtStartup = DEFAULT_FOLDER_AT_STARTUP_TYPE;
+    QString m_rightFolderPath = DEFAULT_FOLDER_PATH_AT_STARTUP;
 
-    QString m_textEditorPath = "";
-    QString m_textEditorArgs = "";
-
-    SectionType m_leftSortSectionType = SectionType::FileName;
-    SortDirsType m_leftSortDirsType = SortDirsType::NoSpecify;
-    bool m_leftSortDotFirst = true;
-    Qt::CaseSensitivity m_leftSortCaseSensitivity = Qt::CaseInsensitive;
-    Qt::SortOrder m_leftSortOrder = Qt::AscendingOrder;
-    SectionType m_rightSortSectionType = SectionType::FileName;
-    SortDirsType m_rightSortDirsType = SortDirsType::NoSpecify;
-    bool m_rightSortDotFirst = true;
-    Qt::CaseSensitivity m_rightSortCaseSensitivity = Qt::CaseInsensitive;
-    Qt::SortOrder m_rightSortOrder = Qt::AscendingOrder;
+    SectionType m_leftSortSectionType = DEFAULT_SORT_SECTION_TYPE;
+    SortDirsType m_leftSortDirsType = DEFAULT_SORT_DIRS_TYPE;
+    bool m_leftSortDotFirst = DEFAULT_SORT_DOT_FIRST;
+    Qt::CaseSensitivity m_leftSortCaseSensitivity = DEFAULT_SORT_CASE_SENSITIVITY;
+    Qt::SortOrder m_leftSortOrder = DEFAULT_SORT_ORDER;
+    SectionType m_rightSortSectionType = DEFAULT_SORT_SECTION_TYPE;
+    SortDirsType m_rightSortDirsType = DEFAULT_SORT_DIRS_TYPE;
+    bool m_rightSortDotFirst = DEFAULT_SORT_DOT_FIRST;
+    Qt::CaseSensitivity m_rightSortCaseSensitivity = DEFAULT_SORT_CASE_SENSITIVITY;
+    Qt::SortOrder m_rightSortOrder = DEFAULT_SORT_ORDER;
 
     QDir::Filters m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
     QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
 
-    DragAndDropBehaviorType m_dragAndDropBehaviorType = DragAndDropBehaviorType::Default;
+    DragAndDropBehaviorType m_dragAndDropBehaviorType = DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE;
 
-    bool m_autoDialogCloseCopy = false;
-    bool m_autoDialogCloseMove = false;
-    bool m_autoDialogCloseRemove = false;
+    bool m_autoDialogCloseCopy = DEFAULT_AUTO_DIALOG_CLOSE_COPY;
+    bool m_autoDialogCloseMove = DEFAULT_AUTO_DIALOG_CLOSE_MOVE;
+    bool m_autoDialogCloseRemove = DEFAULT_AUTO_DIALOG_CLOSE_REMOVE;
 
-    bool m_allowCursorAround = false;
+    bool m_allowCursorAround = DEFAULT_ALLOW_CURSOR_AROUND;
 
-    bool m_moveCursorOpenViewer = false;
+    bool m_moveCursorOpenViewer = DEFAULT_MOVE_CURSOR_OPEN_VIEWER;
 
-    bool m_confirmQuit = true;
+    bool m_confirmQuit = DEFAULT_CONFIRM_QUIT;
 
-    FileSizeFormatType m_singlePaneFileSizeFormatType = FileSizeFormatType::Default;
-    bool m_singlePaneFileSizeDetailCommaEnable = false;
+    FileSizeFormatType m_singlePaneFileSizeFormatType = DEFAULT_SINGLE_PANE_FILE_SIZE_FORMAT_TYPE;
+    bool m_singlePaneFileSizeDetailCommaEnable = DEFAULT_SINGLE_PANE_FILE_SIZE_DETAIL_COMMA_ENABLE;
 
-    FileSizeFormatType m_dualPaneFileSizeFormatType = FileSizeFormatType::Default;
-    bool m_dualPaneFileSizeDetailCommaEnable = false;
+    FileSizeFormatType m_dualPaneFileSizeFormatType = DEFAULT_DUAL_PANE_FILE_SIZE_FORMAT_TYPE;
+    bool m_dualPaneFileSizeDetailCommaEnable = DEFAULT_DUAL_PANE_FILE_SIZE_DETAIL_COMMA_ENABLE;
 
-    DateFormatType m_singlePaneDateFormatType = DateFormatType::Default;
-    QString m_singlePaneDateFormatOriginalString = "yyyy-MM-dd HH:mm:ss";
+    DateFormatType m_singlePaneDateFormatType = DEFAULT_SINGLE_PANE_DATE_FORMAT_TYPE;
+    QString m_singlePaneDateFormatOriginalString = DEFAULT_SINGLE_PANE_DATE_FORMAT_ORIGINAL_STRING;
 
-    DateFormatType m_dualPaneDateFormatType = DateFormatType::Default;
-    QString m_dualPaneDateFormatOriginalString = "yyyy-MM-dd HH:mm:ss";
+    DateFormatType m_dualPaneDateFormatType = DEFAULT_DUAL_PANE_DATE_FORMAT_TYPE;
+    QString m_dualPaneDateFormatOriginalString = DEFAULT_DUAL_PANE_DATE_FORMAT_ORIGINAL_STRING;
 
-    const QMap<QString, QColor> m_defaultColorSettings =
-    {
-        { "folderView_normal",              "#000000", },
-        { "folderView_normal_selected",     "#000000", },
-        { "folderView_folder",              "#0000ff", },
-        { "folderView_folder_selected",     "#0000ff", },
-        { "folderView_readOnly",            "#00ff00", },
-        { "folderView_readOnly_selected",   "#00ff00", },
-        { "folderView_hidden",              "#888888", },
-        { "folderView_hidden_selected",     "#888888", },
-        { "folderView_system",              "#ff0000", },
-        { "folderView_system_selected",     "#ff0000", },
+    QMap<QString, QColor> m_colorSettings = DEFAULT_COLOR_SETTINGS;
 
-        { "folderView_background",          "#ffffff", },
-        { "folderView_selected_background", "#b2d7ff", },
-
-        { "folderView_cursor",              "#0000ff", },
-        { "folderView_cursor_inactive",     "#cccccc", },
-
-        { "folderPath_text",                "#000000", },
-        { "folderPath_background",          "#ffffff", },
-
-        { "console_text",                   "#000000", },
-        { "console_background",             "#ffffff", },
-
-        { "imageViewer_background",         "#808080", },
-
-        { "textViewer_text",                  "#000000", },
-        { "textViewer_background",            "#ffffff", },
-        { "textViewer_selected_text",         "#000000", },
-        { "textViewer_selected_background",   "#b2d7ff", },
-        { "textViewer_lineNumber_text",       "#000000", },
-        { "textViewer_lineNumber_background", "#dfdfdf", },
-
-        { "hexViewer_text",                 "#000000", },
-        { "hexViewer_background",           "#ffffff", },
-        { "hexViewer_selected_text",        "#000000", },
-        { "hexViewer_selected_background",  "#b2d7ff", },
-        { "hexViewer_address_text",         "#000000", },
-        { "hexViewer_address_background",   "#dfdfdf", },
-    };
-
-    QMap<QString, QColor> m_colorSettings = m_defaultColorSettings;
-
-    static const QFont getDefaultFixedFont()
-    {
-#if defined(Q_OS_WIN)
-        return QFont("Terminal", 14);
-#elif defined(Q_OS_MAC)
-        return QFont("Monaco", 13);
-#else
-        return QFont();
-#endif
-    }
-
-    const QMap<QString, QFont> m_defaultFontSettings =
-    {
-        { "folderView", getDefaultFixedFont(), },
-        { "folderPath", getDefaultFixedFont(), },
-        { "console",    getDefaultFixedFont(), },
-        { "textViewer", getDefaultFixedFont(), },
-        { "hexViewer",  getDefaultFixedFont(), },
-    };
-
-    QMap<QString, QFont> m_fontSettings = m_defaultFontSettings;
+    QMap<QString, QFont> m_fontSettings = DEFAULT_FONT_SETTINGS;
 
     int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
 
-    bool m_consoleVisible = true;
+    bool m_consoleVisible = DEFAULT_CONSOLE_VISIBLE;
 
-    bool m_imageViewerFitInView = true;
-    ImageViewerBGType m_imageViewerBGType = ImageViewerBGType::Checkered;
+    bool m_imageViewerFitInView = DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW;
+    ImageViewerBGType m_imageViewerBGType = DEFAULT_IMAGE_VIEWER_BG_TYPE;
 
-    bool m_textViewerShowLineNumber = true;
-    bool m_textViewerWordWrap = false;
+    bool m_textViewerShowLineNumber = DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER;
+    bool m_textViewerWordWrap = DEFAULT_TEXT_VIEWER_WORD_WRAP;
 
     QList<QString> m_textViewerEncodeList;
+
+    QString m_textEditorPath = DEFAULT_TEXT_EDITOR_PATH;
+    QString m_textEditorArgs = DEFAULT_TEXT_EDITOR_ARGS;
 };
 
 }
