@@ -649,6 +649,8 @@ void DoubleFolderPanel::onLeftFocusChanged(bool inFocus)
 
     if(inFocus)
     {
+        setActivePane(PaneType::Left);
+
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
         {
@@ -663,6 +665,8 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 
     if(inFocus)
     {
+        setActivePane(PaneType::Right);
+
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
         {
@@ -785,6 +789,8 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
 
 void DoubleFolderPanel::setActivePane(PaneType pane)
 {
+    qDebug() << "DoubleFolderPanel::setActivePane()" << ((pane == PaneType::Left) ? "left" : "right");
+
     m_activePane = pane;
 
     Settings::getInstance()->setActivePane(pane);
