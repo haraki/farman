@@ -649,7 +649,7 @@ void DoubleFolderPanel::onLeftFocusChanged(bool inFocus)
 
     if(inFocus)
     {
-        setActivePane(PaneType::Left);
+        m_activePane = PaneType::Left;      // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
 
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
@@ -665,7 +665,7 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 
     if(inFocus)
     {
-        setActivePane(PaneType::Right);
+        m_activePane = PaneType::Right;     // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
 
         FolderForm* activeForm = getActiveFolderForm();
         if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
