@@ -465,7 +465,7 @@ SortDirsType Settings::getValueSortDirsType(const QString& prefix)
 
 bool Settings::getValueSortDotFirst(const QString& prefix)
 {
-    return value("main/" + prefix + "SortDotFirst").toBool();
+    return value("main/" + prefix + "SortDotFirst", DEFAULT_SORT_DOT_FIRST).toBool();
 }
 
 Qt::CaseSensitivity Settings::getValueSortCaseSensitivity(const QString& prefix)
