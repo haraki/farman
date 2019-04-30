@@ -24,6 +24,7 @@ public:
 
 public Q_SLOTS:
     virtual int exec() Q_DECL_OVERRIDE;
+    virtual void reject() Q_DECL_OVERRIDE;
 
 protected Q_SLOTS:
     virtual void onStart(int min, int max);

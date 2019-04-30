@@ -1,7 +1,9 @@
 ﻿#include <QDebug>
+#include <QMessageBox>
 #include "workingdialog.h"
 #include "ui_workingdialog.h"
 #include "worker.h"
+#include "workerresult.h"
 
 namespace Farman
 {
@@ -66,12 +68,20 @@ void WorkingDialog::onFinished(int result)
 
     ui->closePushButton->setText(tr("Close"));
 
-    if(result == 0 && ui->autoCloseCheckBox->isChecked())
+    m_finishedWork = true;
+
+    if(result == static_cast<int>(WorkerResult::Success) && ui->autoCloseCheckBox->isChecked())
     {
         QDialog::accept();
     }
+    else if(result == static_cast<int>(WorkerResult::Abort))
+    {
+        QMessageBox::warning(this,
+                             tr("Aborted"),
+                             tr("Aborted by user."));
 
-    m_finishedWork = true;
+        QDialog::reject();
+    }
 }
 
 void WorkingDialog::onError(const QString& err)
@@ -97,6 +107,22 @@ int WorkingDialog::exec()
 
     m_worker->exec();
     return QDialog::exec();
+}
+
+void WorkingDialog::reject()
+{
+    if(m_finishedWork)
+    {
+        QDialog::reject();
+    }
+    else if(m_worker != Q_NULLPTR)
+    {
+        m_worker->abort();
+    }
+    else
+    {
+        QDialog::reject();
+    }
 }
 
 void WorkingDialog::on_closePushButton_clicked()
