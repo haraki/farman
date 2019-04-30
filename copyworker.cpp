@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QFile>
+#include <QTemporaryFile>
 #include <QDateTime>
 #include <QMutex>
 #include <QThread>
@@ -46,7 +47,7 @@ void CopyWorker::run()
     {
         if(isAborted())
         {
-            emitOutputConsole(tr("Aborted.\n"));
+            //emitOutputConsole(tr("Aborted.\n"));          // makeList() 内部でコンソール出力しているので、ここではコンソール出力しない
             emitProcess(prepareAbortStr);
             emitFinished(static_cast<int>(WorkerResult::Abort));
 
@@ -157,11 +158,7 @@ int CopyWorker::makeList(const QString& srcPath, const QString& dstDirPath, QMap
         for(auto srcChildFileInfo : srcChildFileInfoList)
         {
             int ret = makeList(srcChildFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), copyList, removeDirList);
-            if(isAborted())
-            {
-                return static_cast<int>(WorkerResult::Abort);
-            }
-            if(isError(ret))
+            if(ret == static_cast<int>(WorkerResult::Abort) || isError(ret))
             {
                 return ret;
             }
@@ -223,7 +220,8 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             m_renameFileName = "";
             if(!m_methodTypeKeep || m_methodType == OverwriteMethodType::Rename)
             {
-                if(showConfirmOverwrite(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), m_methodType))
+                showConfirmOverwrite(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath(), m_methodType);
+                if(isAborted())
                 {
                     // 中断
                     emitOutputConsole(tr("Aborted.\n"));
@@ -274,7 +272,13 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
             }
         }
 
-        if(!QFile::copy(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath()))
+        int result = copy(srcFileInfo.absoluteFilePath(), dstFileInfo.absoluteFilePath());
+        if(result == static_cast<int>(WorkerResult::Abort))
+        {
+            emitOutputConsole(tr("Aborted.\n"));
+            return static_cast<int>(WorkerResult::Abort);
+        }
+        else if(isError(result))
         {
             // コピー失敗
             emitOutputConsole((m_moveMode) ? tr("Failed move.\n") : tr("Failed copy.\n"));
@@ -299,7 +303,7 @@ int CopyWorker::copyExec(const QString& srcPath, const QString& dstPath)
     return static_cast<int>(WorkerResult::Success);
 }
 
-bool CopyWorker::showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)
+void CopyWorker::showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)
 {
     emitConfirmOverwrite(srcFilePath, dstFilePath, methodType);
 
@@ -309,8 +313,6 @@ bool CopyWorker::showConfirmOverwrite(const QString& srcFilePath, const QString&
 
         m_confirmWait.wait(&mutex);
     }
-
-    return false;
 }
 
 void CopyWorker::emitConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)
@@ -332,6 +334,66 @@ void CopyWorker::cancelConfirmOverwrite()
     abort();
 
     m_confirmWait.wakeAll();
+}
+
+int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
+{
+    qDebug() << "CopyWorker::copy() : " << srcPath << ", " << dstPath;
+
+    QFile srcFile(srcPath);
+    if(!srcFile.open(QIODevice::ReadOnly))
+    {
+        return static_cast<int>(WorkerResult::ErrorCopyFile);
+    }
+
+    QFile dstFile(dstPath);
+    if(!dstFile.open(QIODevice::ReadWrite))
+    {
+        srcFile.close();
+        return static_cast<int>(WorkerResult::ErrorCopyFile);
+    }
+
+    QByteArray buffer;
+    WorkerResult result = WorkerResult::Success;
+    qint64 remineSize = srcFile.size();
+    while(!srcFile.atEnd())
+    {
+        thread()->msleep(1);                    // sleep を入れないと Abort できない場合がある
+
+        if(isAborted())
+        {
+            result = WorkerResult::Abort;
+            break;
+        }
+
+        qint64 readSize = (remineSize > UNIT_COPY_SIZE) ? UNIT_COPY_SIZE : remineSize;
+
+        buffer = srcFile.read(readSize);
+        if(buffer.size() < readSize)
+        {
+            result = WorkerResult::ErrorCopyFile;
+            break;
+        }
+
+        qint64 wroteSize = dstFile.write(buffer);
+        if(wroteSize < readSize)
+        {
+            result = WorkerResult::ErrorCopyFile;
+            break;
+        }
+
+        remineSize -= readSize;
+    }
+
+    srcFile.close();
+    dstFile.close();
+
+    if(result != WorkerResult::Success)
+    {
+        dstFile.remove();
+    }
+
+    return static_cast<int>(result);
 }
 
 }           // namespace Farman

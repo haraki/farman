@@ -32,8 +32,12 @@ private:
     int makeList(const QString& srcPath, const QString& dstDirPath, QMap<QString, QString>& copyList, QList<QString>& removeDirList);
     int copyExec(const QString& srcPath, const QString& dstPath);
 
-    bool showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType);
+    void showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType);
     void emitConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType);
+
+    int copy(const QString& srcPath, const QString& dstPath);
+
+    static const qint64 UNIT_COPY_SIZE = 1 * 1024 * 1024;
 
     QStringList m_srcPaths;
     QString m_dstPath;
