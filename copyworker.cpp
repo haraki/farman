@@ -338,7 +338,7 @@ void CopyWorker::cancelConfirmOverwrite()
 
 int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
 {
-    qDebug() << "CopyWorker::copy() : " << srcPath << ", " << dstPath;
+    qDebug() << "CopyWorker::copy() : " << srcPath << " >> " << dstPath;
 
     QFile srcFile(srcPath);
     if(!srcFile.open(QIODevice::ReadOnly))
@@ -346,8 +346,9 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
         return static_cast<int>(WorkerResult::ErrorCopyFile);
     }
 
-    QFile dstFile(dstPath);
-    if(!dstFile.open(QIODevice::ReadWrite))
+    QTemporaryFile dstFile(QString(QLatin1String("%1/temp.XXXXXX")).arg(QFileInfo(dstPath).path()));
+
+    if(!dstFile.open())
     {
         srcFile.close();
         return static_cast<int>(WorkerResult::ErrorCopyFile);
@@ -386,12 +387,14 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
     }
 
     srcFile.close();
-    dstFile.close();
 
-    if(result != WorkerResult::Success)
+    if(result == WorkerResult::Success)
     {
-        dstFile.remove();
+        dstFile.rename(dstPath);
+        dstFile.setAutoRemove(false);
     }
+
+    dstFile.close();
 
     return static_cast<int>(result);
 }
