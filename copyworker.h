@@ -37,8 +37,6 @@ private:
 
     int copy(const QString& srcPath, const QString& dstPath);
 
-    static const qint64 UNIT_COPY_SIZE = 1 * 1024 * 1024;
-
     QStringList m_srcPaths;
     QString m_dstPath;
     bool m_moveMode;
@@ -48,6 +46,8 @@ private:
     QString m_renameFileName;
 
     QWaitCondition m_confirmWait;
+
+    qint64 m_copyUnitSize;
 };
 
 }           // namespace Farman

@@ -13,6 +13,8 @@
 namespace Farman
 {
 
+static const qint32 DEFAULT_COPY_UNIT_SIZE = 1 * 1024 * 1024;
+
 static const SizeAtStartup DEFAULT_SIZE_AT_STARTUP_TYPE = SizeAtStartup::Default;
 static const QSize DEFAULT_SIZE_AT_STARTUP = QSize(0, 0);
 

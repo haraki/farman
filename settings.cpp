@@ -37,6 +37,9 @@ Settings::Settings()
 
 void Settings::initialize()
 {
+    // Copy unit size
+    m_copyUnitSize = value("main/copyUnitSize", DEFAULT_COPY_UNIT_SIZE).toLongLong();
+
     // Size at startup
     QString sizeAtStartupTypeValue = value("main/sizeAtStartupType").toString();
     m_sizeAtStartupType = (sizeAtStartupTypeValue == "default")  ? SizeAtStartup::Default :
@@ -228,6 +231,9 @@ void Settings::initialize()
 
 void Settings::flush()
 {
+    // Copy unit size
+    setValue("main/copyUnitSize", m_copyUnitSize);
+
     // Size at startup
     QString sizeAtStartupTypeValue = (m_sizeAtStartupType == SizeAtStartup::LastTime) ? "lastTime" :
                                      (m_sizeAtStartupType == SizeAtStartup::Fixed)    ? "fixed" :

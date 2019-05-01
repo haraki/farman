@@ -28,6 +28,9 @@ public:
 
     void flush();
 
+    qint64 getCopyUnitSize() { return m_copyUnitSize; }
+    void setCopyUnitSize(qint64 size) { m_copyUnitSize = size; }
+
     SizeAtStartup getSizeAtStartupType() { return m_sizeAtStartupType; }
     void setSizeAtStartupType(SizeAtStartup sizeAtStartupType) { m_sizeAtStartupType = sizeAtStartupType; }
 
@@ -189,6 +192,8 @@ private:
     void setValueFilterSettings(QDir::Filters filterSettings, const QString& prefix);
 
     static Settings* s_instance;
+
+    qint64 m_copyUnitSize = DEFAULT_COPY_UNIT_SIZE;
 
     SizeAtStartup m_sizeAtStartupType = DEFAULT_SIZE_AT_STARTUP_TYPE;
     QSize m_sizeAtStartup = DEFAULT_SIZE_AT_STARTUP;

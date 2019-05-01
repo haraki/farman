@@ -8,6 +8,7 @@
 #include <QThread>
 #include "copyworker.h"
 #include "workerresult.h"
+#include "settings.h"
 #include "default_settings.h"
 
 namespace Farman
@@ -21,7 +22,9 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool
     , m_methodType(DEFAULT_OVERWRITE_METHOD_TYPE)
     , m_methodTypeKeep(false)
     , m_renameFileName("")
+    , m_copyUnitSize(DEFAULT_COPY_UNIT_SIZE)
 {
+    m_copyUnitSize = Settings::getInstance()->getCopyUnitSize();
 }
 
 CopyWorker::~CopyWorker()
@@ -367,7 +370,7 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
             break;
         }
 
-        qint64 readSize = (remineSize > UNIT_COPY_SIZE) ? UNIT_COPY_SIZE : remineSize;
+        qint64 readSize = (remineSize > m_copyUnitSize) ? m_copyUnitSize : remineSize;
 
         buffer = srcFile.read(readSize);
         if(buffer.size() < readSize)
