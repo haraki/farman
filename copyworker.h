@@ -25,6 +25,9 @@ public:
 Q_SIGNALS:
     void confirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, int methodType);
 
+    void startSub(int min, int max);
+    void progressSub(int value);
+
 public Q_SLOTS:
     void run() Q_DECL_OVERRIDE;
 
@@ -34,6 +37,9 @@ private:
 
     void showConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType);
     void emitConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType);
+
+    void emitStartSub(int min, int max);
+    void emitProgressSub(int value);
 
     int copy(const QString& srcPath, const QString& dstPath);
 

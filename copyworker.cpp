@@ -347,6 +347,16 @@ void CopyWorker::cancelConfirmOverwrite()
     m_confirmWait.wakeAll();
 }
 
+void CopyWorker::emitStartSub(int min, int max)
+{
+    emit startSub(min, max);
+}
+
+void CopyWorker::emitProgressSub(int value)
+{
+    emit progressSub(value);
+}
+
 int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
 {
     qDebug() << "CopyWorker::copy() : " << srcPath << " >> " << dstPath;
@@ -368,6 +378,10 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
     QByteArray buffer;
     WorkerResult result = WorkerResult::Success;
     qint64 remineSize = srcFile.size();
+    qint64 totalSize = 0;
+
+    emitStartSub(0, static_cast<int>(remineSize / 1024));
+
     while(!srcFile.atEnd())
     {
         thread()->msleep(1);                    // sleep を入れないと Abort できない場合がある
@@ -395,6 +409,9 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
         }
 
         remineSize -= readSize;
+        totalSize += readSize;
+
+        emitProgressSub(static_cast<int>(totalSize / 1024));
     }
 
     if(result == WorkerResult::Success)

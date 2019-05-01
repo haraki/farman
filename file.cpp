@@ -41,7 +41,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseCopy(), m_mainWindow);
+    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseCopy(), true, m_mainWindow);
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseCopy(dialog.getAutoClose());
 
@@ -74,7 +74,7 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
             this,
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
-    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseMove(), m_mainWindow);
+    WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseMove(), true, m_mainWindow);
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseMove(dialog.getAutoClose());
 
@@ -103,7 +103,7 @@ bool File::removeFile(const QStringList& paths)
             this,
             SLOT(onRemoveFileError(QString)));
 
-    WorkingDialog dialog(worker, Settings::getInstance()->getAutoDialogCloseRemove(), m_mainWindow);
+    WorkingDialog dialog(worker, Settings::getInstance()->getAutoDialogCloseRemove(), false, m_mainWindow);
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseRemove(dialog.getAutoClose());
 

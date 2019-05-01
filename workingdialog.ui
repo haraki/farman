@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>353</width>
-    <height>132</height>
+    <height>156</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,17 +25,33 @@
     </widget>
    </item>
    <item>
-    <widget class="QProgressBar" name="progressBar">
+    <widget class="QProgressBar" name="subProgressBar">
      <property name="maximum">
       <number>0</number>
      </property>
      <property name="value">
       <number>0</number>
      </property>
+     <property name="textVisible">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="progressLabel">
+    <widget class="QProgressBar" name="mainProgressBar">
+     <property name="maximum">
+      <number>0</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="mainProgressLabel">
      <property name="text">
       <string>( 0 / 0 )</string>
      </property>

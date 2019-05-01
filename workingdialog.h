@@ -17,7 +17,7 @@ class WorkingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit WorkingDialog(Worker* worker, bool autoClose, QWidget *parent = Q_NULLPTR);
+    explicit WorkingDialog(Worker* worker, bool autoClose, bool subVisible = false, QWidget *parent = Q_NULLPTR);
     virtual ~WorkingDialog() Q_DECL_OVERRIDE;
 
     bool getAutoClose();
@@ -32,6 +32,8 @@ protected Q_SLOTS:
     virtual void onProgress(int value);
     virtual void onFinished(int result);
     virtual void onError(const QString& err);
+    virtual void onStartSub(int min, int max);
+    virtual void onProgressSub(int value);
 
 private slots:
     void on_closePushButton_clicked();
@@ -41,6 +43,8 @@ private:
     Worker* m_worker;
 
     bool m_finishedWork;
+
+    bool m_enabledSubProgress;
 };
 
 }           // namespace Farman
