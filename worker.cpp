@@ -8,6 +8,7 @@ namespace Farman
 
 Worker::Worker(QObject *parent)
     : QObject(parent)
+    , m_timer()
     , m_abort(0)
     , m_thread(new QThread())
 {

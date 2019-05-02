@@ -2,6 +2,7 @@
 #define WORKER_H
 
 #include <QObject>
+#include <QElapsedTimer>
 
 class QString;
 class QThread;
@@ -13,6 +14,7 @@ namespace Farman
 class Worker : public QObject
 {
     Q_OBJECT
+
 public:
     explicit Worker(QObject *parent = Q_NULLPTR);
     virtual ~Worker() = default;
@@ -42,11 +44,12 @@ protected:
     void emitFinished(int result);
     void emitError(const QString& err);
 
+    QElapsedTimer m_timer;
+
 private:
     QAtomicInt m_abort;
 
     QThread* m_thread;
-
 };
 
 }           // namespace Farman

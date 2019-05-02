@@ -36,6 +36,8 @@ void CopyWorker::run()
 {
     qDebug() << "start CopyWorker::run()";
 
+    m_timer.start();
+
     QString prepareStr = (m_moveMode) ? tr("Preparing move...") : tr("Preparing copy...");
     QString prepareAbortStr = (m_moveMode) ? tr("Preparing move...aborted.") : tr("Preparing copy...aborted.");
     QString prepareFailedStr = (m_moveMode) ? tr("Preparing move...failed.") : tr("Preparing copy...failed.");
@@ -125,6 +127,8 @@ void CopyWorker::run()
             }
         }
     }
+
+    emitOutputConsole(QString("Total time : %1 ms.").arg(m_timer.elapsed()));
 
     qDebug() << "finish CopyWorker::run()";
 
@@ -310,12 +314,16 @@ void CopyWorker::showConfirmOverwrite(const QString& srcFilePath, const QString&
 {
     emitConfirmOverwrite(srcFilePath, dstFilePath, methodType);
 
+    m_timer.invalidate();
+
     QMutex mutex;
     {
         QMutexLocker locker(&mutex);
 
         m_confirmWait.wait(&mutex);
     }
+
+    m_timer.restart();
 }
 
 void CopyWorker::emitConfirmOverwrite(const QString& srcFilePath, const QString& dstFilePath, OverwriteMethodType methodType)
