@@ -389,14 +389,18 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
         remineSize -= readSize;
     }
 
-    srcFile.close();
-
     if(result == WorkerResult::Success)
     {
         dstFile.rename(dstPath);
         dstFile.setAutoRemove(false);
+        if(!dstFile.setPermissions(srcFile.permissions()))
+        {
+            qDebug() << "set permissons error!! : " << dstPath;
+            result = WorkerResult::ErrorCopyFile;
+        }
     }
 
+    srcFile.close();
     dstFile.close();
 
     return static_cast<int>(result);
