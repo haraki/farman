@@ -76,7 +76,7 @@ void WorkingDialog::onFinished(int result)
     }
     else if(result == static_cast<int>(WorkerResult::Abort))
     {
-        QMessageBox::warning(this,
+        QMessageBox::warning(this->parentWidget(),
                              tr("Aborted"),
                              tr("Aborted by user."));
 
