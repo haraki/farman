@@ -10,13 +10,16 @@
     <x>0</x>
     <y>0</y>
     <width>353</width>
-    <height>214</height>
+    <height>180</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
    <item>
     <widget class="QLabel" name="descriptionLabel">
      <property name="text">
