@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>353</width>
-    <height>156</height>
+    <height>214</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="subProgressLabel">
+     <property name="text">
+      <string>0 / 0</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QProgressBar" name="mainProgressBar">
      <property name="maximum">
       <number>0</number>
@@ -53,10 +63,10 @@
    <item>
     <widget class="QLabel" name="mainProgressLabel">
      <property name="text">
-      <string>( 0 / 0 )</string>
+      <string>0 / 0</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
      </property>
     </widget>
    </item>

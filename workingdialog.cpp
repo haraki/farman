@@ -20,7 +20,6 @@ WorkingDialog::WorkingDialog(Worker* worker, bool autoClose, bool subProgress/*=
     ui->mainProgressBar->setMinimum(0);
     ui->mainProgressBar->setMaximum(1);
     ui->mainProgressBar->setValue(0);
-    ui->mainProgressLabel->setVisible(false);
     ui->subProgressBar->setVisible(subProgress);
     if(subProgress)
     {
@@ -50,8 +49,7 @@ void WorkingDialog::onStart(int min, int max)
     ui->mainProgressBar->setMaximum(max);
     ui->mainProgressBar->setValue(min);
 
-    ui->mainProgressLabel->setText(tr("( %1 / %2 )").arg(min).arg(max));
-    ui->mainProgressLabel->setVisible(true);
+    ui->mainProgressLabel->setText(tr("%1 / %2").arg(min).arg(max));
 }
 
 void WorkingDialog::onProcess(const QString& description)
@@ -67,7 +65,7 @@ void WorkingDialog::onProgress(int value)
 
     ui->mainProgressBar->setValue(value);
 
-    ui->mainProgressLabel->setText(tr("( %1 / %2 )").arg(value).arg(ui->mainProgressBar->maximum()));
+    ui->mainProgressLabel->setText(tr("%1 / %2").arg(value).arg(ui->mainProgressBar->maximum()));
 }
 
 void WorkingDialog::onStartSub(int min, int max)
@@ -77,6 +75,8 @@ void WorkingDialog::onStartSub(int min, int max)
     ui->subProgressBar->setMinimum(min);
     ui->subProgressBar->setMaximum(max);
     ui->subProgressBar->setValue(min);
+
+    ui->subProgressLabel->setText(tr("%1 / %2").arg(min).arg(max));
 }
 
 void WorkingDialog::onProgressSub(int value)
@@ -84,6 +84,8 @@ void WorkingDialog::onProgressSub(int value)
 //    qDebug() << "WorkingDialog::onProgressSub(" << value << ");";
 
     ui->subProgressBar->setValue(value);
+
+    ui->subProgressLabel->setText(tr("%1 / %2").arg(value).arg(ui->subProgressBar->maximum()));
 }
 
 void WorkingDialog::onFinished(int result)
