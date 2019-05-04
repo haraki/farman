@@ -21,6 +21,7 @@ WorkingDialog::WorkingDialog(Worker* worker, bool autoClose, bool subProgress/*=
     ui->mainProgressBar->setMaximum(1);
     ui->mainProgressBar->setValue(0);
     ui->subProgressBar->setVisible(subProgress);
+    ui->subProgressLabel->setVisible(subProgress);
     if(subProgress)
     {
         ui->subProgressBar->setMinimum(0);
