@@ -17,8 +17,14 @@ class WorkingDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit WorkingDialog(Worker* worker, bool autoClose, bool subVisible = false, QWidget *parent = Q_NULLPTR);
+    explicit WorkingDialog(Worker* worker,
+                           bool autoClose,
+                           bool subVisible = false,
+                           QWidget *parent = Q_NULLPTR);
     virtual ~WorkingDialog() Q_DECL_OVERRIDE;
+
+    void setMainProgressLabelFormat(const QString& formatString);
+    void setSubProgressLabelFormat(const QString& formatString);
 
     bool getAutoClose();
 
@@ -45,6 +51,9 @@ private:
     bool m_finishedWork;
 
     bool m_enabledSubProgress;
+
+    QString m_mainProgressLabelFormat;
+    QString m_subProgressLabelFormat;
 };
 
 }           // namespace Farman

@@ -8,18 +8,24 @@
 namespace Farman
 {
 
-WorkingDialog::WorkingDialog(Worker* worker, bool autoClose, bool subProgress/*= false */, QWidget *parent/*= Q_NULLPTR*/) :
+WorkingDialog::WorkingDialog(Worker* worker,
+                             bool autoClose,
+                             bool subProgress/* = false*/,
+                             QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::WorkingDialog),
     m_worker(worker),
     m_finishedWork(false),
-    m_enabledSubProgress(subProgress)
+    m_enabledSubProgress(subProgress),
+    m_mainProgressLabelFormat("%1 / %2"),
+    m_subProgressLabelFormat("%1 / %2")
 {
     ui->setupUi(this);
 
     ui->mainProgressBar->setMinimum(0);
     ui->mainProgressBar->setMaximum(1);
     ui->mainProgressBar->setValue(0);
+    ui->mainProgressLabel->setText("");
     ui->subProgressBar->setVisible(subProgress);
     ui->subProgressLabel->setVisible(subProgress);
     if(subProgress)
@@ -27,6 +33,7 @@ WorkingDialog::WorkingDialog(Worker* worker, bool autoClose, bool subProgress/*=
         ui->subProgressBar->setMinimum(0);
         ui->subProgressBar->setMaximum(1);
         ui->subProgressBar->setValue(0);
+        ui->subProgressLabel->setText("");
     }
     ui->closePushButton->setText(tr("Cancel"));
     ui->autoCloseCheckBox->setChecked(autoClose);
@@ -35,6 +42,16 @@ WorkingDialog::WorkingDialog(Worker* worker, bool autoClose, bool subProgress/*=
 WorkingDialog::~WorkingDialog()
 {
     delete ui;
+}
+
+void WorkingDialog::setMainProgressLabelFormat(const QString& formatString)
+{
+    m_mainProgressLabelFormat = formatString;
+}
+
+void WorkingDialog::setSubProgressLabelFormat(const QString& formatString)
+{
+    m_subProgressLabelFormat = formatString;
 }
 
 bool WorkingDialog::getAutoClose()
@@ -50,7 +67,7 @@ void WorkingDialog::onStart(int min, int max)
     ui->mainProgressBar->setMaximum(max);
     ui->mainProgressBar->setValue(min);
 
-    ui->mainProgressLabel->setText(tr("%1 / %2").arg(min).arg(max));
+    ui->mainProgressLabel->setText(m_mainProgressLabelFormat.arg(min).arg(max));
 }
 
 void WorkingDialog::onProcess(const QString& description)
@@ -66,7 +83,7 @@ void WorkingDialog::onProgress(int value)
 
     ui->mainProgressBar->setValue(value);
 
-    ui->mainProgressLabel->setText(tr("%1 / %2").arg(value).arg(ui->mainProgressBar->maximum()));
+    ui->mainProgressLabel->setText(m_mainProgressLabelFormat.arg(value).arg(ui->mainProgressBar->maximum()));
 }
 
 void WorkingDialog::onStartSub(int min, int max)
@@ -77,7 +94,7 @@ void WorkingDialog::onStartSub(int min, int max)
     ui->subProgressBar->setMaximum(max);
     ui->subProgressBar->setValue(min);
 
-    ui->subProgressLabel->setText(tr("%1 / %2").arg(min).arg(max));
+    ui->subProgressLabel->setText(m_subProgressLabelFormat.arg(min).arg(max));
 }
 
 void WorkingDialog::onProgressSub(int value)
@@ -86,7 +103,7 @@ void WorkingDialog::onProgressSub(int value)
 
     ui->subProgressBar->setValue(value);
 
-    ui->subProgressLabel->setText(tr("%1 / %2").arg(value).arg(ui->subProgressBar->maximum()));
+    ui->subProgressLabel->setText(m_subProgressLabelFormat.arg(value).arg(ui->subProgressBar->maximum()));
 }
 
 void WorkingDialog::onFinished(int result)

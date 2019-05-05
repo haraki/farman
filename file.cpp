@@ -42,6 +42,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
     WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseCopy(), true, m_mainWindow);
+    dialog.setSubProgressLabelFormat(tr("%1 / %2 Bytes"));
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseCopy(dialog.getAutoClose());
 
@@ -75,6 +76,7 @@ bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
             SLOT(onConfirmOverwrite(QString,QString,int)));
 
     WorkingDialog dialog(copyWorker, Settings::getInstance()->getAutoDialogCloseMove(), true, m_mainWindow);
+    dialog.setSubProgressLabelFormat(tr("%1 / %2 Bytes"));
     int result = dialog.exec();
     Settings::getInstance()->setAutoDialogCloseMove(dialog.getAutoClose());
 
