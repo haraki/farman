@@ -152,12 +152,6 @@ public:
     bool getConsoleVisible() { return m_consoleVisible; }
     void setConsoleVisible(bool visible) { m_consoleVisible = visible; }
 
-    bool getImageViewerFitInView() { return m_imageViewerFitInView; }
-    void setImageViewerFitInView(bool fitInView) { m_imageViewerFitInView = fitInView; }
-
-    ImageViewerBGType getImageViewerBGType() { return m_imageViewerBGType; }
-    void setImageViewerBGType(ImageViewerBGType bgType) { m_imageViewerBGType = bgType; }
-
     bool getTextViewerShowLineNumber() { return m_textViewerShowLineNumber; }
     void setTextViewerShowLineNumber(bool show) { m_textViewerShowLineNumber = show; }
 
@@ -166,6 +160,12 @@ public:
 
     const QList<QString>& getTextViewerEncodeList() { return m_textViewerEncodeList; }
     void setTextViewerEncodeList(const QList<QString>& encodeList) { m_textViewerEncodeList = encodeList; }
+
+    bool getImageViewerFitInView() { return m_imageViewerFitInView; }
+    void setImageViewerFitInView(bool fitInView) { m_imageViewerFitInView = fitInView; }
+
+    ImageViewerTransparentBGType getImageViewerTransparentBGType() { return m_imageViewerTransparentBGType; }
+    void setImageViewerTransparentBGType(ImageViewerTransparentBGType bgType) { m_imageViewerTransparentBGType = bgType; }
 
     QString getTextEditorPath() { return m_textEditorPath; }
     void setTextEditorPath(const QString& textEditorPath) { m_textEditorPath = textEditorPath; }
@@ -255,13 +255,13 @@ private:
 
     bool m_consoleVisible = DEFAULT_CONSOLE_VISIBLE;
 
-    bool m_imageViewerFitInView = DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW;
-    ImageViewerBGType m_imageViewerBGType = DEFAULT_IMAGE_VIEWER_BG_TYPE;
-
     bool m_textViewerShowLineNumber = DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER;
     bool m_textViewerWordWrap = DEFAULT_TEXT_VIEWER_WORD_WRAP;
 
     QList<QString> m_textViewerEncodeList;
+
+    bool m_imageViewerFitInView = DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW;
+    ImageViewerTransparentBGType m_imageViewerTransparentBGType = DEFAULT_IMAGE_VIEWER_TRANSPARENT_BG_TYPE;
 
     QString m_textEditorPath = DEFAULT_TEXT_EDITOR_PATH;
     QString m_textEditorArgs = DEFAULT_TEXT_EDITOR_ARGS;

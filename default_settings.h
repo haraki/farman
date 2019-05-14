@@ -86,7 +86,7 @@ static const QMap<QString, QColor> DEFAULT_COLOR_SETTINGS =
     { "console_text",                   "#000000", },
     { "console_background",             "#ffffff", },
 
-    { "imageViewer_background",         "#808080", },
+    { "imageViewer_transparent_background", "#808080", },
 
     { "textViewer_text",                  "#000000", },
     { "textViewer_background",            "#ffffff", },
@@ -127,11 +127,11 @@ static const int DEFAULT_CURSOR_WIDTH = 1;
 
 static const bool DEFAULT_CONSOLE_VISIBLE = true;
 
-static const bool DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW = true;
-static const ImageViewerBGType DEFAULT_IMAGE_VIEWER_BG_TYPE = ImageViewerBGType::Checkered;
-
 static const bool DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER = true;
 static const bool DEFAULT_TEXT_VIEWER_WORD_WRAP = false;
+
+static const bool DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW = true;
+static const ImageViewerTransparentBGType DEFAULT_IMAGE_VIEWER_TRANSPARENT_BG_TYPE = ImageViewerTransparentBGType::Checkered;
 
 #if defined(Q_OS_WIN)
 static const QString DEFAULT_TEXT_EDITOR_PATH = "C:\\Windows\\notepad.exe";

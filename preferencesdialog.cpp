@@ -280,8 +280,8 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
 
     ui->imageViewerFitInViewCheckBox->setChecked(Settings::getInstance()->getImageViewerFitInView());
 
-    ui->imageViewerBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
-    ui->imageViewerBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid) ? 0 : 1);
+    ui->imageViewerTransparentBGTypeComboBox->addItems({tr("Solid"), tr("Checkered")});
+    ui->imageViewerTransparentBGTypeComboBox->setCurrentIndex((Settings::getInstance()->getImageViewerTransparentBGType() == ImageViewerTransparentBGType::Solid) ? 0 : 1);
 
     m_textViewerEncodeList = Settings::getInstance()->getTextViewerEncodeList();
     ui->textViewerEncodeComboBox->addItems(m_textViewerEncodeList);
@@ -751,12 +751,12 @@ void PreferencesDialog::on_textViewerFontPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_textViewerFontColorPushButton_clicked()
+void PreferencesDialog::on_textViewerNormalFontColorPushButton_clicked()
 {
-    chooseColor("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
+    chooseColor("textViewer_text", "textViewer_background", ui->textViewerNormalSampleLineEdit);
 }
 
-void PreferencesDialog::on_textViewerBGColorPushButton_clicked()
+void PreferencesDialog::on_textViewerNormalBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -764,7 +764,7 @@ void PreferencesDialog::on_textViewerBGColorPushButton_clicked()
     {
         m_colorSettings["textViewer_background"] = newColor;
 
-        setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerSampleLineEdit);
+        setFontColorSample("textViewer_text", "textViewer_background", ui->textViewerNormalSampleLineEdit);
     }
 }
 
@@ -830,12 +830,12 @@ void PreferencesDialog::on_hexViewerFontPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_hexViewerFontColorPushButton_clicked()
+void PreferencesDialog::on_hexViewerNormalFontColorPushButton_clicked()
 {
-    chooseColor("hexViewer_text", "hexViewer_background", ui->hexViewerSampleLineEdit);
+    chooseColor("hexViewer_text", "hexViewer_background", ui->hexViewerNormalSampleLineEdit);
 }
 
-void PreferencesDialog::on_hexViewerBGColorPushButton_clicked()
+void PreferencesDialog::on_hexViewerNormalBGColorPushButton_clicked()
 {
     QColor newColor = QColor();
 
@@ -843,7 +843,7 @@ void PreferencesDialog::on_hexViewerBGColorPushButton_clicked()
     {
         m_colorSettings["hexViewer_background"] = newColor;
 
-        setFontColorSample("hexViewer_text", "hexViewer_background", ui->hexViewerSampleLineEdit);
+        setFontColorSample("hexViewer_text", "hexViewer_background", ui->hexViewerNormalSampleLineEdit);
     }
 }
 
@@ -881,16 +881,16 @@ void PreferencesDialog::on_hexViewerAddressBGColorPushButton_clicked()
     }
 }
 
-void PreferencesDialog::on_imageViewerBGColorPushButton_clicked()
+void PreferencesDialog::on_imageViewerTransparentBGColorPushButton_clicked()
 {
-    QColor oldColor = ui->imageViewerBGColorSampleLineEdit->palette().base().color();
+    QColor oldColor = ui->imageViewerTransparentBGColorSampleLineEdit->palette().base().color();
     QColor newColor = QColor();
 
     if(showChooseColorDialog(oldColor, newColor))
     {
-        m_colorSettings["imageViewer_background"] = newColor;
+        m_colorSettings["imageViewer_transparent_background"] = newColor;
 
-        setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
+        setFontColorSample("", "imageViewer_transparent_background", ui->imageViewerTransparentBGColorSampleLineEdit);
     }
 }
 
@@ -1040,7 +1040,7 @@ void PreferencesDialog::setViewerFontAndColorOption()
 
     // Image viewer
 
-    setFontColorSample("", "imageViewer_background", ui->imageViewerBGColorSampleLineEdit);
+    setFontColorSample("", "imageViewer_transparent_background", ui->imageViewerTransparentBGColorSampleLineEdit);
 
     // Text viewer
 
@@ -1049,7 +1049,7 @@ void PreferencesDialog::setViewerFontAndColorOption()
     ui->textViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
     ui->textViewerFontLabel->setFont(font);
 
-    setFontColorSample("textViewer_text",            "textViewer_background",            ui->textViewerSampleLineEdit);
+    setFontColorSample("textViewer_text",            "textViewer_background",            ui->textViewerNormalSampleLineEdit);
     setFontColorSample("textViewer_selected_text",   "textViewer_selected_background",   ui->textViewerSelectedSampleLineEdit);
     setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
 
@@ -1060,7 +1060,7 @@ void PreferencesDialog::setViewerFontAndColorOption()
     ui->hexViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
     ui->hexViewerFontLabel->setFont(font);
 
-    setFontColorSample("hexViewer_text",          "hexViewer_background",          ui->hexViewerSampleLineEdit);
+    setFontColorSample("hexViewer_text",          "hexViewer_background",          ui->hexViewerNormalSampleLineEdit);
     setFontColorSample("hexViewer_selected_text", "hexViewer_selected_background", ui->hexViewerSelectedSampleLineEdit);
     setFontColorSample("hexViewer_address_text",  "hexViewer_address_background",  ui->hexViewerAddressSampleLineEdit);
 }
@@ -1270,8 +1270,8 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setImageViewerFitInView(ui->imageViewerFitInViewCheckBox->isChecked());
 
-    Settings::getInstance()->setImageViewerBGType((ui->imageViewerBGTypeComboBox->currentIndex() == 0) ? ImageViewerBGType::Solid
-                                                                                                       : ImageViewerBGType::Checkered);
+    Settings::getInstance()->setImageViewerTransparentBGType((ui->imageViewerTransparentBGTypeComboBox->currentIndex() == 0) ? ImageViewerTransparentBGType::Solid
+                                                                                                                             : ImageViewerTransparentBGType::Checkered);
 
     Settings::getInstance()->setTextViewerEncodeList(m_textViewerEncodeList);
 

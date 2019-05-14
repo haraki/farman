@@ -30,8 +30,8 @@ enum class FolderAtStartup : int
     Fixed = 2,
 };
 
-// ImageViewer の背景タイプ
-enum class ImageViewerBGType : int
+// ImageViewer の透過部分背景タイプ
+enum class ImageViewerTransparentBGType : int
 {
     Solid = 0,
     Checkered = 1,

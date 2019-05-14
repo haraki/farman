@@ -229,7 +229,7 @@ QBrush ImageViewer::createTransparentBGBrush()
 {
     QBrush bgBrush = QBrush();
 
-    if(Settings::getInstance()->getImageViewerBGType() == ImageViewerBGType::Solid)
+    if(Settings::getInstance()->getImageViewerTransparentBGType() == ImageViewerTransparentBGType::Solid)
     {
         bgBrush.setStyle(Qt::SolidPattern);
     }
@@ -260,7 +260,7 @@ QBrush ImageViewer::createTransparentBGBrush()
         bgBrush.setTexture(bgBitmap);
     }
 
-    bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_background"));
+    bgBrush.setColor(Settings::getInstance()->getColorSetting("imageViewer_transparent_background"));
 
     return bgBrush;
 }

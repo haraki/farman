@@ -183,18 +183,6 @@ void Settings::initialize()
     // Console visible
     m_consoleVisible = value("main/consoleVisible", DEFAULT_CONSOLE_VISIBLE).toBool();
 
-    // ImageViewer
-    {
-        // Fit in view
-        m_imageViewerFitInView = value("main/imageViewer_fitInView", DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW).toBool();
-
-        // BG type
-        QString imageViewerBGTypeValue = value("main/imageViewer_bgType", "checkered").toString();
-        m_imageViewerBGType = (imageViewerBGTypeValue == "solid")     ? ImageViewerBGType::Solid :
-                              (imageViewerBGTypeValue == "checkered") ? ImageViewerBGType::Checkered :
-                                                                        DEFAULT_IMAGE_VIEWER_BG_TYPE;
-    }
-
     // TextViewer
     {
         // Show line number
@@ -222,6 +210,18 @@ void Settings::initialize()
             }
         }
         endArray();
+    }
+
+    // ImageViewer
+    {
+        // Fit in view
+        m_imageViewerFitInView = value("main/imageViewer_fitInView", DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW).toBool();
+
+        // BG type
+        QString imageViewerTransparentBGTypeValue = value("main/imageViewer_transparentBgType", "checkered").toString();
+        m_imageViewerTransparentBGType = (imageViewerTransparentBGTypeValue == "solid")     ? ImageViewerTransparentBGType::Solid :
+                                         (imageViewerTransparentBGTypeValue == "checkered") ? ImageViewerTransparentBGType::Checkered :
+                                                                                              DEFAULT_IMAGE_VIEWER_TRANSPARENT_BG_TYPE;
     }
 
     // External Application
@@ -359,17 +359,6 @@ void Settings::flush()
     // Console visible
     setValue("main/consoleVisible", m_consoleVisible);
 
-    // Image Viewer
-    {
-        // Fit in view
-        setValue("main/imageViewer_fitInView", m_imageViewerFitInView);
-
-        // BG type
-        QString imageViewerBGTypeValue = (m_imageViewerBGType == ImageViewerBGType::Solid) ? "solid" :
-                                                                                             "checkered";
-        setValue("main/imageViewer_bgType", imageViewerBGTypeValue);
-    }
-
     // Text Viewer
     {
         // Show line number
@@ -386,6 +375,17 @@ void Settings::flush()
             setValue("encode", m_textViewerEncodeList[i]);
         }
         endArray();
+    }
+
+    // Image Viewer
+    {
+        // Fit in view
+        setValue("main/imageViewer_fitInView", m_imageViewerFitInView);
+
+        // BG type
+        QString imageViewerTransparentBGTypeValue = (m_imageViewerTransparentBGType == ImageViewerTransparentBGType::Solid) ? "solid" :
+                                                                                                                              "checkered";
+        setValue("main/imageViewer_transparentBgType", imageViewerTransparentBGTypeValue);
     }
 
     // External Application

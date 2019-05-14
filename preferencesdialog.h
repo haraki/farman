@@ -90,8 +90,8 @@ private slots:
     void on_consoleBGColorPushButton_clicked();
 
     void on_textViewerFontPushButton_clicked();
-    void on_textViewerFontColorPushButton_clicked();
-    void on_textViewerBGColorPushButton_clicked();
+    void on_textViewerNormalFontColorPushButton_clicked();
+    void on_textViewerNormalBGColorPushButton_clicked();
     void on_textViewerSelectedFontColorPushButton_clicked();
     void on_textViewerSelectedBGColorPushButton_clicked();
     void on_textViewerLineNumberFontColorPushButton_clicked();
@@ -99,14 +99,14 @@ private slots:
     void on_textViewerEncodeComboBox_activated(int index);
 
     void on_hexViewerFontPushButton_clicked();
-    void on_hexViewerFontColorPushButton_clicked();
-    void on_hexViewerBGColorPushButton_clicked();
+    void on_hexViewerNormalFontColorPushButton_clicked();
+    void on_hexViewerNormalBGColorPushButton_clicked();
     void on_hexViewerSelectedFontColorPushButton_clicked();
     void on_hexViewerSelectedBGColorPushButton_clicked();
     void on_hexViewerAddressFontColorPushButton_clicked();
     void on_hexViewerAddressBGColorPushButton_clicked();
 
-    void on_imageViewerBGColorPushButton_clicked();
+    void on_imageViewerTransparentBGColorPushButton_clicked();
 
     void on_textEditorSelectButton_clicked();
 
