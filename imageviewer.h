@@ -38,7 +38,7 @@ private:
     void makeScaleComboBox(const QString& scaleStr);
     int setData() Q_DECL_OVERRIDE;
     void autoScale();
-    void setScale(float scale);
+    void setScale(qreal scale);
     QBrush createTransparentBGBrush();
 
     Ui::ImageViewer *ui;

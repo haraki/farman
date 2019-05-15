@@ -6,6 +6,7 @@
 #include <QBuffer>
 #include <QMovie>
 #include <QGraphicsProxyWidget>
+#include <QtGlobal>
 #include "imageviewer.h"
 #include "ui_imageviewer.h"
 #include "settings.h"
@@ -74,10 +75,10 @@ void ImageViewer::on_scaleComboBox_editTextChanged(const QString &arg1)
     if(!ui->fitInViewCheckBox->isChecked())
     {
         bool ok = false;
-        float scale = arg1.toFloat(&ok);
-        if(ok && scale > 0.f)
+        qreal scale = arg1.toDouble(&ok);
+        if(ok && scale > 0)
         {
-            scale /= 100.f;
+            scale /= 100;
 
             setScale(scale);
         }
@@ -123,7 +124,7 @@ void ImageViewer::makeScaleComboBox(const QString& scaleStr)
     {
         float presetScale = presetScaleList[index].toFloat();
 
-        if(scale == presetScale)
+        if(qFuzzyCompare(scale, presetScale))
         {
             break;
         }
@@ -176,10 +177,10 @@ int ImageViewer::setData()
     else
     {
         bool ok = false;
-        float scale = ui->scaleComboBox->currentText().toFloat(&ok);
-        if(ok && scale > 0.f)
+        qreal scale = ui->scaleComboBox->currentText().toDouble(&ok);
+        if(ok && scale > 0)
         {
-            scale /= 100.f;
+            scale /= 100;
 
             setScale(scale);
         }
@@ -199,16 +200,16 @@ void ImageViewer::autoScale()
     QSizeF itemSize = m_item->boundingRect().size();
     QSize viewSize = ui->imageGraphicsView->size();
 
-    float wScale = viewSize.width() / itemSize.width();
-    float hScale = viewSize.height() / itemSize.height();
-    float scale = (wScale <= hScale) ? wScale : hScale;
+    qreal wScale = viewSize.width() / itemSize.width();
+    qreal hScale = viewSize.height() / itemSize.height();
+    qreal scale = (wScale <= hScale) ? wScale : hScale;
 
     setScale(scale);
 
-    makeScaleComboBox(QString::number(scale * 100.f, 'f', 1));
+    makeScaleComboBox(QString::number(scale * 100, 'f', 1));
 }
 
-void ImageViewer::setScale(float scale)
+void ImageViewer::setScale(qreal scale)
 {
     if(m_item == Q_NULLPTR)
     {
