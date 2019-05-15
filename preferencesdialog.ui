@@ -344,6 +344,62 @@
            <string>Main</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="2" column="0">
+            <widget class="QGroupBox" name="folderPathGroupBox">
+             <property name="title">
+              <string>Folder path</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_12">
+              <property name="spacing">
+               <number>8</number>
+              </property>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="folderPathColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="folderPathLineEdit">
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="text">
+                 <string>Sample</string>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="folderPathFontPushButton">
+                <property name="text">
+                 <string>Font</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="folderPathBGColorPushButton">
+                <property name="text">
+                 <string>BG Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
+               <widget class="QLabel" name="folderPathFontLabel">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
            <item row="0" column="0" colspan="2">
             <widget class="QGroupBox" name="folderViewFontGroupBox">
              <property name="title">
@@ -788,62 +844,6 @@
              </layout>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QGroupBox" name="folderPathGroupBox">
-             <property name="title">
-              <string>Folder path</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_12">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="folderPathColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="folderPathLineEdit">
-                <property name="focusPolicy">
-                 <enum>Qt::NoFocus</enum>
-                </property>
-                <property name="text">
-                 <string>Sample</string>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="folderPathFontPushButton">
-                <property name="text">
-                 <string>Font</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="folderPathBGColorPushButton">
-                <property name="text">
-                 <string>BG Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1" colspan="2">
-               <widget class="QLabel" name="folderPathFontLabel">
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="2" column="1">
             <widget class="QGroupBox" name="consoleGroupBox">
              <property name="title">
@@ -920,8 +920,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>346</width>
-            <height>281</height>
+            <width>570</width>
+            <height>422</height>
            </rect>
           </property>
           <attribute name="label">
@@ -940,6 +940,9 @@
              <property name="text">
               <string>Encode :</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
             </widget>
            </item>
            <item row="1" column="1">
@@ -955,6 +958,9 @@
               <string>Font</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_11" columnstretch="0,0,0,0">
+              <property name="spacing">
+               <number>8</number>
+              </property>
               <item row="0" column="0">
                <widget class="QPushButton" name="textViewerFontPushButton">
                 <property name="text">
@@ -998,7 +1004,7 @@
                  <string>Selected :</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1038,7 +1044,7 @@
                  <string>Line number :</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1084,6 +1090,9 @@
                 <property name="text">
                  <string>Normal :</string>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
                </widget>
               </item>
              </layout>
@@ -1116,8 +1125,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>324</width>
-            <height>201</height>
+            <width>570</width>
+            <height>422</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1130,6 +1139,9 @@
               <string>Font</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
+              <property name="spacing">
+               <number>8</number>
+              </property>
               <item row="0" column="0">
                <widget class="QPushButton" name="hexViewerFontPushButton">
                 <property name="text">
@@ -1141,6 +1153,9 @@
                <widget class="QLabel" name="hexViewerNormalFontColorLabel">
                 <property name="text">
                  <string>Normal :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1166,7 +1181,7 @@
                  <string>Selected :</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1206,7 +1221,7 @@
                  <string>Address :</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1293,13 +1308,6 @@
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QCheckBox" name="imageViewerFitInViewCheckBox">
-             <property name="text">
-              <string>Fit in view</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QGroupBox" name="imageViewerTransparentGroupBox">
              <property name="title">
               <string>Transparent</string>
@@ -1309,6 +1317,9 @@
                <widget class="QLabel" name="imageViewerTransparentBGTypeLabel">
                 <property name="text">
                  <string>BG Type :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
@@ -1339,6 +1350,13 @@
                </widget>
               </item>
              </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="imageViewerFitInViewCheckBox">
+             <property name="text">
+              <string>Fit in view</string>
+             </property>
             </widget>
            </item>
            <item>
