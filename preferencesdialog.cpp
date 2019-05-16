@@ -1049,6 +1049,10 @@ void PreferencesDialog::setViewerFontAndColorOption()
     ui->textViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
     ui->textViewerFontLabel->setFont(font);
 
+    ui->textViewerNormalSampleLineEdit->setFont(font);
+    ui->textViewerSelectedSampleLineEdit->setFont(font);
+    ui->textViewerLineNumberSampleLineEdit->setFont(font);
+
     setFontColorSample("textViewer_text",            "textViewer_background",            ui->textViewerNormalSampleLineEdit);
     setFontColorSample("textViewer_selected_text",   "textViewer_selected_background",   ui->textViewerSelectedSampleLineEdit);
     setFontColorSample("textViewer_lineNumber_text", "textViewer_lineNumber_background", ui->textViewerLineNumberSampleLineEdit);
@@ -1059,6 +1063,10 @@ void PreferencesDialog::setViewerFontAndColorOption()
 
     ui->hexViewerFontLabel->setText(QString("%1, %2 pt").arg(font.family()).arg(font.pointSize()));
     ui->hexViewerFontLabel->setFont(font);
+
+    ui->hexViewerNormalSampleLineEdit->setFont(font);
+    ui->hexViewerSelectedSampleLineEdit->setFont(font);
+    ui->hexViewerAddressSampleLineEdit->setFont(font);
 
     setFontColorSample("hexViewer_text",          "hexViewer_background",          ui->hexViewerNormalSampleLineEdit);
     setFontColorSample("hexViewer_selected_text", "hexViewer_selected_background", ui->hexViewerSelectedSampleLineEdit);
