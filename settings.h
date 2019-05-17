@@ -249,7 +249,7 @@ private:
 
     QMap<QString, QColor> m_colorSettings = DEFAULT_COLOR_SETTINGS;
 
-    QMap<QString, QFont> m_fontSettings = DEFAULT_FONT_SETTINGS;
+    QMap<QString, QFont> m_fontSettings;
 
     int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
 

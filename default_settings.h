@@ -103,24 +103,48 @@ static const QMap<QString, QColor> DEFAULT_COLOR_SETTINGS =
     { "hexViewer_address_background",   "#dfdfdf", },
 };
 
-static const QFont getDefaultFixedFont()
+class FontSettingParams
 {
-#if defined(Q_OS_WIN)
-    return QFont("Terminal", 14);
-#elif defined(Q_OS_MAC)
-    return QFont("Monaco", 13);
-#else
-    return QFont();
-#endif
-}
+public:
+    FontSettingParams(const QString& family, int pointSize = -1, int weight = -1, bool italic = false) :
+        m_family(family),
+        m_pointSize(pointSize),
+        m_weight(weight),
+        m_italic(italic)
+    {}
+    FontSettingParams() = default;
+    FontSettingParams(const FontSettingParams& params) = default;
+    ~FontSettingParams() = default;
 
-static const QMap<QString, QFont> DEFAULT_FONT_SETTINGS =
+    bool isValid() const { return m_family.length() > 0; }
+
+    const QString& getFamily() const { return m_family; }
+    int getPointSize() const { return m_pointSize; }
+    int getWeight() const { return m_weight; }
+    bool getItalic() const { return m_italic; }
+
+private:
+    QString m_family = "";
+    int m_pointSize = -1;
+    int m_weight = -1;
+    bool m_italic = false;
+};
+
+#if defined(Q_OS_WIN)
+#   define FONT_SETTING_PARAMS    FontSettingParams("Terminal", 14)
+#elif defined(Q_OS_MAC)
+#   define FONT_SETTING_PARAMS    FontSettingParams("Monaco", 13)
+#else
+#   define FONT_SETTING_PARAMS    FontSettingParams()
+#endif
+
+static const QMap<QString, FontSettingParams> DEFAULT_FONT_SETTING_PARAMS =
 {
-    { "folderView", getDefaultFixedFont(), },
-    { "folderPath", getDefaultFixedFont(), },
-    { "console",    getDefaultFixedFont(), },
-    { "textViewer", getDefaultFixedFont(), },
-    { "hexViewer",  getDefaultFixedFont(), },
+    { "folderView", FONT_SETTING_PARAMS, },
+    { "folderPath", FONT_SETTING_PARAMS, },
+    { "console",    FONT_SETTING_PARAMS, },
+    { "textViewer", FONT_SETTING_PARAMS, },
+    { "hexViewer",  FONT_SETTING_PARAMS, },
 };
 
 static const int DEFAULT_CURSOR_WIDTH = 1;

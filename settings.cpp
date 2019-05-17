@@ -1,5 +1,6 @@
 ﻿#include <QTextCodec>
 #include <QCoreApplication>
+#include <QFontDatabase>
 #include <QDebug>
 #include "settings.h"
 
@@ -163,7 +164,7 @@ void Settings::initialize()
     }
 
     // Font settings
-    for(auto fontSettingKey : m_fontSettings.keys())
+    for(auto fontSettingKey : DEFAULT_FONT_SETTING_PARAMS.keys())
     {
         QString fontSettingString = value("main/font/" + fontSettingKey).toString();
         QFont fontSettingValue = QFont();
@@ -171,9 +172,16 @@ void Settings::initialize()
         {
             m_fontSettings[fontSettingKey] = fontSettingValue;
         }
+        else if(DEFAULT_FONT_SETTING_PARAMS[fontSettingKey].isValid())
+        {
+            m_fontSettings[fontSettingKey] = QFont(DEFAULT_FONT_SETTING_PARAMS[fontSettingKey].getFamily(),
+                                                   DEFAULT_FONT_SETTING_PARAMS[fontSettingKey].getPointSize(),
+                                                   DEFAULT_FONT_SETTING_PARAMS[fontSettingKey].getWeight(),
+                                                   DEFAULT_FONT_SETTING_PARAMS[fontSettingKey].getItalic());
+        }
         else
         {
-            m_fontSettings[fontSettingKey] = DEFAULT_FONT_SETTINGS[fontSettingKey];
+            m_fontSettings[fontSettingKey] = QFontDatabase::systemFont(QFontDatabase::FixedFont);
         }
     }
 
