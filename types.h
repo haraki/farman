@@ -113,7 +113,7 @@ enum class DateFormatType : int
     DateFormatTypeNum,
 };
 
-static const QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
+static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
 
 // 同名ファイルが存在する場合の処理タイプ
 enum class OverwriteMethodType : int

@@ -13,53 +13,53 @@
 namespace Farman
 {
 
-static const qint32 DEFAULT_COPY_UNIT_SIZE = 1 * 1024 * 1024;
+static Q_DECL_CONSTEXPR qint32 DEFAULT_COPY_UNIT_SIZE = 1 * 1024 * 1024;
 
-static const SizeAtStartup DEFAULT_SIZE_AT_STARTUP_TYPE = SizeAtStartup::Default;
-static const QSize DEFAULT_SIZE_AT_STARTUP = QSize(0, 0);
+static Q_DECL_CONSTEXPR SizeAtStartup DEFAULT_SIZE_AT_STARTUP_TYPE = SizeAtStartup::Default;
+static Q_DECL_CONSTEXPR QSize DEFAULT_SIZE_AT_STARTUP = QSize(0, 0);
 
-static const PositionAtStartup DEFAULT_POSITION_AT_STARTUP_TYPE = PositionAtStartup::Default;
-static const QPoint DEFAULT_POSITION_AT_STARTUP = QPoint(0, 0);
+static Q_DECL_CONSTEXPR PositionAtStartup DEFAULT_POSITION_AT_STARTUP_TYPE = PositionAtStartup::Default;
+static Q_DECL_CONSTEXPR QPoint DEFAULT_POSITION_AT_STARTUP = QPoint(0, 0);
 
-static const PaneMode DEFAULT_PANE_MODE = PaneMode::Dual;
-static const PaneType DEFAULT_ACTIVE_PANE = PaneType::Left;
+static Q_DECL_CONSTEXPR PaneMode DEFAULT_PANE_MODE = PaneMode::Dual;
+static Q_DECL_CONSTEXPR PaneType DEFAULT_ACTIVE_PANE = PaneType::Left;
 
-static const FolderAtStartup DEFAULT_FOLDER_AT_STARTUP_TYPE = FolderAtStartup::Default;
-static const QString DEFAULT_FOLDER_PATH_AT_STARTUP = "";
+static Q_DECL_CONSTEXPR FolderAtStartup DEFAULT_FOLDER_AT_STARTUP_TYPE = FolderAtStartup::Default;
+static Q_DECL_CONSTEXPR char DEFAULT_FOLDER_PATH_AT_STARTUP[] = "";
 
-static const SectionType DEFAULT_SORT_SECTION_TYPE = SectionType::FileName;
-static const SortDirsType DEFAULT_SORT_DIRS_TYPE = SortDirsType::NoSpecify;
-static const bool DEFAULT_SORT_DOT_FIRST = true;
-static const Qt::CaseSensitivity DEFAULT_SORT_CASE_SENSITIVITY = Qt::CaseInsensitive;
-static const Qt::SortOrder DEFAULT_SORT_ORDER = Qt::AscendingOrder;
+static Q_DECL_CONSTEXPR SectionType DEFAULT_SORT_SECTION_TYPE = SectionType::FileName;
+static Q_DECL_CONSTEXPR SortDirsType DEFAULT_SORT_DIRS_TYPE = SortDirsType::NoSpecify;
+static Q_DECL_CONSTEXPR bool DEFAULT_SORT_DOT_FIRST = true;
+static Q_DECL_CONSTEXPR Qt::CaseSensitivity DEFAULT_SORT_CASE_SENSITIVITY = Qt::CaseInsensitive;
+static Q_DECL_CONSTEXPR Qt::SortOrder DEFAULT_SORT_ORDER = Qt::AscendingOrder;
 
-static const QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
+static Q_DECL_CONSTEXPR QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
 
-static const OverwriteMethodType DEFAULT_OVERWRITE_METHOD_TYPE = OverwriteMethodType::Overwrite;
+static Q_DECL_CONSTEXPR OverwriteMethodType DEFAULT_OVERWRITE_METHOD_TYPE = OverwriteMethodType::Overwrite;
 
-static const DragAndDropBehaviorType DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE = DragAndDropBehaviorType::Select;
+static Q_DECL_CONSTEXPR DragAndDropBehaviorType DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE = DragAndDropBehaviorType::Select;
 
-static const bool DEFAULT_AUTO_DIALOG_CLOSE_COPY = false;
-static const bool DEFAULT_AUTO_DIALOG_CLOSE_MOVE = false;
-static const bool DEFAULT_AUTO_DIALOG_CLOSE_REMOVE = false;
+static Q_DECL_CONSTEXPR bool DEFAULT_AUTO_DIALOG_CLOSE_COPY = false;
+static Q_DECL_CONSTEXPR bool DEFAULT_AUTO_DIALOG_CLOSE_MOVE = false;
+static Q_DECL_CONSTEXPR bool DEFAULT_AUTO_DIALOG_CLOSE_REMOVE = false;
 
-static const bool DEFAULT_ALLOW_CURSOR_AROUND = false;
+static Q_DECL_CONSTEXPR bool DEFAULT_ALLOW_CURSOR_AROUND = false;
 
-static const bool DEFAULT_MOVE_CURSOR_OPEN_VIEWER = false;
+static Q_DECL_CONSTEXPR bool DEFAULT_MOVE_CURSOR_OPEN_VIEWER = false;
 
-static const bool DEFAULT_CONFIRM_QUIT = true;
+static Q_DECL_CONSTEXPR bool DEFAULT_CONFIRM_QUIT = true;
 
-static const FileSizeFormatType DEFAULT_SINGLE_PANE_FILE_SIZE_FORMAT_TYPE = FileSizeFormatType::SI;
-static const bool DEFAULT_SINGLE_PANE_FILE_SIZE_DETAIL_COMMA_ENABLE = false;
+static Q_DECL_CONSTEXPR FileSizeFormatType DEFAULT_SINGLE_PANE_FILE_SIZE_FORMAT_TYPE = FileSizeFormatType::SI;
+static Q_DECL_CONSTEXPR bool DEFAULT_SINGLE_PANE_FILE_SIZE_DETAIL_COMMA_ENABLE = false;
 
-static const FileSizeFormatType DEFAULT_DUAL_PANE_FILE_SIZE_FORMAT_TYPE = FileSizeFormatType::SI;
-static const bool DEFAULT_DUAL_PANE_FILE_SIZE_DETAIL_COMMA_ENABLE = false;
+static Q_DECL_CONSTEXPR FileSizeFormatType DEFAULT_DUAL_PANE_FILE_SIZE_FORMAT_TYPE = FileSizeFormatType::SI;
+static Q_DECL_CONSTEXPR bool DEFAULT_DUAL_PANE_FILE_SIZE_DETAIL_COMMA_ENABLE = false;
 
-static const DateFormatType DEFAULT_SINGLE_PANE_DATE_FORMAT_TYPE = DateFormatType::Default;
-static const QString DEFAULT_SINGLE_PANE_DATE_FORMAT_ORIGINAL_STRING = "yyyy-MM-dd HH:mm:ss";
+static Q_DECL_CONSTEXPR DateFormatType DEFAULT_SINGLE_PANE_DATE_FORMAT_TYPE = DateFormatType::Default;
+static Q_DECL_CONSTEXPR char DEFAULT_SINGLE_PANE_DATE_FORMAT_ORIGINAL_STRING[] = "yyyy-MM-dd HH:mm:ss";
 
-static const DateFormatType DEFAULT_DUAL_PANE_DATE_FORMAT_TYPE = DateFormatType::Original;
-static const QString DEFAULT_DUAL_PANE_DATE_FORMAT_ORIGINAL_STRING = "yyyy-MM-dd HH:mm";
+static Q_DECL_CONSTEXPR DateFormatType DEFAULT_DUAL_PANE_DATE_FORMAT_TYPE = DateFormatType::Original;
+static Q_DECL_CONSTEXPR char DEFAULT_DUAL_PANE_DATE_FORMAT_ORIGINAL_STRING[] = "yyyy-MM-dd HH:mm";
 
 static const QMap<QString, QColor> DEFAULT_COLOR_SETTINGS =
 {
@@ -147,25 +147,25 @@ static const QMap<QString, FontSettingParams> DEFAULT_FONT_SETTING_PARAMS =
     { "hexViewer",  FONT_SETTING_PARAMS, },
 };
 
-static const int DEFAULT_CURSOR_WIDTH = 1;
+static Q_DECL_CONSTEXPR int DEFAULT_CURSOR_WIDTH = 1;
 
-static const bool DEFAULT_CONSOLE_VISIBLE = true;
+static Q_DECL_CONSTEXPR bool DEFAULT_CONSOLE_VISIBLE = true;
 
-static const bool DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER = true;
-static const bool DEFAULT_TEXT_VIEWER_WORD_WRAP = false;
+static Q_DECL_CONSTEXPR bool DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER = true;
+static Q_DECL_CONSTEXPR bool DEFAULT_TEXT_VIEWER_WORD_WRAP = false;
 
-static const bool DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW = true;
-static const ImageViewerTransparentBGType DEFAULT_IMAGE_VIEWER_TRANSPARENT_BG_TYPE = ImageViewerTransparentBGType::Checkered;
+static Q_DECL_CONSTEXPR bool DEFAULT_IMAGE_VIEWER_FIT_IN_VIEW = true;
+static Q_DECL_CONSTEXPR ImageViewerTransparentBGType DEFAULT_IMAGE_VIEWER_TRANSPARENT_BG_TYPE = ImageViewerTransparentBGType::Checkered;
 
 #if defined(Q_OS_WIN)
-static const QString DEFAULT_TEXT_EDITOR_PATH = "C:\\Windows\\notepad.exe";
-static const QString DEFAULT_TEXT_EDITOR_ARGS = "$F";
+static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_PATH[] = "C:\\Windows\\notepad.exe";
+static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_ARGS[] = "$F";
 #elif defined(Q_OS_MAC)
-static const QString DEFAULT_TEXT_EDITOR_PATH = "/Applications/TextEdit.app";
-static const QString DEFAULT_TEXT_EDITOR_ARGS = "$M";
+static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_PATH[] = "/Applications/TextEdit.app";
+static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_ARGS[] = "$M";
 #else
-static const QString DEFAULT_TEXT_EDITOR_PATH = "";
-static const QString DEFAULT_TEXT_EDITOR_ARGS = "";
+static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_PATH[] = "";
+static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_ARGS[] = "$F";
 #endif
 
 }           // namespace Farman
