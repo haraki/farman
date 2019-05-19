@@ -31,7 +31,11 @@ Settings* Settings::getInstance()
 Settings::Settings()
     : QSettings(QSettings::IniFormat, QSettings::UserScope,
                 QCoreApplication::organizationName(),
-                QCoreApplication::applicationName())
+                QCoreApplication::applicationName()
+#ifdef QT_DEBUG
+                + "_Debug"
+#endif
+                )
 {
     this->setIniCodec("UTF-8");
 }
