@@ -128,6 +128,7 @@ private:
     int m_pointSize = -1;
     int m_weight = -1;
     bool m_italic = false;
+    qint64 :56;
 };
 
 #if defined(Q_OS_WIN)
