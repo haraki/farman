@@ -1859,12 +1859,48 @@
   <tabstop>rightFolderSelectButton</tabstop>
   <tabstop>confirmQuitCheckBox</tabstop>
   <tabstop>initializeSettingsPushButton</tabstop>
+  <tabstop>folderViewFontFontPushButton</tabstop>
+  <tabstop>folderViewFontNormalColorPushButton</tabstop>
+  <tabstop>folderViewFontNormalSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontFolderColorPushButton</tabstop>
+  <tabstop>folderViewFontFolderSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontReadOnlyColorPushButton</tabstop>
+  <tabstop>folderViewFontReadOnlySelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontHiddenColorPushButton</tabstop>
+  <tabstop>folderViewFontHiddenSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontSystemColorPushButton</tabstop>
+  <tabstop>folderViewFontSystemSelectedColorPushButton</tabstop>
+  <tabstop>folderViewFontBGColorPushButton</tabstop>
+  <tabstop>folderViewFontSelectedBGColorPushButton</tabstop>
+  <tabstop>folderViewCursorWidthSpinBox</tabstop>
+  <tabstop>folderViewCursorColorPushButton</tabstop>
+  <tabstop>folderViewCursorInactiveColorPushButton</tabstop>
   <tabstop>folderPathFontPushButton</tabstop>
   <tabstop>folderPathColorPushButton</tabstop>
   <tabstop>folderPathBGColorPushButton</tabstop>
   <tabstop>consoleFontPushButton</tabstop>
   <tabstop>consoleColorPushButton</tabstop>
   <tabstop>consoleBGColorPushButton</tabstop>
+  <tabstop>textViewerFontPushButton</tabstop>
+  <tabstop>textViewerNormalFontColorPushButton</tabstop>
+  <tabstop>textViewerNormalBGColorPushButton</tabstop>
+  <tabstop>textViewerSelectedFontColorPushButton</tabstop>
+  <tabstop>textViewerSelectedBGColorPushButton</tabstop>
+  <tabstop>textViewerLineNumberFontColorPushButton</tabstop>
+  <tabstop>textViewerLineNumberBGColorPushButton</tabstop>
+  <tabstop>textViewerEncodeComboBox</tabstop>
+  <tabstop>textViewerShowLineNumberCheckBox</tabstop>
+  <tabstop>textViewerWordWrapCheckBox</tabstop>
+  <tabstop>hexViewerFontPushButton</tabstop>
+  <tabstop>hexViewerNormalFontColorPushButton</tabstop>
+  <tabstop>hexViewerNormalBGColorPushButton</tabstop>
+  <tabstop>hexViewerSelectedFontColorPushButton</tabstop>
+  <tabstop>hexViewerSelectedBGColorPushButton</tabstop>
+  <tabstop>hexViewerAddressFontColorPushButton</tabstop>
+  <tabstop>hexViewerAddressBGColorPushButton</tabstop>
+  <tabstop>imageViewerTransparentBGTypeComboBox</tabstop>
+  <tabstop>imageViewerTransparentBGColorPushButton</tabstop>
+  <tabstop>imageViewerFitInViewCheckBox</tabstop>
   <tabstop>singlePaneFileSizeSIRadioButton</tabstop>
   <tabstop>singlePaneFileSizeIecRadioButton</tabstop>
   <tabstop>singlePaneFileSizeDetailRadioButton</tabstop>
