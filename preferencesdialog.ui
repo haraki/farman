@@ -341,7 +341,7 @@
            </rect>
           </property>
           <attribute name="label">
-           <string>Main</string>
+           <string>Main(&amp;M)</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout">
            <item row="2" column="0">
@@ -925,7 +925,7 @@
            </rect>
           </property>
           <attribute name="label">
-           <string>Text Viewer</string>
+           <string>Text Viewer(&amp;T)</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_13" columnstretch="0,1">
            <item row="2" column="0" colspan="2">
@@ -1130,7 +1130,7 @@
            </rect>
           </property>
           <attribute name="label">
-           <string>Hex Viewer</string>
+           <string>Hex Viewer(&amp;H)</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
@@ -1304,7 +1304,7 @@
            </rect>
           </property>
           <attribute name="label">
-           <string>Image Viewer</string>
+           <string>Image Viewer(&amp;I)</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
