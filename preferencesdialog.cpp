@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QtGlobal>
 #include "preferencesdialog.h"
 #include "ui_preferencesdialog.h"
 #include "settings.h"
@@ -905,7 +906,7 @@ void PreferencesDialog::on_textEditorSelectButton_clicked()
         // Program Files フォルダのパスを取得するには環境変数 PROGRAMFILES から取得するしかない
         // (QStandartPaths::standardLocations() では返されない)
         // 参考 : https://doc.qt.io/qt-5/qstandardpaths.html#StandardLocation-enum
-        dirPath = getenv("PROGRAMFILES");
+        dirPath = qEnvironmentVariable("PROGRAMFILES", "C:\\Program Files");
 #else
         dirPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0);
 #endif
