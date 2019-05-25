@@ -385,10 +385,12 @@ void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 
 void FolderModel::refresh()
 {
-    bool backup = dynamicSortFilter();
-    setDynamicSortFilter(false);
     QSortFilterProxyModel::sort(m_sortColumn, m_sortOrder);
-    setDynamicSortFilter(backup);
+
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+    QString backup = fsModel->rootPath();
+    fsModel->setRootPath("");
+    fsModel->setRootPath(backup);
 }
 
 QItemSelectionModel* FolderModel::getSelectionModel()
