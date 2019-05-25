@@ -8,8 +8,23 @@
 #include "settings.h"
 #include "types.h"
 
+#ifdef Q_OS_WIN
+#   include <Windows.h>
+#endif
+
 namespace Farman
 {
+
+// QFileSystemModel の固定フィルタ値
+static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries |
+                                                         QDir::Readable   |
+                                                         QDir::Writable   |
+                                                         QDir::Executable |
+                                                         QDir::Modified   |
+                                                         QDir::System     |
+                                                         QDir::AllDirs    |
+                                                         QDir::NoDot;
+
 
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
@@ -23,8 +38,7 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
 
     QFileSystemModel* fsModel = new QFileSystemModel(this);
 
-//    fsModel->setRootPath(QDir::currentPath());
-    fsModel->setFilter(DEFAULT_FILTER_FLAGS);
+    fsModel->setFilter(FIX_FILTER_FLAGS);
 
     connect(fsModel,
             SIGNAL(rootPathChanged(QString)),
@@ -117,6 +131,36 @@ void FolderModel::setSortOrder(Qt::SortOrder order)
 Qt::SortOrder FolderModel::sortOrder() const
 {
     return m_sortOrder;
+}
+
+void FolderModel::setFilterFlags(FilterFlags filterFlags)
+{
+    m_filterFlags = filterFlags;
+
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+    QDir::Filters filters = fsModel->filter();
+    if(filterFlags & FilterFlag::Hidden)
+    {
+        filters |= QDir::Hidden;
+    }
+    else
+    {
+        filters &= ~QDir::Hidden;
+    }
+    if(filterFlags & FilterFlag::Parent)
+    {
+        filters &= ~QDir::NoDotDot;
+    }
+    else
+    {
+        filters |= QDir::NoDotDot;
+    }
+    fsModel->setFilter(filters);
+}
+
+FilterFlags FolderModel::getFilterFlags() const
+{
+    return m_filterFlags;
 }
 
 int FolderModel::columnCount(const QModelIndex& parent) const
@@ -381,6 +425,24 @@ void FolderModel::clearSelected()
     }
 }
 
+bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+{
+#ifdef Q_OS_WIN
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    // source_parent は mapToSource されているようなので、QFileSystemModel::index() に渡す際は改めて mapToSource しない
+    // QFileSystemModel::fileInfo() に渡す child_index も同様
+    QModelIndex childIndex = fsModel->index(source_row, 0, source_parent);
+    QFileInfo fi = fsModel->fileInfo(childIndex);
+
+    if(!(m_filterFlags & FilterFlag::System) && isWindowsSystemFile(fi))
+    {
+        return false;
+    }
+#endif
+    return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
+}
+
 bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
@@ -497,6 +559,17 @@ bool FolderModel::isDrive(const QModelIndex& index) const
 
     return false;
 }
+
+bool FolderModel::isWindowsSystemFile(const QFileInfo& fileInfo) const
+{
+    DWORD attrFlags = ::GetFileAttributes(fileInfo.filePath().toStdWString().c_str());
+    if(attrFlags != static_cast<DWORD>(-1) && (attrFlags & FILE_ATTRIBUTE_SYSTEM))
+    {
+        return true;
+    }
+
+    return false;
+}
 #endif
 
 SectionType FolderModel::getSectionTypeFromColumn(int column) const
@@ -548,33 +621,12 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
 {
     QBrush ret;
 
-    // TODO: System file(for Win)
+    QFileInfo fi = fileInfo(index);
+    bool selected = isSelected(index);
 
-    if((fileName(index) != "..") && (fileInfo(index).isHidden()))
+    if(fi.isDir())
     {
-        if(isSelected(index))
-        {
-            ret = getBrush(ColorRoleType::Hidden_Selected);
-        }
-        else
-        {
-            ret = getBrush(ColorRoleType::Hidden);
-        }
-    }
-    else if((fileName(index) != "..") && (!fileInfo(index).isWritable()))
-    {
-        if(isSelected(index))
-        {
-            ret = getBrush(ColorRoleType::ReadOnly_Selected);
-        }
-        else
-        {
-            ret = getBrush(ColorRoleType::ReadOnly);
-        }
-    }
-    else if(fileInfo(index).isDir())
-    {
-        if(isSelected(index))
+        if(selected)
         {
             ret = getBrush(ColorRoleType::Folder_Selected);
         }
@@ -583,9 +635,44 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
             ret = getBrush(ColorRoleType::Folder);
         }
     }
+#ifdef Q_OS_WIN
+    else if(fi.fileName() != ".." && isWindowsSystemFile(fi))
+    {
+        if(selected)
+        {
+            ret = getBrush(ColorRoleType::System_Selected);
+        }
+        else
+        {
+            ret = getBrush(ColorRoleType::System);
+        }
+    }
+#endif
+    else if((fi.fileName() != "..") && (fi.isHidden()))
+    {
+        if(selected)
+        {
+            ret = getBrush(ColorRoleType::Hidden_Selected);
+        }
+        else
+        {
+            ret = getBrush(ColorRoleType::Hidden);
+        }
+    }
+    else if((fi.fileName() != "..") && (!fi.isWritable()))
+    {
+        if(selected)
+        {
+            ret = getBrush(ColorRoleType::ReadOnly_Selected);
+        }
+        else
+        {
+            ret = getBrush(ColorRoleType::ReadOnly);
+        }
+    }
     else
     {
-        if(isSelected(index))
+        if(selected)
         {
             ret = getBrush(ColorRoleType::Normal_Selected);
         }
@@ -701,20 +788,6 @@ QFileIconProvider* FolderModel::iconProvider() const
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
 
     return fsModel->iconProvider();
-}
-
-void FolderModel::setFilter(QDir::Filters filters)
-{
-    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
-
-    fsModel->setFilter(filters);
-}
-
-QDir::Filters FolderModel::filter() const
-{
-    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
-
-    return fsModel->filter();
 }
 
 void FolderModel::setResolveSymlinks(bool enable)

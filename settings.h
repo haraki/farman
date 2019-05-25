@@ -83,11 +83,11 @@ public:
     void setRightSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity) { m_rightSortCaseSensitivity = caseSensitivity; }
     void setRightSortOrder(Qt::SortOrder order) { m_rightSortOrder = order; }
 
-    QDir::Filters getLeftFilterSettings() { return m_leftFilterSettings; }
-    void setLeftFilterSettings(QDir::Filters leftFilterSettings) { m_leftFilterSettings = leftFilterSettings; }
+    FilterFlags getLeftFilterSettings() { return m_leftFilterSettings; }
+    void setLeftFilterSettings(FilterFlags leftFilterSettings) { m_leftFilterSettings = leftFilterSettings; }
 
-    QDir::Filters getRightFilterSettings() { return m_rightFilterSettings; }
-    void setRightFilterSettings(QDir::Filters rightFilterSettings) { m_rightFilterSettings = rightFilterSettings; }
+    FilterFlags getRightFilterSettings() { return m_rightFilterSettings; }
+    void setRightFilterSettings(FilterFlags rightFilterSettings) { m_rightFilterSettings = rightFilterSettings; }
 
     DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
     void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
@@ -188,8 +188,8 @@ private:
     void setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
     void setValueSortOrder(Qt::SortOrder order, const QString& prefix);
 
-    QDir::Filters getValueFilterSettings(const QString& prefix);
-    void setValueFilterSettings(QDir::Filters filterSettings, const QString& prefix);
+    FilterFlags getValueFilterSettings(const QString& prefix);
+    void setValueFilterSettings(FilterFlags filterSettings, const QString& prefix);
 
     static Settings* s_instance;
 
@@ -220,8 +220,8 @@ private:
     Qt::CaseSensitivity m_rightSortCaseSensitivity = DEFAULT_SORT_CASE_SENSITIVITY;
     Qt::SortOrder m_rightSortOrder = DEFAULT_SORT_ORDER;
 
-    QDir::Filters m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
-    QDir::Filters m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
+    FilterFlags m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
+    FilterFlags m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
 
     DragAndDropBehaviorType m_dragAndDropBehaviorType = DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE;
 

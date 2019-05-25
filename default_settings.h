@@ -33,7 +33,7 @@ static Q_DECL_CONSTEXPR bool DEFAULT_SORT_DOT_FIRST = true;
 static Q_DECL_CONSTEXPR Qt::CaseSensitivity DEFAULT_SORT_CASE_SENSITIVITY = Qt::CaseInsensitive;
 static Q_DECL_CONSTEXPR Qt::SortOrder DEFAULT_SORT_ORDER = Qt::AscendingOrder;
 
-static Q_DECL_CONSTEXPR QDir::Filters DEFAULT_FILTER_FLAGS = FIX_FILTER_FLAGS;
+static Q_DECL_CONSTEXPR FilterFlags DEFAULT_FILTER_FLAGS = FilterFlag::Hidden | FilterFlag::System;
 
 static Q_DECL_CONSTEXPR OverwriteMethodType DEFAULT_OVERWRITE_METHOD_TYPE = OverwriteMethodType::Overwrite;
 

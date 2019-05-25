@@ -5,19 +5,19 @@
 namespace Farman
 {
 
-FilterDialog::FilterDialog(QDir::Filters filterFlags, QWidget *parent) :
+FilterDialog::FilterDialog(FilterFlags filterFlags, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FilterDialog),
     m_filterFlags(filterFlags)
 {
     ui->setupUi(this);
 
-    if(filterFlags & QDir::Filter::Hidden)
+    if(filterFlags & FilterFlag::Hidden)
     {
         ui->showHiddenCheckBox->setChecked(true);
     }
 
-    if(filterFlags & QDir::Filter::System)
+    if(filterFlags & FilterFlag::System)
     {
         ui->showSystemCheckBox->setChecked(true);
     }
@@ -28,22 +28,22 @@ FilterDialog::~FilterDialog()
     delete ui;
 }
 
-QDir::Filters FilterDialog::getFilterFlags()
+FilterFlags FilterDialog::getFilterFlags()
 {
     return m_filterFlags;
 }
 
 void FilterDialog::accept()
 {
-    m_filterFlags &= ~(QDir::Filter::Hidden | QDir::Filter::System);
+    m_filterFlags &= ~(FilterFlag::Hidden | FilterFlag::System);
     if(ui->showHiddenCheckBox->isChecked())
     {
-        m_filterFlags |= QDir::Filter::Hidden;
+        m_filterFlags |= FilterFlag::Hidden;
     }
 
     if(ui->showSystemCheckBox->isChecked())
     {
-        m_filterFlags |= QDir::Filter::System;
+        m_filterFlags |= FilterFlag::System;
     }
 
     qDebug() << "filterFlags == " << m_filterFlags;

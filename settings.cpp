@@ -546,29 +546,29 @@ void Settings::setValueSortOrder(Qt::SortOrder order, const QString& prefix)
     setValue("main/" + prefix + "SortOrder", sortOrderValue);
 }
 
-QDir::Filters Settings::getValueFilterSettings(const QString& prefix)
+FilterFlags Settings::getValueFilterSettings(const QString& prefix)
 {
-    QDir::Filters ret = DEFAULT_FILTER_FLAGS;
+    FilterFlags ret = DEFAULT_FILTER_FLAGS;
 
     if(value("main/" + prefix + "FilterHidden", false).toBool())
     {
-        ret |= QDir::Filter::Hidden;
+        ret |= FilterFlag::Hidden;
     }
 
     if(value("main/" + prefix + "FilterSystem", false).toBool())
     {
-        ret |= QDir::Filter::System;
+        ret |= FilterFlag::System;
     }
 
     return ret;
 }
 
-void Settings::setValueFilterSettings(QDir::Filters filterSettings, const QString& prefix)
+void Settings::setValueFilterSettings(FilterFlags filterSettings, const QString& prefix)
 {
-    bool filterHiddenValue = (filterSettings & QDir::Filter::Hidden) ? true : false;
+    bool filterHiddenValue = (filterSettings & FilterFlag::Hidden) ? true : false;
     setValue("main/" + prefix + "FilterHidden", filterHiddenValue);
 
-    bool filterSystemValue = (filterSettings & QDir::Filter::System) ? true : false;
+    bool filterSystemValue = (filterSettings & FilterFlag::System) ? true : false;
     setValue("main/" + prefix + "FilterSystem", filterSystemValue);
 }
 

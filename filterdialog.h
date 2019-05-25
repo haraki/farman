@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <qdir.h>
+#include "types.h"
 
 namespace Ui {
 class FilterDialog;
@@ -16,16 +17,16 @@ class FilterDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FilterDialog(QDir::Filters filterFlags, QWidget *parent = Q_NULLPTR);
+    explicit FilterDialog(FilterFlags filterFlags, QWidget *parent = Q_NULLPTR);
     ~FilterDialog() Q_DECL_OVERRIDE;
 
-    QDir::Filters getFilterFlags();
+    FilterFlags getFilterFlags();
 
 private:
     void accept() Q_DECL_OVERRIDE;
 
     Ui::FilterDialog *ui;
-    QDir::Filters m_filterFlags;
+    FilterFlags m_filterFlags;
 };
 
 }           // namespace Farman

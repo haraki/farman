@@ -41,7 +41,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         l_path = QDir::currentPath();
     }
 
-    QDir::Filters l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
+    FilterFlags l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
     SectionType l_sortSectionType = Settings::getInstance()->getLeftSortSectionType();
     SortDirsType l_sortDirsType = Settings::getInstance()->getLeftSortDirsType();
     bool l_sortDotFirst = Settings::getInstance()->getLeftSortDotFirst();
@@ -101,7 +101,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         r_path = QDir::currentPath();
     }
 
-    QDir::Filters r_filterFlags = Settings::getInstance()->getRightFilterSettings();
+    FilterFlags r_filterFlags = Settings::getInstance()->getRightFilterSettings();
     SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
     SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
     bool r_sortDotFirst = Settings::getInstance()->getRightSortDotFirst();
@@ -369,7 +369,7 @@ void DoubleFolderPanel::onChangeFilterSettings()
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR)
     {
-        QDir::Filters filterFlags = activeForm->getFilterFlags();
+        FilterFlags filterFlags = activeForm->getFilterFlags();
 
         FilterDialog dialog(filterFlags, parentWidget());
         if(dialog.exec())

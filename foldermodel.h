@@ -43,6 +43,9 @@ public:
     void setSortOrder(Qt::SortOrder order);
     Qt::SortOrder sortOrder() const;
 
+    void setFilterFlags(FilterFlags filterFlags);
+    FilterFlags getFilterFlags() const;
+
     int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -58,6 +61,7 @@ public:
 
 #ifdef Q_OS_WIN
     bool isDrive(const QModelIndex& index) const;
+    bool isWindowsSystemFile(const QFileInfo& fileInfo) const;
 #endif
 
     // QFileSystemModel specific API
@@ -67,9 +71,6 @@ public:
 
     void setIconProvider(QFileIconProvider *provider);
     QFileIconProvider *iconProvider() const;
-
-    void setFilter(QDir::Filters filters);
-    QDir::Filters filter() const;
 
     void setResolveSymlinks(bool enable);
     bool resolveSymlinks() const;
@@ -108,6 +109,7 @@ private Q_SLOTS:
     void onDirectoryLoaded(const QString &path);
 
 private:
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE;
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const Q_DECL_OVERRIDE;
 
     bool isSelected(const QModelIndex& index) const;
@@ -122,6 +124,8 @@ private:
     void emitRootPathChanged(const QString &newPath);
     void emitFileRenamed(const QString &path, const QString &oldName, const QString &newName);
     void emitDirectoryLoaded(const QString &path);
+
+    FilterFlags m_filterFlags;
 
     int m_sortColumn;
     SortDirsType m_sortDirsType;

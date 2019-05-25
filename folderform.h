@@ -21,7 +21,7 @@ class FolderForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit FolderForm(QDir::Filters filterFlags,
+    explicit FolderForm(FilterFlags filterFlags,
                         SectionType sortSectionType,
                         SortDirsType sortDirsType,
                         bool sortDotFirst,
@@ -36,8 +36,8 @@ public:
                        const QColor& pathColor,
                        const QColor& pathBgColor);
 
-    void setFilterFlags(QDir::Filters filterFlags);
-    QDir::Filters getFilterFlags() const;
+    void setFilterFlags(FilterFlags filterFlags);
+    FilterFlags getFilterFlags() const;
 
     void setSortSettings(SectionType sectionType,
                          SortDirsType dirsType,

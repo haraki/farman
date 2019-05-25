@@ -10,7 +10,7 @@
 namespace Farman
 {
 
-FolderForm::FolderForm(QDir::Filters filterFlags,
+FolderForm::FolderForm(FilterFlags filterFlags,
                        SectionType sortSectionType,
                        SortDirsType sortDirsType,
                        bool sortDotFirst,
@@ -103,14 +103,14 @@ void FolderForm::setAppearance(const QFont& viewFont,
     ui->folderPathEdit->setPalette(pal);
 }
 
-void FolderForm::setFilterFlags(QDir::Filters filterFlags)
+void FolderForm::setFilterFlags(FilterFlags filterFlags)
 {
-    m_folderModel->setFilter(filterFlags);
+    m_folderModel->setFilterFlags(filterFlags);
 }
 
-QDir::Filters FolderForm::getFilterFlags() const
+FilterFlags FolderForm::getFilterFlags() const
 {
-    return m_folderModel->filter();
+    return m_folderModel->getFilterFlags();
 }
 
 void FolderForm::setSortSettings(SectionType sectionType,
@@ -166,31 +166,30 @@ int FolderForm::setPath(const QString& dirPath)
         return -1;
     }
 
-    QDir dir(dirPath);
-    QDir::Filters filterFlags;
+    FilterFlags filterFlags = m_folderModel->getFilterFlags();
 
     // ルートディレクトリの場合は".."を表示しないようにする
-    if(dir.isRoot())
+    if(QDir(dirPath).isRoot())
     {
-        filterFlags = m_folderModel->filter() | QDir::NoDotDot;
+        filterFlags &= ~static_cast<int>(FilterFlag::Parent);
     }
     else
     {
-        filterFlags = m_folderModel->filter() & ~QDir::NoDotDot;
+        filterFlags |= FilterFlag::Parent;
     }
 
-    if(dir.entryInfoList(filterFlags).size() == 0)
-    {
-        qDebug() << dirPath << " size() == 0";
+//    if(dir.entryInfoList(filterFlags).size() == 0)
+//    {
+//        qDebug() << dirPath << " size() == 0";
 
-        return -1;
-    }
+//        return -1;
+//    }
 
     m_isSettingPath = true;
 
     m_folderModel->clearSelected();
 
-    m_folderModel->setFilter(filterFlags);
+    m_folderModel->setFilterFlags(filterFlags);
 
     m_folderModel->setRootPath(dirPath);
 

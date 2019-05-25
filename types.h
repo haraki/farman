@@ -113,7 +113,18 @@ enum class DateFormatType : int
     DateFormatTypeNum,
 };
 
-static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries | QDir::AccessMask | QDir::AllDirs | QDir::NoDot;
+// フィルター
+enum class FilterFlag : int
+{
+    None = 0,
+
+    Hidden = (1 << 0),          // 隠しファイル
+    System = (1 << 1),          // システムファイル(Windows)
+
+    Parent = (1 << 8),          // ".."
+};
+Q_DECLARE_FLAGS(FilterFlags, FilterFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(FilterFlags)
 
 // 同名ファイルが存在する場合の処理タイプ
 enum class OverwriteMethodType : int
