@@ -22,7 +22,6 @@ static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries |
                                                          QDir::Executable |
                                                          QDir::Modified   |
                                                          QDir::System     |
-                                                         QDir::AllDirs    |
                                                          QDir::NoDot;
 
 
