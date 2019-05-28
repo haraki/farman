@@ -21,6 +21,7 @@ static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries |
                                                          QDir::Writable   |
                                                          QDir::Executable |
                                                          QDir::Modified   |
+                                                         QDir::Hidden     |
                                                          QDir::System     |
                                                          QDir::NoDot;
 
@@ -135,26 +136,6 @@ Qt::SortOrder FolderModel::sortOrder() const
 void FolderModel::setFilterFlags(FilterFlags filterFlags)
 {
     m_filterFlags = filterFlags;
-
-    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
-    QDir::Filters filters = fsModel->filter();
-    if(filterFlags & FilterFlag::Hidden)
-    {
-        filters |= QDir::Hidden;
-    }
-    else
-    {
-        filters &= ~QDir::Hidden;
-    }
-    if(filterFlags & FilterFlag::Parent)
-    {
-        filters &= ~QDir::NoDotDot;
-    }
-    else
-    {
-        filters |= QDir::NoDotDot;
-    }
-    fsModel->setFilter(filters);
 }
 
 FilterFlags FolderModel::getFilterFlags() const
@@ -437,6 +418,11 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
     QFileInfo cfi = fsModel->fileInfo(childIndex);
 
     if(pfi.isRoot() && cfi.fileName() == "..")
+    {
+        return false;
+    }
+
+    if(!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden() && cfi.fileName() != "..")
     {
         return false;
     }
