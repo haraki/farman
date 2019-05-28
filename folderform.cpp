@@ -166,33 +166,17 @@ int FolderForm::setPath(const QString& dirPath)
         return -1;
     }
 
-    FilterFlags filterFlags = m_folderModel->getFilterFlags();
-
-    QDir nextDir = QDir(dirPath);
-
     // ディレクトリが空(".." も存在しない)場合は Open できないとみなしてエラー
-    if(nextDir.isEmpty(QDir::AllEntries | QDir::NoDot))
+    if(QDir(dirPath).isEmpty(QDir::AllEntries | QDir::NoDot))
     {
         qDebug() << dirPath << " size() == 0";
 
         return -1;
     }
 
-    // ルートディレクトリの場合は".."を表示しないようにする
-    if(nextDir.isRoot())
-    {
-        filterFlags &= ~static_cast<int>(FilterFlag::Parent);
-    }
-    else
-    {
-        filterFlags |= FilterFlag::Parent;
-    }
-
     m_isSettingPath = true;
 
     m_folderModel->clearSelected();
-
-    m_folderModel->setFilterFlags(filterFlags);
 
     m_folderModel->setRootPath(dirPath);
 

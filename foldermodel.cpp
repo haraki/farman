@@ -428,15 +428,21 @@ void FolderModel::clearSelected()
 
 bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-#ifdef Q_OS_WIN
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
 
-    // source_parent は mapToSource されているようなので、QFileSystemModel::index() に渡す際は改めて mapToSource しない
-    // QFileSystemModel::fileInfo() に渡す child_index も同様
-    QModelIndex childIndex = fsModel->index(source_row, 0, source_parent);
-    QFileInfo fi = fsModel->fileInfo(childIndex);
+    // source_parent は mapToSource されているようなので、QFileSystemModel に渡す際は mapToSource しない
+    QFileInfo pfi = fsModel->fileInfo(source_parent);
 
-    if(!(m_filterFlags & FilterFlag::System) && isWindowsSystemFile(fi))
+    QModelIndex childIndex = fsModel->index(source_row, 0, source_parent);
+    QFileInfo cfi = fsModel->fileInfo(childIndex);
+
+    if(pfi.isRoot() && cfi.fileName() == "..")
+    {
+        return false;
+    }
+
+#ifdef Q_OS_WIN
+    if(!(m_filterFlags & FilterFlag::System) && isWindowsSystemFile(cfi))
     {
         return false;
     }
