@@ -295,11 +295,7 @@ int FolderForm::onGoToParentDir()
     const QModelIndex currentDirIndex = ui->folderView->rootIndex();
     const QString currentPath = m_folderModel->filePath(currentDirIndex);
 
-#ifdef Q_OS_WIN
-    if(currentPath == "")
-#else           // Q_OS_WIN
     if(QDir(currentPath).isRoot())
-#endif          // Q_OS_WIN
     {
         return -1;
     }
