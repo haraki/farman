@@ -16,11 +16,14 @@ FilterDialog::FilterDialog(FilterFlags filterFlags, QWidget *parent) :
     {
         ui->showHiddenCheckBox->setChecked(true);
     }
-
+#ifdef Q_OS_WIN
     if(filterFlags & FilterFlag::System)
     {
         ui->showSystemCheckBox->setChecked(true);
     }
+#else
+    ui->showSystemCheckBox->setVisible(false);
+#endif
 }
 
 FilterDialog::~FilterDialog()
@@ -40,12 +43,12 @@ void FilterDialog::accept()
     {
         m_filterFlags |= FilterFlag::Hidden;
     }
-
+#ifdef Q_OS_WIN
     if(ui->showSystemCheckBox->isChecked())
     {
         m_filterFlags |= FilterFlag::System;
     }
-
+#endif
     qDebug() << "filterFlags == " << m_filterFlags;
 
     QDialog::accept();
