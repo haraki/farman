@@ -38,7 +38,7 @@ FilterFlags FilterDialog::getFilterFlags()
 
 void FilterDialog::accept()
 {
-    m_filterFlags &= ~(FilterFlag::Hidden | FilterFlag::System);
+    m_filterFlags = FilterFlag::None;
     if(ui->showHiddenCheckBox->isChecked())
     {
         m_filterFlags |= FilterFlag::Hidden;

@@ -188,7 +188,7 @@ private:
     void setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
     void setValueSortOrder(Qt::SortOrder order, const QString& prefix);
 
-    FilterFlags getValueFilterSettings(const QString& prefix);
+    FilterFlags getValueFilterSettings(const QString& prefix) const;
     void setValueFilterSettings(FilterFlags filterSettings, const QString& prefix);
 
     static Settings* s_instance;

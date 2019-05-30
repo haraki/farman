@@ -546,9 +546,9 @@ void Settings::setValueSortOrder(Qt::SortOrder order, const QString& prefix)
     setValue("main/" + prefix + "SortOrder", sortOrderValue);
 }
 
-FilterFlags Settings::getValueFilterSettings(const QString& prefix)
+FilterFlags Settings::getValueFilterSettings(const QString& prefix) const
 {
-    FilterFlags ret = DEFAULT_FILTER_FLAGS;
+    FilterFlags ret = FilterFlag::None;
 
     if(value("main/" + prefix + "FilterHidden", false).toBool())
     {
