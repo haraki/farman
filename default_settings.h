@@ -35,6 +35,8 @@ static Q_DECL_CONSTEXPR Qt::SortOrder DEFAULT_SORT_ORDER = Qt::AscendingOrder;
 
 static Q_DECL_CONSTEXPR FilterFlags DEFAULT_FILTER_FLAGS = FilterFlag::Hidden | FilterFlag::System;
 
+static Q_DECL_CONSTEXPR char DEFAULT_NAME_MASK_FILTERS[] = "*";
+
 static Q_DECL_CONSTEXPR OverwriteMethodType DEFAULT_OVERWRITE_METHOD_TYPE = OverwriteMethodType::Overwrite;
 
 static Q_DECL_CONSTEXPR DragAndDropBehaviorType DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE = DragAndDropBehaviorType::Select;

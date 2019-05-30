@@ -83,11 +83,15 @@ public:
     void setRightSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity) { m_rightSortCaseSensitivity = caseSensitivity; }
     void setRightSortOrder(Qt::SortOrder order) { m_rightSortOrder = order; }
 
-    FilterFlags getLeftFilterSettings() { return m_leftFilterSettings; }
-    void setLeftFilterSettings(FilterFlags leftFilterSettings) { m_leftFilterSettings = leftFilterSettings; }
+    FilterFlags getLeftFilterSettings() const { return m_leftFilterSettings; }
+    void setLeftFilterSettings(FilterFlags filterSettings) { m_leftFilterSettings = filterSettings; }
+    QStringList getLeftNameMaskFilterSettings() const { return m_leftNameMaskFilterSettings; }
+    void setLeftNameMaskFilterSettings(const QStringList& nameMaskFilterSettings) { m_leftNameMaskFilterSettings = nameMaskFilterSettings; }
 
-    FilterFlags getRightFilterSettings() { return m_rightFilterSettings; }
-    void setRightFilterSettings(FilterFlags rightFilterSettings) { m_rightFilterSettings = rightFilterSettings; }
+    FilterFlags getRightFilterSettings() const { return m_rightFilterSettings; }
+    void setRightFilterSettings(FilterFlags filterSettings) { m_rightFilterSettings = filterSettings; }
+    QStringList getRightNameMaskFilterSettings() const { return m_rightNameMaskFilterSettings; }
+    void setRightNameMaskFilterSettings(const QStringList& nameMaskFilterSettings) { m_rightNameMaskFilterSettings = nameMaskFilterSettings; }
 
     DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
     void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
@@ -190,6 +194,8 @@ private:
 
     FilterFlags getValueFilterSettings(const QString& prefix) const;
     void setValueFilterSettings(FilterFlags filterSettings, const QString& prefix);
+    QStringList getValueNameMaskFilterSettings(const QString& prefix) const;
+    void setValueNameMaskFilterSettings(const QStringList& nameMaskFilterSettings, const QString& prefix);
 
     static Settings* s_instance;
 
@@ -221,7 +227,9 @@ private:
     Qt::SortOrder m_rightSortOrder = DEFAULT_SORT_ORDER;
 
     FilterFlags m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
+    QStringList m_leftNameMaskFilterSettings = QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts);
     FilterFlags m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
+    QStringList m_rightNameMaskFilterSettings = QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts);
 
     DragAndDropBehaviorType m_dragAndDropBehaviorType = DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE;
 
