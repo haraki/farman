@@ -108,6 +108,14 @@ void FolderForm::setAppearance(const QFont& viewFont,
 void FolderForm::setFilterFlags(FilterFlags filterFlags)
 {
     m_folderModel->setFilterFlags(filterFlags);
+
+    QString flagsStr = tr("Hidden : ") + ((filterFlags & FilterFlag::Hidden) ? tr("Show") : tr("Hide"))
+#ifdef Q_OS_WIN
+                     + tr(", System : ") + ((filterFlags & FilterFlag::System) ? tr("Show") : tr("Hide"))
+#endif
+                     ;
+
+    ui->filterFlagsLabel->setText(flagsStr);
 }
 
 FilterFlags FolderForm::getFilterFlags() const
@@ -118,6 +126,8 @@ FilterFlags FolderForm::getFilterFlags() const
 void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
 {
     m_folderModel->setNameFilters(nameMaskFilters);
+
+    ui->filterNameMaskLabel->setText(tr("Filter : ") + nameMaskFilters.join(' '));
 }
 
 QStringList FolderForm::getNameMaskFilters() const
