@@ -39,6 +39,7 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QFileSystemModel* fsModel = new QFileSystemModel(this);
 
     fsModel->setFilter(FIX_FILTER_FLAGS);
+    fsModel->setNameFilterDisables(false);
 
     connect(fsModel,
             SIGNAL(rootPathChanged(QString)),

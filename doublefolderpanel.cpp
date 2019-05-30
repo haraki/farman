@@ -42,6 +42,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     }
 
     FilterFlags l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
+    QStringList l_nameMaskfilters = Settings::getInstance()->getLeftNameMaskFilterSettings();
     SectionType l_sortSectionType = Settings::getInstance()->getLeftSortSectionType();
     SortDirsType l_sortDirsType = Settings::getInstance()->getLeftSortDirsType();
     bool l_sortDotFirst = Settings::getInstance()->getLeftSortDotFirst();
@@ -54,6 +55,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     l_vLayout->setContentsMargins(0, 0, 0, 0);
 
     FolderForm* l_folderForm = new FolderForm(l_filterFlags,
+                                              l_nameMaskfilters,
                                               l_sortSectionType,
                                               l_sortDirsType,
                                               l_sortDotFirst,
@@ -102,6 +104,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     }
 
     FilterFlags r_filterFlags = Settings::getInstance()->getRightFilterSettings();
+    QStringList r_nameMaskfilters = Settings::getInstance()->getRightNameMaskFilterSettings();
     SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
     SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
     bool r_sortDotFirst = Settings::getInstance()->getRightSortDotFirst();
@@ -114,6 +117,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     r_vLayout->setContentsMargins(0, 0, 0, 0);
 
     FolderForm* r_folderForm = new FolderForm(r_filterFlags,
+                                              r_nameMaskfilters,
                                               r_sortSectionType,
                                               r_sortDirsType,
                                               r_sortDotFirst,
@@ -370,19 +374,24 @@ void DoubleFolderPanel::onChangeFilterSettings()
     if(activeForm != Q_NULLPTR)
     {
         FilterFlags filterFlags = activeForm->getFilterFlags();
+        QStringList nameMaskFilters = activeForm->getNameMaskFilters();
 
-        FilterDialog dialog(filterFlags, parentWidget());
+        FilterDialog dialog(filterFlags, nameMaskFilters, parentWidget());
         if(dialog.exec())
         {
             filterFlags = dialog.getFilterFlags();
+            nameMaskFilters = dialog.getNameMaskFilters();
             activeForm->setFilterFlags(filterFlags);
+            activeForm->setNameMaskFilters(nameMaskFilters);
             if(activeForm->objectName() == "l_folderForm")
             {
                 Settings::getInstance()->setLeftFilterSettings(filterFlags);
+                Settings::getInstance()->setLeftNameMaskFilterSettings(nameMaskFilters);
             }
             else
             {
                 Settings::getInstance()->setRightFilterSettings(filterFlags);
+                Settings::getInstance()->setRightNameMaskFilterSettings(nameMaskFilters);
             }
 
             activeForm->refresh();

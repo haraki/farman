@@ -22,6 +22,7 @@ class FolderForm : public QWidget
 
 public:
     explicit FolderForm(FilterFlags filterFlags,
+                        const QStringList& nameMaskFilters,
                         SectionType sortSectionType,
                         SortDirsType sortDirsType,
                         bool sortDotFirst,
@@ -38,6 +39,8 @@ public:
 
     void setFilterFlags(FilterFlags filterFlags);
     FilterFlags getFilterFlags() const;
+    void setNameMaskFilters(const QStringList& nameMaskFilters);
+    QStringList getNameMaskFilters() const;
 
     void setSortSettings(SectionType sectionType,
                          SortDirsType dirsType,

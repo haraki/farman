@@ -5,10 +5,11 @@
 namespace Farman
 {
 
-FilterDialog::FilterDialog(FilterFlags filterFlags, QWidget *parent) :
+FilterDialog::FilterDialog(FilterFlags filterFlags,  const QStringList& nameMaskFilters, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FilterDialog),
-    m_filterFlags(filterFlags)
+    m_filterFlags(filterFlags),
+    m_nameMaskFilters(nameMaskFilters)
 {
     ui->setupUi(this);
 
@@ -24,6 +25,8 @@ FilterDialog::FilterDialog(FilterFlags filterFlags, QWidget *parent) :
 #else
     ui->showSystemCheckBox->setVisible(false);
 #endif
+
+    ui->nameMaskFilterLineEdit->setText(nameMaskFilters.join(' '));
 }
 
 FilterDialog::~FilterDialog()
@@ -34,6 +37,11 @@ FilterDialog::~FilterDialog()
 FilterFlags FilterDialog::getFilterFlags()
 {
     return m_filterFlags;
+}
+
+QStringList FilterDialog::getNameMaskFilters()
+{
+    return m_nameMaskFilters;
 }
 
 void FilterDialog::accept()
@@ -49,7 +57,13 @@ void FilterDialog::accept()
         m_filterFlags |= FilterFlag::System;
     }
 #endif
-    qDebug() << "filterFlags == " << m_filterFlags;
+    m_nameMaskFilters = ui->nameMaskFilterLineEdit->text().simplified().split(' ', QString::SkipEmptyParts);
+    if(m_nameMaskFilters.isEmpty())
+    {
+        m_nameMaskFilters = QStringList("*");
+    }
+
+    qDebug() << "filterFlags : " << m_filterFlags << ", nameMaskFilters : " << m_nameMaskFilters;
 
     QDialog::accept();
 }

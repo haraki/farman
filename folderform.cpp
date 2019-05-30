@@ -11,6 +11,7 @@ namespace Farman
 {
 
 FolderForm::FolderForm(FilterFlags filterFlags,
+                       const QStringList& nameMaskFilters,
                        SectionType sortSectionType,
                        SortDirsType sortDirsType,
                        bool sortDotFirst,
@@ -29,6 +30,7 @@ FolderForm::FolderForm(FilterFlags filterFlags,
     m_folderModel->setSortLocaleAware(true);
 
     setFilterFlags(filterFlags);
+    setNameMaskFilters(nameMaskFilters);
     setSortSettings(sortSectionType, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
 
     ui->folderView->setModel(m_folderModel);
@@ -111,6 +113,16 @@ void FolderForm::setFilterFlags(FilterFlags filterFlags)
 FilterFlags FolderForm::getFilterFlags() const
 {
     return m_folderModel->getFilterFlags();
+}
+
+void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
+{
+    m_folderModel->setNameFilters(nameMaskFilters);
+}
+
+QStringList FolderForm::getNameMaskFilters() const
+{
+    return m_folderModel->nameFilters();
 }
 
 void FolderForm::setSortSettings(SectionType sectionType,

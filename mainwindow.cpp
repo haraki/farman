@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     , ui(new Ui::MainWindow)
     , m_file(Q_NULLPTR)
     , m_viewerDispatcher(Q_NULLPTR)
-    , m_nameFilters()
 {
     ui->setupUi(this);
 

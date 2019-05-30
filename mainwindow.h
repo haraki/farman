@@ -81,8 +81,6 @@ private:
 
     File* m_file;
     ViewerDispatcher* m_viewerDispatcher;
-
-    QStringList m_nameFilters;
 };
 
 }           // namespace Farman
