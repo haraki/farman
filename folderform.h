@@ -75,6 +75,8 @@ Q_SIGNALS:
 protected Q_SLOTS:
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
     void onDirectoryLoaded(const QString &path);
+    void onLayoutChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
+    void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private Q_SLOTS:
     void on_folderSelectButton_clicked();
@@ -92,7 +94,7 @@ private:
 
     FolderModel *m_folderModel;
 
-    bool m_isSettingPath;
+//    bool m_isSettingPath;
 };
 
 }           // namespace Farman

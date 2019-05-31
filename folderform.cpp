@@ -21,7 +21,6 @@ FolderForm::FolderForm(FilterFlags filterFlags,
     : QWidget(parent)
     , ui(new Ui::FolderForm)
     , m_folderModel(new FolderModel(this))
-    , m_isSettingPath(false)
 {
     ui->setupUi(this);
 
@@ -45,6 +44,14 @@ FolderForm::FolderForm(FilterFlags filterFlags,
             SIGNAL(directoryLoaded(const QString&)),
             this,
             SLOT(onDirectoryLoaded(const QString&)));
+    connect(m_folderModel,
+            SIGNAL(layoutChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)),
+            this,
+            SLOT(onLayoutChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
+    connect(m_folderModel,
+            SIGNAL(layoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)),
+            this,
+            SLOT(onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
 
     ui->folderView->installEventFilter(this);
 }
@@ -180,14 +187,6 @@ Qt::SortOrder FolderForm::getSortOrder() const
 
 int FolderForm::setPath(const QString& dirPath)
 {
-    if(m_isSettingPath)
-    {
-        // 前回の setPath() が終わっていない
-        qDebug() << "previous setPath() has not ended.";
-
-        return -1;
-    }
-
     // ディレクトリが空(".." も存在しない)場合は Open できないとみなしてエラー
     if(QDir(dirPath).isEmpty(QDir::AllEntries | QDir::NoDot))
     {
@@ -195,8 +194,6 @@ int FolderForm::setPath(const QString& dirPath)
 
         return -1;
     }
-
-    m_isSettingPath = true;
 
     m_folderModel->clearSelected();
 
@@ -267,25 +264,37 @@ void FolderForm::onDirectoryLoaded(const QString& path)
 {
     qDebug() << "directory loaded." << path;
 
-    if(m_isSettingPath)
+    QModelIndex currentRootIndex = ui->folderView->rootIndex();
+    QModelIndex newRootIndex = m_folderModel->index(path);
+
+    ui->folderView->setRootIndex(newRootIndex);
+
+    if(currentRootIndex.parent() == newRootIndex)
     {
-        // 前回のパスが子ディレクトリであれば、そこを初期カーソル位置とする
-        QModelIndex newCursorIndex = ui->folderView->rootIndex();
-
-        // setPath() によって発生した場合はカーソル位置を再設定する
-        QModelIndex newDirIndex = m_folderModel->index(path);
-        ui->folderView->setRootIndex(newDirIndex);
-
-        if(!newCursorIndex.isValid() || newCursorIndex.parent() != newDirIndex || newCursorIndex.row() < 0)
-        {
-            // 初期カーソル位置はリストの先頭
-            newCursorIndex = m_folderModel->index(0, 0, newDirIndex);
-        }
-
-        ui->folderView->setCursor(newCursorIndex);
-
-        m_isSettingPath = false;
+        ui->folderView->setCursor(currentRootIndex);
     }
+}
+
+void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
+{
+    qDebug() << "FolderForm::onLayoutChanged() parents : " << parents << ", hint : " << hint;
+
+    QModelIndex cursorIndex = ui->folderView->currentIndex();
+
+    qDebug() << "============================= cursorIndex.isValid() : " << cursorIndex.isValid() << ", cursorIndex.row() : " << cursorIndex.row();
+
+    if(!cursorIndex.isValid() || cursorIndex.row() < 0)
+    {
+        // 初期カーソル位置はリストの先頭
+        cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
+        ui->folderView->setCursor(cursorIndex);
+    }
+}
+
+void FolderForm::onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
+{
+    qDebug() << "FolderForm::onLayoutAboutToBeChanged()";
+
 }
 
 void FolderForm::setCursor(const QString& fileName)
@@ -332,7 +341,7 @@ int FolderForm::onGoToParentDir()
 void FolderForm::refresh()
 {
     m_folderModel->refresh();
-
+#if 0
     QModelIndex cursorIndex = ui->folderView->currentIndex();
     if(!cursorIndex.isValid() || cursorIndex.parent() != ui->folderView->rootIndex() || cursorIndex.row() < 0)
     {
@@ -340,6 +349,7 @@ void FolderForm::refresh()
     }
 
     ui->folderView->setCursor(cursorIndex);
+#endif
 }
 
 int FolderForm::getTotalColumnWidth(int withOutColumn)
