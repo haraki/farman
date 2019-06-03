@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QItemSelectionModel>
 #include <QFileIconProvider>
+#include <functional>
 #include "foldermodel.h"
 #include "settings.h"
 #include "types.h"
@@ -444,12 +445,42 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
 
     if(pfi.isRoot() && cfi.fileName() == "..")
     {
+        // ルートディレクトリより上には行けないようにする
         return false;
     }
 
-    if(!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden() && cfi.fileName() != "..")
+    if(!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden())
     {
-        return false;
+        // 隠しファイル非表示時、カレントディレクトリが属するディレクトリは隠しであっても表示する
+        // 非表示にすると、隠し属性の親ディレクトリに移動した際、FolderView が正常に表示されなくなってしまう現象を回避するため
+        if(!cfi.isDir())
+        {
+            return false;
+        }
+
+        // source_row(childIndex)が指すディレクトリが、カレントディレクトリ(fsModel->rootPath())が属するディレクトリであるかを確認する
+        std::function<bool (const QModelIndex&)> isBelong =
+                [&isBelong, &fsModel, &childIndex](const QModelIndex& dirIndex)
+        {
+            if(!dirIndex.isValid() || fsModel->fileInfo(dirIndex).isRoot())
+            {
+                return false;
+            }
+            else if(childIndex == dirIndex)
+            {
+                return true;
+            }
+            return isBelong(dirIndex.parent());
+        };
+
+        if(isBelong(fsModel->index(fsModel->rootPath())))
+        {
+            return true;
+        }
+        else if(cfi.fileName() != "..")
+        {
+            return false;
+        }
     }
 
 #ifdef Q_OS_WIN
