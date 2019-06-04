@@ -27,16 +27,6 @@ public:
     explicit MainWindow(QWidget *parent = Q_NULLPTR);
     ~MainWindow() Q_DECL_OVERRIDE;
 
-public Q_SLOTS:
-    void onOpenFile(ViewerType viewerType);
-    void onOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
-    void onCloseViewer(const QString& viewerName);
-    void onOpenWithApp(const QString& path);
-    void onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths);
-    void onStatusChanged(const QString& statusString);
-    void onCreateNewFileFinished(const QString& filePath);
-    void onOutputConsole(const QString& consoleString);
-
 private:
     void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
 
@@ -52,7 +42,27 @@ private:
 
     void about();
 
+Q_SIGNALS:
+    void outputConsole(const QString& consoleString);
+
+private:
+    int openFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
+    int closeViewer(const QString& viewerObjectName);
+    int openWithApp(const QString& path);
+    int openWithTextEditor(const QString& dirPath, const QStringList& filePaths);
+
+    void emitOutputConsole(const QString& consoleString);
+
 private Q_SLOTS:
+    void onOpenFile(ViewerType viewerType);
+    void onOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
+    void onCloseViewer(const QString& viewerName);
+    void onOpenWithApp(const QString& path);
+    void onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths);
+    void onCreateNewFileFinished(const QString& filePath);
+    void onStatusChanged(const QString& statusString);
+    void onOutputConsole(const QString& consoleString);
+
     void on_actionOpen_triggered();
     void on_actionOpenWithTextViewer_triggered();
     void on_actionOpenWithHexViewer_triggered();
