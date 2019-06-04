@@ -128,7 +128,7 @@ void CopyWorker::run()
         }
     }
 
-    emitOutputConsole(QString("Total time : %1 ms.").arg(m_timer.elapsed()));
+    emitOutputConsole(QString("Total time : %L1 ms.\n").arg(m_timer.elapsed()));
 
     qDebug() << "finish CopyWorker::run()";
 
