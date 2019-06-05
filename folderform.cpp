@@ -338,18 +338,14 @@ int FolderForm::onGoToParentDir()
     return setPath(newPath);
 }
 
-void FolderForm::refresh()
+void FolderForm::refresh(bool clearSelected/* = false */)
 {
-    m_folderModel->refresh();
-#if 0
-    QModelIndex cursorIndex = ui->folderView->currentIndex();
-    if(!cursorIndex.isValid() || cursorIndex.parent() != ui->folderView->rootIndex() || cursorIndex.row() < 0)
+    if(clearSelected)
     {
-        cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
+        m_folderModel->clearSelected();
     }
 
-    ui->folderView->setCursor(cursorIndex);
-#endif
+    m_folderModel->refresh();
 }
 
 int FolderForm::getTotalColumnWidth(int withOutColumn)

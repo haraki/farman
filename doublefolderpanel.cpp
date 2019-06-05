@@ -328,74 +328,78 @@ void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)
 void DoubleFolderPanel::onChangeSortSettings()
 {
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        SectionType sectionType = activeForm->getSortSectionType();
-        SortDirsType dirsType = activeForm->getSortDirsType();
-        bool dotFirst = activeForm->getSortDotFirst();
-        Qt::CaseSensitivity caseSensitivity = activeForm->getSortCaseSensitivity();
-        Qt::SortOrder order = activeForm->getSortOrder();
+        return;
+    }
 
-        SortDialog dialog(sectionType, dirsType, dotFirst, caseSensitivity, order, parentWidget());
-        if(dialog.exec())
+    SectionType sectionType = activeForm->getSortSectionType();
+    SortDirsType dirsType = activeForm->getSortDirsType();
+    bool dotFirst = activeForm->getSortDotFirst();
+    Qt::CaseSensitivity caseSensitivity = activeForm->getSortCaseSensitivity();
+    Qt::SortOrder order = activeForm->getSortOrder();
+
+    SortDialog dialog(sectionType, dirsType, dotFirst, caseSensitivity, order, parentWidget());
+    if(dialog.exec())
+    {
+        sectionType = dialog.getSortSectionType();
+        dirsType = dialog.getSortDirsType();
+        dotFirst = dialog.getSortDotFirst();
+        caseSensitivity = dialog.getSortCaseSensitivity();
+        order = dialog.getSortOrder();
+
+        activeForm->setSortSettings(sectionType, dirsType, dotFirst, caseSensitivity, order);
+        if(activeForm->objectName() == "l_folderForm")
         {
-            sectionType = dialog.getSortSectionType();
-            dirsType = dialog.getSortDirsType();
-            dotFirst = dialog.getSortDotFirst();
-            caseSensitivity = dialog.getSortCaseSensitivity();
-            order = dialog.getSortOrder();
-
-            activeForm->setSortSettings(sectionType, dirsType, dotFirst, caseSensitivity, order);
-            if(activeForm->objectName() == "l_folderForm")
-            {
-                Settings::getInstance()->setLeftSortSectionType(sectionType);
-                Settings::getInstance()->setLeftSortDirsType(dirsType);
-                Settings::getInstance()->setLeftSortDotFirst(dotFirst);
-                Settings::getInstance()->setLeftSortCaseSensitivity(caseSensitivity);
-                Settings::getInstance()->setLeftSortOrder(order);
-            }
-            else
-            {
-                Settings::getInstance()->setRightSortSectionType(sectionType);
-                Settings::getInstance()->setRightSortDirsType(dirsType);
-                Settings::getInstance()->setRightSortDotFirst(dotFirst);
-                Settings::getInstance()->setRightSortCaseSensitivity(caseSensitivity);
-                Settings::getInstance()->setRightSortOrder(order);
-            }
-
-            activeForm->refresh();
+            Settings::getInstance()->setLeftSortSectionType(sectionType);
+            Settings::getInstance()->setLeftSortDirsType(dirsType);
+            Settings::getInstance()->setLeftSortDotFirst(dotFirst);
+            Settings::getInstance()->setLeftSortCaseSensitivity(caseSensitivity);
+            Settings::getInstance()->setLeftSortOrder(order);
         }
+        else
+        {
+            Settings::getInstance()->setRightSortSectionType(sectionType);
+            Settings::getInstance()->setRightSortDirsType(dirsType);
+            Settings::getInstance()->setRightSortDotFirst(dotFirst);
+            Settings::getInstance()->setRightSortCaseSensitivity(caseSensitivity);
+            Settings::getInstance()->setRightSortOrder(order);
+        }
+
+        activeForm->refresh();
     }
 }
 
 void DoubleFolderPanel::onChangeFilterSettings()
 {
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
+    if(activeForm == Q_NULLPTR)
     {
-        FilterFlags filterFlags = activeForm->getFilterFlags();
-        QStringList nameMaskFilters = activeForm->getNameMaskFilters();
+        return;
+    }
 
-        FilterDialog dialog(filterFlags, nameMaskFilters, parentWidget());
-        if(dialog.exec())
+    FilterFlags filterFlags = activeForm->getFilterFlags();
+    QStringList nameMaskFilters = activeForm->getNameMaskFilters();
+
+    FilterDialog dialog(filterFlags, nameMaskFilters, parentWidget());
+    if(dialog.exec())
+    {
+        filterFlags = dialog.getFilterFlags();
+        nameMaskFilters = dialog.getNameMaskFilters();
+        activeForm->setFilterFlags(filterFlags);
+        activeForm->setNameMaskFilters(nameMaskFilters);
+        if(activeForm->objectName() == "l_folderForm")
         {
-            filterFlags = dialog.getFilterFlags();
-            nameMaskFilters = dialog.getNameMaskFilters();
-            activeForm->setFilterFlags(filterFlags);
-            activeForm->setNameMaskFilters(nameMaskFilters);
-            if(activeForm->objectName() == "l_folderForm")
-            {
-                Settings::getInstance()->setLeftFilterSettings(filterFlags);
-                Settings::getInstance()->setLeftNameMaskFilterSettings(nameMaskFilters);
-            }
-            else
-            {
-                Settings::getInstance()->setRightFilterSettings(filterFlags);
-                Settings::getInstance()->setRightNameMaskFilterSettings(nameMaskFilters);
-            }
-
-            activeForm->refresh();
+            Settings::getInstance()->setLeftFilterSettings(filterFlags);
+            Settings::getInstance()->setLeftNameMaskFilterSettings(nameMaskFilters);
         }
+        else
+        {
+            Settings::getInstance()->setRightFilterSettings(filterFlags);
+            Settings::getInstance()->setRightNameMaskFilterSettings(nameMaskFilters);
+        }
+
+        activeForm->refresh(true);          // 選択状態のファイルがあると refresh でクラッシュするので選択状態を解除する
     }
 }
 

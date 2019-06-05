@@ -66,7 +66,7 @@ public:
 
     int onGoToChildDir();
     int onGoToParentDir();
-    void refresh();
+    void refresh(bool clearSelected = false);
 
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
