@@ -192,7 +192,14 @@ int MainWindow::openFile(const QString& path, ViewerType viewerType/* = ViewerTy
         return -1;
     }
 
-    if(QFileInfo(path).isDir())
+    QFileInfo fileInfo = QFileInfo(path);
+
+    if(path.isEmpty() || !fileInfo.exists())
+    {
+        return -1;
+    }
+
+    if(fileInfo.isDir())
     {
         // ディレクトリ移動
         if(viewerType == ViewerType::Auto)
@@ -272,6 +279,11 @@ int MainWindow::closeViewer(const QString& viewerObjectName)
 
 int MainWindow::openWithApp(const QString& path)
 {
+    if(path.isEmpty() || !QFileInfo(path).exists())
+    {
+        return -1;
+    }
+
     if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
     {
         qDebug() << "open url error:" << path;
@@ -285,6 +297,11 @@ int MainWindow::openWithApp(const QString& path)
 
 int MainWindow::openWithTextEditor(const QString& dirPath, const QStringList& filePaths)
 {
+    if(dirPath.isEmpty() || !QDir(dirPath).exists())
+    {
+        return -1;
+    }
+
     QString appPath = Settings::getInstance()->getTextEditorPath();
     QString args = Settings::getInstance()->getTextEditorArgs();
 

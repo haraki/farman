@@ -206,23 +206,44 @@ int FolderForm::setPath(const QString& dirPath)
 
 QString FolderForm::getCurrentDirPath()
 {
-    return m_folderModel->filePath(ui->folderView->rootIndex());
+    QModelIndex index = ui->folderView->rootIndex();
+
+    if(index.isValid())
+    {
+        return m_folderModel->filePath(index);
+    }
+
+    return "";
 }
 
 QString FolderForm::getCurrentFileName()
 {
-    return m_folderModel->fileName(ui->folderView->currentIndex());
+    QModelIndex index = ui->folderView->currentIndex();
+
+    if(index.isValid())
+    {
+        return m_folderModel->fileName(index);
+    }
+
+    return "";
 }
 
 QFileInfo FolderForm::getCurrentFileInfo()
 {
-    return m_folderModel->fileInfo(ui->folderView->currentIndex());
+    QModelIndex index = ui->folderView->currentIndex();
+
+    if(index.isValid())
+    {
+        return m_folderModel->fileInfo(index);
+    }
+
+    return QFileInfo();
 }
 
 QList<QFileInfo> FolderForm::getSelectedFileInfoList()
 {
     QModelIndexList indexList = m_folderModel->getSelectedIndexList();
-    if(indexList.size() == 0 && getCurrentFileName() != "..")
+    if(indexList.size() == 0 && getCurrentFileName() != "" && getCurrentFileName() != "..")
     {
         // 選択しているアイテムが無くても、".." 以外の箇所にカーソルがあれば、それを選択しているものとする
         indexList.push_back(ui->folderView->currentIndex());
@@ -281,7 +302,7 @@ void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* =
 
     QModelIndex cursorIndex = ui->folderView->currentIndex();
 
-    qDebug() << "============================= cursorIndex.isValid() : " << cursorIndex.isValid() << ", cursorIndex.row() : " << cursorIndex.row();
+    qDebug() << "cursorIndex.isValid() : " << cursorIndex.isValid() << ", cursorIndex.row() : " << cursorIndex.row();
 
     if(!cursorIndex.isValid() || cursorIndex.row() < 0)
     {
@@ -289,12 +310,16 @@ void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* =
         cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
         ui->folderView->setCursor(cursorIndex);
     }
+
+    qDebug() << "rowCount : " << m_folderModel->rowCount(ui->folderView->rootIndex());
 }
 
 void FolderForm::onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
 {
-    qDebug() << "FolderForm::onLayoutAboutToBeChanged()";
+    Q_UNUSED(parents)
+    Q_UNUSED(hint)
 
+    qDebug() << "FolderForm::onLayoutAboutToBeChanged()";
 }
 
 void FolderForm::setCursor(const QString& fileName)

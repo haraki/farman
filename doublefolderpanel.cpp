@@ -532,6 +532,12 @@ void DoubleFolderPanel::onMakeDirectory()
         return;
     }
 
+    QString currentDirPath = activeForm->getCurrentDirPath();
+    if(currentDirPath.isEmpty())
+    {
+        return;
+    }
+
     bool ok = false;
     QString dirName = QInputDialog::getText(parentWidget(),
                                             tr("Make a new directory"),
@@ -544,7 +550,7 @@ void DoubleFolderPanel::onMakeDirectory()
         return;
     }
 
-    emitMakeDirectory(activeForm->getCurrentDirPath(), dirName);
+    emitMakeDirectory(currentDirPath, dirName);
 }
 
 void DoubleFolderPanel::onCreateNewFile()
@@ -553,6 +559,12 @@ void DoubleFolderPanel::onCreateNewFile()
 
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    QString currentDirPath = activeForm->getCurrentDirPath();
+    if(currentDirPath.isEmpty())
     {
         return;
     }
@@ -569,7 +581,7 @@ void DoubleFolderPanel::onCreateNewFile()
         return;
     }
 
-    emitCreateNewFile(activeForm->getCurrentDirPath(), fileName);
+    emitCreateNewFile(currentDirPath, fileName);
 }
 
 void DoubleFolderPanel::onRename()
@@ -583,7 +595,13 @@ void DoubleFolderPanel::onRename()
     }
 
     QString oldName = activeForm->getCurrentFileName();
-    if(oldName == "..")
+    if(oldName.isEmpty() || oldName == "..")
+    {
+        return;
+    }
+
+    QString currentDirPath = activeForm->getCurrentDirPath();
+    if(currentDirPath.isEmpty())
     {
         return;
     }
@@ -595,7 +613,11 @@ void DoubleFolderPanel::onRename()
     }
 
     QString newName = dialog.getNewName();
-    emitRenameFile(activeForm->getCurrentDirPath(), oldName, newName);
+    if(newName.isEmpty() || newName == "." || newName == "..")
+    {
+        return;
+    }
+    emitRenameFile(currentDirPath, oldName, newName);
 
     activeForm->setCursor(newName);
 }
@@ -610,7 +632,8 @@ void DoubleFolderPanel::onAttributes()
         return;
     }
 
-    if(activeForm->getCurrentFileName() == "..")
+    QString currentFileName = activeForm->getCurrentFileName();
+    if(currentFileName.isEmpty() || currentFileName == "..")
     {
         return;
     }

@@ -55,6 +55,11 @@ void FolderView::selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag/
     Q_ASSERT(folderModel);
 
     const QModelIndex index = currentIndex();
+    if(!index.isValid() || folderModel->rowCount(index.parent()) == 0)
+    {
+        return;
+    }
+
     if(folderModel->fileName(index) != "..")
     {
         folderModel->setSelect(index.row(), selectionFlag, index.parent());
@@ -72,9 +77,14 @@ void FolderView::setCursor(const QModelIndex& index)
 
 void FolderView::movePreviousCursor()
 {
-    const QModelIndex index = currentIndex();
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
+
+    const QModelIndex index = currentIndex();
+    if(!index.isValid() || folderModel->rowCount(index.parent()) == 0)
+    {
+        return;
+    }
 
     int rowNext = index.row() - 1;
     if(rowNext < 0)
@@ -94,9 +104,14 @@ void FolderView::movePreviousCursor()
 
 void FolderView::moveNextCursor()
 {
-    const QModelIndex index = currentIndex();
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
+
+    const QModelIndex index = currentIndex();
+    if(!index.isValid() || folderModel->rowCount(index.parent()) == 0)
+    {
+        return;
+    }
 
     int rowNext = index.row() + 1;
     if(rowNext == folderModel->rowCount(index.parent()))
@@ -123,6 +138,11 @@ void FolderView::onDoubleClicked(const QModelIndex& index)
 {
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
     Q_ASSERT(folderModel);
+
+    if(!index.isValid())
+    {
+        return;
+    }
 
     const QString path = folderModel->fileInfo(index).absoluteFilePath();
 
@@ -160,7 +180,13 @@ void FolderView::keyPressEvent(QKeyEvent *e)
         FolderModel* folderModel = qobject_cast<FolderModel*>(model());
         Q_ASSERT(folderModel);
 
-        const QString path = folderModel->fileInfo(currentIndex()).absoluteFilePath();
+        const QModelIndex index = currentIndex();
+        if(!index.isValid())
+        {
+            return;
+        }
+
+        const QString path = folderModel->fileInfo(index).absoluteFilePath();
         if(e->modifiers() & Qt::ShiftModifier)
         {
             emitOpenWithApp(path);
