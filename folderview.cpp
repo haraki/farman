@@ -34,9 +34,6 @@ FolderView::~FolderView()
 void FolderView::setModel(FolderModel *model)
 {
     QTableView::setModel(model);
-
-    horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 }
 
 QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelIndex& index, const QEvent* e/* = Q_NULLPTR*/) const
@@ -131,6 +128,11 @@ void FolderView::moveNextCursor()
 
 void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
+    // フィルタ設定などで FolderView に表示するものが存在しない場合、ResizeMode がリセット？されてしまう不具合回避のため、refresh の度に再設定する
+    QHeaderView* hHeader = horizontalHeader();
+    hHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+    hHeader->setSectionResizeMode(0, QHeaderView::Stretch);
+
     emit dataChanged(topLeft, bottomRight);
 }
 
