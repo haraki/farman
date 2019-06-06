@@ -1,0 +1,3 @@
+[submodule "QHexView"]
+	path = QHexView
+	url = git@github.com:haraki/QHexView.git
