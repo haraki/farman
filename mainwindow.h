@@ -33,6 +33,11 @@ private:
     void initFont();
     void initPalette();
 
+    int openFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
+    int closeViewer(const QString& viewerObjectName);
+    int openWithApp(const QString& path);
+    int openWithTextEditor(const QString& dirPath, const QStringList& filePaths);
+
     void updateSettings();
 
     void setVisibleConsole(bool visible);
@@ -46,11 +51,6 @@ Q_SIGNALS:
     void outputConsole(const QString& consoleString);
 
 private:
-    int openFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
-    int closeViewer(const QString& viewerObjectName);
-    int openWithApp(const QString& path);
-    int openWithTextEditor(const QString& dirPath, const QStringList& filePaths);
-
     void emitOutputConsole(const QString& consoleString);
 
 private Q_SLOTS:
@@ -70,7 +70,7 @@ private Q_SLOTS:
     void on_actionOpenWithApp_triggered();
     void on_actionOpenWithTextEditor_triggered();
     void on_actionCreateNewFile_triggered();
-    void on_actionPreferences_triggered();
+    void on_actionSelectStorageFavorite_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();
     void on_actionDualPane_triggered();
@@ -82,6 +82,7 @@ private Q_SLOTS:
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
     void on_actionAttributes_triggered();
+    void on_actionPreferences_triggered();
     void on_actionConsole_triggered(bool checked);
     void on_consoleDockWidget_visibilityChanged(bool visible);
     void on_actionAbout_triggered();

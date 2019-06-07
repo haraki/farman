@@ -101,6 +101,8 @@
     <addaction name="actionOpenWithTextEditor"/>
     <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
+    <addaction name="actionSelectStorageFavorite"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -364,6 +366,20 @@
    </property>
    <property name="shortcut">
     <string>N</string>
+   </property>
+  </action>
+  <action name="actionSelectStorageFavorite">
+   <property name="text">
+    <string>Select Storage / Favorite folder...</string>
+   </property>
+   <property name="iconText">
+    <string>Select Storage / Favorite folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Select Storage / Favorite folder.</string>
+   </property>
+   <property name="shortcut">
+    <string>L</string>
    </property>
   </action>
  </widget>

@@ -28,6 +28,7 @@ SOURCES += main.cpp\
     folderviewstyleditemdelegate.cpp \
     foldermodel.cpp \
     doublefolderpanel.cpp \
+    selectstoragefavoritedialog.cpp \
     sortdialog.cpp \
     filterdialog.cpp \
     workingdialog.cpp \
@@ -57,6 +58,7 @@ HEADERS  += mainwindow.h \
     foldermodel.h \
     folderview.h \
     doublefolderpanel.h \
+    selectstoragefavoritedialog.h \
     types.h \
     sortdialog.h \
     filterdialog.h \
@@ -84,6 +86,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     folderform.ui \
     doublefolderpanel.ui \
+    selectstoragefavoritedialog.ui \
     sortdialog.ui \
     filterdialog.ui \
     workingdialog.ui \

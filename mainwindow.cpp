@@ -184,160 +184,6 @@ void MainWindow::emitOutputConsole(const QString& consoleString)
     emit outputConsole(consoleString);
 }
 
-int MainWindow::openFile(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
-{
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return -1;
-    }
-
-    QFileInfo fileInfo = QFileInfo(path);
-
-    if(path.isEmpty() || !fileInfo.exists())
-    {
-        return -1;
-    }
-
-    if(fileInfo.isDir())
-    {
-        // ディレクトリ移動
-        if(viewerType == ViewerType::Auto)
-        {
-            FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-            if(activeFolderForm == Q_NULLPTR)
-            {
-                return -1;
-            }
-
-            int ret = activeFolderForm->setPath(path);
-            if(ret < 0)
-            {
-                emitOutputConsole(tr("Folder can not be opened : %1\n").arg(path));
-            }
-        }
-        else
-        {
-            emitOutputConsole(tr("Folder can not be opened with the viewer : %1\n").arg(path));
-        }
-    }
-    else
-    {
-        // ファイルを Viewer でオープン
-        ViewerBase* viewer = m_viewerDispatcher->dispatcher(path, viewerType);
-        if(viewer == Q_NULLPTR)
-        {
-            return -1;
-        }
-
-        connect(viewer,
-                SIGNAL(closeViewer(const QString)),
-                this,
-                SLOT(onCloseViewer(const QString)));
-
-        // 余計な操作ができないよう、ビュアー時はメニューは無効化
-        ui->menuBar->setEnabled(false);
-
-        ui->mainWidget->layout()->addWidget(viewer);
-        ui->mainWidget->installEventFilter(viewer);
-
-        doubleFolderPanel->setVisible(false);
-
-        viewer->start(this);
-    }
-
-    return 0;
-}
-
-int MainWindow::closeViewer(const QString& viewerObjectName)
-{
-    ui->menuBar->setEnabled(true);
-
-    QWidget* viewer = ui->mainWidget->findChild<QWidget*>(viewerObjectName);
-    if(viewer == Q_NULLPTR)
-    {
-        return -1;
-    }
-
-    viewer->setVisible(false);
-    ui->mainWidget->layout()->removeWidget(viewer);
-    delete viewer;
-
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return -1;
-    }
-
-    if(!doubleFolderPanel->isVisible())
-    {
-        doubleFolderPanel->setVisible(true);
-    }
-
-    return 0;
-}
-
-int MainWindow::openWithApp(const QString& path)
-{
-    if(path.isEmpty() || !QFileInfo(path).exists())
-    {
-        return -1;
-    }
-
-    if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
-    {
-        qDebug() << "open url error:" << path;
-        emitOutputConsole(tr("Open failed : %1\n").arg(path));
-
-        return -1;
-    }
-
-    return 0;
-}
-
-int MainWindow::openWithTextEditor(const QString& dirPath, const QStringList& filePaths)
-{
-    if(dirPath.isEmpty() || !QDir(dirPath).exists())
-    {
-        return -1;
-    }
-
-    QString appPath = Settings::getInstance()->getTextEditorPath();
-    QString args = Settings::getInstance()->getTextEditorArgs();
-
-    if(appPath.isEmpty())
-    {
-        if(QMessageBox::warning(this,
-                                tr("Error"),
-                                tr("The external text editor has not been set.<br />Do you want to set it?"),
-                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
-        {
-            launchPreferencesDialog(PreferencesDialogTabPage::ExternalApp);
-        }
-
-        return 0;
-    }
-
-#ifdef Q_OS_MAC
-    QString command = "open -a ";
-#else
-    QString command = "";
-#endif
-    args.replace("$M", "\"" + filePaths.join("\" \"") + "\"");          // 複数ファイル
-    args.replace("$F", "\"" + filePaths.at(0) + "\"");                  // 最後に選択されたファイル or カーソルが指すファイル
-
-    command += "\"" + appPath + "\" " + args;
-
-    qDebug() << "dirPath : " << dirPath << ", filePaths : " << filePaths << ", command : " << command;
-
-    if(!launchExternalApp(command, dirPath))
-    {
-        return -1;
-    }
-
-    return 0;
-}
-
 void MainWindow::onOpenFile(ViewerType viewerType)
 {
     qDebug() << "MainWindow::onOpenFile()";
@@ -503,11 +349,15 @@ void MainWindow::on_actionCreateNewFile_triggered()
     }
 }
 
-void MainWindow::on_actionPreferences_triggered()
+void MainWindow::on_actionSelectStorageFavorite_triggered()
 {
-    qDebug() << "MainWindow::on_actionPreferences_triggered()";
+    qDebug() << "MainWindow::on_actionSelectStorageFavorite_triggered()";
 
-    launchPreferencesDialog();
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onSelectStorageFavorite();
+    }
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -627,6 +477,13 @@ void MainWindow::on_actionAttributes_triggered()
     }
 }
 
+void MainWindow::on_actionPreferences_triggered()
+{
+    qDebug() << "MainWindow::on_actionPreferences_triggered()";
+
+    launchPreferencesDialog();
+}
+
 void MainWindow::on_actionConsole_triggered(bool checked)
 {
     qDebug() << "MainWindow::on_actionConsole_triggered : " << checked;
@@ -646,6 +503,160 @@ void MainWindow::on_actionAbout_triggered()
     qDebug() << "MainWindow::on_actionAbout_triggered()";
 
     about();
+}
+
+int MainWindow::openFile(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
+{
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return -1;
+    }
+
+    QFileInfo fileInfo = QFileInfo(path);
+
+    if(path.isEmpty() || !fileInfo.exists())
+    {
+        return -1;
+    }
+
+    if(fileInfo.isDir())
+    {
+        // ディレクトリ移動
+        if(viewerType == ViewerType::Auto)
+        {
+            FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+            if(activeFolderForm == Q_NULLPTR)
+            {
+                return -1;
+            }
+
+            int ret = activeFolderForm->setPath(path);
+            if(ret < 0)
+            {
+                emitOutputConsole(tr("Folder can not be opened : %1\n").arg(path));
+            }
+        }
+        else
+        {
+            emitOutputConsole(tr("Folder can not be opened with the viewer : %1\n").arg(path));
+        }
+    }
+    else
+    {
+        // ファイルを Viewer でオープン
+        ViewerBase* viewer = m_viewerDispatcher->dispatcher(path, viewerType);
+        if(viewer == Q_NULLPTR)
+        {
+            return -1;
+        }
+
+        connect(viewer,
+                SIGNAL(closeViewer(const QString)),
+                this,
+                SLOT(onCloseViewer(const QString)));
+
+        // 余計な操作ができないよう、ビュアー時はメニューは無効化
+        ui->menuBar->setEnabled(false);
+
+        ui->mainWidget->layout()->addWidget(viewer);
+        ui->mainWidget->installEventFilter(viewer);
+
+        doubleFolderPanel->setVisible(false);
+
+        viewer->start(this);
+    }
+
+    return 0;
+}
+
+int MainWindow::closeViewer(const QString& viewerObjectName)
+{
+    ui->menuBar->setEnabled(true);
+
+    QWidget* viewer = ui->mainWidget->findChild<QWidget*>(viewerObjectName);
+    if(viewer == Q_NULLPTR)
+    {
+        return -1;
+    }
+
+    viewer->setVisible(false);
+    ui->mainWidget->layout()->removeWidget(viewer);
+    delete viewer;
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return -1;
+    }
+
+    if(!doubleFolderPanel->isVisible())
+    {
+        doubleFolderPanel->setVisible(true);
+    }
+
+    return 0;
+}
+
+int MainWindow::openWithApp(const QString& path)
+{
+    if(path.isEmpty() || !QFileInfo(path).exists())
+    {
+        return -1;
+    }
+
+    if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
+    {
+        qDebug() << "open url error:" << path;
+        emitOutputConsole(tr("Open failed : %1\n").arg(path));
+
+        return -1;
+    }
+
+    return 0;
+}
+
+int MainWindow::openWithTextEditor(const QString& dirPath, const QStringList& filePaths)
+{
+    if(dirPath.isEmpty() || !QDir(dirPath).exists())
+    {
+        return -1;
+    }
+
+    QString appPath = Settings::getInstance()->getTextEditorPath();
+    QString args = Settings::getInstance()->getTextEditorArgs();
+
+    if(appPath.isEmpty())
+    {
+        if(QMessageBox::warning(this,
+                                tr("Error"),
+                                tr("The external text editor has not been set.<br />Do you want to set it?"),
+                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+        {
+            launchPreferencesDialog(PreferencesDialogTabPage::ExternalApp);
+        }
+
+        return 0;
+    }
+
+#ifdef Q_OS_MAC
+    QString command = "open -a ";
+#else
+    QString command = "";
+#endif
+    args.replace("$M", "\"" + filePaths.join("\" \"") + "\"");          // 複数ファイル
+    args.replace("$F", "\"" + filePaths.at(0) + "\"");                  // 最後に選択されたファイル or カーソルが指すファイル
+
+    command += "\"" + appPath + "\" " + args;
+
+    qDebug() << "dirPath : " << dirPath << ", filePaths : " << filePaths << ", command : " << command;
+
+    if(!launchExternalApp(command, dirPath))
+    {
+        return -1;
+    }
+
+    return 0;
 }
 
 void MainWindow::updateSettings()
