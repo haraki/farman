@@ -31,6 +31,7 @@ SOURCES += main.cpp\
     selectstoragefavoritedialog.cpp \
     sortdialog.cpp \
     filterdialog.cpp \
+    storagefavoriteinfomodel.cpp \
     workingdialog.cpp \
     worker.cpp \
     copyworker.cpp \
@@ -59,6 +60,7 @@ HEADERS  += mainwindow.h \
     folderview.h \
     doublefolderpanel.h \
     selectstoragefavoritedialog.h \
+    storagefavoriteinfomodel.h \
     types.h \
     sortdialog.h \
     filterdialog.h \
