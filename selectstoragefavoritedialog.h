@@ -2,6 +2,7 @@
 #define SELECTSTORAGEFAVORITEDIALOG_H
 
 #include <QDialog>
+#include "storagefavoriteinfomodel.h"
 
 namespace Ui {
 class SelectStorageFavoriteDialog;
@@ -18,10 +19,18 @@ public:
     explicit SelectStorageFavoriteDialog(QWidget *parent = Q_NULLPTR);
     ~SelectStorageFavoriteDialog();
 
+    const QString& getSelectedPath() { return m_selectedPath; }
+
+    void accept();
+
 private:
     void initialize();
 
     Ui::SelectStorageFavoriteDialog *ui;
+
+    StorageFavoriteInfoModel *m_sfInfoModel;
+
+    QString m_selectedPath;
 };
 
 }           // namespace Farman

@@ -319,12 +319,21 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 
 void DoubleFolderPanel::onSelectStorageFavorite()
 {
+    FolderForm* activeForm = getActiveFolderForm();
+    if(activeForm == Q_NULLPTR)
+    {
+        return;
+    }
+
     SelectStorageFavoriteDialog dialog(parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
+    QString selectedPath = dialog.getSelectedPath();
+
+    activeForm->setPath(selectedPath);
 }
 
 void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)

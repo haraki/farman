@@ -187,6 +187,11 @@ Qt::SortOrder FolderForm::getSortOrder() const
 
 int FolderForm::setPath(const QString& dirPath)
 {
+    if(m_folderModel->rootPath() == dirPath)
+    {
+        return 0;
+    }
+
     // ディレクトリが空(".." も存在しない)場合は Open できないとみなしてエラー
     if(QDir(dirPath).isEmpty(QDir::AllEntries | QDir::NoDot))
     {
