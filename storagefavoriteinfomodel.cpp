@@ -18,13 +18,24 @@ int StorageFavoriteInfoModel::initialize()
 
     m_infos.clear();
 
-    for(const QStorageInfo& storage : QStorageInfo::mountedVolumes())
+    for(const QStorageInfo& volume : QStorageInfo::mountedVolumes())
     {
-        if(storage.isValid())
-        {
-            m_infos.push_back({StorageFavoriteInfo::Type::Storage, storage.displayName(), storage.rootPath()});
+        qDebug() << "Name : " << volume.name();
+        qDebug() << "Display Name : " << volume.displayName();
+        qDebug() << "Device:" << volume.device();
+        qDebug() << "Root path:" << volume.rootPath();
+        qDebug() << "File system type:" << volume.fileSystemType();
+        qDebug() << "Is valid" << volume.isValid();
+        qDebug() << "Is root" << volume.isRoot();
+        qDebug() << "Is ready" << volume.isReady();
+        qDebug() << "Is read only" << volume.isReadOnly();
+        qDebug() << QString("Bytes available: %L1 Bytes").arg(volume.bytesAvailable());
+        qDebug() << QString("Bytes free: %L1 Bytes").arg(volume.bytesFree());
+        qDebug() << QString("Bytes total: %L1 Bytes").arg(volume.bytesTotal()) << endl;
 
-            qDebug() << "name : " << m_infos.back().getName() << ", path : " << m_infos.back().getPath();
+        if(volume.isValid() && volume.isReady())
+        {
+            m_infos.push_back({StorageFavoriteInfo::Type::Storage, volume.displayName(), volume.rootPath()});
         }
     }
 
