@@ -40,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             SLOT(onOutputConsole(const QString&)));
 
     connect(doubleFolderPanel,
+            SIGNAL(outputConsole(const QString&)),
+            this,
+            SLOT(onOutputConsole(const QString&)));
+    connect(doubleFolderPanel,
             SIGNAL(statusChanged(const QString&)),
             this,
             SLOT(onStatusChanged(const QString&)));

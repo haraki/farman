@@ -49,6 +49,7 @@ public:
     void onAttributes();
 
 Q_SIGNALS:
+    void outputConsole(const QString& consoleString);
     void statusChanged(const QString& statusString);
 
     void openFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
@@ -81,6 +82,7 @@ protected Q_SLOTS:
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
+    void emitOutputConsole(const QString& consoleString);
     void emitStatusChanged(const QString& statusString);
 
     void emitOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);

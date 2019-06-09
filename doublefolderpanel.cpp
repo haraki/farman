@@ -333,7 +333,11 @@ void DoubleFolderPanel::onSelectStorageFavorite()
 
     QString selectedPath = dialog.getSelectedPath();
 
-    activeForm->setPath(selectedPath);
+    int ret = activeForm->setPath(selectedPath);
+    if(ret < 0)
+    {
+        emitOutputConsole(tr("Folder can not be opened : %1\n").arg(selectedPath));
+    }
 }
 
 void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)
@@ -761,6 +765,11 @@ void DoubleFolderPanel::onMoveFile(const QStringList& srcPaths, const QString& d
     qDebug() << "DoubleFolderPanel::onMoveFile";
 
     emitMoveFile(srcPaths, dstPath);
+}
+
+void DoubleFolderPanel::emitOutputConsole(const QString& consoleString)
+{
+    emit outputConsole(consoleString);
 }
 
 void DoubleFolderPanel::emitStatusChanged(const QString& statusString)
