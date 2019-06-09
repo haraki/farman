@@ -33,9 +33,19 @@ int StorageFavoriteInfoModel::initialize()
         qDebug() << QString("Bytes free: %L1 Bytes").arg(volume.bytesFree());
         qDebug() << QString("Bytes total: %L1 Bytes").arg(volume.bytesTotal()) << endl;
 
-        if(volume.isValid() && volume.isReady())
+        if(volume.isValid() && volume.isReady()
+#ifdef Q_OS_LINUX
+            && (volume.isRoot() || volume.rootPath().startsWith("/media"))
+#endif
+          )
         {
-            m_infos.push_back({StorageFavoriteInfo::Type::Storage, volume.displayName(), volume.rootPath()});
+            m_infos.push_back({StorageFavoriteInfo::Type::Storage,
+#ifdef Q_OS_LINUX
+                               volume.device(),
+#else
+                               volume.displayName(),
+#endif
+                               volume.rootPath()});
         }
     }
 
