@@ -66,6 +66,7 @@ public:
 
     int onGoToChildDir();
     int onGoToParentDir();
+    int onSelectDir();
     void refresh(bool clearSelected = false);
 
 Q_SIGNALS:
@@ -79,7 +80,7 @@ protected Q_SLOTS:
     void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private Q_SLOTS:
-    void on_folderSelectButton_clicked();
+    void on_selectFolderButton_clicked();
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void emitFocusChanged(bool inFocus);

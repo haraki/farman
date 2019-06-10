@@ -101,6 +101,7 @@
     <addaction name="actionOpenWithTextEditor"/>
     <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
+    <addaction name="actionSelectFolder"/>
     <addaction name="actionSelectStorageFavorite"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -376,10 +377,18 @@
     <string>Select Storage / Favorite folder</string>
    </property>
    <property name="toolTip">
-    <string>Select Storage / Favorite folder.</string>
+    <string>Select Storage / Favorite folder</string>
    </property>
    <property name="shortcut">
     <string>L</string>
+   </property>
+  </action>
+  <action name="actionSelectFolder">
+   <property name="text">
+    <string>Select folder...</string>
+   </property>
+   <property name="shortcut">
+    <string>O</string>
    </property>
   </action>
  </widget>

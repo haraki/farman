@@ -368,6 +368,23 @@ int FolderForm::onGoToParentDir()
     return setPath(newPath);
 }
 
+int FolderForm::onSelectDir()
+{
+    const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
+
+    QString dirPath = QFileDialog::getExistingDirectory(this,
+                                                        tr("Select folder."),
+                                                        currentPath,
+                                                        QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
+
+    if(dirPath.isEmpty())
+    {
+        return -1;
+    }
+
+    return setPath(dirPath);
+}
+
 void FolderForm::refresh(bool clearSelected/* = false */)
 {
     if(clearSelected)
@@ -393,19 +410,11 @@ int FolderForm::getTotalColumnWidth(int withOutColumn)
     return totalWidth;
 }
 
-void FolderForm::on_folderSelectButton_clicked()
+void FolderForm::on_selectFolderButton_clicked()
 {
-    const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
+    qDebug() << "FolderForm::on_selectFolderButton_clicked()";
 
-    QString dirPath = QFileDialog::getExistingDirectory(this,
-                                                        tr("Select folder."),
-                                                        currentPath,
-                                                        QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
-
-    if(!dirPath.isEmpty())
-    {
-        setPath(dirPath);
-    }
+    onSelectDir();
 }
 
 void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)

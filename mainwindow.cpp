@@ -353,6 +353,25 @@ void MainWindow::on_actionCreateNewFile_triggered()
     }
 }
 
+void MainWindow::on_actionSelectFolder_triggered()
+{
+    qDebug() << "MainWindow::on_actionSelectFolder_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel == Q_NULLPTR)
+    {
+        return;
+    }
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    if(activeFolderForm == Q_NULLPTR)
+    {
+        return;
+    }
+
+    activeFolderForm->onSelectDir();
+}
+
 void MainWindow::on_actionSelectStorageFavorite_triggered()
 {
     qDebug() << "MainWindow::on_actionSelectStorageFavorite_triggered()";
