@@ -2,6 +2,7 @@
 #include <QStorageInfo>
 #include <QDebug>
 #include "storagefavoriteinfomodel.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -47,6 +48,11 @@ int StorageFavoriteInfoModel::initialize()
 #endif
                                volume.rootPath()});
         }
+    }
+
+    for(auto& favorite : Settings::getInstance()->getFavoriteDirPathList())
+    {
+        m_infos.push_back({StorageFavoriteInfo::Type::Favorite, favorite.first, favorite.second});
     }
 
     return 0;

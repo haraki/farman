@@ -1,6 +1,7 @@
 ﻿#include <QTextCodec>
 #include <QCoreApplication>
 #include <QFontDatabase>
+#include <QStandardPaths>
 #include <QDebug>
 #include "settings.h"
 
@@ -241,6 +242,36 @@ void Settings::initialize()
     // External Application
     m_textEditorPath = value("main/textEditorPath", DEFAULT_TEXT_EDITOR_PATH).toString();
     m_textEditorArgs = value("main/textEditorArgs", DEFAULT_TEXT_EDITOR_ARGS).toString();
+
+    // Favorite directory paths
+    m_favoriteDirPathList.clear();
+    int size = beginReadArray("main/favoriteDirPathList");
+    if(size > 0)
+    {
+        for(int i = 0;i < size;i++)
+        {
+            setArrayIndex(i);
+            m_favoriteDirPathList.append({value("name").toString(), value("path").toString()});
+        }
+    }
+    else
+    {
+        QStandardPaths::StandardLocation locations[] = {
+            QStandardPaths::HomeLocation,
+            QStandardPaths::DesktopLocation,
+            QStandardPaths::DocumentsLocation,
+            QStandardPaths::DownloadLocation,
+            QStandardPaths::PicturesLocation,
+            QStandardPaths::MusicLocation,
+            QStandardPaths::MoviesLocation,
+        };
+
+        for(auto location : locations)
+        {
+            m_favoriteDirPathList.append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
+        }
+    }
+    endArray();
 }
 
 void Settings::flush()
@@ -407,6 +438,16 @@ void Settings::flush()
     // External Application
     setValue("main/textEditorPath", m_textEditorPath);
     setValue("main/textEditorArgs", m_textEditorArgs);
+
+    // Favorite directory paths
+    beginWriteArray("main/favoriteDirPathList");
+    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    {
+        setArrayIndex(i);
+        setValue("name", m_favoriteDirPathList[i].first);
+        setValue("path", m_favoriteDirPathList[i].second);
+    }
+    endArray();
 }
 
 QColor Settings::getValueColorSetting(const QString& key, const QColor& defColor)

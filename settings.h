@@ -176,6 +176,9 @@ public:
     QString getTextEditorArgs() { return m_textEditorArgs; }
     void setTextEditorArgs(const QString& textEditorArgs) { m_textEditorArgs = textEditorArgs; }
 
+    const QList<QPair<QString, QString>>& getFavoriteDirPathList() { return m_favoriteDirPathList; }
+    void setFavoriteDirPathList(const QList<QPair<QString, QString>>& favoriteDirPathList) { m_favoriteDirPathList = favoriteDirPathList; }
+
 private:
     Settings();
 
@@ -273,6 +276,8 @@ private:
 
     QString m_textEditorPath = DEFAULT_TEXT_EDITOR_PATH;
     QString m_textEditorArgs = DEFAULT_TEXT_EDITOR_ARGS;
+
+    QList<QPair<QString, QString>> m_favoriteDirPathList;
 };
 
 }
