@@ -13,8 +13,10 @@ SelectStorageFavoriteDialog::SelectStorageFavoriteDialog(QWidget *parent/* = Q_N
 
     m_sfInfoModel = new StorageFavoriteInfoModel();
 
-    ui->storagesFavoritesListView->setModel(m_sfInfoModel);
-    ui->storagesFavoritesListView->setCurrentIndex(m_sfInfoModel->index(0));
+    ui->storagesFavoritesTableView->setModel(m_sfInfoModel);
+    ui->storagesFavoritesTableView->setCurrentIndex(m_sfInfoModel->index(0));
+
+    ui->storagesFavoritesTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 SelectStorageFavoriteDialog::~SelectStorageFavoriteDialog()
@@ -26,7 +28,7 @@ SelectStorageFavoriteDialog::~SelectStorageFavoriteDialog()
 
 void SelectStorageFavoriteDialog::accept()
 {
-    m_selectedPath = m_sfInfoModel->data(ui->storagesFavoritesListView->currentIndex(), StorageFavoriteInfoModel::PathRole).toString();
+    m_selectedPath = m_sfInfoModel->data(ui->storagesFavoritesTableView->currentIndex(), StorageFavoriteInfoModel::PathRole).toString();
 
     QDialog::accept();
 }

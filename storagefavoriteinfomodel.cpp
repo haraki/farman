@@ -58,7 +58,7 @@ int StorageFavoriteInfoModel::initialize()
     return 0;
 }
 
-int StorageFavoriteInfoModel::rowCount(const QModelIndex &parent/* = Q_NULLPTR*/) const
+int StorageFavoriteInfoModel::rowCount(const QModelIndex &parent/* = QModelIndex()*/) const
 {
     if(parent.isValid())
     {
@@ -67,6 +67,17 @@ int StorageFavoriteInfoModel::rowCount(const QModelIndex &parent/* = Q_NULLPTR*/
 
     return m_infos.count();
 }
+
+int StorageFavoriteInfoModel::columnCount(const QModelIndex &parent/* = QModelIndex()*/) const
+{
+    if(parent.isValid())
+    {
+        return 0;
+    }
+
+    return 2;
+}
+
 
 QHash<int, QByteArray> StorageFavoriteInfoModel::roleNames() const
 {
@@ -89,7 +100,15 @@ QVariant StorageFavoriteInfoModel::data(const QModelIndex &index, int role) cons
     switch (role)
     {
     case Qt::DisplayRole:
-        return info.getName() + " [" + info.getPath() + "]";
+        if(index.column() == 0)
+        {
+            return info.getName();
+        }
+        else if(index.column() == 1)
+        {
+            return info.getPath();
+        }
+        break;
     case TypeRole:
         return info.getTypeName();
     case NameRole:
@@ -100,5 +119,25 @@ QVariant StorageFavoriteInfoModel::data(const QModelIndex &index, int role) cons
 
     return QVariant();
 }
+
+QVariant StorageFavoriteInfoModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole*/) const
+{
+    Q_UNUSED(orientation);
+
+    if(role == Qt::DisplayRole)
+    {
+        if(section == 0)
+        {
+            return tr("Name");
+        }
+        else if(section == 1)
+        {
+            return tr("Path");
+        }
+    }
+
+    return QVariant();
+}
+
 
 }           // namespace Farman
