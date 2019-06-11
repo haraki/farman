@@ -9,8 +9,14 @@ namespace Farman
 
 StorageFavoriteInfoModel::StorageFavoriteInfoModel(QObject *parent/*= Q_NULLPTR*/)
     : QAbstractListModel(parent)
+    , m_fileSystemModel(new QFileSystemModel(this))
 {
     initialize();
+}
+
+StorageFavoriteInfoModel::~StorageFavoriteInfoModel()
+{
+    delete m_fileSystemModel;
 }
 
 int StorageFavoriteInfoModel::initialize()
@@ -107,6 +113,12 @@ QVariant StorageFavoriteInfoModel::data(const QModelIndex &index, int role) cons
         else if(index.column() == 1)
         {
             return info.getPath();
+        }
+        break;
+    case Qt::DecorationRole:
+        if(index.column() == 0)
+        {
+            return m_fileSystemModel->fileIcon(m_fileSystemModel->index(info.getPath()));
         }
         break;
     case TypeRole:

@@ -2,6 +2,7 @@
 #define STORAGEFAVORITEINFOMODEL_H
 
 #include <QAbstractListModel>
+#include <QFileSystemModel>
 #include <QStorageInfo>
 
 namespace Farman
@@ -51,6 +52,7 @@ public:
     };
 
     explicit StorageFavoriteInfoModel(QObject *parent = Q_NULLPTR);
+    ~StorageFavoriteInfoModel() Q_DECL_OVERRIDE;
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
