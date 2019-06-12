@@ -100,3 +100,6 @@ FORMS    += mainwindow.ui \
     imageviewer.ui \
     textviewer.ui \
     hexviewer.ui
+
+RESOURCES += \
+    resources.qrc
