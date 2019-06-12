@@ -35,6 +35,21 @@
       <number>0</number>
      </property>
      <item>
+      <widget class="QToolButton" name="favoriteToolButton">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/images/favorite_off.svg</normaloff>
+         <normalon>:/images/favorite_on.svg</normalon>:/images/favorite_off.svg</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="folderPathEdit">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
@@ -151,6 +166,8 @@
   <tabstop>folderView</tabstop>
   <tabstop>folderPathEdit</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

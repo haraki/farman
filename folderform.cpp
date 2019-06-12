@@ -6,6 +6,7 @@
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -299,6 +300,15 @@ void FolderForm::onDirectoryLoaded(const QString& path)
     {
         ui->folderView->setCursor(currentRootIndex);
     }
+
+    if(Settings::getInstance()->searchFavoriteDirPath(path) >= 0)
+    {
+        ui->favoriteToolButton->setChecked(true);
+    }
+    else
+    {
+        ui->favoriteToolButton->setChecked(false);
+    }
 }
 
 void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
@@ -385,6 +395,30 @@ int FolderForm::onSelectDir()
     return setPath(dirPath);
 }
 
+int FolderForm::onFavoriteDir(bool marked)
+{
+    const QModelIndex currentDirIndex = ui->folderView->rootIndex();
+    const QString currentPath = m_folderModel->filePath(currentDirIndex);
+    int index = Settings::getInstance()->searchFavoriteDirPath(currentPath);
+
+    if(marked)
+    {
+        if(index < 0)
+        {
+           Settings::getInstance()->insertFavoriteDirPath(currentPath);
+        }
+    }
+    else
+    {
+        if(index >= 0)
+        {
+           Settings::getInstance()->removeFavoriteDirPath(index);
+        }
+    }
+
+    return 0;
+}
+
 void FolderForm::refresh(bool clearSelected/* = false */)
 {
     if(clearSelected)
@@ -415,6 +449,13 @@ void FolderForm::on_selectFolderButton_clicked()
     qDebug() << "FolderForm::on_selectFolderButton_clicked()";
 
     onSelectDir();
+}
+
+void FolderForm::on_favoriteToolButton_toggled(bool checked)
+{
+    qDebug() << "FolderForm::on_favoriteToolButton_toggled() : " << checked;
+
+    onFavoriteDir(checked);
 }
 
 void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)

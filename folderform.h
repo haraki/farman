@@ -67,6 +67,8 @@ public:
     int onGoToChildDir();
     int onGoToParentDir();
     int onSelectDir();
+    int onFavoriteDir(bool marked);
+
     void refresh(bool clearSelected = false);
 
 Q_SIGNALS:
@@ -81,6 +83,7 @@ protected Q_SLOTS:
 
 private Q_SLOTS:
     void on_selectFolderButton_clicked();
+    void on_favoriteToolButton_toggled(bool checked);
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void emitFocusChanged(bool inFocus);
