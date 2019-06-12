@@ -450,6 +450,88 @@ void Settings::flush()
     endArray();
 }
 
+QPair<QString, QString> Settings::getFavoriteDirPath(const QString& name)
+{
+    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    {
+        if(m_favoriteDirPathList[i].first == name)
+        {
+            return getFavoriteDirPath(i);
+        }
+    }
+
+    return QPair<QString, QString>();
+}
+
+QPair<QString, QString> Settings::getFavoriteDirPath(int index)
+{
+    if(index < 0 || index >= m_favoriteDirPathList.count())
+    {
+        return QPair<QString, QString>();
+    }
+
+    return m_favoriteDirPathList[index];
+}
+
+int Settings::searchFavoriteDirPath(const QString& path)
+{
+    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    {
+        if(m_favoriteDirPathList[i].second == path)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int Settings::insertFavoriteDirPath(const QString dirPath, int index/* = -1*/)
+{
+    return insertFavoriteDirPath({dirPath, dirPath}, index);
+}
+
+int Settings::insertFavoriteDirPath(const QPair<QString, QString>& favoriteDirPath, int index/* = -1*/)
+{
+    if(index < 0 || index >= m_favoriteDirPathList.count())
+    {
+        index = m_favoriteDirPathList.count();
+    }
+
+    m_favoriteDirPathList.insert(index, favoriteDirPath);
+
+    qDebug() << "insert favorite : " << favoriteDirPath << ", index : " << index;
+
+    return index;
+}
+
+int Settings::removeFavoriteDirPath(const QPair<QString, QString>& favoriteDirPath)
+{
+    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    {
+        if(m_favoriteDirPathList[i] == favoriteDirPath)
+        {
+            return removeFavoriteDirPath(i);
+        }
+    }
+
+    return -1;
+}
+
+int Settings::removeFavoriteDirPath(int index)
+{
+    if(index < 0 || index >= m_favoriteDirPathList.count())
+    {
+        return -1;
+    }
+
+    qDebug() << "remove favorite : " << m_favoriteDirPathList[index] << ", index : " << index;
+
+    m_favoriteDirPathList.removeAt(index);
+
+    return index;
+}
+
 QColor Settings::getValueColorSetting(const QString& key, const QColor& defColor)
 {
     QString colorSettingString = value(key).toString();

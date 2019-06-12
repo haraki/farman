@@ -178,6 +178,13 @@ public:
 
     const QList<QPair<QString, QString>>& getFavoriteDirPathList() { return m_favoriteDirPathList; }
     void setFavoriteDirPathList(const QList<QPair<QString, QString>>& favoriteDirPathList) { m_favoriteDirPathList = favoriteDirPathList; }
+    QPair<QString, QString> getFavoriteDirPath(const QString& name);
+    QPair<QString, QString> getFavoriteDirPath(int index);
+    int searchFavoriteDirPath(const QString& path);
+    int insertFavoriteDirPath(const QString dirPath, int index = -1);
+    int insertFavoriteDirPath(const QPair<QString, QString>& favoriteDirPath, int index = -1);
+    int removeFavoriteDirPath(const QPair<QString, QString>& favoriteDirPath);
+    int removeFavoriteDirPath(int index);
 
 private:
     Settings();
