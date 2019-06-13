@@ -372,14 +372,14 @@ void MainWindow::on_actionSelectFolder_triggered()
     activeFolderForm->onSelectDir();
 }
 
-void MainWindow::on_actionSelectStorageFavorite_triggered()
+void MainWindow::on_actionSelectStorageBookmark_triggered()
 {
-    qDebug() << "MainWindow::on_actionSelectStorageFavorite_triggered()";
+    qDebug() << "MainWindow::on_actionSelectStorageBookmark_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
     {
-        doubleFolderPanel->onSelectStorageFavorite();
+        doubleFolderPanel->onSelectStorageBookmark();
     }
 }
 

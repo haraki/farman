@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/favorite_off.svg</file>
-        <file>images/favorite_on.svg</file>
+        <file>images/bookmark_off.svg</file>
+        <file>images/bookmark_on.svg</file>
     </qresource>
 </RCC>

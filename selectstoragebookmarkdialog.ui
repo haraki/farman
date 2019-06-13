@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SelectStorageFavoriteDialog</class>
- <widget class="QDialog" name="SelectStorageFavoriteDialog">
+ <class>SelectStorageBookmarkDialog</class>
+ <widget class="QDialog" name="SelectStorageBookmarkDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Select Storage / Favorite folder</string>
+   <string>Select Storage / Bookmark folder</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTableView" name="storagesFavoritesTableView">
+    <widget class="QTableView" name="storagesBookmarksTableView">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -56,7 +56,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SelectStorageFavoriteDialog</receiver>
+   <receiver>SelectStorageBookmarkDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -72,7 +72,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SelectStorageFavoriteDialog</receiver>
+   <receiver>SelectStorageBookmarkDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

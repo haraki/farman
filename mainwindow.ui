@@ -102,7 +102,7 @@
     <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
     <addaction name="actionSelectFolder"/>
-    <addaction name="actionSelectStorageFavorite"/>
+    <addaction name="actionSelectStorageBookmark"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -369,15 +369,15 @@
     <string>N</string>
    </property>
   </action>
-  <action name="actionSelectStorageFavorite">
+  <action name="actionSelectStorageBookmark">
    <property name="text">
-    <string>Select Storage / Favorite folder...</string>
+    <string>Select Storage / Bookmark folder...</string>
    </property>
    <property name="iconText">
-    <string>Select Storage / Favorite folder</string>
+    <string>Select Storage / Bookmark folder</string>
    </property>
    <property name="toolTip">
-    <string>Select Storage / Favorite folder</string>
+    <string>Select Storage / Bookmark folder</string>
    </property>
    <property name="shortcut">
     <string>L</string>

@@ -14,7 +14,7 @@
 #include "settings.h"
 #include "fileoperationdialog.h"
 #include "fileattributesdialog.h"
-#include "selectstoragefavoritedialog.h"
+#include "selectstoragebookmarkdialog.h"
 #include "file.h"
 
 namespace Farman
@@ -317,7 +317,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     return ret;
 }
 
-void DoubleFolderPanel::onSelectStorageFavorite()
+void DoubleFolderPanel::onSelectStorageBookmark()
 {
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm == Q_NULLPTR)
@@ -325,7 +325,7 @@ void DoubleFolderPanel::onSelectStorageFavorite()
         return;
     }
 
-    SelectStorageFavoriteDialog dialog(parentWidget());
+    SelectStorageBookmarkDialog dialog(parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;

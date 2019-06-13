@@ -1,27 +1,27 @@
 ﻿#include <QAbstractListModel>
 #include <QStorageInfo>
 #include <QDebug>
-#include "storagefavoriteinfomodel.h"
+#include "storagebookmarkinfomodel.h"
 #include "settings.h"
 
 namespace Farman
 {
 
-StorageFavoriteInfoModel::StorageFavoriteInfoModel(QObject *parent/*= Q_NULLPTR*/)
+StorageBookmarkInfoModel::StorageBookmarkInfoModel(QObject *parent/*= Q_NULLPTR*/)
     : QAbstractListModel(parent)
     , m_fileSystemModel(new QFileSystemModel(this))
 {
     initialize();
 }
 
-StorageFavoriteInfoModel::~StorageFavoriteInfoModel()
+StorageBookmarkInfoModel::~StorageBookmarkInfoModel()
 {
     delete m_fileSystemModel;
 }
 
-int StorageFavoriteInfoModel::initialize()
+int StorageBookmarkInfoModel::initialize()
 {
-    qDebug() << "StorageFavoriteInfoModel::initialize()";
+    qDebug() << "StorageBookmarkInfoModel::initialize()";
 
     m_infos.clear();
 
@@ -46,7 +46,7 @@ int StorageFavoriteInfoModel::initialize()
 #endif
           )
         {
-            m_infos.push_back({StorageFavoriteInfo::Type::Storage,
+            m_infos.push_back({StorageBookmarkInfo::Type::Storage,
 #ifdef Q_OS_LINUX
                                volume.device(),
 #else
@@ -56,15 +56,15 @@ int StorageFavoriteInfoModel::initialize()
         }
     }
 
-    for(auto& favorite : Settings::getInstance()->getFavoriteDirPathList())
+    for(auto& bookmark : Settings::getInstance()->getBookmarkDirPathList())
     {
-        m_infos.push_back({StorageFavoriteInfo::Type::Favorite, favorite.first, favorite.second});
+        m_infos.push_back({StorageBookmarkInfo::Type::Bookmark, bookmark.first, bookmark.second});
     }
 
     return 0;
 }
 
-int StorageFavoriteInfoModel::rowCount(const QModelIndex &parent/* = QModelIndex()*/) const
+int StorageBookmarkInfoModel::rowCount(const QModelIndex &parent/* = QModelIndex()*/) const
 {
     if(parent.isValid())
     {
@@ -74,7 +74,7 @@ int StorageFavoriteInfoModel::rowCount(const QModelIndex &parent/* = QModelIndex
     return m_infos.count();
 }
 
-int StorageFavoriteInfoModel::columnCount(const QModelIndex &parent/* = QModelIndex()*/) const
+int StorageBookmarkInfoModel::columnCount(const QModelIndex &parent/* = QModelIndex()*/) const
 {
     if(parent.isValid())
     {
@@ -85,7 +85,7 @@ int StorageFavoriteInfoModel::columnCount(const QModelIndex &parent/* = QModelIn
 }
 
 
-QHash<int, QByteArray> StorageFavoriteInfoModel::roleNames() const
+QHash<int, QByteArray> StorageBookmarkInfoModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[TypeRole] = "type";
@@ -94,14 +94,14 @@ QHash<int, QByteArray> StorageFavoriteInfoModel::roleNames() const
     return roles;
 }
 
-QVariant StorageFavoriteInfoModel::data(const QModelIndex &index, int role) const
+QVariant StorageBookmarkInfoModel::data(const QModelIndex &index, int role) const
 {
     if(!index.isValid() || index.row() < 0 || index.row() >= m_infos.count())
     {
         return QVariant();
     }
 
-    const StorageFavoriteInfo& info = m_infos[index.row()];
+    const StorageBookmarkInfo& info = m_infos[index.row()];
 
     switch (role)
     {
@@ -132,7 +132,7 @@ QVariant StorageFavoriteInfoModel::data(const QModelIndex &index, int role) cons
     return QVariant();
 }
 
-QVariant StorageFavoriteInfoModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole*/) const
+QVariant StorageBookmarkInfoModel::headerData(int section, Qt::Orientation orientation, int role/* = Qt::DisplayRole*/) const
 {
     Q_UNUSED(orientation);
 

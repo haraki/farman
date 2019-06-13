@@ -301,13 +301,13 @@ void FolderForm::onDirectoryLoaded(const QString& path)
         ui->folderView->setCursor(currentRootIndex);
     }
 
-    if(Settings::getInstance()->searchFavoriteDirPath(path) >= 0)
+    if(Settings::getInstance()->searchBookmarkDirPath(path) >= 0)
     {
-        ui->favoriteToolButton->setChecked(true);
+        ui->bookmarkToolButton->setChecked(true);
     }
     else
     {
-        ui->favoriteToolButton->setChecked(false);
+        ui->bookmarkToolButton->setChecked(false);
     }
 }
 
@@ -395,24 +395,24 @@ int FolderForm::onSelectDir()
     return setPath(dirPath);
 }
 
-int FolderForm::onFavoriteDir(bool marked)
+int FolderForm::onBookmarkDir(bool marked)
 {
     const QModelIndex currentDirIndex = ui->folderView->rootIndex();
     const QString currentPath = m_folderModel->filePath(currentDirIndex);
-    int index = Settings::getInstance()->searchFavoriteDirPath(currentPath);
+    int index = Settings::getInstance()->searchBookmarkDirPath(currentPath);
 
     if(marked)
     {
         if(index < 0)
         {
-           Settings::getInstance()->insertFavoriteDirPath(currentPath);
+           Settings::getInstance()->insertBookmarkDirPath(currentPath);
         }
     }
     else
     {
         if(index >= 0)
         {
-           Settings::getInstance()->removeFavoriteDirPath(index);
+           Settings::getInstance()->removeBookmarkDirPath(index);
         }
     }
 
@@ -451,11 +451,11 @@ void FolderForm::on_selectFolderButton_clicked()
     onSelectDir();
 }
 
-void FolderForm::on_favoriteToolButton_toggled(bool checked)
+void FolderForm::on_bookmarkToolButton_toggled(bool checked)
 {
-    qDebug() << "FolderForm::on_favoriteToolButton_toggled() : " << checked;
+    qDebug() << "FolderForm::on_bookmarkToolButton_toggled() : " << checked;
 
-    onFavoriteDir(checked);
+    onBookmarkDir(checked);
 }
 
 void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)

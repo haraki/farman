@@ -36,7 +36,7 @@ public:
     FolderForm* getLeftFolderForm();
     FolderForm* getRightFolderForm();
 
-    void onSelectStorageFavorite();
+    void onSelectStorageBookmark();
     void onSetPaneMode(PaneMode paneMode);
     void onChangeSortSettings();
     void onChangeFilterSettings();

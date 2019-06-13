@@ -71,7 +71,7 @@ private Q_SLOTS:
     void on_actionOpenWithTextEditor_triggered();
     void on_actionCreateNewFile_triggered();
     void on_actionSelectFolder_triggered();
-    void on_actionSelectStorageFavorite_triggered();
+    void on_actionSelectStorageBookmark_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();
     void on_actionDualPane_triggered();

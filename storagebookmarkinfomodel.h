@@ -1,5 +1,5 @@
-﻿#ifndef STORAGEFAVORITEINFOMODEL_H
-#define STORAGEFAVORITEINFOMODEL_H
+﻿#ifndef STORAGEBOOKMARKINFOMODEL_H
+#define STORAGEBOOKMARKINFOMODEL_H
 
 #include <QAbstractListModel>
 #include <QFileSystemModel>
@@ -8,38 +8,38 @@
 namespace Farman
 {
 
-class StorageFavoriteInfo
+class StorageBookmarkInfo
 {
 public:
     enum class Type : int
     {
         Storage,
-        Favorite,
+        Bookmark,
     };
 
-    StorageFavoriteInfo(Type type, const QString& name, const QString& path)
+    StorageBookmarkInfo(Type type, const QString& name, const QString& path)
     {
         m_type = type;
         m_name = name;
         m_path = path;
     }
 
-    ~StorageFavoriteInfo() = default;
+    ~StorageBookmarkInfo() = default;
 
     Type getType() const { return m_type; }
-    QString getTypeName() const { return (m_type == Type::Storage) ? "Storage" : (m_type == Type::Favorite) ? "Favorite" : "Unknown"; }
+    QString getTypeName() const { return (m_type == Type::Storage) ? "Storage" : (m_type == Type::Bookmark) ? "Bookmark" : "Unknown"; }
     QString getName() const { return m_name; }
     QString getPath() const { return m_path; }
 
 private:
-    StorageFavoriteInfo() = delete;
+    StorageBookmarkInfo() = delete;
 
     Type m_type;
     QString m_name;
     QString m_path;
 };
 
-class StorageFavoriteInfoModel : public QAbstractListModel
+class StorageBookmarkInfoModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -51,8 +51,8 @@ public:
         PathRole,
     };
 
-    explicit StorageFavoriteInfoModel(QObject *parent = Q_NULLPTR);
-    ~StorageFavoriteInfoModel() Q_DECL_OVERRIDE;
+    explicit StorageBookmarkInfoModel(QObject *parent = Q_NULLPTR);
+    ~StorageBookmarkInfoModel() Q_DECL_OVERRIDE;
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
@@ -67,10 +67,10 @@ protected:
 private:
     int initialize();
 
-    QList<StorageFavoriteInfo> m_infos;
+    QList<StorageBookmarkInfo> m_infos;
     QFileSystemModel* m_fileSystemModel;
 };
 
 }           // namespace Farman
 
-#endif // STORAGEFAVORITEINFOMODEL_H
+#endif // STORAGEBOOKMARKINFOMODEL_H

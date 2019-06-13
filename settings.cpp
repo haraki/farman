@@ -243,15 +243,15 @@ void Settings::initialize()
     m_textEditorPath = value("main/textEditorPath", DEFAULT_TEXT_EDITOR_PATH).toString();
     m_textEditorArgs = value("main/textEditorArgs", DEFAULT_TEXT_EDITOR_ARGS).toString();
 
-    // Favorite directory paths
-    m_favoriteDirPathList.clear();
-    int size = beginReadArray("main/favoriteDirPathList");
+    // Bookmark directory paths
+    m_bookmarkDirPathList.clear();
+    int size = beginReadArray("main/bookmarkDirPathList");
     if(size > 0)
     {
         for(int i = 0;i < size;i++)
         {
             setArrayIndex(i);
-            m_favoriteDirPathList.append({value("name").toString(), value("path").toString()});
+            m_bookmarkDirPathList.append({value("name").toString(), value("path").toString()});
         }
     }
     else
@@ -268,7 +268,7 @@ void Settings::initialize()
 
         for(auto location : locations)
         {
-            m_favoriteDirPathList.append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
+            m_bookmarkDirPathList.append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
         }
     }
     endArray();
@@ -439,45 +439,45 @@ void Settings::flush()
     setValue("main/textEditorPath", m_textEditorPath);
     setValue("main/textEditorArgs", m_textEditorArgs);
 
-    // Favorite directory paths
-    beginWriteArray("main/favoriteDirPathList");
-    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    // Bookmark directory paths
+    beginWriteArray("main/bookmarkDirPathList");
+    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
     {
         setArrayIndex(i);
-        setValue("name", m_favoriteDirPathList[i].first);
-        setValue("path", m_favoriteDirPathList[i].second);
+        setValue("name", m_bookmarkDirPathList[i].first);
+        setValue("path", m_bookmarkDirPathList[i].second);
     }
     endArray();
 }
 
-QPair<QString, QString> Settings::getFavoriteDirPath(const QString& name)
+QPair<QString, QString> Settings::getBookmarkDirPath(const QString& name)
 {
-    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
     {
-        if(m_favoriteDirPathList[i].first == name)
+        if(m_bookmarkDirPathList[i].first == name)
         {
-            return getFavoriteDirPath(i);
+            return getBookmarkDirPath(i);
         }
     }
 
     return QPair<QString, QString>();
 }
 
-QPair<QString, QString> Settings::getFavoriteDirPath(int index)
+QPair<QString, QString> Settings::getBookmarkDirPath(int index)
 {
-    if(index < 0 || index >= m_favoriteDirPathList.count())
+    if(index < 0 || index >= m_bookmarkDirPathList.count())
     {
         return QPair<QString, QString>();
     }
 
-    return m_favoriteDirPathList[index];
+    return m_bookmarkDirPathList[index];
 }
 
-int Settings::searchFavoriteDirPath(const QString& path)
+int Settings::searchBookmarkDirPath(const QString& path)
 {
-    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
     {
-        if(m_favoriteDirPathList[i].second == path)
+        if(m_bookmarkDirPathList[i].second == path)
         {
             return i;
         }
@@ -486,48 +486,48 @@ int Settings::searchFavoriteDirPath(const QString& path)
     return -1;
 }
 
-int Settings::insertFavoriteDirPath(const QString dirPath, int index/* = -1*/)
+int Settings::insertBookmarkDirPath(const QString dirPath, int index/* = -1*/)
 {
-    return insertFavoriteDirPath({dirPath, dirPath}, index);
+    return insertBookmarkDirPath({dirPath, dirPath}, index);
 }
 
-int Settings::insertFavoriteDirPath(const QPair<QString, QString>& favoriteDirPath, int index/* = -1*/)
+int Settings::insertBookmarkDirPath(const QPair<QString, QString>& dirPath, int index/* = -1*/)
 {
-    if(index < 0 || index >= m_favoriteDirPathList.count())
+    if(index < 0 || index >= m_bookmarkDirPathList.count())
     {
-        index = m_favoriteDirPathList.count();
+        index = m_bookmarkDirPathList.count();
     }
 
-    m_favoriteDirPathList.insert(index, favoriteDirPath);
+    m_bookmarkDirPathList.insert(index, dirPath);
 
-    qDebug() << "insert favorite : " << favoriteDirPath << ", index : " << index;
+    qDebug() << "insert bookmark : " << dirPath << ", index : " << index;
 
     return index;
 }
 
-int Settings::removeFavoriteDirPath(const QPair<QString, QString>& favoriteDirPath)
+int Settings::removeBookmarkDirPath(const QPair<QString, QString>& dirPath)
 {
-    for(int i = 0;i < m_favoriteDirPathList.size();i++)
+    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
     {
-        if(m_favoriteDirPathList[i] == favoriteDirPath)
+        if(m_bookmarkDirPathList[i] == dirPath)
         {
-            return removeFavoriteDirPath(i);
+            return removeBookmarkDirPath(i);
         }
     }
 
     return -1;
 }
 
-int Settings::removeFavoriteDirPath(int index)
+int Settings::removeBookmarkDirPath(int index)
 {
-    if(index < 0 || index >= m_favoriteDirPathList.count())
+    if(index < 0 || index >= m_bookmarkDirPathList.count())
     {
         return -1;
     }
 
-    qDebug() << "remove favorite : " << m_favoriteDirPathList[index] << ", index : " << index;
+    qDebug() << "remove bookmark : " << m_bookmarkDirPathList[index] << ", index : " << index;
 
-    m_favoriteDirPathList.removeAt(index);
+    m_bookmarkDirPathList.removeAt(index);
 
     return index;
 }
