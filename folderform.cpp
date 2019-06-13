@@ -301,6 +301,7 @@ void FolderForm::onDirectoryLoaded(const QString& path)
         ui->folderView->setCursor(currentRootIndex);
     }
 
+    ui->bookmarkToolButton->blockSignals(true);
     if(Settings::getInstance()->searchBookmarkDirPath(path) >= 0)
     {
         ui->bookmarkToolButton->setChecked(true);
@@ -309,6 +310,7 @@ void FolderForm::onDirectoryLoaded(const QString& path)
     {
         ui->bookmarkToolButton->setChecked(false);
     }
+    ui->bookmarkToolButton->blockSignals(false);
 }
 
 void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
