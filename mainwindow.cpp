@@ -372,17 +372,6 @@ void MainWindow::on_actionSelectFolder_triggered()
     activeFolderForm->onSelectDir();
 }
 
-void MainWindow::on_actionSelectStorageBookmark_triggered()
-{
-    qDebug() << "MainWindow::on_actionSelectStorageBookmark_triggered()";
-
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onSelectStorageBookmark();
-    }
-}
-
 void MainWindow::on_actionQuit_triggered()
 {
     qDebug() << "MainWindow::on_actionQuit_triggered()";
@@ -497,6 +486,31 @@ void MainWindow::on_actionAttributes_triggered()
     if(doubleFolderPanel != Q_NULLPTR)
     {
         doubleFolderPanel->onAttributes();
+    }
+}
+
+void MainWindow::on_actionBookmark_toggled(bool arg1)
+{
+    qDebug() << "MainWindow::on_actionBookmark_toggled()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeFolderForm != Q_NULLPTR);
+
+    activeFolderForm->onBookmarkDir(arg1);
+    activeFolderForm->checkBookmark();
+}
+
+void MainWindow::on_actionSelectStorageBookmark_triggered()
+{
+    qDebug() << "MainWindow::on_actionSelectStorageBookmark_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onSelectStorageBookmark();
     }
 }
 

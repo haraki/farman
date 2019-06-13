@@ -71,7 +71,6 @@ private Q_SLOTS:
     void on_actionOpenWithTextEditor_triggered();
     void on_actionCreateNewFile_triggered();
     void on_actionSelectFolder_triggered();
-    void on_actionSelectStorageBookmark_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();
     void on_actionDualPane_triggered();
@@ -83,6 +82,8 @@ private Q_SLOTS:
     void on_actionMakeDirectory_triggered();
     void on_actionRename_triggered();
     void on_actionAttributes_triggered();
+    void on_actionBookmark_toggled(bool arg1);
+    void on_actionSelectStorageBookmark_triggered();
     void on_actionPreferences_triggered();
     void on_actionConsole_triggered(bool checked);
     void on_consoleDockWidget_visibilityChanged(bool visible);

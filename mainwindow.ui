@@ -102,7 +102,6 @@
     <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
     <addaction name="actionSelectFolder"/>
-    <addaction name="actionSelectStorageBookmark"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -121,9 +120,18 @@
     <addaction name="actionPreferences"/>
     <addaction name="actionConsole"/>
    </widget>
+   <widget class="QMenu" name="menuBookmark">
+    <property name="title">
+     <string>Bookmark</string>
+    </property>
+    <addaction name="actionBookmark"/>
+    <addaction name="actionSelectStorageBookmark"/>
+    <addaction name="actionEdit_Bookmark"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuOperation"/>
+   <addaction name="menuBookmark"/>
    <addaction name="menuOption"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -389,6 +397,25 @@
    </property>
    <property name="shortcut">
     <string>O</string>
+   </property>
+  </action>
+  <action name="actionEdit_Bookmark">
+   <property name="text">
+    <string>Edit Bookmark...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionBookmark">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bookmark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
  </widget>

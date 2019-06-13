@@ -69,6 +69,8 @@ public:
     int onSelectDir();
     int onBookmarkDir(bool marked);
 
+    void checkBookmark();
+
     void refresh(bool clearSelected = false);
 
 Q_SIGNALS:

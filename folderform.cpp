@@ -301,16 +301,7 @@ void FolderForm::onDirectoryLoaded(const QString& path)
         ui->folderView->setCursor(currentRootIndex);
     }
 
-    ui->bookmarkToolButton->blockSignals(true);
-    if(Settings::getInstance()->searchBookmarkDirPath(path) >= 0)
-    {
-        ui->bookmarkToolButton->setChecked(true);
-    }
-    else
-    {
-        ui->bookmarkToolButton->setChecked(false);
-    }
-    ui->bookmarkToolButton->blockSignals(false);
+    checkBookmark();
 }
 
 void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
@@ -419,6 +410,24 @@ int FolderForm::onBookmarkDir(bool marked)
     }
 
     return 0;
+}
+
+void FolderForm::checkBookmark()
+{
+    qDebug() << "FolderForm::checkBookmark()";
+
+    const QString& currentPath = getCurrentDirPath();
+
+    ui->bookmarkToolButton->blockSignals(true);
+    if(Settings::getInstance()->searchBookmarkDirPath(currentPath) >= 0)
+    {
+        ui->bookmarkToolButton->setChecked(true);
+    }
+    else
+    {
+        ui->bookmarkToolButton->setChecked(false);
+    }
+    ui->bookmarkToolButton->blockSignals(false);
 }
 
 void FolderForm::refresh(bool clearSelected/* = false */)
