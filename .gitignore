@@ -10,3 +10,4 @@ ui_*.h
 debug
 release
 moc_predefs.h
+.vscode
