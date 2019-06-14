@@ -45,6 +45,8 @@ private:
     QDialog::DialogCode launchPreferencesDialog(PreferencesDialogTabPage page = PreferencesDialogTabPage::General);
     bool launchExternalApp(const QString& command, const QString dirPath);
 
+    void checkBookmark();
+
     void about();
 
 Q_SIGNALS:
@@ -60,8 +62,11 @@ private Q_SLOTS:
     void onOpenWithApp(const QString& path);
     void onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths);
     void onCreateNewFileFinished(const QString& filePath);
-    void onStatusChanged(const QString& statusString);
     void onOutputConsole(const QString& consoleString);
+    void onStatusChanged(const QString& statusString);
+    void onFocusChanged(PaneType pane, bool inFocus);
+    void onDirectoryLoaded(PaneType pane, const QString& path);
+    void onDirectoryBookmarked(PaneType pane, const QString &path, bool marked);
 
     void on_actionOpen_triggered();
     void on_actionOpenWithTextViewer_triggered();

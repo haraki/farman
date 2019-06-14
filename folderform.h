@@ -67,7 +67,7 @@ public:
     int onGoToChildDir();
     int onGoToParentDir();
     int onSelectDir();
-    int onBookmarkDir(bool marked);
+    void onBookmarkDir(bool marked);
 
     void checkBookmark();
 
@@ -75,7 +75,9 @@ public:
 
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void directoryLoaded(const QString &path);
     void focusChanged(bool inFocus);
+    void directoryBookmarked(const QString &path, bool marked);
 
 protected Q_SLOTS:
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
@@ -88,7 +90,9 @@ private Q_SLOTS:
     void on_bookmarkToolButton_toggled(bool checked);
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
+    void emitDirectoryLoaded(const QString &path);
     void emitFocusChanged(bool inFocus);
+    void emitDirectoryBookmarked(const QString &path, bool marked);
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;

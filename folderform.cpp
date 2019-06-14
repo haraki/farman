@@ -302,6 +302,8 @@ void FolderForm::onDirectoryLoaded(const QString& path)
     }
 
     checkBookmark();
+
+    emitDirectoryLoaded(path);
 }
 
 void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
@@ -388,10 +390,9 @@ int FolderForm::onSelectDir()
     return setPath(dirPath);
 }
 
-int FolderForm::onBookmarkDir(bool marked)
+void FolderForm::onBookmarkDir(bool marked)
 {
-    const QModelIndex currentDirIndex = ui->folderView->rootIndex();
-    const QString currentPath = m_folderModel->filePath(currentDirIndex);
+    const QString currentPath = getCurrentDirPath();
     int index = Settings::getInstance()->searchBookmarkDirPath(currentPath);
 
     if(marked)
@@ -409,7 +410,7 @@ int FolderForm::onBookmarkDir(bool marked)
         }
     }
 
-    return 0;
+    emitDirectoryBookmarked(currentPath, marked);
 }
 
 void FolderForm::checkBookmark()
@@ -474,9 +475,19 @@ void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInf
     emit currentChanged(newFileInfo, oldFileInfo);
 }
 
+void FolderForm::emitDirectoryLoaded(const QString &path)
+{
+    emit directoryLoaded(path);
+}
+
 void FolderForm::emitFocusChanged(bool inFocus)
 {
     emit focusChanged(inFocus);
+}
+
+void FolderForm::emitDirectoryBookmarked(const QString &path, bool marked)
+{
+    emit directoryBookmarked(path, marked);
 }
 
 }           // namespace Farman

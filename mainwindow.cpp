@@ -40,13 +40,25 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             SLOT(onOutputConsole(const QString&)));
 
     connect(doubleFolderPanel,
+            SIGNAL(statusChanged(const QString&)),
+            this,
+            SLOT(onStatusChanged(const QString&)));
+    connect(doubleFolderPanel,
             SIGNAL(outputConsole(const QString&)),
             this,
             SLOT(onOutputConsole(const QString&)));
     connect(doubleFolderPanel,
-            SIGNAL(statusChanged(const QString&)),
+            SIGNAL(focusChanged(PaneType, bool)),
             this,
-            SLOT(onStatusChanged(const QString&)));
+            SLOT(onFocusChanged(PaneType, bool)));
+    connect(doubleFolderPanel,
+            SIGNAL(directoryLoaded(PaneType, const QString&)),
+            this,
+            SLOT(onDirectoryLoaded(PaneType, const QString&)));
+    connect(doubleFolderPanel,
+            SIGNAL(directoryBookmarked(PaneType, const QString&, bool)),
+            this,
+            SLOT(onDirectoryBookmarked(PaneType, const QString&, bool)));
 
     connect(doubleFolderPanel,
             SIGNAL(openFile(const QString&, ViewerType)),
@@ -260,6 +272,42 @@ void MainWindow::onOutputConsole(const QString& consoleString)
 
     ui->consolePlainTextEdit->insertPlainText(consoleString);
     ui->consolePlainTextEdit->moveCursor(QTextCursor::End);
+}
+
+void MainWindow::onFocusChanged(PaneType pane, bool inFocus)
+{
+    Q_ASSERT(pane == PaneType::Left || pane == PaneType::Right);
+
+    qDebug() << "MainWindow::onFocusChanged : pane : "
+             << (pane == PaneType::Left ? "left" : pane == PaneType::Right ? "right" : "unknown") << ", inFocus : " << inFocus;
+
+    if(!inFocus)
+    {
+        return;
+    }
+
+    checkBookmark();
+}
+
+void MainWindow::onDirectoryLoaded(PaneType pane, const QString& path)
+{
+    Q_ASSERT(pane == PaneType::Left || pane == PaneType::Right);
+
+    qDebug() << "MainWindow::onDirectoryLoaded : pane : "
+             << (pane == PaneType::Left ? "left" : pane == PaneType::Right ? "right" : "unknown") << ", path : " << path;
+
+    checkBookmark();
+}
+
+void MainWindow::onDirectoryBookmarked(PaneType pane, const QString &path, bool marked)
+{
+    Q_ASSERT(pane == PaneType::Left || pane == PaneType::Right);
+
+    qDebug() << "MainWindow::onDirectoryBookmarked : pane : "
+             << (pane == PaneType::Left ? "left" : pane == PaneType::Right ? "right" : "unknown")
+             << ", path : " << path << ", marked : " << marked;
+
+    checkBookmark();
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -762,6 +810,26 @@ bool MainWindow::launchExternalApp(const QString& command, const QString dirPath
     }
 
     return true;
+}
+
+void MainWindow::checkBookmark()
+{
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeFolderForm != Q_NULLPTR);
+
+    ui->actionBookmark->blockSignals(true);
+    if(Settings::getInstance()->searchBookmarkDirPath(activeFolderForm->getCurrentDirPath()) >= 0)
+    {
+        ui->actionBookmark->setChecked(true);
+    }
+    else
+    {
+        ui->actionBookmark->setChecked(false);
+    }
+    ui->actionBookmark->blockSignals(false);
 }
 
 void MainWindow::about()
