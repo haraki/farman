@@ -14,7 +14,7 @@ SelectStorageBookmarkDialog::SelectStorageBookmarkDialog(QWidget *parent/* = Q_N
     m_sfInfoModel = new StorageBookmarkInfoModel();
 
     ui->storagesBookmarksTableView->setModel(m_sfInfoModel);
-    ui->storagesBookmarksTableView->setCurrentIndex(m_sfInfoModel->index(0));
+    ui->storagesBookmarksTableView->setCurrentIndex(m_sfInfoModel->index(0, 0));
 
     ui->storagesBookmarksTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }

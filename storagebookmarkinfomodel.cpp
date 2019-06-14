@@ -1,4 +1,4 @@
-﻿#include <QAbstractListModel>
+﻿#include <QAbstractTableModel>
 #include <QStorageInfo>
 #include <QDebug>
 #include "storagebookmarkinfomodel.h"
@@ -8,7 +8,7 @@ namespace Farman
 {
 
 StorageBookmarkInfoModel::StorageBookmarkInfoModel(QObject *parent/*= Q_NULLPTR*/)
-    : QAbstractListModel(parent)
+    : QAbstractTableModel(parent)
     , m_fileSystemModel(new QFileSystemModel(this))
 {
     initialize();
@@ -150,6 +150,5 @@ QVariant StorageBookmarkInfoModel::headerData(int section, Qt::Orientation orien
 
     return QVariant();
 }
-
 
 }           // namespace Farman

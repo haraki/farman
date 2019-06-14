@@ -1,7 +1,7 @@
 ﻿#ifndef STORAGEBOOKMARKINFOMODEL_H
 #define STORAGEBOOKMARKINFOMODEL_H
 
-#include <QAbstractListModel>
+#include <QAbstractTableModel>
 #include <QFileSystemModel>
 #include <QStorageInfo>
 
@@ -39,7 +39,7 @@ private:
     QString m_path;
 };
 
-class StorageBookmarkInfoModel : public QAbstractListModel
+class StorageBookmarkInfoModel : public QAbstractTableModel
 {
     Q_OBJECT
 
