@@ -64,7 +64,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuView">
@@ -126,7 +126,7 @@
     </property>
     <addaction name="actionBookmark"/>
     <addaction name="actionSelectStorageBookmark"/>
-    <addaction name="actionEdit_Bookmark"/>
+    <addaction name="actionBookmarkManager"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -399,9 +399,9 @@
     <string>O</string>
    </property>
   </action>
-  <action name="actionEdit_Bookmark">
+  <action name="actionBookmarkManager">
    <property name="text">
-    <string>Edit Bookmark...(&amp;E)</string>
+    <string>Bookmark Manager...(&amp;E)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>

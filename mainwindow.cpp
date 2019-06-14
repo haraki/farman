@@ -10,6 +10,7 @@
 #include "doublefolderpanel.h"
 #include "settings.h"
 #include "preferencesdialog.h"
+#include "bookmarkmanagerdialog.h"
 #include "viewerdispatcher.h"
 #include "imageviewer.h"
 #include "file.h"
@@ -559,6 +560,17 @@ void MainWindow::on_actionSelectStorageBookmark_triggered()
     if(doubleFolderPanel != Q_NULLPTR)
     {
         doubleFolderPanel->onSelectStorageBookmark();
+    }
+}
+
+void MainWindow::on_actionBookmarkManager_triggered()
+{
+    qDebug() << "MainWindow::on_actionBookmarkManager_triggered()";
+
+    BookmarkManagerDialog dialog(this);
+    if(dialog.exec() != QDialog::Accepted)
+    {
+        return;
     }
 }
 
