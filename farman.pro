@@ -22,6 +22,7 @@ DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 INCLUDEPATH += ./QHexView/include
 
 SOURCES += main.cpp\
+    bookmarkinfomodel.cpp \
     bookmarkmanagerdialog.cpp \
         mainwindow.cpp \
     folderform.cpp \
@@ -54,6 +55,7 @@ SOURCES += main.cpp\
     file.cpp
 
 HEADERS  += mainwindow.h \
+    bookmarkinfomodel.h \
     bookmarkmanagerdialog.h \
     default_settings.h \
     folderform.h \
