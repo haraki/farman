@@ -1,5 +1,6 @@
 ﻿#include <QFileDialog>
 #include <QPushButton>
+#include <QStyle>
 #include <QDebug>
 #include "bookmarkeditdialog.h"
 #include "ui_bookmarkeditdialog.h"
@@ -14,6 +15,8 @@ BookmarkEditDialog::BookmarkEditDialog(const QString& currentDirPath, const Book
     m_info(info)
 {
     ui->setupUi(this);
+
+    ui->selectPathToolButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileDialogStart));
 
     ui->nameLineEdit->setText(info.getName());
     ui->pathLineEdit->setText(info.getPath());
@@ -55,7 +58,10 @@ void BookmarkEditDialog::on_selectPathToolButton_clicked()
                                                 dirPath,
                                                 QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
-    ui->pathLineEdit->setText(dirPath);
+    if(!dirPath.isEmpty())
+    {
+        ui->pathLineEdit->setText(dirPath);
+    }
 
     checkNamePathEmpty();
 }

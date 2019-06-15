@@ -567,11 +567,24 @@ void MainWindow::on_actionBookmarkManager_triggered()
 {
     qDebug() << "MainWindow::on_actionBookmarkManager_triggered()";
 
-    BookmarkManagerDialog dialog(this);
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeFolderForm != Q_NULLPTR);
+
+    BookmarkManagerDialog dialog(activeFolderForm->getCurrentDirPath(), this);
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
+
+    checkBookmark();
+    activeFolderForm->checkBookmark();
+
+    FolderForm* inactiveFolderForm = doubleFolderPanel->getInactiveFolderForm();
+    Q_ASSERT(inactiveFolderForm != Q_NULLPTR);
+    inactiveFolderForm->checkBookmark();
 }
 
 void MainWindow::on_actionPreferences_triggered()

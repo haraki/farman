@@ -6,18 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>489</width>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Bookmark Manager</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QTableView" name="bookmarksTableView"/>
-   </item>
-   <item row="0" column="1">
+   <item row="1" column="1">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <spacer name="verticalSpacer">
@@ -37,12 +34,18 @@
        <property name="text">
         <string>...</string>
        </property>
+       <property name="shortcut">
+        <string>Shift+Num+Up</string>
+       </property>
       </widget>
      </item>
      <item>
       <widget class="QToolButton" name="downToolButton">
        <property name="text">
         <string>...</string>
+       </property>
+       <property name="shortcut">
+        <string>Shift+Num+Down</string>
        </property>
       </widget>
      </item>
@@ -61,7 +64,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -71,8 +74,85 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QTableView" name="bookmarksTableView">
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>false</bool>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="newPushButton">
+       <property name="text">
+        <string>New(&amp;N)</string>
+       </property>
+       <property name="shortcut">
+        <string>N</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="editPushButton">
+       <property name="text">
+        <string>Edit(&amp;E)</string>
+       </property>
+       <property name="shortcut">
+        <string>E</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="deletePushButton">
+       <property name="text">
+        <string>Delete(&amp;D)</string>
+       </property>
+       <property name="shortcut">
+        <string>D</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>bookmarksTableView</tabstop>
+  <tabstop>newPushButton</tabstop>
+  <tabstop>editPushButton</tabstop>
+  <tabstop>deletePushButton</tabstop>
+  <tabstop>upToolButton</tabstop>
+  <tabstop>downToolButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
