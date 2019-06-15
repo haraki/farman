@@ -6,47 +6,58 @@
 namespace Farman
 {
 
-BookmarkInfoModel::BookmarkInfoModel(QObject *parent)
+BookmarkInfoModel::BookmarkInfoModel(bool system/* = true*/, bool showIcon/* = true*/, QObject *parent/* = Q_NULLPTR*/)
     : QAbstractTableModel(parent)
     , m_fileSystemModel(new QFileSystemModel(this))
+    , m_showIcon(showIcon)
+    , m_bookmarkIcon(new QIcon(":/images/bookmark_on.svg"))
 {
-    initialize();
+    initialize(system);
 }
 
-int BookmarkInfoModel::initialize()
+BookmarkInfoModel::~BookmarkInfoModel()
 {
-    qDebug() << "BookmarkInfoModel::initialize()";
+    delete m_bookmarkIcon;
+    delete m_fileSystemModel;
+}
+
+int BookmarkInfoModel::initialize(bool system)
+{
+    qDebug() << "BookmarkInfoModel::initialize() : system : " << system;
 
     m_infos.clear();
 
-    for(const QStorageInfo& volume : QStorageInfo::mountedVolumes())
+    if(system)
     {
-        qDebug() << "Name : " << volume.name();
-        qDebug() << "Display Name : " << volume.displayName();
-        qDebug() << "Device:" << volume.device();
-        qDebug() << "Root path:" << volume.rootPath();
-        qDebug() << "File system type:" << volume.fileSystemType();
-        qDebug() << "Is valid" << volume.isValid();
-        qDebug() << "Is root" << volume.isRoot();
-        qDebug() << "Is ready" << volume.isReady();
-        qDebug() << "Is read only" << volume.isReadOnly();
-        qDebug() << QString("Bytes available: %L1 Bytes").arg(volume.bytesAvailable());
-        qDebug() << QString("Bytes free: %L1 Bytes").arg(volume.bytesFree());
-        qDebug() << QString("Bytes total: %L1 Bytes").arg(volume.bytesTotal()) << endl;
-
-        if(volume.isValid() && volume.isReady()
-#ifdef Q_OS_LINUX
-            && (volume.isRoot() || volume.rootPath().startsWith("/media"))
-#endif
-          )
+        for(const QStorageInfo& volume : QStorageInfo::mountedVolumes())
         {
-            m_infos.push_back({BookmarkInfo::Type::System,
+            qDebug() << "Name : " << volume.name();
+            qDebug() << "Display Name : " << volume.displayName();
+            qDebug() << "Device:" << volume.device();
+            qDebug() << "Root path:" << volume.rootPath();
+            qDebug() << "File system type:" << volume.fileSystemType();
+            qDebug() << "Is valid" << volume.isValid();
+            qDebug() << "Is root" << volume.isRoot();
+            qDebug() << "Is ready" << volume.isReady();
+            qDebug() << "Is read only" << volume.isReadOnly();
+            qDebug() << QString("Bytes available: %L1 Bytes").arg(volume.bytesAvailable());
+            qDebug() << QString("Bytes free: %L1 Bytes").arg(volume.bytesFree());
+            qDebug() << QString("Bytes total: %L1 Bytes").arg(volume.bytesTotal()) << endl;
+
+            if(volume.isValid() && volume.isReady()
 #ifdef Q_OS_LINUX
-                               volume.device(),
-#else
-                               volume.displayName(),
+                && (volume.isRoot() || volume.rootPath().startsWith("/media"))
 #endif
-                               volume.rootPath()});
+              )
+            {
+                m_infos.push_back({BookmarkInfo::Type::System,
+#ifdef Q_OS_LINUX
+                                   volume.device(),
+#else
+                                   volume.displayName(),
+#endif
+                                   volume.rootPath()});
+            }
         }
     }
 
@@ -76,17 +87,7 @@ QVariant BookmarkInfoModel::headerData(int section, Qt::Orientation orientation,
 
     return QVariant();
 }
-#if 0
-bool BookmarkInfoModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
-{
-    if (value != headerData(section, orientation, role)) {
-        // FIXME: Implement me!
-        emit headerDataChanged(orientation, section, section);
-        return true;
-    }
-    return false;
-}
-#endif
+
 int BookmarkInfoModel::rowCount(const QModelIndex &parent) const
 {
     if(parent.isValid())
@@ -129,9 +130,16 @@ QVariant BookmarkInfoModel::data(const QModelIndex &index, int role) const
         }
         break;
     case Qt::DecorationRole:
-        if(index.column() == 0)
+        if(m_showIcon && index.column() == 0)
         {
-            return m_fileSystemModel->fileIcon(m_fileSystemModel->index(info.getPath()));
+            if(info.getType() == BookmarkInfo::Type::System)
+            {
+                return m_fileSystemModel->fileIcon(m_fileSystemModel->index(info.getPath()));
+            }
+            else if (info.getType() == BookmarkInfo::Type::User)
+            {
+                return *m_bookmarkIcon;
+            }
         }
         break;
     case TypeRole:
@@ -144,11 +152,27 @@ QVariant BookmarkInfoModel::data(const QModelIndex &index, int role) const
 
     return QVariant();
 }
-#if 0
+
 bool BookmarkInfoModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (data(index, role) != value) {
-        // FIXME: Implement me!
+    qDebug() << "BookmarkInfoModel::setData() : row : " << index.row() << ", column : " << index.column() << ", value : " << value;
+
+    if(!index.isValid() || (index.column() > 1) || role != Qt::EditRole)
+    {
+        return false;
+    }
+
+    if(data(index, role) != value)
+    {
+        if(index.column() == 0)
+        {
+            m_infos[index.row()].setName(value.toString());
+        }
+        else            // if(index.column() == 1)
+        {
+            m_infos[index.row()].setPath(value.toString());
+        }
+
         emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
@@ -157,40 +181,90 @@ bool BookmarkInfoModel::setData(const QModelIndex &index, const QVariant &value,
 
 Qt::ItemFlags BookmarkInfoModel::flags(const QModelIndex &index) const
 {
-    if (!index.isValid())
-        return Qt::NoItemFlags;
+    Qt::ItemFlags flag = QAbstractTableModel::flags(index);
+    if(!index.isValid())
+    {
+        flag |= Qt::ItemIsEditable;
+    }
 
-    return Qt::ItemIsEditable; // FIXME: Implement me!
+    return flag;
 }
 
 bool BookmarkInfoModel::insertRows(int row, int count, const QModelIndex &parent)
 {
-    beginInsertRows(parent, row, row + count - 1);
-    // FIXME: Implement me!
-    endInsertRows();
-}
+    Q_UNUSED(parent);
 
-bool BookmarkInfoModel::insertColumns(int column, int count, const QModelIndex &parent)
-{
-    beginInsertColumns(parent, column, column + count - 1);
-    // FIXME: Implement me!
-    endInsertColumns();
+    beginInsertRows(QModelIndex(), row, row + count - 1);
+
+    for(int i = 0;i < count;i++)
+    {
+        m_infos.insert(row + i, BookmarkInfo(BookmarkInfo::Type::User, "", ""));
+    }
+
+    endInsertRows();
+
+    return true;
 }
 
 bool BookmarkInfoModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-    beginRemoveRows(parent, row, row + count - 1);
-    // FIXME: Implement me!
+    Q_UNUSED(parent);
+
+    beginRemoveRows(QModelIndex(), row, row + count - 1);
+
+    for(;count > 0;count--)
+    {
+        m_infos.removeAt(row);
+    }
+
     endRemoveRows();
+
+    return true;
 }
 
-bool BookmarkInfoModel::removeColumns(int column, int count, const QModelIndex &parent)
+bool BookmarkInfoModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                                 const QModelIndex &destinationParent, int destinationChild)
 {
-    beginRemoveColumns(parent, column, column + count - 1);
-    // FIXME: Implement me!
-    endRemoveColumns();
+    Q_UNUSED(sourceParent);
+    Q_UNUSED(destinationParent);
+
+    if(destinationChild >= sourceRow && destinationChild <= sourceRow + count - 1)
+    {
+        return false;
+    }
+
+    if(!beginMoveRows(QModelIndex(), sourceRow, sourceRow + count - 1, QModelIndex(), destinationChild))
+    {
+        return false;
+    }
+
+    for(int i = 0;i < count;i++)
+    {
+        m_infos.insert(destinationChild + i, m_infos[sourceRow]);
+
+        int removeIndex = (destinationChild > sourceRow) ? sourceRow : sourceRow + 1;
+
+        m_infos.removeAt(removeIndex);
+    }
+
+    endMoveRows();
+
+    return true;
 }
-#endif
+
+int BookmarkInfoModel::saveToSettings()
+{
+    QList<QPair<QString, QString>> dirPathList;
+    for(auto& info : m_infos)
+    {
+        dirPathList.push_back({info.getName(), info.getPath()});
+    }
+
+    Settings::getInstance()->setBookmarkDirPathList(dirPathList);
+
+    return 0;
+}
+
 QHash<int, QByteArray> BookmarkInfoModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
