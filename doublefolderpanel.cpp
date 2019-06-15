@@ -14,7 +14,7 @@
 #include "settings.h"
 #include "fileoperationdialog.h"
 #include "fileattributesdialog.h"
-#include "selectstoragebookmarkdialog.h"
+#include "selectbookmarkdialog.h"
 #include "file.h"
 
 namespace Farman
@@ -341,7 +341,7 @@ void DoubleFolderPanel::onSelectStorageBookmark()
         return;
     }
 
-    SelectStorageBookmarkDialog dialog(parentWidget());
+    SelectBookmarkDialog dialog(parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;

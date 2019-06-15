@@ -30,10 +30,9 @@ SOURCES += main.cpp\
     folderviewstyleditemdelegate.cpp \
     foldermodel.cpp \
     doublefolderpanel.cpp \
-    selectstoragebookmarkdialog.cpp \
+    selectbookmarkdialog.cpp \
     sortdialog.cpp \
     filterdialog.cpp \
-    storagebookmarkinfomodel.cpp \
     workingdialog.cpp \
     worker.cpp \
     copyworker.cpp \
@@ -55,6 +54,7 @@ SOURCES += main.cpp\
     file.cpp
 
 HEADERS  += mainwindow.h \
+    bookmarkinfo.h \
     bookmarkinfomodel.h \
     bookmarkmanagerdialog.h \
     default_settings.h \
@@ -63,8 +63,7 @@ HEADERS  += mainwindow.h \
     foldermodel.h \
     folderview.h \
     doublefolderpanel.h \
-    selectstoragebookmarkdialog.h \
-    storagebookmarkinfomodel.h \
+    selectbookmarkdialog.h \
     types.h \
     sortdialog.h \
     filterdialog.h \
@@ -93,7 +92,7 @@ FORMS    += mainwindow.ui \
     bookmarkmanagerdialog.ui \
     folderform.ui \
     doublefolderpanel.ui \
-    selectstoragebookmarkdialog.ui \
+    selectbookmarkdialog.ui \
     sortdialog.ui \
     filterdialog.ui \
     workingdialog.ui \
