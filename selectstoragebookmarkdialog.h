@@ -24,8 +24,6 @@ public:
     void accept();
 
 private:
-    void initialize();
-
     Ui::SelectStorageBookmarkDialog *ui;
 
     StorageBookmarkInfoModel *m_sfInfoModel;
