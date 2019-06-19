@@ -35,7 +35,7 @@
         <string>...</string>
        </property>
        <property name="shortcut">
-        <string>Shift+Num+Up</string>
+        <string>Shift+Up</string>
        </property>
       </widget>
      </item>
@@ -45,7 +45,7 @@
         <string>...</string>
        </property>
        <property name="shortcut">
-        <string>Shift+Num+Down</string>
+        <string>Shift+Down</string>
        </property>
       </widget>
      </item>
