@@ -20,7 +20,14 @@ BookmarkEditDialog::BookmarkEditDialog(const QString& currentDirPath, const Book
     ui->selectPathToolButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileDialogStart));
 
     ui->nameLineEdit->setText(info.getName());
-    ui->pathLineEdit->setText(info.getPath());
+    if(info.getPath().isEmpty())
+    {
+        ui->pathLineEdit->setText(currentDirPath);
+    }
+    else
+    {
+        ui->pathLineEdit->setText(info.getPath());
+    }
 
     checkNamePathEmpty();
 }
