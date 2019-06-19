@@ -1,6 +1,7 @@
 ﻿#include <QFileDialog>
 #include <QPushButton>
 #include <QStyle>
+#include <QKeyEvent>
 #include <QDebug>
 #include "bookmarkeditdialog.h"
 #include "ui_bookmarkeditdialog.h"
@@ -64,6 +65,35 @@ void BookmarkEditDialog::on_selectPathToolButton_clicked()
     }
 
     checkNamePathEmpty();
+}
+
+void BookmarkEditDialog::keyPressEvent(QKeyEvent *e)
+{
+    switch(e->key())
+    {
+    case Qt::Key_N:
+        ui->nameLineEdit->setFocus();
+
+        e->accept();
+
+        break;
+
+    case Qt::Key_Return:
+        if(ui->buttonBox->button(QDialogButtonBox::Ok)->isEnabled())
+        {
+            accept();
+
+            e->accept();
+        }
+        break;
+
+    case Qt::Key_Escape:
+        reject();
+
+        e->accept();
+
+        break;
+    }
 }
 
 void BookmarkEditDialog::checkNamePathEmpty()

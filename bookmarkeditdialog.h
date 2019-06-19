@@ -29,6 +29,7 @@ private slots:
     void on_selectPathToolButton_clicked();
 
 private:
+    void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
     void checkNamePathEmpty();
 
     Ui::BookmarkEditDialog *ui;
