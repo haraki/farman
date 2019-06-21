@@ -14,6 +14,7 @@ namespace Farman
 FolderForm::FolderForm(FilterFlags filterFlags,
                        const QStringList& nameMaskFilters,
                        SectionType sortSectionType,
+                       SectionType sortSectionType2nd,
                        SortDirsType sortDirsType,
                        bool sortDotFirst,
                        Qt::CaseSensitivity sortCaseSensitivity,
@@ -33,7 +34,7 @@ FolderForm::FolderForm(FilterFlags filterFlags,
 
     setFilterFlags(filterFlags);
     setNameMaskFilters(nameMaskFilters);
-    setSortSettings(sortSectionType, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
+    setSortSettings(sortSectionType, sortSectionType2nd, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
 
     ui->folderView->setModel(m_folderModel);
 
@@ -146,12 +147,14 @@ QStringList FolderForm::getNameMaskFilters() const
 }
 
 void FolderForm::setSortSettings(SectionType sectionType,
+                                 SectionType sectionType2nd,
                                  SortDirsType dirsType,
                                  bool dotFirst,
                                  Qt::CaseSensitivity caseSensitivity,
                                  Qt::SortOrder order)
 {
     m_folderModel->setSortSectionType(sectionType);
+    m_folderModel->setSortSectionType2nd(sectionType2nd);
     m_folderModel->setSortDirsType(dirsType);
     m_folderModel->setSortDotFirst(dotFirst);
     m_folderModel->setSortCaseSensitivity(caseSensitivity);
@@ -161,6 +164,11 @@ void FolderForm::setSortSettings(SectionType sectionType,
 SectionType FolderForm::getSortSectionType() const
 {
     return m_folderModel->sortSectionType();
+}
+
+SectionType FolderForm::getSortSectionType2nd() const
+{
+    return m_folderModel->sortSectionType2nd();
 }
 
 int FolderForm::getSortColumn() const

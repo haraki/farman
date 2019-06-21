@@ -24,6 +24,7 @@ public:
     explicit FolderForm(FilterFlags filterFlags,
                         const QStringList& nameMaskFilters,
                         SectionType sortSectionType,
+                        SectionType sortSectionType2nd,
                         SortDirsType sortDirsType,
                         bool sortDotFirst,
                         Qt::CaseSensitivity sortCaseSensitivity,
@@ -43,11 +44,13 @@ public:
     QStringList getNameMaskFilters() const;
 
     void setSortSettings(SectionType sectionType,
+                         SectionType sectionType2nd,
                          SortDirsType dirsType,
                          bool dotFirst,
                          Qt::CaseSensitivity caseSensitivity,
                          Qt::SortOrder order);
     SectionType getSortSectionType() const;
+    SectionType getSortSectionType2nd() const;
     int getSortColumn() const;
     SortDirsType getSortDirsType() const;
     bool getSortDotFirst() const;

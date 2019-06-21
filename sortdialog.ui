@@ -6,14 +6,53 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>315</width>
-    <height>247</height>
+    <width>503</width>
+    <height>256</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Sort Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="2" rowspan="2">
+    <widget class="QGroupBox" name="caseGroupBox">
+     <property name="title">
+      <string>Case Sensitive(&amp;C)</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QRadioButton" name="caseSensitiveRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Sensitive</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="caseInsensitiveRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Insensitive</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QGroupBox" name="sortTypeGroupBox">
      <property name="title">
@@ -66,7 +105,95 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="1" column="0" rowspan="2">
+    <widget class="QGroupBox" name="orderGroupBox">
+     <property name="title">
+      <string>Order(&amp;O)</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QRadioButton" name="orderAscendingRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Ascending</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="orderDescendingRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Descending</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2">
+    <widget class="QGroupBox" name="sortType2ndGroupBox">
+     <property name="title">
+      <string>Sort Type(secondary)(&amp;E)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QRadioButton" name="sort2ndNameRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="sort2ndTypeRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="sort2ndSizeRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="sort2ndLastModifiedRadioButton">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Last modified</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="sort2ndNoSpecifyRadioButton">
+        <property name="text">
+         <string>No specify</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="2">
     <widget class="QGroupBox" name="dirGroupBox">
      <property name="title">
       <string>Folders(&amp;F)</string>
@@ -105,73 +232,18 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="orderGroupBox">
-     <property name="title">
-      <string>Order(&amp;O)</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QRadioButton" name="orderAscendingRadioButton">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Ascending</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="orderDescendingRadioButton">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Descending</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QGroupBox" name="caseGroupBox">
-     <property name="title">
-      <string>Case Sensitive(&amp;C)</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
-      <item>
-       <widget class="QRadioButton" name="caseSensitiveRadioButton">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Sensitive</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="caseInsensitiveRadioButton">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Insensitive</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttonBox">
+   <item row="2" column="1">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>44</height>
+      </size>
      </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>
@@ -180,6 +252,11 @@
   <tabstop>sortTypeRadioButton</tabstop>
   <tabstop>sortSizeRadioButton</tabstop>
   <tabstop>sortLastModifiedRadioButton</tabstop>
+  <tabstop>sort2ndNameRadioButton</tabstop>
+  <tabstop>sort2ndTypeRadioButton</tabstop>
+  <tabstop>sort2ndSizeRadioButton</tabstop>
+  <tabstop>sort2ndLastModifiedRadioButton</tabstop>
+  <tabstop>sort2ndNoSpecifyRadioButton</tabstop>
   <tabstop>dirFirstRadioButton</tabstop>
   <tabstop>dirLastRadioButton</tabstop>
   <tabstop>dirNoSpecifyRadioButton</tabstop>
