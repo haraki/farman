@@ -28,6 +28,7 @@ static Q_DECL_CONSTEXPR FolderAtStartup DEFAULT_FOLDER_AT_STARTUP_TYPE = FolderA
 static Q_DECL_CONSTEXPR char DEFAULT_FOLDER_PATH_AT_STARTUP[] = "";
 
 static Q_DECL_CONSTEXPR SectionType DEFAULT_SORT_SECTION_TYPE = SectionType::FileName;
+static Q_DECL_CONSTEXPR SectionType DEFAULT_SORT_SECTION_TYPE_2ND = SectionType::NoSpecify;
 static Q_DECL_CONSTEXPR SortDirsType DEFAULT_SORT_DIRS_TYPE = SortDirsType::NoSpecify;
 static Q_DECL_CONSTEXPR bool DEFAULT_SORT_DOT_FIRST = true;
 static Q_DECL_CONSTEXPR Qt::CaseSensitivity DEFAULT_SORT_CASE_SENSITIVITY = Qt::CaseInsensitive;

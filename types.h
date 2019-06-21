@@ -61,6 +61,7 @@ enum class SectionType : int
     FileType,
     FileSize,
     LastModified,
+    NoSpecify,
 
     SectionTypeNum
 };

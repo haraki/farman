@@ -91,6 +91,7 @@ void Settings::initialize()
 
     // Left side Sort settings
     m_leftSortSectionType = getValueSortSectionType("left");
+    m_leftSortSectionType2nd = getValueSortSectionType2nd("left");
     m_leftSortDirsType = getValueSortDirsType("left");
     m_leftSortDotFirst = getValueSortDotFirst("left");
     m_leftSortCaseSensitivity = getValueSortCaseSensitivity("left");
@@ -98,6 +99,7 @@ void Settings::initialize()
 
     // Right side Sort settings
     m_rightSortSectionType = getValueSortSectionType("right");
+    m_rightSortSectionType2nd = getValueSortSectionType2nd("right");
     m_rightSortDirsType = getValueSortDirsType("right");
     m_rightSortDotFirst = getValueSortDotFirst("right");
     m_rightSortCaseSensitivity = getValueSortCaseSensitivity("right");
@@ -318,6 +320,7 @@ void Settings::flush()
 
     // Left side Sort settings
     setValueSortSectionType(m_leftSortSectionType, "left");
+    setValueSortSectionType2nd(m_leftSortSectionType2nd, "left");
     setValueSortDirsType(m_leftSortDirsType, "left");
     setValueSortDotFirst(m_leftSortDotFirst, "left");
     setValueSortCaseSensitivity(m_leftSortCaseSensitivity, "left");
@@ -325,6 +328,7 @@ void Settings::flush()
 
     // Right side Sort settings
     setValueSortSectionType(m_rightSortSectionType, "right");
+    setValueSortSectionType2nd(m_rightSortSectionType2nd, "right");
     setValueSortDirsType(m_rightSortDirsType, "right");
     setValueSortDotFirst(m_rightSortDotFirst, "right");
     setValueSortCaseSensitivity(m_rightSortCaseSensitivity, "right");
@@ -595,6 +599,21 @@ SectionType Settings::getValueSortSectionType(const QString& prefix)
     return ret;
 }
 
+SectionType Settings::getValueSortSectionType2nd(const QString& prefix)
+{
+    SectionType ret = DEFAULT_SORT_SECTION_TYPE_2ND;
+
+    QString sortTypeValue = value("main/" + prefix + "SortType2nd").toString();
+    ret = (sortTypeValue == "lastModified") ? SectionType::LastModified :
+          (sortTypeValue == "size") ? SectionType::FileSize :
+          (sortTypeValue == "type") ? SectionType::FileType :
+          (sortTypeValue == "name") ? SectionType::FileName :
+          (sortTypeValue == "none") ? SectionType::NoSpecify :
+                                      DEFAULT_SORT_SECTION_TYPE_2ND;
+
+    return ret;
+}
+
 SortDirsType Settings::getValueSortDirsType(const QString& prefix)
 {
     SortDirsType ret = DEFAULT_SORT_DIRS_TYPE;
@@ -644,6 +663,16 @@ void Settings::setValueSortSectionType(SectionType sectionType, const QString& p
                             (sectionType == SectionType::FileType) ? "type" :
                                                                      "name";
     setValue("main/" + prefix + "SortType", sortTypeValue);
+}
+
+void Settings::setValueSortSectionType2nd(SectionType sectionType2nd, const QString& prefix)
+{
+    QString sortTypeValue = (sectionType2nd == SectionType::LastModified) ? "lastModified" :
+                            (sectionType2nd == SectionType::FileSize) ? "size" :
+                            (sectionType2nd == SectionType::FileType) ? "type" :
+                            (sectionType2nd == SectionType::FileName) ? "name" :
+                                                                        "none";
+    setValue("main/" + prefix + "SortType2nd", sortTypeValue);
 }
 
 void Settings::setValueSortDirsType(SortDirsType dirsType, const QString& prefix)
