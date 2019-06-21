@@ -30,9 +30,13 @@ public:
 
     void setSortSectionType(SectionType sectionType);
     SectionType sortSectionType() const;
+    void setSortSectionType2nd(SectionType sectionType2nd);
+    SectionType sortSectionType2nd() const;
 
     void setSortColumn(int column);
     int sortColumn() const;
+    void setSortColumn2nd(int column);
+    int sortColumn2nd() const;
 
     void setSortDirsType(SortDirsType dirsType);
     SortDirsType sortDirsType() const;
@@ -114,7 +118,9 @@ private Q_SLOTS:
 
 private:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE;
+
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const Q_DECL_OVERRIDE;
+    bool sectionTypeLessThan(QFileInfo& l_info, QFileInfo& r_info, SectionType sectionType, SectionType sectionType2nd, Qt::CaseSensitivity caseSensitivity) const;
 
     bool isSelected(const QModelIndex& index) const;
 
@@ -134,6 +140,7 @@ private:
     FilterFlags m_filterFlags;
 
     int m_sortColumn;
+    int m_sortColumn2nd;
     SortDirsType m_sortDirsType;
     bool m_sortDotFirst;
     Qt::SortOrder m_sortOrder;

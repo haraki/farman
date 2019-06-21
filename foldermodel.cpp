@@ -30,6 +30,7 @@ static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries |
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
     m_sortColumn(0),
+    m_sortColumn2nd(-1),
     m_sortDirsType(SortDirsType::NoSpecify),
     m_sortDotFirst(true),
     m_sortOrder(Qt::AscendingOrder),
@@ -112,9 +113,19 @@ void FolderModel::setSortSectionType(SectionType sectionType)
     setSortColumn(getColumnFromSectionType(sectionType));
 }
 
+void FolderModel::setSortSectionType2nd(SectionType sectionType2nd)
+{
+    setSortColumn2nd(getColumnFromSectionType(sectionType2nd));
+}
+
 SectionType FolderModel::sortSectionType() const
 {
     return getSectionTypeFromColumn(m_sortColumn);
+}
+
+SectionType FolderModel::sortSectionType2nd() const
+{
+    return getSectionTypeFromColumn(m_sortColumn2nd);
 }
 
 void FolderModel::setSortColumn(int column)
@@ -125,6 +136,16 @@ void FolderModel::setSortColumn(int column)
 int FolderModel::sortColumn() const
 {
     return m_sortColumn;
+}
+
+void FolderModel::setSortColumn2nd(int column)
+{
+    m_sortColumn2nd = column;
+}
+
+int FolderModel::sortColumn2nd() const
+{
+    return m_sortColumn2nd;
 }
 
 void FolderModel::setSortDirsType(SortDirsType dirsType)
@@ -215,6 +236,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
                 ret = fi.fileName();
             }
             break;
+
         case SectionType::FileType:
             if(!fi.isDir() && !fi.completeBaseName().isEmpty())
             {
@@ -253,6 +275,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
                 }
             }
             break;
+
         case SectionType::LastModified:
         {
             PaneMode paneMode = Settings::getInstance()->getPaneMode();
@@ -382,6 +405,7 @@ QVariant FolderModel::headerData(int section, Qt::Orientation orientation, int r
 void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 {
     m_sortColumn = column;
+    m_sortColumn2nd = -1;
     m_sortOrder = order;
 
     refresh();
@@ -389,7 +413,7 @@ void FolderModel::sort(int column, Qt::SortOrder order/* = Qt::AscendingOrder*/)
 
 void FolderModel::refresh()
 {
-    QSortFilterProxyModel::sort(m_sortColumn, m_sortOrder);
+    QSortFilterProxyModel::sort(0, m_sortOrder);
 
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
     QString backup = fsModel->rootPath();
@@ -546,15 +570,29 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
     }
 
     SectionType sortSectionType = getSectionTypeFromColumn(m_sortColumn);
+    SectionType sortSectionType2nd = getSectionTypeFromColumn(m_sortColumn2nd);
+    Qt::CaseSensitivity caseSensitivity = sortCaseSensitivity();
 
-    if(sortSectionType == SectionType::FileSize)
+    return sectionTypeLessThan(l_info, r_info, sortSectionType, sortSectionType2nd, caseSensitivity);
+}
+
+bool FolderModel::sectionTypeLessThan(QFileInfo& l_info, QFileInfo& r_info, SectionType sectionType, SectionType sectionType2nd, Qt::CaseSensitivity caseSensitivity) const
+{
+    if(sectionType == SectionType::FileSize)
     {
         if(!l_info.isDir() && !r_info.isDir())
         {
-            return l_info.size() < r_info.size();
+            if(sectionType2nd != SectionType::NoSpecify && l_info.size() == r_info.size())
+            {
+                return sectionTypeLessThan(l_info, r_info, sectionType2nd, SectionType::NoSpecify, caseSensitivity);
+            }
+            else
+            {
+                return l_info.size() < r_info.size();
+            }
         }
     }
-    else if(sortSectionType == SectionType::FileType)
+    else if(sectionType == SectionType::FileType)
     {
         QString l_type = (!l_info.isDir() && !l_info.completeBaseName().isEmpty()) ? l_info.suffix() : "";
         QString r_type = (!r_info.isDir() && !r_info.completeBaseName().isEmpty()) ? r_info.suffix() : "";
@@ -565,27 +603,46 @@ bool FolderModel::lessThan(const QModelIndex &source_left, const QModelIndex &so
             r_type = r_info.fileName();
         }
 
-        if(sortCaseSensitivity() == Qt::CaseInsensitive && l_type.toLower() != r_type.toLower())
+        if(caseSensitivity == Qt::CaseInsensitive)
         {
-            return l_type.toLower() < r_type.toLower();
+            l_type = l_type.toLower();
+            r_type = r_type.toLower();
+        }
+
+        if(sectionType2nd != SectionType::NoSpecify && l_type == r_type)
+        {
+            return sectionTypeLessThan(l_info, r_info, sectionType2nd, SectionType::NoSpecify, caseSensitivity);
         }
         else
         {
             return l_type < r_type;
         }
     }
-    else if(sortSectionType == SectionType::LastModified)
+    else if(sectionType == SectionType::LastModified)
     {
-        return l_info.lastModified() < r_info.lastModified();
+        if(sectionType2nd != SectionType::NoSpecify && l_info.lastModified() == r_info.lastModified())
+        {
+            return sectionTypeLessThan(l_info, r_info, sectionType2nd, SectionType::NoSpecify, caseSensitivity);
+        }
+        else
+        {
+            return l_info.lastModified() < r_info.lastModified();
+        }
     }
     else
     {
         QString l_name = (!l_info.isDir() && !l_info.completeBaseName().isEmpty()) ? l_info.completeBaseName() : l_info.fileName();
         QString r_name = (!r_info.isDir() && !r_info.completeBaseName().isEmpty()) ? r_info.completeBaseName() : r_info.fileName();
 
-        if(sortCaseSensitivity() == Qt::CaseInsensitive && l_name.toLower() != r_name.toLower())
+        if(caseSensitivity == Qt::CaseInsensitive)
         {
-            return l_name.toLower() < r_name.toLower();
+            l_name = l_name.toLower();
+            r_name = r_name.toLower();
+        }
+
+        if(sectionType2nd != SectionType::NoSpecify && l_name == r_name)
+        {
+            return sectionTypeLessThan(l_info, r_info, sectionType2nd, SectionType::NoSpecify, caseSensitivity);
         }
         else
         {
@@ -643,7 +700,7 @@ SectionType FolderModel::getSectionTypeFromColumn(int column) const
         return SectionType::LastModified;
     }
 
-    return SectionType::Unknown;
+    return SectionType::NoSpecify;
 }
 
 int FolderModel::getColumnFromSectionType(SectionType sectionType) const
