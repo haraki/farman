@@ -1727,7 +1727,7 @@
        <item row="3" column="0" colspan="2">
         <widget class="QCheckBox" name="allowCursorAroundCheckBox">
          <property name="text">
-          <string>Allow cursor around(&amp;C)</string>
+          <string>Loop movement of the cursor(&amp;L)</string>
          </property>
         </widget>
        </item>
