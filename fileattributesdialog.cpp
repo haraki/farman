@@ -25,6 +25,14 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
 
     ui->informationFullPathLabel->setText(fileInfo.absoluteFilePath());
     ui->informationMimeLabel->setText(QMimeDatabase().mimeTypeForFile(fileInfo).name());
+    if(fileInfo.isDir())
+    {
+        ui->informationFileSizeLabel->setText("- ");
+    }
+    else
+    {
+        ui->informationFileSizeLabel->setText(QString("%L1 ").arg(fileInfo.size()) + tr("Bytes"));
+    }
 
     ui->ownershipUserLabel->setText(fileInfo.owner());
     ui->ownershipGroupLabel->setText(fileInfo.group());

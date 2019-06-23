@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>407</height>
+    <height>505</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -44,6 +44,9 @@
         <property name="text">
          <string>Full path :</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">
@@ -53,17 +56,37 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="3" column="1">
+       <widget class="QLabel" name="informationMimeLabel">
+        <property name="text">
+         <string>MIME</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
        <widget class="QLabel" name="informationMimeHeadLabel">
         <property name="text">
          <string>MIME :</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="informationMimeLabel">
+      <item row="4" column="0">
+       <widget class="QLabel" name="informationFileSizeHeadLabel">
         <property name="text">
-         <string>MIME</string>
+         <string>File size :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="informationFileSizeLabel">
+        <property name="text">
+         <string>File size</string>
         </property>
        </widget>
       </item>
@@ -88,12 +111,18 @@
         <property name="text">
          <string>Group :</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="ownershipUserHeadLabel">
         <property name="text">
          <string>User :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -210,6 +239,9 @@
        <widget class="QLabel" name="timestampCreatedHeadLabel">
         <property name="text">
          <string>Created : </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
