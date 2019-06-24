@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>505</height>
+    <height>529</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -56,14 +56,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="informationMimeLabel">
-        <property name="text">
-         <string>MIME</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
+      <item row="1" column="0">
        <widget class="QLabel" name="informationMimeHeadLabel">
         <property name="text">
          <string>MIME :</string>
@@ -73,7 +66,14 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="1" column="1">
+       <widget class="QLabel" name="informationMimeLabel">
+        <property name="text">
+         <string>MIME</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
        <widget class="QLabel" name="informationFileSizeHeadLabel">
         <property name="text">
          <string>File size :</string>
@@ -83,10 +83,27 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="2" column="1">
        <widget class="QLabel" name="informationFileSizeLabel">
         <property name="text">
          <string>File size</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="informationSizeOnDiskHeadLabel">
+        <property name="text">
+         <string>Size on disk :</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="informationSizeOnDiskLabel">
+        <property name="text">
+         <string>Size on disk</string>
         </property>
        </widget>
       </item>

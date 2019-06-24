@@ -23,6 +23,7 @@ public:
                                   QFile::Permissions permissions,
                                   const QDateTime& created,
                                   const QDateTime& lastModified,
+                                  const qint64 fileSizeOnDisk,
                                   QWidget *parent = Q_NULLPTR);
     ~FileAttributesDialog();
 

@@ -12,6 +12,7 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
                                            QFile::Permissions permissions,
                                            const QDateTime& created,
                                            const QDateTime& lastModified,
+                                           const qint64 fileSizeOnDisk,
                                            QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::FileAttributesDialog),
@@ -28,10 +29,12 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
     if(fileInfo.isDir())
     {
         ui->informationFileSizeLabel->setText("- ");
+        ui->informationSizeOnDiskLabel->setText("- ");
     }
     else
     {
         ui->informationFileSizeLabel->setText(QString("%L1 ").arg(fileInfo.size()) + tr("Bytes"));
+        ui->informationSizeOnDiskLabel->setText(QString("%L1 ").arg(fileSizeOnDisk) + tr("Bytes"));
     }
 
     ui->ownershipUserLabel->setText(fileInfo.owner());

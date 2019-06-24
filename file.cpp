@@ -1,4 +1,5 @@
-﻿#include <QDebug>
+﻿#include <QString>
+#include <QDebug>
 #include "file.h"
 #include "copyworker.h"
 #include "removeworker.h"
@@ -6,6 +7,11 @@
 #include "workingdialog.h"
 #include "settings.h"
 #include "mainwindow.h"
+
+#ifdef Q_OS_WIN
+#else
+#include <sys/stat.h>
+#endif
 
 namespace Farman
 {
@@ -18,6 +24,24 @@ File::File(MainWindow* mainWindow)
 
 File::~File()
 {
+}
+
+qint64 File::getFileSizeOnDisk(const QString& filePath)
+{
+#ifdef Q_OS_WIN
+    return 0;
+#else
+    struct stat statBuf;
+
+    if(lstat(filePath.toUtf8(), &statBuf) == -1)
+    {
+        return -1;
+    }
+
+    qDebug() << "st_size : " << statBuf.st_size << ", st_blocks : " << statBuf.st_blocks;
+
+    return statBuf.st_blocks * 512;
+#endif
 }
 
 bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)

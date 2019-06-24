@@ -691,19 +691,21 @@ void DoubleFolderPanel::onAttributes()
     }
 
     QFileInfo fileInfo = activeForm->getCurrentFileInfo();
-    QFile file(fileInfo.absoluteFilePath());
+    QString filePath = fileInfo.absoluteFilePath();
+    QFile file(filePath);
 
     FileAttributesDialog dialog(fileInfo,
                                 file.permissions(),
                                 file.fileTime(QFile::FileBirthTime),
                                 file.fileTime(QFile::FileModificationTime),
+                                File::getFileSizeOnDisk(filePath),
                                 parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
-    emitChangeFileAttributes(fileInfo.absoluteFilePath(),
+    emitChangeFileAttributes(filePath,
                              dialog.getPermissions(),
                              dialog.getCreated(),
                              dialog.getLastModified());
