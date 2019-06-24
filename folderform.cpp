@@ -7,6 +7,7 @@
 #include "ui_folderform.h"
 #include "foldermodel.h"
 #include "settings.h"
+#include "bookmarkeditdialog.h"
 
 namespace Farman
 {
@@ -409,14 +410,25 @@ void FolderForm::onBookmarkDir(bool marked)
     {
         if(index < 0)
         {
-           Settings::getInstance()->insertBookmarkDirPath(currentPath);
+            BookmarkInfo retInfo;
+            if(BookmarkEditDialog::launchDialog(currentPath,
+                                                {BookmarkInfo::Type::User,
+                                                 currentPath,
+                                                 currentPath},
+                                                retInfo,
+                                                this) != QDialog::Accepted)
+            {
+                return;
+            }
+
+            Settings::getInstance()->insertBookmarkDirPath({retInfo.getName(), retInfo.getPath()});
         }
     }
     else
     {
         if(index >= 0)
         {
-           Settings::getInstance()->removeBookmarkDirPath(index);
+            Settings::getInstance()->removeBookmarkDirPath(index);
         }
     }
 
