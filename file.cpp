@@ -9,8 +9,9 @@
 #include "mainwindow.h"
 
 #ifdef Q_OS_WIN
+#   include <Windows.h>
 #else
-#include <sys/stat.h>
+#   include <sys/stat.h>
 #endif
 
 namespace Farman
@@ -29,7 +30,16 @@ File::~File()
 qint64 File::getFileSizeOnDisk(const QString& filePath)
 {
 #ifdef Q_OS_WIN
-    return 0;
+    DWORD fileSizeH, fileSizeL;
+    fileSizeL = ::GetCompressedFileSize(filePath.toStdWString().c_str(), &fileSizeH);
+    if(fileSizeL == static_cast<DWORD>(-1))
+    {
+        return -1;
+    }
+
+    qDebug() << "fileSizeH : " << fileSizeH << ", fileSizeL : " << fileSizeL;
+
+    return (static_cast<qint64>(fileSizeH) << 32) | fileSizeL;
 #else
     struct stat statBuf;
 
