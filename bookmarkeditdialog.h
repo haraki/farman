@@ -24,6 +24,11 @@ public:
 
     void accept() Q_DECL_OVERRIDE;
 
+    static QDialog::DialogCode launchDialog(const QString& currentDirPath,
+                                            const BookmarkInfo& in,
+                                            BookmarkInfo& out,
+                                            QWidget* parent = Q_NULLPTR);
+
 private slots:
     void on_nameLineEdit_textChanged(const QString &arg1);
     void on_selectPathToolButton_clicked();

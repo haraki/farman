@@ -45,6 +45,24 @@ void BookmarkEditDialog::accept()
     QDialog::accept();
 }
 
+
+QDialog::DialogCode BookmarkEditDialog::launchDialog(const QString& currentDirPath, const BookmarkInfo& in, BookmarkInfo& out, QWidget* parent/* = Q_NULLPTR*/)
+{
+    BookmarkEditDialog dialog(currentDirPath, in, parent);
+
+    QDialog::DialogCode ret = static_cast<QDialog::DialogCode>(dialog.exec());
+
+    if(ret != QDialog::Accepted)
+    {
+        return ret;
+    }
+
+    out = dialog.getBookmarkInfo();
+
+    return QDialog::Accepted;
+}
+
+
 void BookmarkEditDialog::on_nameLineEdit_textChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);

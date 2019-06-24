@@ -33,7 +33,6 @@ private Q_SLOTS:
 
 private:
     void editBookmark(const QModelIndex& index);
-    QDialog::DialogCode launchBookmarkEditDialog(const BookmarkInfo& in, BookmarkInfo& out);
 
     Ui::BookmarkManagerDialog *ui;
 

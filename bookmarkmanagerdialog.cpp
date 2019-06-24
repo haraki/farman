@@ -45,7 +45,7 @@ void BookmarkManagerDialog::on_newPushButton_clicked()
     qDebug() << "BookmarkManagerDialog::on_newPushButton_clicked()";
 
     BookmarkInfo retInfo;
-    if(launchBookmarkEditDialog(BookmarkInfo(), retInfo) != QDialog::Accepted)
+    if(BookmarkEditDialog::launchDialog(m_currentDirPath, BookmarkInfo(), retInfo, this) != QDialog::Accepted)
     {
         return;
     }
@@ -142,10 +142,12 @@ void BookmarkManagerDialog::on_bookmarksTableView_doubleClicked(const QModelInde
 void BookmarkManagerDialog::editBookmark(const QModelIndex& index)
 {
     BookmarkInfo retInfo;
-    if(launchBookmarkEditDialog({BookmarkInfo::Type::User,
-                                 m_bookmarkInfoModel->data(index, BookmarkInfoModel::NameRole).toString(),
-                                 m_bookmarkInfoModel->data(index, BookmarkInfoModel::PathRole).toString()},
-                                retInfo) != QDialog::Accepted)
+    if(BookmarkEditDialog::launchDialog(m_currentDirPath,
+                                        {BookmarkInfo::Type::User,
+                                         m_bookmarkInfoModel->data(index, BookmarkInfoModel::NameRole).toString(),
+                                         m_bookmarkInfoModel->data(index, BookmarkInfoModel::PathRole).toString()},
+                                        retInfo,
+                                        this) != QDialog::Accepted)
     {
         return;
     }
@@ -153,22 +155,6 @@ void BookmarkManagerDialog::editBookmark(const QModelIndex& index)
     int row = index.row();
     m_bookmarkInfoModel->setData(m_bookmarkInfoModel->index(row, 0), retInfo.getName());
     m_bookmarkInfoModel->setData(m_bookmarkInfoModel->index(row, 1), retInfo.getPath());
-}
-
-QDialog::DialogCode BookmarkManagerDialog::launchBookmarkEditDialog(const BookmarkInfo& in, BookmarkInfo& out)
-{
-    BookmarkEditDialog dialog(m_currentDirPath, in, this);
-
-    QDialog::DialogCode ret = static_cast<QDialog::DialogCode>(dialog.exec());
-
-    if(ret != QDialog::Accepted)
-    {
-        return ret;
-    }
-
-    out = dialog.getBookmarkInfo();
-
-    return QDialog::Accepted;
 }
 
 }           // namespace Farman
