@@ -18,8 +18,6 @@ public:
     explicit File(MainWindow* mainWindow);
     ~File();
 
-    static qint64 getFileSizeOnDisk(const QString& filePath);
-
 Q_SIGNALS:
     void createNewFileFinished(const QString& filePath);
 

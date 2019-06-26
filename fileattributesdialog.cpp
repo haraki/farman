@@ -29,11 +29,17 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
     if(fileInfo.isDir())
     {
         ui->informationFileSizeLabel->setText("- ");
-        ui->informationSizeOnDiskLabel->setText("- ");
     }
     else
     {
         ui->informationFileSizeLabel->setText(QString("%L1 ").arg(fileInfo.size()) + tr("Bytes"));
+    }
+    if(fileInfo.isDir() || fileSizeOnDisk < 0)
+    {
+        ui->informationSizeOnDiskLabel->setText("- ");
+    }
+    else
+    {
         ui->informationSizeOnDiskLabel->setText(QString("%L1 ").arg(fileSizeOnDisk) + tr("Bytes"));
     }
 

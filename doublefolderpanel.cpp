@@ -17,6 +17,12 @@
 #include "selectbookmarkdialog.h"
 #include "file.h"
 
+#ifdef Q_OS_WIN
+#   include "win32.h"
+#else
+#   include "xnix.h"
+#endif
+
 namespace Farman
 {
 
@@ -698,7 +704,7 @@ void DoubleFolderPanel::onAttributes()
                                 file.permissions(),
                                 file.fileTime(QFile::FileBirthTime),
                                 file.fileTime(QFile::FileModificationTime),
-                                File::getFileSizeOnDisk(filePath),
+                                getFileSizeOnDisk(filePath),
                                 parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {

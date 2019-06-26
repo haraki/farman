@@ -34,6 +34,7 @@ SOURCES += main.cpp\
     selectbookmarkdialog.cpp \
     sortdialog.cpp \
     filterdialog.cpp \
+    win32.cpp \
     workingdialog.cpp \
     worker.cpp \
     copyworker.cpp \
@@ -52,7 +53,8 @@ SOURCES += main.cpp\
     textview.cpp \
     QHexView/src/QHexView.cpp \
     hexviewer.cpp \
-    file.cpp
+    file.cpp \
+    xnix.cpp
 
 HEADERS  += mainwindow.h \
     bookmarkeditdialog.h \
@@ -65,10 +67,12 @@ HEADERS  += mainwindow.h \
     foldermodel.h \
     folderview.h \
     doublefolderpanel.h \
+    misc.h \
     selectbookmarkdialog.h \
     types.h \
     sortdialog.h \
     filterdialog.h \
+    win32.h \
     workingdialog.h \
     worker.h \
     copyworker.h \
@@ -88,7 +92,8 @@ HEADERS  += mainwindow.h \
     textview.h \
     QHexView/include/QHexView.h \
     hexviewer.h \
-    file.h
+    file.h \
+    xnix.h
 
 FORMS    += mainwindow.ui \
     bookmarkeditdialog.ui \

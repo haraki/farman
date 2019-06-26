@@ -8,10 +8,7 @@
 #include "foldermodel.h"
 #include "settings.h"
 #include "types.h"
-
-#ifdef Q_OS_WIN
-#   include <Windows.h>
-#endif
+#include "win32.h"
 
 namespace Farman
 {
@@ -508,7 +505,7 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
     }
 
 #ifdef Q_OS_WIN
-    if(!(m_filterFlags & FilterFlag::System) && isWindowsSystemFile(cfi))
+    if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi))
     {
         return false;
     }
@@ -667,17 +664,6 @@ bool FolderModel::isDrive(const QModelIndex& index) const
 
     return false;
 }
-
-bool FolderModel::isWindowsSystemFile(const QFileInfo& fileInfo) const
-{
-    DWORD attrFlags = ::GetFileAttributes(fileInfo.filePath().toStdWString().c_str());
-    if(attrFlags != static_cast<DWORD>(-1) && (attrFlags & FILE_ATTRIBUTE_SYSTEM))
-    {
-        return true;
-    }
-
-    return false;
-}
 #endif
 
 SectionType FolderModel::getSectionTypeFromColumn(int column) const
@@ -744,7 +730,7 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
         }
     }
 #ifdef Q_OS_WIN
-    else if(fi.fileName() != ".." && isWindowsSystemFile(fi))
+    else if(fi.fileName() != ".." && isSystemFile(fi))
     {
         if(selected)
         {

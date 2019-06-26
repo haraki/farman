@@ -8,12 +8,6 @@
 #include "settings.h"
 #include "mainwindow.h"
 
-#ifdef Q_OS_WIN
-#   include <Windows.h>
-#else
-#   include <sys/stat.h>
-#endif
-
 namespace Farman
 {
 
@@ -25,33 +19,6 @@ File::File(MainWindow* mainWindow)
 
 File::~File()
 {
-}
-
-qint64 File::getFileSizeOnDisk(const QString& filePath)
-{
-#ifdef Q_OS_WIN
-    DWORD fileSizeH, fileSizeL;
-    fileSizeL = ::GetCompressedFileSize(filePath.toStdWString().c_str(), &fileSizeH);
-    if(fileSizeL == static_cast<DWORD>(-1))
-    {
-        return -1;
-    }
-
-    qDebug() << "fileSizeH : " << fileSizeH << ", fileSizeL : " << fileSizeL;
-
-    return (static_cast<qint64>(fileSizeH) << 32) | fileSizeL;
-#else
-    struct stat statBuf;
-
-    if(lstat(filePath.toUtf8(), &statBuf) == -1)
-    {
-        return -1;
-    }
-
-    qDebug() << "st_size : " << statBuf.st_size << ", st_blocks : " << statBuf.st_blocks;
-
-    return statBuf.st_blocks * 512;
-#endif
 }
 
 bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
