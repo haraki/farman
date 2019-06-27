@@ -103,7 +103,7 @@ QString getCompilerVersion()
 #elif defined(__MINGW32__)
     return QString("MinGW %1.%2, 32bit").arg(__MINGW32_MAJOR_VERSION).arg(__MINGW32_MINOR_VERSION)
 #else
-    return QString("unknown")
+    return QString("")
 #endif
                 ;
 }

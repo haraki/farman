@@ -867,10 +867,10 @@ void MainWindow::about()
 {
     QMessageBox::about(this,
                        tr("About %1").arg(qApp->applicationName()),
-                       QString("<p><font size = '+4'>%1<font size = '+1'> Version %2</font></font></p>").arg(qApp->applicationName()).arg(qApp->applicationVersion())
-                       + QString("<p style = 'font-weight:normal'>Based on Qt %1 ").arg(qVersion())
-                       + QString("(%1)").arg(getCompilerVersion())
-                       + QString("<p style = 'font-weight:normal'>Copyright 2019 %1 All right reserved.</p>").arg(qApp->organizationName())
+                       tr("<p><font size = '+4'>%1<font size = '+1'> Version %2</font></font></p>").arg(qApp->applicationName()).arg(qApp->applicationVersion())
+                       + tr("<p style = 'font-weight:normal'>Based on Qt %1 ").arg(qVersion())
+                       + tr("(%1)").arg(getCompilerVersion())
+                       + tr("<p style = 'font-weight:normal'>Copyright 2019 %1 All right reserved.</p>").arg(qApp->organizationName())
                        );
 }
 

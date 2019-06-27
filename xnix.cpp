@@ -32,9 +32,14 @@ extern QString getCompilerVersion()
 #if defined(__clang__)
     return QString("Clang %1").arg(__clang_version__)
 #elif defined(__GNUC__)
-    return QString("gcc %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__)
+    return QString("gcc %1, %2").arg(__VERSION__)
+#   if defined(__x86_64__)
+            .arg("64bit")
+#   else
+            .arg("32bit")
+#   endif
 #else
-    return QString("unknown")
+    return QString("")
 #endif
             ;
 }
