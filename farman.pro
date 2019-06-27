@@ -14,8 +14,8 @@ TEMPLATE = app
 VERSION = 0.5.0
 QMAKE_TARGET_COMPANY = MASHSOFT
 QMAKE_TARGET_PRODUCT = farman
-QMAKE_TARGET_DESCRIPTION = farman
-QMAKE_TARGET_COPYRIGHT = Copyright 2018 MASHSOFT. All right reserved.
+QMAKE_TARGET_DESCRIPTION = 'farman' is Dual pane File manager.
+QMAKE_TARGET_COPYRIGHT = Copyright 2019 MASHSOFT. All right reserved.
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
@@ -25,7 +25,7 @@ SOURCES += main.cpp\
     bookmarkeditdialog.cpp \
     bookmarkinfomodel.cpp \
     bookmarkmanagerdialog.cpp \
-        mainwindow.cpp \
+    mainwindow.cpp \
     folderform.cpp \
     folderview.cpp \
     folderviewstyleditemdelegate.cpp \
