@@ -15,6 +15,12 @@
 #include "imageviewer.h"
 #include "file.h"
 
+#ifdef Q_OS_WIN
+#   include "win32.h"
+#else
+#   include "xnix.h"
+#endif
+
 namespace Farman
 {
 
@@ -863,13 +869,7 @@ void MainWindow::about()
                        tr("About %1").arg(qApp->applicationName()),
                        QString("<p><font size = '+4'>%1<font size = '+1'> Version %2</font></font></p>").arg(qApp->applicationName()).arg(qApp->applicationVersion())
                        + QString("<p style = 'font-weight:normal'>Based on Qt %1 ").arg(qVersion())
-#if defined(_MSC_VER)
-                       + QString("(MSVC %1)</p>").arg(_MSC_VER)
-#elif defined(__clang__)
-                       + QString("(Clang %1)</p>").arg(__clang_version__)
-#elif defined(__GNUC__)
-                       + QString("(gcc %1.%2.%3)</p>").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__)
-#endif
+                       + QString("(%1)").arg(getCompilerVersion())
                        + QString("<p style = 'font-weight:normal'>Copyright 2019 %1 All right reserved.</p>").arg(qApp->organizationName())
                        );
 }

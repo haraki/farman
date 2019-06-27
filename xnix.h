@@ -14,6 +14,7 @@ namespace Xnix
 {
 
 extern qint64 getFileSizeOnDisk(const QString& filePath);
+extern QString getCompilerVersion();
 
 }           // namespace Xnix
 

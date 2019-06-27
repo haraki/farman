@@ -16,6 +16,7 @@ namespace Win32
 
 extern bool isSystemFile(const QFileInfo& fileInfo);
 extern qint64 getFileSizeOnDisk(const QString& filePath);
+extern QString getCompilerVersion();
 
 }           // namespace Win32
 
