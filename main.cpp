@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName("MASHSOFT");
+    QCoreApplication::setApplicationVersion(APP_VERSION);
 
     int ret = 0;
 
