@@ -1,4 +1,5 @@
-<strong>QHexView</strong>
+﻿<strong>QHexView</strong>
+<a href = "https://github.com/virinext/QHexView">https://github.com/virinext/QHexView</a>
 
 The MIT License (MIT)
 
