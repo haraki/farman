@@ -18,9 +18,13 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->appNameLabel->setText(tr("<p><font size = '+4'>%1<font size = '+1'> Version %2</font></font></p>")
+    ui->appNameLabel->setText(tr("<p><font size = '+4'>%1</font><font size = '+1'> Version %2</font>")
                               .arg(qApp->applicationName())
-                              .arg(qApp->applicationVersion()));
+                              .arg(qApp->applicationVersion())
+#ifdef QT_DEBUG
+                              + " (Debug Build)"
+#endif
+                              + "</p>");
 
     ui->appDescriptionLabel->setText(tr("<p>Based on Qt %1 ").arg(qVersion())
                                      + tr("(%1)").arg(getCompilerVersion())
