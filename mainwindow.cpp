@@ -14,12 +14,7 @@
 #include "viewerdispatcher.h"
 #include "imageviewer.h"
 #include "file.h"
-
-#ifdef Q_OS_WIN
-#   include "win32.h"
-#else
-#   include "xnix.h"
-#endif
+#include "aboutdialog.h"
 
 namespace Farman
 {
@@ -865,13 +860,8 @@ void MainWindow::checkBookmark()
 
 void MainWindow::about()
 {
-    QMessageBox::about(this,
-                       tr("About %1").arg(qApp->applicationName()),
-                       tr("<p><font size = '+4'>%1<font size = '+1'> Version %2</font></font></p>").arg(qApp->applicationName()).arg(qApp->applicationVersion())
-                       + tr("<p style = 'font-weight:normal'>Based on Qt %1 ").arg(qVersion())
-                       + tr("(%1)").arg(getCompilerVersion())
-                       + tr("<p style = 'font-weight:normal'>Copyright 2019 %1 All right reserved.</p>").arg(qApp->organizationName())
-                       );
+    AboutDialog dialog(this);
+    dialog.exec();
 }
 
 }           // namespace Farman
