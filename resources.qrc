@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>text/license.txt</file>
         <file>images/bookmark_off.svg</file>
         <file>images/bookmark_on.svg</file>
     </qresource>

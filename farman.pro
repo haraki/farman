@@ -25,6 +25,7 @@ SOURCES += main.cpp\
     bookmarkeditdialog.cpp \
     bookmarkinfomodel.cpp \
     bookmarkmanagerdialog.cpp \
+    licensedialog.cpp \
     mainwindow.cpp \
     folderform.cpp \
     folderview.cpp \
@@ -67,6 +68,7 @@ HEADERS  += mainwindow.h \
     foldermodel.h \
     folderview.h \
     doublefolderpanel.h \
+    licensedialog.h \
     misc.h \
     selectbookmarkdialog.h \
     types.h \
@@ -100,6 +102,7 @@ FORMS    += mainwindow.ui \
     bookmarkmanagerdialog.ui \
     folderform.ui \
     doublefolderpanel.ui \
+    licensedialog.ui \
     selectbookmarkdialog.ui \
     sortdialog.ui \
     filterdialog.ui \
