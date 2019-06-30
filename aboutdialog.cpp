@@ -26,8 +26,8 @@ AboutDialog::AboutDialog(QWidget *parent) :
 #endif
                               + "</p>");
 
-    ui->appDescriptionLabel->setText(tr("<p>Based on Qt %1 ").arg(qVersion())
-                                     + tr("(%1)").arg(getCompilerVersion())
+    ui->appDescriptionLabel->setText(tr("<p>Based on Qt %1 (%2)</p>").arg(qVersion()).arg(getCompilerVersion())
+                                     + tr("<p>Revision : %1</p>").arg(APP_REVISION)
                                      + tr("<p>Copyright 2019 %1 All right reserved.</p>").arg(qApp->organizationName()));
 }
 

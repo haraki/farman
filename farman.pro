@@ -17,7 +17,10 @@ QMAKE_TARGET_PRODUCT = farman
 QMAKE_TARGET_DESCRIPTION = 'farman' is Dual pane File manager.
 QMAKE_TARGET_COPYRIGHT = Copyright 2019 MASHSOFT. All right reserved.
 
+REVISION = $$system(git rev-parse HEAD)
+
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+DEFINES += APP_REVISION=\\\"$$REVISION\\\"
 
 INCLUDEPATH += ./QHexView/include
 
