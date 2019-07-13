@@ -129,9 +129,9 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="filterNameMaskLabel">
+      <widget class="QLabel" name="filterLabel">
        <property name="text">
-        <string>Filter : </string>
+        <string>Filter : *, Hidden : Show, System : Show</string>
        </property>
        <property name="indent">
         <number>8</number>
@@ -139,9 +139,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="filterFlagsLabel">
+      <widget class="QLabel" name="markedLabel">
        <property name="text">
-        <string>Hidden : Show, System : Show</string>
+        <string>Marked : 0 / 0, 0 Bytes</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -100,6 +100,8 @@ private Q_SLOTS:
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
 
+    void updateFilterLabel();
+
     int getTotalColumnWidth(int withOutColumn = -1);
 
 private:

@@ -33,8 +33,10 @@ FolderForm::FolderForm(FilterFlags filterFlags,
     m_folderModel->setDynamicSortFilter(true);
     m_folderModel->setSortLocaleAware(true);
 
-    setFilterFlags(filterFlags);
-    setNameMaskFilters(nameMaskFilters);
+    m_folderModel->setFilterFlags(filterFlags);
+    m_folderModel->setNameFilters(nameMaskFilters);
+    updateFilterLabel();
+
     setSortSettings(sortSectionType, sortSectionType2nd, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
 
     ui->folderView->setModel(m_folderModel);
@@ -121,13 +123,7 @@ void FolderForm::setFilterFlags(FilterFlags filterFlags)
 {
     m_folderModel->setFilterFlags(filterFlags);
 
-    QString flagsStr = tr("Hidden : ") + ((filterFlags & FilterFlag::Hidden) ? tr("Show") : tr("Hide"))
-#ifdef Q_OS_WIN
-                     + tr(", System : ") + ((filterFlags & FilterFlag::System) ? tr("Show") : tr("Hide"))
-#endif
-                     ;
-
-    ui->filterFlagsLabel->setText(flagsStr);
+    updateFilterLabel();
 }
 
 FilterFlags FolderForm::getFilterFlags() const
@@ -139,12 +135,27 @@ void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
 {
     m_folderModel->setNameFilters(nameMaskFilters);
 
-    ui->filterNameMaskLabel->setText(tr("Filter : ") + nameMaskFilters.join(' '));
+    updateFilterLabel();
 }
 
 QStringList FolderForm::getNameMaskFilters() const
 {
     return m_folderModel->nameFilters();
+}
+
+void FolderForm::updateFilterLabel()
+{
+    qDebug() << "FolderForm::updateFilterLabel()";
+
+    FilterFlags filterFlags = getFilterFlags();
+
+    QString flagsStr = tr("Hidden : ") + ((filterFlags & FilterFlag::Hidden) ? tr("Show") : tr("Hide"))
+#ifdef Q_OS_WIN
+                     + ", " + tr("System : ") + ((filterFlags & FilterFlag::System) ? tr("Show") : tr("Hide"))
+#endif
+                     ;
+
+    ui->filterLabel->setText(tr("Filter : ") + getNameMaskFilters().join(' ') + ", " + flagsStr);
 }
 
 void FolderForm::setSortSettings(SectionType sectionType,
