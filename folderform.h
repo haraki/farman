@@ -74,6 +74,8 @@ public:
 
     void checkBookmark();
 
+    void updateMarkedLabel();
+
     void refresh(bool clearSelected = false);
 
 Q_SIGNALS:

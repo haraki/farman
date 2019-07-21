@@ -343,7 +343,7 @@ void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* =
         ui->folderView->setCursor(cursorIndex);
     }
 
-    qDebug() << "fileDirNum : " << m_folderModel->getFileDirNum();
+    updateMarkedLabel();
 }
 
 void FolderForm::onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
@@ -462,6 +462,29 @@ void FolderForm::checkBookmark()
         ui->bookmarkToolButton->setChecked(false);
     }
     ui->bookmarkToolButton->blockSignals(false);
+}
+
+void FolderForm::updateMarkedLabel()
+{
+    qDebug() << "FolderForm::updateMarkedLabel()";
+
+    qint64 size = 0;
+
+    if(m_folderModel->getSelectedIndexList().size() > 0)
+    {
+        for(auto fileInfo : getSelectedFileInfoList())
+        {
+            if(!fileInfo.isDir())
+            {
+                size += fileInfo.size();
+            }
+        }
+    }
+
+    ui->markedLabel->setText(tr("Marked : %1 / %2, %L3 Bytes")
+                             .arg(m_folderModel->getSelectedIndexList().size())
+                             .arg(m_folderModel->getFileDirNum())
+                             .arg(size));
 }
 
 void FolderForm::refresh(bool clearSelected/* = false */)
