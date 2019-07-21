@@ -68,6 +68,11 @@ public:
     bool isWindowsSystemFile(const QFileInfo& fileInfo) const;
 #endif
 
+    // カレントディレクトリ内のファイル・ディレクトリ数を返す
+    int getFileNum();               // ファイル数を返す(ディレクトリは含まない)
+    int getDirNum();                // ディレクトリ数を返す(".." は除外)
+    int getFileDirNum();            // getFileNum() + getDirNum()
+
     // QFileSystemModel specific API
     QModelIndex setRootPath(const QString &path);
     QString rootPath() const;
@@ -117,6 +122,8 @@ private Q_SLOTS:
     void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private:
+    int getFileDirNum(QDir::Filters filters);
+
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE;
 
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const Q_DECL_OVERRIDE;

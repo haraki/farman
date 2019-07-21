@@ -343,7 +343,7 @@ void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* =
         ui->folderView->setCursor(cursorIndex);
     }
 
-    qDebug() << "rowCount : " << m_folderModel->rowCount(ui->folderView->rootIndex());
+    qDebug() << "fileDirNum : " << m_folderModel->getFileDirNum();
 }
 
 void FolderForm::onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)

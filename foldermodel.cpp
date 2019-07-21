@@ -666,6 +666,60 @@ bool FolderModel::isDrive(const QModelIndex& index) const
 }
 #endif
 
+int FolderModel::getFileNum()
+{
+    return getFileDirNum(QDir::Files);
+}
+
+int FolderModel::getDirNum()
+{
+    return getFileDirNum(QDir::Dirs);
+}
+
+int FolderModel::getFileDirNum()
+{
+    return getFileDirNum(QDir::Files | QDir::Dirs);
+}
+
+int FolderModel::getFileDirNum(QDir::Filters filters)
+{
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+
+    QModelIndex index = fsModel->index(fsModel->rootPath());
+    if(!index.isValid())
+    {
+        return -1;
+    }
+
+    QFileInfo pfi = fileInfo(mapFromSource(index));
+    if(!pfi.isDir())
+    {
+        return -1;
+    }
+
+    QDir dir = QDir(pfi.absoluteFilePath());
+    QDir::Filters dirFilters = QDir::NoDotAndDotDot | (fsModel->filter() & ~QDir::AllEntries) | filters;
+
+    int count = 0;
+    for(const QFileInfo& cfi : dir.entryInfoList(fsModel->nameFilters(), dirFilters))
+    {
+        if(!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden())
+        {
+            continue;
+        }
+
+#ifdef Q_OS_WIN
+        if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi))
+        {
+            continue;
+        }
+#endif
+        count++;
+    }
+
+    return count;
+}
+
 SectionType FolderModel::getSectionTypeFromColumn(int column) const
 {
     // Todo: 将来的に可変にする
