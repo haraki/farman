@@ -23,8 +23,12 @@ public:
     FilterFlags getFilterFlags();
     QStringList getNameMaskFilters();
 
+private Q_SLOTS:
+    void on_nameMaskFilterLineEdit_textChanged(const QString &arg1);
+
 private:
     void accept() Q_DECL_OVERRIDE;
+    bool valicationFilterString(const QString &nameMaskFilterString);
 
     Ui::FilterDialog *ui;
     FilterFlags m_filterFlags;

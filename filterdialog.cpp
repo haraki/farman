@@ -1,4 +1,5 @@
 ﻿#include <QDebug>
+#include <QPushButton>
 #include "filterdialog.h"
 #include "ui_filterdialog.h"
 
@@ -26,7 +27,11 @@ FilterDialog::FilterDialog(FilterFlags filterFlags,  const QStringList& nameMask
     ui->showSystemCheckBox->setVisible(false);
 #endif
 
-    ui->nameMaskFilterLineEdit->setText(nameMaskFilters.join(' '));
+    QString nameMaskFilterString = nameMaskFilters.join(' ');
+
+    ui->nameMaskFilterLineEdit->setText(nameMaskFilterString);
+
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valicationFilterString(nameMaskFilterString));
 }
 
 FilterDialog::~FilterDialog()
@@ -66,6 +71,25 @@ void FilterDialog::accept()
     qDebug() << "filterFlags : " << m_filterFlags << ", nameMaskFilters : " << m_nameMaskFilters;
 
     QDialog::accept();
+}
+
+void FilterDialog::on_nameMaskFilterLineEdit_textChanged(const QString &arg1)
+{
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(valicationFilterString(arg1));
+}
+
+bool FilterDialog::valicationFilterString(const QString &nameMaskFilterString)
+{
+    QStringList nameMaskFilters = nameMaskFilterString.simplified().split(' ', QString::SkipEmptyParts);
+    for(auto filter : nameMaskFilters)
+    {
+        if(filter == "." || filter == "..")
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 }
