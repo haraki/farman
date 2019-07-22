@@ -36,6 +36,7 @@ Q_SIGNALS:
     void openWithTextEditor(const QString& dirPath, const QStringList& fileNames);
     void copyFile(const QStringList& srcPaths, const QString& dstDirPath);
     void moveFile(const QStringList& srcPaths, const QString& dstDirPath);
+    void selectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag);
 
 private Q_SLOTS:
     void onDoubleClicked(const QModelIndex&);
@@ -51,6 +52,7 @@ private:
     void emitOpenWithApp(const QString& path);
     void emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath);
     void emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath);
+    void emitSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag);
 };
 
 }           // namespace Farman

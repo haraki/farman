@@ -43,6 +43,10 @@ FolderForm::FolderForm(FilterFlags filterFlags,
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
 
+    connect(ui->folderView,
+            SIGNAL(selectedFile(const QString&, QItemSelectionModel::SelectionFlag)),
+            this,
+            SLOT(onSelectedFile(const QString&, QItemSelectionModel::SelectionFlag)));
     connect(m_folderModel->getSelectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
@@ -284,6 +288,13 @@ QList<QFileInfo> FolderForm::getSelectedFileInfoList()
     }
 
     return selectedFileInfoList;
+}
+
+void FolderForm::onSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag)
+{
+    qDebug() << "FolderForm::onSelectedFile : path : " << path << ", selectionFlag : " << selectionFlag;
+
+    updateMarkedLabel();
 }
 
 void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex)

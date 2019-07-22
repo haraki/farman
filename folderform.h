@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDir>
 #include <QModelIndex>
+#include <QItemSelectionModel>
 #include "types.h"
 
 namespace Ui {
@@ -85,6 +86,7 @@ Q_SIGNALS:
     void directoryBookmarked(const QString &path, bool marked);
 
 protected Q_SLOTS:
+    void onSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag);
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
     void onDirectoryLoaded(const QString &path);
     void onLayoutChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);

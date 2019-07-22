@@ -60,6 +60,8 @@ void FolderView::selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag/
     if(folderModel->fileName(index) != "..")
     {
         folderModel->setSelect(index.row(), selectionFlag, index.parent());
+
+        emitSelectedFile(folderModel->filePath(index), selectionFlag);
     }
 }
 
@@ -360,6 +362,11 @@ void FolderView::emitCopyFile(const QStringList& srcPaths, const QString& dstDir
 void FolderView::emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath)
 {
     emit moveFile(srcPaths, dstDirPath);
+}
+
+void FolderView::emitSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag)
+{
+    emit selectedFile(path, selectionFlag);
 }
 
 }           // namespace Farman
