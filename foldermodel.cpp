@@ -992,16 +992,30 @@ bool FolderModel::nameFilterDisables() const
 
 void FolderModel::setNameFilters(const QStringList &filters)
 {
+    QStringList filterList = filters;
+
+    // 必ず親ディレクトリ("..")は表示
+    if(filterList[0] != "..")
+    {
+        filterList.push_front("..");
+    }
+
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
 
-    return fsModel->setNameFilters(filters);
+    fsModel->setNameFilters(filterList);
 }
 
 QStringList FolderModel::nameFilters() const
 {
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
 
-    return fsModel->nameFilters();
+    QStringList filterList = fsModel->nameFilters();
+    if(filterList[0] == "..")
+    {
+        filterList.pop_front();
+    }
+
+    return filterList;
 }
 
 QString FolderModel::filePath(const QModelIndex &index) const
