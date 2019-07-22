@@ -23,7 +23,6 @@ class FolderForm : public QWidget
 
 public:
     explicit FolderForm(FilterFlags filterFlags,
-                        const QStringList& nameMaskFilters,
                         SectionType sortSectionType,
                         SectionType sortSectionType2nd,
                         SortDirsType sortDirsType,

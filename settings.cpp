@@ -107,11 +107,9 @@ void Settings::initialize()
 
     // Left side Filter settings
     m_leftFilterSettings = getValueFilterSettings("left");
-    m_leftNameMaskFilterSettings = getValueNameMaskFilterSettings("left");
 
     // Right side Filter settings
     m_rightFilterSettings = getValueFilterSettings("right");
-    m_rightNameMaskFilterSettings = getValueNameMaskFilterSettings("right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = value("main/dragAndDropBehaviorType").toString();
@@ -336,11 +334,9 @@ void Settings::flush()
 
     // Left side Filter settings
     setValueFilterSettings(m_leftFilterSettings, "left");
-    setValueNameMaskFilterSettings(m_leftNameMaskFilterSettings, "left");
 
     // Right side Filter settings
     setValueFilterSettings(m_rightFilterSettings, "right");
-    setValueNameMaskFilterSettings(m_rightNameMaskFilterSettings, "right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Copy) ? "copy" :
@@ -726,20 +722,6 @@ void Settings::setValueFilterSettings(FilterFlags filterSettings, const QString&
 
     bool filterSystemValue = (filterSettings & FilterFlag::System) ? true : false;
     setValue("main/" + prefix + "FilterSystem", filterSystemValue);
-}
-
-QStringList Settings::getValueNameMaskFilterSettings(const QString& prefix) const
-{
-    QStringList ret = QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts);;
-
-    ret = value("main/" + prefix + "NameMaskFilters", ret).toStringList();
-
-    return ret;
-}
-
-void Settings::setValueNameMaskFilterSettings(const QStringList& nameMaskfilterSettings, const QString& prefix)
-{
-    setValue("main/" + prefix + "NameMaskFilters", nameMaskfilterSettings);
 }
 
 }

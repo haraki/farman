@@ -49,7 +49,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     }
 
     FilterFlags l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
-    QStringList l_nameMaskfilters = Settings::getInstance()->getLeftNameMaskFilterSettings();
     SectionType l_sortSectionType = Settings::getInstance()->getLeftSortSectionType();
     SectionType l_sortSectionType2nd = Settings::getInstance()->getLeftSortSectionType2nd();
     SortDirsType l_sortDirsType = Settings::getInstance()->getLeftSortDirsType();
@@ -63,7 +62,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     l_vLayout->setContentsMargins(0, 0, 0, 0);
 
     FolderForm* l_folderForm = new FolderForm(l_filterFlags,
-                                              l_nameMaskfilters,
                                               l_sortSectionType,
                                               l_sortSectionType2nd,
                                               l_sortDirsType,
@@ -113,7 +111,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     }
 
     FilterFlags r_filterFlags = Settings::getInstance()->getRightFilterSettings();
-    QStringList r_nameMaskfilters = Settings::getInstance()->getRightNameMaskFilterSettings();
     SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
     SectionType r_sortSectionType2nd = Settings::getInstance()->getRightSortSectionType2nd();
     SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
@@ -127,7 +124,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     r_vLayout->setContentsMargins(0, 0, 0, 0);
 
     FolderForm* r_folderForm = new FolderForm(r_filterFlags,
-                                              r_nameMaskfilters,
                                               r_sortSectionType,
                                               r_sortSectionType2nd,
                                               r_sortDirsType,
@@ -450,12 +446,10 @@ void DoubleFolderPanel::onChangeFilterSettings()
     if(activeForm->objectName() == "l_folderForm")
     {
         Settings::getInstance()->setLeftFilterSettings(filterFlags);
-        Settings::getInstance()->setLeftNameMaskFilterSettings(nameMaskFilters);
     }
     else
     {
         Settings::getInstance()->setRightFilterSettings(filterFlags);
-        Settings::getInstance()->setRightNameMaskFilterSettings(nameMaskFilters);
     }
 
     activeForm->refresh(true);          // 選択状態のファイルがあると refresh でクラッシュするので選択状態を解除する
