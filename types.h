@@ -171,6 +171,12 @@ enum class PreferencesDialogTabPage : int
     PreferencesDialogTabPageNum,
 };
 
+#ifdef Q_OS_WIN
+#define LINEFEED_CODE       "\r\n"
+#else
+#define LINEFEED_CODE       "\n"
+#endif
+
 }
 
 #endif // TYPES_H

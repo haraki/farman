@@ -742,11 +742,15 @@ void DoubleFolderPanel::onCopyFullPath()
     QClipboard* clipboard = QApplication::clipboard();
     Q_ASSERT(clipboard != Q_NULLPTR);
 
-    const QString& path = activeForm->getCurrentFileInfo().absoluteFilePath();
+    QStringList filePaths;
+    for(auto fileInfo : activeForm->getSelectedFileInfoList())
+    {
+        filePaths.push_back(fileInfo.absoluteFilePath());
+    }
 
-    clipboard->setText(path);
+    clipboard->setText(filePaths.join(LINEFEED_CODE));
 
-    emitOutputConsole(tr("Copy full path to clipboard : \"%1\"\n").arg(path));
+    emitOutputConsole(tr("Copy full path to clipboard.\n"));
 }
 
 void DoubleFolderPanel::onCopyFileName()
@@ -759,11 +763,15 @@ void DoubleFolderPanel::onCopyFileName()
     QClipboard* clipboard = QApplication::clipboard();
     Q_ASSERT(clipboard != Q_NULLPTR);
 
-    const QString& fileName = activeForm->getCurrentFileInfo().fileName();
+    QStringList fileNames;
+    for(auto fileInfo : activeForm->getSelectedFileInfoList())
+    {
+        fileNames.push_back(fileInfo.fileName());
+    }
 
-    clipboard->setText(fileName);
+    clipboard->setText(fileNames.join(LINEFEED_CODE));
 
-    emitOutputConsole(tr("Copy file name to clipboard : \"%1\"\n").arg(fileName));
+    emitOutputConsole(tr("Copy file name to clipboard\n"));
 }
 
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
