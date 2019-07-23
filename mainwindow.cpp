@@ -539,6 +539,28 @@ void MainWindow::on_actionAttributes_triggered()
     }
 }
 
+void MainWindow::on_actionSelectAll_triggered()
+{
+    qDebug() << "MainWindow::on_actionSelectAll_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onSelectAll();
+    }
+}
+
+void MainWindow::on_actionDeselectAll_triggered()
+{
+    qDebug() << "MainWindow::on_actionDeselectAll_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onDeselectAll();
+    }
+}
+
 void MainWindow::on_actionBookmark_toggled(bool arg1)
 {
     qDebug() << "MainWindow::on_actionBookmark_toggled()";

@@ -87,6 +87,9 @@
     <addaction name="actionMakeDirectory"/>
     <addaction name="actionRename"/>
     <addaction name="actionAttributes"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelectAll"/>
+    <addaction name="actionDeselectAll"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -422,6 +425,28 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="text">
+    <string>Select all(&amp;A)</string>
+   </property>
+   <property name="toolTip">
+    <string>Select all</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionDeselectAll">
+   <property name="text">
+    <string>Deselect all(&amp;R)</string>
+   </property>
+   <property name="toolTip">
+    <string>Deselect all</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
    </property>
   </action>
  </widget>

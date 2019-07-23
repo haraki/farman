@@ -61,6 +61,7 @@ public:
     QItemSelectionModel* getSelectionModel();
     void setSelect(int row, QItemSelectionModel::SelectionFlags selectionFlags, const QModelIndex &parentIndex);
     QModelIndexList getSelectedIndexList();
+    void setSelectAll();
     void clearSelected();
 
 #ifdef Q_OS_WIN

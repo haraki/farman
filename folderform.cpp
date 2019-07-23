@@ -457,6 +457,24 @@ void FolderForm::onBookmarkDir(bool marked)
     emitDirectoryBookmarked(currentPath, marked);
 }
 
+void FolderForm::onSelectAll()
+{
+    qDebug() << "FolderForm::onSelectAll()";
+
+    m_folderModel->setSelectAll();
+
+    updateMarkedLabel();            // setSelectAll() は onSelectedFile は通知されないので、自分で updateMarkedLabel() を呼ぶ
+}
+
+void FolderForm::onDeselectAll()
+{
+    qDebug() << "FolderForm::onDeselectAll()";
+
+    m_folderModel->clearSelected();
+
+    updateMarkedLabel();            // clearSelected() は onSelectedFile は通知されないので、自分で updateMarkedLabel() を呼ぶ
+}
+
 void FolderForm::checkBookmark()
 {
     qDebug() << "FolderForm::checkBookmark()";

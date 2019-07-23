@@ -71,6 +71,8 @@ public:
     int onGoToParentDir();
     int onChangeDir();
     void onBookmarkDir(bool marked);
+    void onSelectAll();
+    void onDeselectAll();
 
     void checkBookmark();
 

@@ -711,6 +711,26 @@ void DoubleFolderPanel::onAttributes()
                              dialog.getLastModified());
 }
 
+void DoubleFolderPanel::onSelectAll()
+{
+    qDebug() << "DoubleFolderPanel::onSelectAll()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->onSelectAll();
+}
+
+void DoubleFolderPanel::onDeselectAll()
+{
+    qDebug() << "DoubleFolderPanel::onDeselectAll()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->onDeselectAll();
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();

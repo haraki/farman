@@ -47,6 +47,8 @@ public:
     void onCreateNewFile();
     void onRename();
     void onAttributes();
+    void onSelectAll();
+    void onDeselectAll();
 
 Q_SIGNALS:
     void outputConsole(const QString& consoleString);

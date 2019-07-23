@@ -444,6 +444,25 @@ QModelIndexList FolderModel::getSelectedIndexList()
     return indexList;
 }
 
+void FolderModel::setSelectAll()
+{
+    QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
+    const QModelIndex& parentIndex = mapFromSource(fsModel->index(fsModel->rootPath()));
+
+    bool dotDotCheck = true;        // ".."は一つしか存在しないので、一つ発見したら後は".."の存在をチェックしないようにするためのフラグ
+    for(int row = 0;row < rowCount(parentIndex);row++)
+    {
+        if(!dotDotCheck || fsModel->fileName(index(row, 0, parentIndex)) != "..")
+        {
+            setSelect(row, QItemSelectionModel::Select, parentIndex);
+        }
+        else
+        {
+            dotDotCheck = false;
+        }
+    }
+}
+
 void FolderModel::clearSelected()
 {
     if(m_selectionModel != Q_NULLPTR)
