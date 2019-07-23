@@ -98,6 +98,8 @@ private Q_SLOTS:
     void on_consoleDockWidget_visibilityChanged(bool visible);
     void on_actionAbout_triggered();
 
+    void on_actionCopyFileName_triggered();
+
 private:
     Ui::MainWindow *ui;
 

@@ -572,6 +572,17 @@ void MainWindow::on_actionCopyFullPath_triggered()
     }
 }
 
+void MainWindow::on_actionCopyFileName_triggered()
+{
+    qDebug() << "MainWindow::on_actionCopyFileName_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onCopyFileName();
+    }
+}
+
 void MainWindow::on_actionBookmark_toggled(bool arg1)
 {
     qDebug() << "MainWindow::on_actionBookmark_toggled()";

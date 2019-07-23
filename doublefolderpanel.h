@@ -50,6 +50,7 @@ public:
     void onSelectAll();
     void onDeselectAll();
     void onCopyFullPath();
+    void onCopyFileName();
 
 Q_SIGNALS:
     void outputConsole(const QString& consoleString);
