@@ -258,13 +258,13 @@
   </action>
   <action name="actionAttributes">
    <property name="text">
-    <string>Attributes(&amp;A)...</string>
+    <string>Attributes(&amp;T)...</string>
    </property>
    <property name="toolTip">
     <string>Attributes</string>
    </property>
    <property name="shortcut">
-    <string>A</string>
+    <string>T</string>
    </property>
   </action>
   <action name="actionPreferences">
@@ -403,6 +403,9 @@
    <property name="text">
     <string>Bookmark Manager...(&amp;E)</string>
    </property>
+   <property name="toolTip">
+    <string>Bookmark Manager</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
    </property>
@@ -413,6 +416,9 @@
    </property>
    <property name="text">
     <string>Bookmark(&amp;B)</string>
+   </property>
+   <property name="toolTip">
+    <string>Bookmark</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
