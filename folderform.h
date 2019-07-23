@@ -69,7 +69,7 @@ public:
 
     int onGoToChildDir();
     int onGoToParentDir();
-    int onSelectDir();
+    int onChangeDir();
     void onBookmarkDir(bool marked);
 
     void checkBookmark();

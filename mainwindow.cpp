@@ -419,7 +419,7 @@ void MainWindow::on_actionSelectFolder_triggered()
         return;
     }
 
-    activeFolderForm->onSelectDir();
+    activeFolderForm->onChangeDir();
 }
 
 void MainWindow::on_actionQuit_triggered()

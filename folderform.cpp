@@ -406,12 +406,12 @@ int FolderForm::onGoToParentDir()
     return setPath(newPath);
 }
 
-int FolderForm::onSelectDir()
+int FolderForm::onChangeDir()
 {
     const QString currentPath = m_folderModel->filePath(ui->folderView->rootIndex());
 
     QString dirPath = QFileDialog::getExistingDirectory(this,
-                                                        tr("Select folder."),
+                                                        tr("Change folder."),
                                                         currentPath,
                                                         QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly);
 
@@ -527,7 +527,7 @@ void FolderForm::on_selectFolderToolButton_clicked()
 {
     qDebug() << "FolderForm::on_selectFolderToolButton_clicked()";
 
-    onSelectDir();
+    onChangeDir();
 }
 
 void FolderForm::on_bookmarkToolButton_toggled(bool checked)
