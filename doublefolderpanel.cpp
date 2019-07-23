@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QClipboard>
 #include "doublefolderpanel.h"
 #include "ui_doublefolderpanel.h"
 #include "folderform.h"
@@ -729,6 +730,23 @@ void DoubleFolderPanel::onDeselectAll()
     Q_ASSERT(activeForm != Q_NULLPTR);
 
     activeForm->onDeselectAll();
+}
+
+void DoubleFolderPanel::onCopyFullPath()
+{
+    qDebug() << "DoubleFolderPanel::onCopyFullPath()";
+
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    QClipboard* clipboard = QApplication::clipboard();
+    Q_ASSERT(clipboard != Q_NULLPTR);
+
+    const QString& path = activeForm->getCurrentFileInfo().absoluteFilePath();
+
+    clipboard->setText(path);
+
+    emitOutputConsole(tr("Copy full path to clipboard : \"%1\"\n").arg(path));
 }
 
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)

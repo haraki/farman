@@ -49,6 +49,7 @@ public:
     void onAttributes();
     void onSelectAll();
     void onDeselectAll();
+    void onCopyFullPath();
 
 Q_SIGNALS:
     void outputConsole(const QString& consoleString);

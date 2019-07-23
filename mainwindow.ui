@@ -90,6 +90,7 @@
     <addaction name="separator"/>
     <addaction name="actionSelectAll"/>
     <addaction name="actionDeselectAll"/>
+    <addaction name="actionCopyFullPath"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -447,6 +448,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionCopyFullPath">
+   <property name="text">
+    <string>Copy full path(&amp;F)</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy full path to Clipboard</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
  </widget>

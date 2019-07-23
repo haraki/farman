@@ -561,6 +561,17 @@ void MainWindow::on_actionDeselectAll_triggered()
     }
 }
 
+void MainWindow::on_actionCopyFullPath_triggered()
+{
+    qDebug() << "MainWindow::on_actionCopyFullPath_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    if(doubleFolderPanel != Q_NULLPTR)
+    {
+        doubleFolderPanel->onCopyFullPath();
+    }
+}
+
 void MainWindow::on_actionBookmark_toggled(bool arg1)
 {
     qDebug() << "MainWindow::on_actionBookmark_toggled()";
