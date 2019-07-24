@@ -75,7 +75,6 @@ private Q_SLOTS:
     void on_actionOpenWithApp_triggered();
     void on_actionOpenWithTextEditor_triggered();
     void on_actionCreateNewFile_triggered();
-    void on_actionSelectFolder_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();
     void on_actionDualPane_triggered();
@@ -90,6 +89,7 @@ private Q_SLOTS:
     void on_actionSelectAll_triggered();
     void on_actionDeselectAll_triggered();
     void on_actionCopyFullPath_triggered();
+    void on_actionGoToFolder_triggered();
     void on_actionBookmark_toggled(bool arg1);
     void on_actionSelectStorageBookmark_triggered();
     void on_actionBookmarkManager_triggered();

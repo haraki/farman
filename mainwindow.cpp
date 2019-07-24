@@ -403,9 +403,9 @@ void MainWindow::on_actionCreateNewFile_triggered()
     }
 }
 
-void MainWindow::on_actionSelectFolder_triggered()
+void MainWindow::on_actionGoToFolder_triggered()
 {
-    qDebug() << "MainWindow::on_actionSelectFolder_triggered()";
+    qDebug() << "MainWindow::on_actionGoToFolder_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel == Q_NULLPTR)

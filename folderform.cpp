@@ -26,7 +26,7 @@ FolderForm::FolderForm(FilterFlags filterFlags,
 {
     ui->setupUi(this);
 
-    ui->selectFolderToolButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileDialogStart));
+    ui->goToFolderToolButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileDialogStart));
 
     m_folderModel->setReadOnly(true);
     m_folderModel->setDynamicSortFilter(true);
@@ -541,9 +541,9 @@ int FolderForm::getTotalColumnWidth(int withOutColumn)
     return totalWidth;
 }
 
-void FolderForm::on_selectFolderToolButton_clicked()
+void FolderForm::on_goToFolderToolButton_clicked()
 {
-    qDebug() << "FolderForm::on_selectFolderToolButton_clicked()";
+    qDebug() << "FolderForm::on_goToFolderToolButton_clicked()";
 
     onChangeDir();
 }

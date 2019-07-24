@@ -107,8 +107,6 @@
     <addaction name="actionOpenWithTextEditor"/>
     <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
-    <addaction name="actionSelectFolder"/>
-    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -134,9 +132,16 @@
     <addaction name="actionSelectStorageBookmark"/>
     <addaction name="actionBookmarkManager"/>
    </widget>
+   <widget class="QMenu" name="menuGo">
+    <property name="title">
+     <string>Go</string>
+    </property>
+    <addaction name="actionGoToFolder"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuOperation"/>
+   <addaction name="menuGo"/>
    <addaction name="menuBookmark"/>
    <addaction name="menuOption"/>
    <addaction name="menuHelp"/>
@@ -397,12 +402,12 @@
     <string>L</string>
    </property>
   </action>
-  <action name="actionSelectFolder">
+  <action name="actionGoToFolder">
    <property name="text">
-    <string>Select folder...</string>
+    <string>Go to folder...</string>
    </property>
    <property name="shortcut">
-    <string>O</string>
+    <string>G</string>
    </property>
   </action>
   <action name="actionBookmarkManager">

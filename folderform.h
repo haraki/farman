@@ -94,7 +94,7 @@ protected Q_SLOTS:
     void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private Q_SLOTS:
-    void on_selectFolderToolButton_clicked();
+    void on_goToFolderToolButton_clicked();
     void on_bookmarkToolButton_toggled(bool checked);
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
