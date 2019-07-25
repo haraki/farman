@@ -50,6 +50,18 @@ public:
     void setFilterFlags(FilterFlags filterFlags);
     FilterFlags getFilterFlags() const;
 
+    void setFileSizeFormatType(FileSizeFormatType formatType);
+    FileSizeFormatType getFileSizeFormatType() const;
+
+    void setFileSizeComma(bool comma);
+    bool getFileSizeComma() const;
+
+    void setDateFormatType(DateFormatType formatType);
+    DateFormatType getDateFormatType() const;
+
+    void setDateFormatOriginalString(const QString& orgString);
+    QString getDateFormatOriginalString() const;
+
     int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &modelIndex, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -152,6 +164,12 @@ private:
     SortDirsType m_sortDirsType;
     bool m_sortDotFirst;
     Qt::SortOrder m_sortOrder;
+
+    FileSizeFormatType m_fileSizeFormatType;
+    bool m_fileSizeComma;
+
+    DateFormatType m_dateFormatType;
+    QString m_dateFormatOriginalString;
 
     QFont m_font;
     QMap<ColorRoleType, QBrush> m_brushes;

@@ -6,7 +6,6 @@
 #include <QFileIconProvider>
 #include <functional>
 #include "foldermodel.h"
-#include "settings.h"
 #include "types.h"
 #include "win32.h"
 
@@ -185,6 +184,46 @@ FilterFlags FolderModel::getFilterFlags() const
     return m_filterFlags;
 }
 
+void FolderModel::setFileSizeFormatType(FileSizeFormatType formatType)
+{
+    m_fileSizeFormatType = formatType;
+}
+
+FileSizeFormatType FolderModel::getFileSizeFormatType() const
+{
+    return m_fileSizeFormatType;
+}
+
+void FolderModel::setFileSizeComma(bool comma)
+{
+    m_fileSizeComma = comma;
+}
+
+bool FolderModel::getFileSizeComma() const
+{
+    return m_fileSizeComma;
+}
+
+void FolderModel::setDateFormatType(DateFormatType formatType)
+{
+    m_dateFormatType = formatType;
+}
+
+DateFormatType FolderModel::getDateFormatType() const
+{
+    return m_dateFormatType;
+}
+
+void FolderModel::setDateFormatOriginalString(const QString& orgString)
+{
+    m_dateFormatOriginalString = orgString;
+}
+
+QString FolderModel::getDateFormatOriginalString() const
+{
+    return m_dateFormatOriginalString;
+}
+
 int FolderModel::columnCount(const QModelIndex& parent) const
 {
     if(parent.column() > 0)
@@ -254,41 +293,29 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             }
             else
             {
-                PaneMode paneMode = Settings::getInstance()->getPaneMode();
-                FileSizeFormatType formatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
-                                                                                 Settings::getInstance()->getDualPaneFileSizeFormatType();
-                if(formatType == FileSizeFormatType::Detail)
+                if(m_fileSizeFormatType == FileSizeFormatType::Detail)
                 {
-                    bool comma = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable() :
-                                                                  Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable();
-
-                    ret = (comma) ? QLocale(QLocale::English).toString(fi.size()) : QString::number(fi.size());
+                    ret = (m_fileSizeComma) ? QLocale(QLocale::English).toString(fi.size()) : QString::number(fi.size());
                 }
                 else
                 {
                     ret = QLocale().formattedDataSize(fi.size(), 2,
-                                                      (formatType == FileSizeFormatType::IEC) ? QLocale::DataSizeIecFormat :
-                                                                                                QLocale::DataSizeSIFormat);
+                                                      (m_fileSizeFormatType == FileSizeFormatType::IEC) ? QLocale::DataSizeIecFormat :
+                                                                                                          QLocale::DataSizeSIFormat);
                 }
             }
             break;
 
         case SectionType::LastModified:
         {
-            PaneMode paneMode = Settings::getInstance()->getPaneMode();
-            DateFormatType formatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatType() :
-                                                                         Settings::getInstance()->getDualPaneDateFormatType();
-            switch(formatType)
+            switch(m_dateFormatType)
             {
             case DateFormatType::ISO:
                 ret = fi.lastModified().toString(Qt::ISODate);
                 break;
             case DateFormatType::Original:
             {
-                QString orgFormat = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatOriginalString() :
-                                                                     Settings::getInstance()->getDualPaneDateFormatOriginalString();
-
-                ret = fi.lastModified().toString(orgFormat);
+                ret = fi.lastModified().toString(m_dateFormatOriginalString);
                 break;
             }
             case DateFormatType::Default:

@@ -38,6 +38,16 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     PaneMode paneMode = Settings::getInstance()->getPaneMode();
     PaneType activePane = Settings::getInstance()->getActivePane();
 
+    FileSizeFormatType fileSizeFormatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
+                                                                             Settings::getInstance()->getDualPaneFileSizeFormatType();
+    bool fileSizeComma = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable() :
+                                                          Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable();
+
+    DateFormatType dateFormatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatType() :
+                                                                     Settings::getInstance()->getDualPaneDateFormatType();
+    QString dateOrgString = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatOriginalString() :
+                                                             Settings::getInstance()->getDualPaneDateFormatOriginalString();
+
     QString l_path = QDir::homePath();
     FolderAtStartup l_folderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
     if(l_folderAtStartup == FolderAtStartup::LastTime || l_folderAtStartup == FolderAtStartup::Fixed)
@@ -69,6 +79,10 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                                               l_sortDotFirst,
                                               l_sortCaseSensitivity,
                                               l_sortOrder,
+                                              fileSizeFormatType,
+                                              fileSizeComma,
+                                              dateFormatType,
+                                              dateOrgString,
                                               this);
     l_folderForm->setObjectName(QStringLiteral("l_folderForm"));
     l_folderForm->setPath(l_path);
@@ -131,6 +145,10 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                                               r_sortDotFirst,
                                               r_sortCaseSensitivity,
                                               r_sortOrder,
+                                              fileSizeFormatType,
+                                              fileSizeComma,
+                                              dateFormatType,
+                                              dateOrgString,
                                               this);
     r_folderForm->setObjectName(QStringLiteral("r_folderForm"));
     r_folderForm->setPath(r_path);
@@ -257,16 +275,36 @@ void DoubleFolderPanel::updateSettings()
 
     const QColor pathBgColor = Settings::getInstance()->getColorSetting("folderPath_background");
 
+    FileSizeFormatType fileSizeFormatType = (m_paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
+                                                                               Settings::getInstance()->getDualPaneFileSizeFormatType();
+    bool fileSizeComma = (m_paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable() :
+                                                            Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable();
+
+    DateFormatType dateFormatType = (m_paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatType() :
+                                                                       Settings::getInstance()->getDualPaneDateFormatType();
+    QString dateOrgString = (m_paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatOriginalString() :
+                                                               Settings::getInstance()->getDualPaneDateFormatOriginalString();
+
     FolderForm* activeForm = getActiveFolderForm();
     if(activeForm != Q_NULLPTR)
     {
         activeForm->setAppearance(viewFont, pathFont, colors, pathColor, pathBgColor);
+
+        activeForm->setFileSizeFormatType(fileSizeFormatType);
+        activeForm->setFileSizeComma(fileSizeComma);
+        activeForm->setDateFormatType(dateFormatType);
+        activeForm->setDateFormatOriginalString(dateOrgString);
     }
 
     FolderForm* inactiveForm = getInactiveFolderForm();
     if(inactiveForm != Q_NULLPTR)
     {
         inactiveForm->setAppearance(viewFont, pathFont, colors, pathColor, pathBgColor);
+
+        inactiveForm->setFileSizeFormatType(fileSizeFormatType);
+        inactiveForm->setFileSizeComma(fileSizeComma);
+        inactiveForm->setDateFormatType(dateFormatType);
+        inactiveForm->setDateFormatOriginalString(dateOrgString);
     }
 }
 
@@ -987,11 +1025,29 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
             ui->rightPanel->setVisible(true);
         }
 
+        getActiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getSinglePaneFileSizeFormatType());
+        getActiveFolderForm()->setFileSizeComma(Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable());
+        getActiveFolderForm()->setDateFormatType(Settings::getInstance()->getSinglePaneDateFormatType());
+        getActiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getSinglePaneDateFormatOriginalString());
+        getInactiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getSinglePaneFileSizeFormatType());
+        getInactiveFolderForm()->setFileSizeComma(Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable());
+        getInactiveFolderForm()->setDateFormatType(Settings::getInstance()->getSinglePaneDateFormatType());
+        getInactiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getSinglePaneDateFormatOriginalString());
+
         break;
 
     case PaneMode::Dual:
         ui->leftPanel->setVisible(true);
         ui->rightPanel->setVisible(true);
+
+        getActiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getDualPaneFileSizeFormatType());
+        getActiveFolderForm()->setFileSizeComma(Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable());
+        getActiveFolderForm()->setDateFormatType(Settings::getInstance()->getDualPaneDateFormatType());
+        getActiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getDualPaneDateFormatOriginalString());
+        getInactiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getDualPaneFileSizeFormatType());
+        getInactiveFolderForm()->setFileSizeComma(Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable());
+        getInactiveFolderForm()->setDateFormatType(Settings::getInstance()->getDualPaneDateFormatType());
+        getInactiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getDualPaneDateFormatOriginalString());
 
         break;
 

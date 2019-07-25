@@ -19,6 +19,10 @@ FolderForm::FolderForm(FilterFlags filterFlags,
                        bool sortDotFirst,
                        Qt::CaseSensitivity sortCaseSensitivity,
                        Qt::SortOrder sortOrder,
+                       FileSizeFormatType fileSizeformatType,
+                       bool fileSizeComma,
+                       DateFormatType dateFormatType,
+                       QString dateOrgString,
                        QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::FolderForm)
@@ -31,6 +35,11 @@ FolderForm::FolderForm(FilterFlags filterFlags,
     m_folderModel->setReadOnly(true);
     m_folderModel->setDynamicSortFilter(true);
     m_folderModel->setSortLocaleAware(true);
+
+    m_folderModel->setFileSizeFormatType(fileSizeformatType);
+    m_folderModel->setFileSizeComma(fileSizeComma);
+    m_folderModel->setDateFormatType(dateFormatType);
+    m_folderModel->setDateFormatOriginalString(dateOrgString);
 
     m_folderModel->setFilterFlags(filterFlags);
     m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
@@ -120,6 +129,46 @@ void FolderForm::setAppearance(const QFont& viewFont,
     pal.setColor(QPalette::Base, pathBgColor);
     ui->folderPathEdit->setAutoFillBackground(true);
     ui->folderPathEdit->setPalette(pal);
+}
+
+void FolderForm::setFileSizeFormatType(FileSizeFormatType formatType)
+{
+    m_folderModel->setFileSizeFormatType(formatType);
+}
+
+FileSizeFormatType FolderForm::getFileSizeFormatType() const
+{
+    return m_folderModel->getFileSizeFormatType();
+}
+
+void FolderForm::setFileSizeComma(bool fileSizeComma)
+{
+    m_folderModel->setFileSizeComma(fileSizeComma);
+}
+
+bool FolderForm::getFileSizeComma() const
+{
+    return m_folderModel->getFileSizeComma();
+}
+
+void FolderForm::setDateFormatType(DateFormatType formatType)
+{
+    m_folderModel->setDateFormatType(formatType);
+}
+
+DateFormatType FolderForm::getDateFormatType() const
+{
+    return m_folderModel->getDateFormatType();
+}
+
+void FolderForm::setDateFormatOriginalString(const QString& orgString)
+{
+    m_folderModel->setDateFormatOriginalString(orgString);
+}
+
+QString FolderForm::getDateFormatOriginalString() const
+{
+    return m_folderModel->getDateFormatOriginalString();
 }
 
 void FolderForm::setFilterFlags(FilterFlags filterFlags)

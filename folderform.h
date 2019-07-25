@@ -29,6 +29,10 @@ public:
                         bool sortDotFirst,
                         Qt::CaseSensitivity sortCaseSensitivity,
                         Qt::SortOrder sortOrder,
+                        FileSizeFormatType fileSizeformatType,
+                        bool fileSizeComma,
+                        DateFormatType dateFormatType,
+                        QString dateOrgString,
                         QWidget *parent = Q_NULLPTR);
     ~FolderForm() Q_DECL_OVERRIDE;
 
@@ -37,6 +41,18 @@ public:
                        const QMap<ColorRoleType, QColor>& colors,
                        const QColor& pathColor,
                        const QColor& pathBgColor);
+
+    void setFileSizeFormatType(FileSizeFormatType formatType);
+    FileSizeFormatType getFileSizeFormatType() const;
+
+    void setFileSizeComma(bool comma);
+    bool getFileSizeComma() const;
+
+    void setDateFormatType(DateFormatType formatType);
+    DateFormatType getDateFormatType() const;
+
+    void setDateFormatOriginalString(const QString& orgString);
+    QString getDateFormatOriginalString() const;
 
     void setFilterFlags(FilterFlags filterFlags);
     FilterFlags getFilterFlags() const;
