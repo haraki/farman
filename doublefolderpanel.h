@@ -31,10 +31,9 @@ public:
 
     void setVisible(bool visible) Q_DECL_OVERRIDE;
 
+    FolderForm* getFolderForm(PaneType pane);
     FolderForm* getActiveFolderForm();
     FolderForm* getInactiveFolderForm();
-    FolderForm* getLeftFolderForm();
-    FolderForm* getRightFolderForm();
 
     void onSelectStorageBookmark();
     void onSetPaneMode(PaneMode paneMode);

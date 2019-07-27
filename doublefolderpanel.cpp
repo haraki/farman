@@ -48,170 +48,115 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
     QString dateOrgString = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneDateFormatOriginalString() :
                                                              Settings::getInstance()->getDualPaneDateFormatOriginalString();
 
-    QString l_path = QDir::homePath();
-    FolderAtStartup l_folderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
-    if(l_folderAtStartup == FolderAtStartup::LastTime || l_folderAtStartup == FolderAtStartup::Fixed)
+    for(auto pane : {PaneType::Left, PaneType::Right})
     {
-        l_path = Settings::getInstance()->getLeftFolderPath();
-    }
-    if(!QDir(l_path).exists())
-    {
-        l_path = QDir::currentPath();
-    }
+        QString path = QDir::homePath();
+        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(pane);
+        if(folderAtStartup == FolderAtStartup::LastTime || folderAtStartup == FolderAtStartup::Fixed)
+        {
+            path = Settings::getInstance()->getFolderPath(pane);
+        }
+        if(!QDir(path).exists())
+        {
+            path = QDir::currentPath();
+        }
 
-    FilterFlags l_filterFlags = Settings::getInstance()->getLeftFilterSettings();
-    SectionType l_sortSectionType = Settings::getInstance()->getLeftSortSectionType();
-    SectionType l_sortSectionType2nd = Settings::getInstance()->getLeftSortSectionType2nd();
-    SortDirsType l_sortDirsType = Settings::getInstance()->getLeftSortDirsType();
-    bool l_sortDotFirst = Settings::getInstance()->getLeftSortDotFirst();
-    Qt::CaseSensitivity l_sortCaseSensitivity = Settings::getInstance()->getLeftSortCaseSensitivity();
-    Qt::SortOrder l_sortOrder = Settings::getInstance()->getLeftSortOrder();
+        FilterFlags filterFlags = Settings::getInstance()->getFilterSettings(pane);
+        SectionType sortSectionType = Settings::getInstance()->getSortSectionType(pane);
+        SectionType sortSectionType2nd = Settings::getInstance()->getSortSectionType2nd(pane);
+        SortDirsType sortDirsType = Settings::getInstance()->getSortDirsType(pane);
+        bool sortDotFirst = Settings::getInstance()->getSortDotFirst(pane);
+        Qt::CaseSensitivity sortCaseSensitivity = Settings::getInstance()->getSortCaseSensitivity(pane);
+        Qt::SortOrder sortOrder = Settings::getInstance()->getSortOrder(pane);
 
-    QVBoxLayout* l_vLayout = new QVBoxLayout();
-    l_vLayout->setSpacing(6);
-    l_vLayout->setObjectName(QStringLiteral("l_vLayout"));
-    l_vLayout->setContentsMargins(0, 0, 0, 0);
+        FolderForm* folderForm = new FolderForm(pane,
+                                                filterFlags,
+                                                sortSectionType,
+                                                sortSectionType2nd,
+                                                sortDirsType,
+                                                sortDotFirst,
+                                                sortCaseSensitivity,
+                                                sortOrder,
+                                                fileSizeFormatType,
+                                                fileSizeComma,
+                                                dateFormatType,
+                                                dateOrgString,
+                                                this);
+        Q_ASSERT(folderForm != Q_NULLPTR);
 
-    FolderForm* l_folderForm = new FolderForm(l_filterFlags,
-                                              l_sortSectionType,
-                                              l_sortSectionType2nd,
-                                              l_sortDirsType,
-                                              l_sortDotFirst,
-                                              l_sortCaseSensitivity,
-                                              l_sortOrder,
-                                              fileSizeFormatType,
-                                              fileSizeComma,
-                                              dateFormatType,
-                                              dateOrgString,
-                                              this);
-    l_folderForm->setObjectName(QStringLiteral("l_folderForm"));
-    l_folderForm->setPath(l_path);
+        folderForm->setObjectName(QStringLiteral("folderForm"));
+        folderForm->setPath(path);
 
-    l_vLayout->addWidget(l_folderForm);
+        QVBoxLayout* vLayout = new QVBoxLayout();
+        vLayout->setSpacing(6);
+        vLayout->setContentsMargins(0, 0, 0, 0);
+        vLayout->addWidget(folderForm);
 
-    ui->leftPanel->setLayout(l_vLayout);
+        if(pane == PaneType::Left)
+        {
+            connect(folderForm,
+                    SIGNAL(currentChanged(QFileInfo,QFileInfo)),
+                    this,
+                    SLOT(onLeftCurrentChanged(QFileInfo,QFileInfo)));
+            connect(folderForm,
+                    SIGNAL(directoryLoaded(const QString&)),
+                    this,
+                    SLOT(onLeftDirectoryLoaded(const QString&)));
+            connect(folderForm,
+                    SIGNAL(directoryBookmarked(const QString&, bool)),
+                    this,
+                    SLOT(onLeftDirectoryBookmarked(const QString&, bool)));
+            connect(folderForm,
+                    SIGNAL(focusChanged(bool)),
+                    this,
+                    SLOT(onLeftFocusChanged(bool)));
 
-    FolderView* l_folderView = l_folderForm->findChild<FolderView*>("folderView");
-    if(l_folderView != Q_NULLPTR)
-    {
-        l_folderView->installEventFilter(this);
+            ui->leftPanel->setLayout(vLayout);
+        }
+        else
+        {
+            connect(folderForm,
+                    SIGNAL(currentChanged(QFileInfo,QFileInfo)),
+                    this,
+                    SLOT(onRightCurrentChanged(QFileInfo,QFileInfo)));
+            connect(folderForm,
+                    SIGNAL(directoryLoaded(const QString&)),
+                    this,
+                    SLOT(onRightDirectoryLoaded(const QString&)));
+            connect(folderForm,
+                    SIGNAL(directoryBookmarked(const QString&, bool)),
+                    this,
+                    SLOT(onRightDirectoryBookmarked(const QString&, bool)));
+            connect(folderForm,
+                    SIGNAL(focusChanged(bool)),
+                    this,
+                    SLOT(onRightFocusChanged(bool)));
 
-        connect(l_folderView,
+            ui->rightPanel->setLayout(vLayout);
+        }
+
+        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+        Q_ASSERT(folderView != Q_NULLPTR);
+
+        folderView->installEventFilter(this);
+
+        connect(folderView,
                 SIGNAL(open(const QString&)),
                 this,
                 SLOT(onOpenFile(const QString&)));
-        connect(l_folderView,
+        connect(folderView,
                 SIGNAL(openWithApp(const QString&)),
                 this,
                 SLOT(onOpenWithApp(const QString&)));
-        connect(l_folderView,
+        connect(folderView,
                 SIGNAL(copyFile(const QStringList&, const QString&)),
                 this,
                 SLOT(onCopyFile(const QStringList&, const QString&)));
-        connect(l_folderView,
+        connect(folderView,
                 SIGNAL(moveFile(const QStringList&, const QString&)),
                 this,
                 SLOT(onMoveFile(const QStringList&, const QString&)));
     }
-
-    QString r_path = QDir::homePath();
-    FolderAtStartup r_folderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
-    if(r_folderAtStartup == FolderAtStartup::LastTime || r_folderAtStartup == FolderAtStartup::Fixed)
-    {
-        r_path = Settings::getInstance()->getRightFolderPath();
-    }
-    if(!QDir(r_path).exists())
-    {
-        r_path = QDir::currentPath();
-    }
-
-    FilterFlags r_filterFlags = Settings::getInstance()->getRightFilterSettings();
-    SectionType r_sortSectionType = Settings::getInstance()->getRightSortSectionType();
-    SectionType r_sortSectionType2nd = Settings::getInstance()->getRightSortSectionType2nd();
-    SortDirsType r_sortDirsType = Settings::getInstance()->getRightSortDirsType();
-    bool r_sortDotFirst = Settings::getInstance()->getRightSortDotFirst();
-    Qt::CaseSensitivity r_sortCaseSensitivity = Settings::getInstance()->getRightSortCaseSensitivity();
-    Qt::SortOrder r_sortOrder = Settings::getInstance()->getRightSortOrder();
-
-    QVBoxLayout* r_vLayout = new QVBoxLayout();
-    r_vLayout->setSpacing(6);
-    r_vLayout->setObjectName(QStringLiteral("r_vLayout"));
-    r_vLayout->setContentsMargins(0, 0, 0, 0);
-
-    FolderForm* r_folderForm = new FolderForm(r_filterFlags,
-                                              r_sortSectionType,
-                                              r_sortSectionType2nd,
-                                              r_sortDirsType,
-                                              r_sortDotFirst,
-                                              r_sortCaseSensitivity,
-                                              r_sortOrder,
-                                              fileSizeFormatType,
-                                              fileSizeComma,
-                                              dateFormatType,
-                                              dateOrgString,
-                                              this);
-    r_folderForm->setObjectName(QStringLiteral("r_folderForm"));
-    r_folderForm->setPath(r_path);
-
-    r_vLayout->addWidget(r_folderForm);
-
-    ui->rightPanel->setLayout(r_vLayout);
-
-    FolderView* r_folderView = r_folderForm->findChild<FolderView*>("folderView");
-    if(r_folderView != Q_NULLPTR)
-    {
-        r_folderView->installEventFilter(this);
-
-        connect(r_folderView,
-                SIGNAL(open(const QString&)),
-                this,
-                SLOT(onOpenFile(const QString&)));
-        connect(r_folderView,
-                SIGNAL(openWithApp(const QString&)),
-                this,
-                SLOT(onOpenWithApp(const QString&)));
-        connect(r_folderView,
-                SIGNAL(copyFile(const QStringList&, const QString&)),
-                this,
-                SLOT(onCopyFile(const QStringList&, const QString&)));
-        connect(r_folderView,
-                SIGNAL(moveFile(const QStringList&, const QString&)),
-                this,
-                SLOT(onMoveFile(const QStringList&, const QString&)));
-    }
-
-    connect(l_folderForm,
-            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
-            this,
-            SLOT(onLeftCurrentChanged(QFileInfo,QFileInfo)));
-    connect(r_folderForm,
-            SIGNAL(currentChanged(QFileInfo,QFileInfo)),
-            this,
-            SLOT(onRightCurrentChanged(QFileInfo,QFileInfo)));
-    connect(l_folderForm,
-            SIGNAL(directoryLoaded(const QString&)),
-            this,
-            SLOT(onLeftDirectoryLoaded(const QString&)));
-    connect(r_folderForm,
-            SIGNAL(directoryLoaded(const QString&)),
-            this,
-            SLOT(onRightDirectoryLoaded(const QString&)));
-    connect(l_folderForm,
-            SIGNAL(directoryBookmarked(const QString&, bool)),
-            this,
-            SLOT(onLeftDirectoryBookmarked(const QString&, bool)));
-    connect(r_folderForm,
-            SIGNAL(directoryBookmarked(const QString&, bool)),
-            this,
-            SLOT(onRightDirectoryBookmarked(const QString&, bool)));
-    connect(l_folderForm,
-            SIGNAL(focusChanged(bool)),
-            this,
-            SLOT(onLeftFocusChanged(bool)));
-    connect(r_folderForm,
-            SIGNAL(focusChanged(bool)),
-            this,
-            SLOT(onRightFocusChanged(bool)));
 
     setActivePane(activePane);
     setPaneMode(paneMode);
@@ -228,23 +173,15 @@ void DoubleFolderPanel::closeEvent(QCloseEvent* e)
 
     qDebug() << "DoubleFolderPanel::closeEvent()";
 
-    FolderAtStartup leftfolderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
-    if(leftfolderAtStartup == FolderAtStartup::LastTime)
+    for(auto pane : {PaneType::Left, PaneType::Right})
     {
-        FolderForm* l_folderForm = findChild<FolderForm*>("l_folderForm");
-        if(l_folderForm != Q_NULLPTR)
+        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(pane);
+        if(folderAtStartup == FolderAtStartup::LastTime)
         {
-            Settings::getInstance()->setLeftFolderPath(l_folderForm->getCurrentDirPath());
-        }
-    }
+            FolderForm* folderForm = getFolderForm(pane);
+            Q_ASSERT(folderForm != Q_NULLPTR);
 
-    FolderAtStartup rightFolderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
-    if(rightFolderAtStartup == FolderAtStartup::LastTime)
-    {
-        FolderForm* r_folderForm = findChild<FolderForm*>("r_folderForm");
-        if(r_folderForm != Q_NULLPTR)
-        {
-            Settings::getInstance()->setRightFolderPath(r_folderForm->getCurrentDirPath());
+            Settings::getInstance()->setFolderPath(pane, folderForm->getCurrentDirPath());
         }
     }
 }
@@ -439,24 +376,15 @@ void DoubleFolderPanel::onChangeSortSettings()
     order = dialog.getSortOrder();
 
     activeForm->setSortSettings(sectionType, sectionType2nd, dirsType, dotFirst, caseSensitivity, order);
-    if(activeForm->objectName() == "l_folderForm")
-    {
-        Settings::getInstance()->setLeftSortSectionType(sectionType);
-        Settings::getInstance()->setLeftSortSectionType2nd(sectionType2nd);
-        Settings::getInstance()->setLeftSortDirsType(dirsType);
-        Settings::getInstance()->setLeftSortDotFirst(dotFirst);
-        Settings::getInstance()->setLeftSortCaseSensitivity(caseSensitivity);
-        Settings::getInstance()->setLeftSortOrder(order);
-    }
-    else
-    {
-        Settings::getInstance()->setRightSortSectionType(sectionType);
-        Settings::getInstance()->setRightSortSectionType2nd(sectionType2nd);
-        Settings::getInstance()->setRightSortDirsType(dirsType);
-        Settings::getInstance()->setRightSortDotFirst(dotFirst);
-        Settings::getInstance()->setRightSortCaseSensitivity(caseSensitivity);
-        Settings::getInstance()->setRightSortOrder(order);
-    }
+
+    PaneType pane = activeForm->getPaneType();
+
+    Settings::getInstance()->setSortSectionType(pane, sectionType);
+    Settings::getInstance()->setSortSectionType2nd(pane, sectionType2nd);
+    Settings::getInstance()->setSortDirsType(pane, dirsType);
+    Settings::getInstance()->setSortDotFirst(pane, dotFirst);
+    Settings::getInstance()->setSortCaseSensitivity(pane, caseSensitivity);
+    Settings::getInstance()->setSortOrder(pane, order);
 
     activeForm->refresh();
 }
@@ -482,14 +410,10 @@ void DoubleFolderPanel::onChangeFilterSettings()
     nameMaskFilters = dialog.getNameMaskFilters();
     activeForm->setFilterFlags(filterFlags);
     activeForm->setNameMaskFilters(nameMaskFilters);
-    if(activeForm->objectName() == "l_folderForm")
-    {
-        Settings::getInstance()->setLeftFilterSettings(filterFlags);
-    }
-    else
-    {
-        Settings::getInstance()->setRightFilterSettings(filterFlags);
-    }
+
+    PaneType pane = activeForm->getPaneType();
+
+    Settings::getInstance()->setFilterSettings(pane, filterFlags);
 
     activeForm->refresh(true);          // 選択状態のファイルがあると refresh でクラッシュするので選択状態を解除する
 }
@@ -817,7 +741,7 @@ void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
+    if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Left)
     {
         emitStatusChanged(newFileInfo.absoluteFilePath());
     }
@@ -828,7 +752,7 @@ void DoubleFolderPanel::onRightCurrentChanged(const QFileInfo& newFileInfo, cons
     qDebug() << "DoubleFolderPanel::onRightCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
+    if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Right)
     {
         emitStatusChanged(newFileInfo.absoluteFilePath());
     }
@@ -843,7 +767,7 @@ void DoubleFolderPanel::onLeftFocusChanged(bool inFocus)
         m_activePane = PaneType::Left;      // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
 
         FolderForm* activeForm = getActiveFolderForm();
-        if(activeForm != Q_NULLPTR && activeForm->objectName() == "l_folderForm")
+        if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Left)
         {
             emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
         }
@@ -861,7 +785,7 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
         m_activePane = PaneType::Right;     // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
 
         FolderForm* activeForm = getActiveFolderForm();
-        if(activeForm != Q_NULLPTR && activeForm->objectName() == "r_folderForm")
+        if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Right)
         {
             emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
         }
@@ -888,7 +812,7 @@ void DoubleFolderPanel::onLeftDirectoryBookmarked(const QString &path, bool mark
 {
     qDebug() << "DoubleFolderPanel::onLeftDirectoryBookmarked : path : " << path << ", marked : " << marked;
 
-    FolderForm* folderForm = getRightFolderForm();
+    FolderForm* folderForm = getFolderForm(PaneType::Right);
     Q_ASSERT(folderForm != Q_NULLPTR);
     folderForm->checkBookmark();
 
@@ -899,7 +823,7 @@ void DoubleFolderPanel::onRightDirectoryBookmarked(const QString &path, bool mar
 {
     qDebug() << "DoubleFolderPanel::onRightDirectoryBookmarked : path : " << path << ", marked : " << marked;
 
-    FolderForm* folderForm = getLeftFolderForm();
+    FolderForm* folderForm = getFolderForm(PaneType::Left);
     Q_ASSERT(folderForm != Q_NULLPTR);
     folderForm->checkBookmark();
 
@@ -1014,7 +938,7 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
     switch(paneMode)
     {
     case PaneMode::Single:
-        if(getActiveFolderForm()->objectName() == "l_folderForm")
+        if(getActiveFolderForm()->getPaneType() == PaneType::Left)
         {
             ui->leftPanel->setVisible(true);
             ui->rightPanel->setVisible(false);
@@ -1064,7 +988,7 @@ void DoubleFolderPanel::setActivePane(PaneType pane)
 
     Settings::getInstance()->setActivePane(pane);
 
-    FolderForm* folderForm = findChild<FolderForm*>((pane == PaneType::Left) ? "l_folderForm" : "r_folderForm");
+    FolderForm* folderForm = getFolderForm(pane);
     if(folderForm != Q_NULLPTR)
     {
         FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
@@ -1075,24 +999,27 @@ void DoubleFolderPanel::setActivePane(PaneType pane)
     }
 }
 
+FolderForm* DoubleFolderPanel::getFolderForm(PaneType pane)
+{
+    for(auto folderForm : findChildren<FolderForm*>(QStringLiteral("folderForm")))
+    {
+        if(folderForm->getPaneType() == pane)
+        {
+            return folderForm;
+        }
+    }
+
+    return Q_NULLPTR;
+}
+
 FolderForm* DoubleFolderPanel::getActiveFolderForm()
 {
-    return findChild<FolderForm*>((m_activePane == PaneType::Left) ? "l_folderForm" : "r_folderForm");
+    return getFolderForm(m_activePane);
 }
 
 FolderForm* DoubleFolderPanel::getInactiveFolderForm()
 {
-    return findChild<FolderForm*>((m_activePane == PaneType::Left) ? "r_folderForm" : "l_folderForm");
-}
-
-FolderForm* DoubleFolderPanel::getLeftFolderForm()
-{
-    return findChild<FolderForm*>("l_folderForm");
-}
-
-FolderForm* DoubleFolderPanel::getRightFolderForm()
-{
-    return findChild<FolderForm*>("r_folderForm");
+    return getFolderForm((m_activePane == PaneType::Left) ? PaneType::Right : PaneType::Left);
 }
 
 void DoubleFolderPanel::refresh()

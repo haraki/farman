@@ -104,54 +104,58 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
         ui->positionYLineEdit->setText(QString::number(mainWindowPos.y()));
     }
 
-    FolderAtStartup leftFolderAtStartup = Settings::getInstance()->getLeftFolderAtStartup();
-    if(leftFolderAtStartup == FolderAtStartup::Fixed)
     {
-        ui->leftFolderFixedRadioButton->setChecked(true);
-        ui->leftFolderSelectButton->setEnabled(true);
-        ui->leftFolderPathLineEdit->setEnabled(true);
-
-        ui->leftFolderPathLineEdit->setText(Settings::getInstance()->getLeftFolderPath());
-    }
-    else
-    {
-        if(leftFolderAtStartup == FolderAtStartup::LastTime)
+        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(PaneType::Left);
+        if(folderAtStartup == FolderAtStartup::Fixed)
         {
-            ui->leftFolderLastTimeRadioButton->setChecked(true);
+            ui->leftFolderFixedRadioButton->setChecked(true);
+            ui->leftFolderSelectButton->setEnabled(true);
+            ui->leftFolderPathLineEdit->setEnabled(true);
+
+            ui->leftFolderPathLineEdit->setText(Settings::getInstance()->getFolderPath(PaneType::Left));
         }
         else
         {
-            ui->leftFolderDefaultRadioButton->setChecked(true);
+            if(folderAtStartup == FolderAtStartup::LastTime)
+            {
+                ui->leftFolderLastTimeRadioButton->setChecked(true);
+            }
+            else
+            {
+                ui->leftFolderDefaultRadioButton->setChecked(true);
+            }
+            ui->leftFolderSelectButton->setEnabled(false);
+            ui->leftFolderPathLineEdit->setEnabled(false);
+
+            ui->leftFolderPathLineEdit->setText(leftDirPath);
         }
-        ui->leftFolderSelectButton->setEnabled(false);
-        ui->leftFolderPathLineEdit->setEnabled(false);
-
-        ui->leftFolderPathLineEdit->setText(leftDirPath);
     }
 
-    FolderAtStartup rightFolderAtStartup = Settings::getInstance()->getRightFolderAtStartup();
-    if(rightFolderAtStartup == FolderAtStartup::Fixed)
     {
-        ui->rightFolderFixedRadioButton->setChecked(true);
-        ui->rightFolderSelectButton->setEnabled(true);
-        ui->rightFolderPathLineEdit->setEnabled(true);
-
-        ui->rightFolderPathLineEdit->setText(Settings::getInstance()->getRightFolderPath());
-    }
-    else
-    {
-        if(rightFolderAtStartup == FolderAtStartup::LastTime)
+        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(PaneType::Right);
+        if(folderAtStartup == FolderAtStartup::Fixed)
         {
-            ui->rightFolderLastTimeRadioButton->setChecked(true);
+            ui->rightFolderFixedRadioButton->setChecked(true);
+            ui->rightFolderSelectButton->setEnabled(true);
+            ui->rightFolderPathLineEdit->setEnabled(true);
+
+            ui->rightFolderPathLineEdit->setText(Settings::getInstance()->getFolderPath(PaneType::Right));
         }
         else
         {
-            ui->rightFolderDefaultRadioButton->setChecked(true);
-        }
-        ui->rightFolderSelectButton->setEnabled(false);
-        ui->rightFolderPathLineEdit->setEnabled(false);
+            if(folderAtStartup == FolderAtStartup::LastTime)
+            {
+                ui->rightFolderLastTimeRadioButton->setChecked(true);
+            }
+            else
+            {
+                ui->rightFolderDefaultRadioButton->setChecked(true);
+            }
+            ui->rightFolderSelectButton->setEnabled(false);
+            ui->rightFolderPathLineEdit->setEnabled(false);
 
-        ui->rightFolderPathLineEdit->setText(rightDirPath);
+            ui->rightFolderPathLineEdit->setText(rightDirPath);
+        }
     }
 
     DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
@@ -1153,34 +1157,34 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     if(ui->leftFolderFixedRadioButton->isChecked())
     {
-        Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::Fixed);
+        Settings::getInstance()->setFolderAtStartup(PaneType::Left, FolderAtStartup::Fixed);
 
         QString dirPath = ui->leftFolderPathLineEdit->text();
-        Settings::getInstance()->setLeftFolderPath(dirPath);
+        Settings::getInstance()->setFolderPath(PaneType::Left, dirPath);
     }
     else if(ui->leftFolderLastTimeRadioButton->isChecked())
     {
-        Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::LastTime);
+        Settings::getInstance()->setFolderAtStartup(PaneType::Left, FolderAtStartup::LastTime);
     }
     else
     {
-        Settings::getInstance()->setLeftFolderAtStartup(FolderAtStartup::Default);
+        Settings::getInstance()->setFolderAtStartup(PaneType::Left, FolderAtStartup::Default);
     }
 
     if(ui->rightFolderFixedRadioButton->isChecked())
     {
-        Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Fixed);
+        Settings::getInstance()->setFolderAtStartup(PaneType::Right, FolderAtStartup::Fixed);
 
         QString dirPath = ui->rightFolderPathLineEdit->text();
-        Settings::getInstance()->setRightFolderPath(dirPath);
+        Settings::getInstance()->setFolderPath(PaneType::Right, dirPath);
     }
     else if(ui->rightFolderLastTimeRadioButton->isChecked())
     {
-        Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::LastTime);
+        Settings::getInstance()->setFolderAtStartup(PaneType::Right, FolderAtStartup::LastTime);
     }
     else
     {
-        Settings::getInstance()->setRightFolderAtStartup(FolderAtStartup::Default);
+        Settings::getInstance()->setFolderAtStartup(PaneType::Right, FolderAtStartup::Default);
     }
 
     if(ui->dragAndDropBehaviorCopyRadioButton->isChecked())

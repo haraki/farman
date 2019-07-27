@@ -22,7 +22,8 @@ class FolderForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit FolderForm(FilterFlags filterFlags,
+    explicit FolderForm(PaneType pane,
+                        FilterFlags filterFlags,
                         SectionType sortSectionType,
                         SectionType sortSectionType2nd,
                         SortDirsType sortDirsType,
@@ -35,6 +36,8 @@ public:
                         QString dateOrgString,
                         QWidget *parent = Q_NULLPTR);
     ~FolderForm() Q_DECL_OVERRIDE;
+
+    PaneType getPaneType() const { return m_paneType; }
 
     void setAppearance(const QFont& viewFont,
                        const QFont& pathFont,
@@ -128,9 +131,8 @@ private:
 private:
     Ui::FolderForm *ui;
 
+    const PaneType m_paneType;
     FolderModel *m_folderModel;
-
-//    bool m_isSettingPath;
 };
 
 }           // namespace Farman

@@ -73,43 +73,30 @@ void Settings::initialize()
                    (activePaneValue == "right") ? PaneType::Right :
                                                   DEFAULT_ACTIVE_PANE;
 
-    // Folder at startup(Left)
-    QString leftFolderAtStartupValue = value("main/leftFolderAtStartup").toString();
-    m_leftFolderAtStartup = (leftFolderAtStartupValue == "default")  ? FolderAtStartup::Default :
-                            (leftFolderAtStartupValue == "lastTime") ? FolderAtStartup::LastTime :
-                            (leftFolderAtStartupValue == "fixed")    ? FolderAtStartup::Fixed :
-                                                                       DEFAULT_FOLDER_AT_STARTUP_TYPE;
-    m_leftFolderPath = value("main/leftFolderPath", DEFAULT_FOLDER_PATH_AT_STARTUP).toString();
+    for(auto pane : {PaneType::Left, PaneType::Right})
+    {
+        QString prefix = (pane == PaneType::Left) ? "left" : "right";
 
-    // Folder at startup(Right)
-    QString rightFolderAtStartupValue = value("main/rightFolderAtStartup").toString();
-    m_rightFolderAtStartup = (rightFolderAtStartupValue == "default")  ? FolderAtStartup::Default :
-                             (rightFolderAtStartupValue == "lastTime") ? FolderAtStartup::LastTime :
-                             (rightFolderAtStartupValue == "fixed")    ? FolderAtStartup::Fixed :
-                                                                         DEFAULT_FOLDER_AT_STARTUP_TYPE;
-    m_rightFolderPath = value("main/rightFolderPath", DEFAULT_FOLDER_PATH_AT_STARTUP).toString();
+        // Folder at startup
+        QString folderAtStartupValue = value("main/" + prefix + "FolderAtStartup").toString();
+        m_folderAtStartup[static_cast<int>(pane)] =
+                (folderAtStartupValue == "default")  ? FolderAtStartup::Default :
+                (folderAtStartupValue == "lastTime") ? FolderAtStartup::LastTime :
+                (folderAtStartupValue == "fixed")    ? FolderAtStartup::Fixed :
+                                                       DEFAULT_FOLDER_AT_STARTUP_TYPE;
+        m_folderPath[static_cast<int>(pane)] = value("main/" + prefix + "FolderPath", DEFAULT_FOLDER_PATH_AT_STARTUP).toString();
 
-    // Left side Sort settings
-    m_leftSortSectionType = getValueSortSectionType("left");
-    m_leftSortSectionType2nd = getValueSortSectionType2nd("left");
-    m_leftSortDirsType = getValueSortDirsType("left");
-    m_leftSortDotFirst = getValueSortDotFirst("left");
-    m_leftSortCaseSensitivity = getValueSortCaseSensitivity("left");
-    m_leftSortOrder = getValueSortOrder("left");
+        // Sort settings
+        m_sortSectionType[static_cast<int>(pane)]     = getValueSortSectionType(prefix);
+        m_sortSectionType2nd[static_cast<int>(pane)]  = getValueSortSectionType2nd(prefix);
+        m_sortDirsType[static_cast<int>(pane)]        = getValueSortDirsType(prefix);
+        m_sortDotFirst[static_cast<int>(pane)]        = getValueSortDotFirst(prefix);
+        m_sortCaseSensitivity[static_cast<int>(pane)] = getValueSortCaseSensitivity(prefix);
+        m_sortOrder[static_cast<int>(pane)]           = getValueSortOrder(prefix);
 
-    // Right side Sort settings
-    m_rightSortSectionType = getValueSortSectionType("right");
-    m_rightSortSectionType2nd = getValueSortSectionType2nd("right");
-    m_rightSortDirsType = getValueSortDirsType("right");
-    m_rightSortDotFirst = getValueSortDotFirst("right");
-    m_rightSortCaseSensitivity = getValueSortCaseSensitivity("right");
-    m_rightSortOrder = getValueSortOrder("right");
-
-    // Left side Filter settings
-    m_leftFilterSettings = getValueFilterSettings("left");
-
-    // Right side Filter settings
-    m_rightFilterSettings = getValueFilterSettings("right");
+        // Filter settings
+        m_filterSettings[static_cast<int>(pane)] = getValueFilterSettings(prefix);
+    }
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = value("main/dragAndDropBehaviorType").toString();
@@ -302,41 +289,47 @@ void Settings::flush()
                                                                   "left";
     setValue("main/activePane", activePaneValue);
 
-    // Folder at startup(Left)
-    QString leftFolderAtStartupValue = (m_leftFolderAtStartup == FolderAtStartup::LastTime) ? "lastTime" :
-                                       (m_leftFolderAtStartup == FolderAtStartup::Fixed)    ? "fixed" :
-                                                                                              "default";
-    setValue("main/leftFolderAtStartup", leftFolderAtStartupValue);
-    setValue("main/leftFolderPath", m_leftFolderPath);
+    {
+        // Folder at startup(Left)
+        QString folderAtStartupValue =
+                (m_folderAtStartup[static_cast<int>(PaneType::Left)] == FolderAtStartup::LastTime) ? "lastTime" :
+                (m_folderAtStartup[static_cast<int>(PaneType::Left)] == FolderAtStartup::Fixed)    ? "fixed" :
+                                                                                                     "default";
+        setValue("main/leftFolderAtStartup", folderAtStartupValue);
+        setValue("main/leftFolderPath", m_folderPath[static_cast<int>(PaneType::Left)]);
+    }
 
-    // Folder at startup(Right)
-    QString rightFolderAtStartupValue = (m_rightFolderAtStartup == FolderAtStartup::LastTime) ? "lastTime" :
-                                        (m_rightFolderAtStartup == FolderAtStartup::Fixed)    ? "fixed" :
-                                                                                                "default";
-    setValue("main/rightFolderAtStartup", rightFolderAtStartupValue);
-    setValue("main/rightFolderPath", m_rightFolderPath);
+    {
+        // Folder at startup(Right)
+        QString folderAtStartupValue =
+                (m_folderAtStartup[static_cast<int>(PaneType::Right)] == FolderAtStartup::LastTime) ? "lastTime" :
+                (m_folderAtStartup[static_cast<int>(PaneType::Right)] == FolderAtStartup::Fixed)    ? "fixed" :
+                                                                                                      "default";
+        setValue("main/rightFolderAtStartup", folderAtStartupValue);
+        setValue("main/rightFolderPath", m_folderPath[static_cast<int>(PaneType::Right)]);
+    }
 
     // Left side Sort settings
-    setValueSortSectionType(m_leftSortSectionType, "left");
-    setValueSortSectionType2nd(m_leftSortSectionType2nd, "left");
-    setValueSortDirsType(m_leftSortDirsType, "left");
-    setValueSortDotFirst(m_leftSortDotFirst, "left");
-    setValueSortCaseSensitivity(m_leftSortCaseSensitivity, "left");
-    setValueSortOrder(m_leftSortOrder, "left");
+    setValueSortSectionType(m_sortSectionType[static_cast<int>(PaneType::Left)], "left");
+    setValueSortSectionType2nd(m_sortSectionType2nd[static_cast<int>(PaneType::Left)], "left");
+    setValueSortDirsType(m_sortDirsType[static_cast<int>(PaneType::Left)], "left");
+    setValueSortDotFirst(m_sortDotFirst[static_cast<int>(PaneType::Left)], "left");
+    setValueSortCaseSensitivity(m_sortCaseSensitivity[static_cast<int>(PaneType::Left)], "left");
+    setValueSortOrder(m_sortOrder[static_cast<int>(PaneType::Left)], "left");
 
     // Right side Sort settings
-    setValueSortSectionType(m_rightSortSectionType, "right");
-    setValueSortSectionType2nd(m_rightSortSectionType2nd, "right");
-    setValueSortDirsType(m_rightSortDirsType, "right");
-    setValueSortDotFirst(m_rightSortDotFirst, "right");
-    setValueSortCaseSensitivity(m_rightSortCaseSensitivity, "right");
-    setValueSortOrder(m_rightSortOrder, "right");
+    setValueSortSectionType(m_sortSectionType[static_cast<int>(PaneType::Right)], "right");
+    setValueSortSectionType2nd(m_sortSectionType2nd[static_cast<int>(PaneType::Right)], "right");
+    setValueSortDirsType(m_sortDirsType[static_cast<int>(PaneType::Right)], "right");
+    setValueSortDotFirst(m_sortDotFirst[static_cast<int>(PaneType::Right)], "right");
+    setValueSortCaseSensitivity(m_sortCaseSensitivity[static_cast<int>(PaneType::Right)], "right");
+    setValueSortOrder(m_sortOrder[static_cast<int>(PaneType::Right)], "right");
 
     // Left side Filter settings
-    setValueFilterSettings(m_leftFilterSettings, "left");
+    setValueFilterSettings(m_filterSettings[static_cast<int>(PaneType::Left)], "left");
 
     // Right side Filter settings
-    setValueFilterSettings(m_rightFilterSettings, "right");
+    setValueFilterSettings(m_filterSettings[static_cast<int>(PaneType::Right)], "right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Copy) ? "copy" :

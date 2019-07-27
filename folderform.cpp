@@ -12,7 +12,8 @@
 namespace Farman
 {
 
-FolderForm::FolderForm(FilterFlags filterFlags,
+FolderForm::FolderForm(PaneType pane,
+                       FilterFlags filterFlags,
                        SectionType sortSectionType,
                        SectionType sortSectionType2nd,
                        SortDirsType sortDirsType,
@@ -26,6 +27,7 @@ FolderForm::FolderForm(FilterFlags filterFlags,
                        QWidget *parent/* = Q_NULLPTR*/)
     : QWidget(parent)
     , ui(new Ui::FolderForm)
+    , m_paneType(pane)
     , m_folderModel(new FolderModel(this))
 {
     ui->setupUi(this);

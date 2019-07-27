@@ -843,13 +843,13 @@ QDialog::DialogCode MainWindow::launchPreferencesDialog(PreferencesDialogTabPage
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     if(doubleFolderPanel != Q_NULLPTR)
     {
-        FolderForm* l_folderForm = doubleFolderPanel->getLeftFolderForm();
+        FolderForm* l_folderForm = doubleFolderPanel->getFolderForm(PaneType::Left);
         if(l_folderForm != Q_NULLPTR)
         {
             leftDirPath = l_folderForm->getCurrentDirPath();
         }
 
-        FolderForm* r_folderForm = doubleFolderPanel->getRightFolderForm();
+        FolderForm* r_folderForm = doubleFolderPanel->getFolderForm(PaneType::Right);
         if(r_folderForm != Q_NULLPTR)
         {
             rightDirPath = r_folderForm->getCurrentDirPath();

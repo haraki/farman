@@ -49,49 +49,27 @@ public:
     PaneType getActivePane() { return m_activePane; }
     void setActivePane(PaneType pane) { m_activePane = pane; }
 
-    FolderAtStartup getLeftFolderAtStartup() { return m_leftFolderAtStartup; }
-    void setLeftFolderAtStartup(FolderAtStartup leftFolderAtStartup) { m_leftFolderAtStartup = leftFolderAtStartup; }
+    FolderAtStartup getFolderAtStartup(PaneType pane) { return m_folderAtStartup[static_cast<int>(pane)]; }
+    void setFolderAtStartup(PaneType pane, FolderAtStartup folderAtStartup) { m_folderAtStartup[static_cast<int>(pane)] = folderAtStartup; }
 
-    QString getLeftFolderPath() { return m_leftFolderPath; }
-    void setLeftFolderPath(const QString& leftFolderPath) { m_leftFolderPath = leftFolderPath; }
+    QString getFolderPath(PaneType pane) { return m_folderPath[static_cast<int>(pane)]; }
+    void setFolderPath(PaneType pane, const QString& folderPath) { m_folderPath[static_cast<int>(pane)] = folderPath; }
 
-    FolderAtStartup getRightFolderAtStartup() { return m_rightFolderAtStartup; }
-    void setRightFolderAtStartup(FolderAtStartup rightFolderAtStartup) { m_rightFolderAtStartup = rightFolderAtStartup; }
+    SectionType getSortSectionType(PaneType pane) { return m_sortSectionType[static_cast<int>(pane)]; }
+    SectionType getSortSectionType2nd(PaneType pane) { return m_sortSectionType2nd[static_cast<int>(pane)]; }
+    SortDirsType getSortDirsType(PaneType pane) { return m_sortDirsType[static_cast<int>(pane)]; }
+    bool getSortDotFirst(PaneType pane) { return m_sortDotFirst[static_cast<int>(pane)]; }
+    Qt::CaseSensitivity getSortCaseSensitivity(PaneType pane) { return m_sortCaseSensitivity[static_cast<int>(pane)]; }
+    Qt::SortOrder getSortOrder(PaneType pane) { return m_sortOrder[static_cast<int>(pane)]; }
+    void setSortSectionType(PaneType pane, SectionType sectionType) { m_sortSectionType[static_cast<int>(pane)] = sectionType; }
+    void setSortSectionType2nd(PaneType pane, SectionType sectionType2nd) { m_sortSectionType2nd[static_cast<int>(pane)] = sectionType2nd; }
+    void setSortDirsType(PaneType pane, SortDirsType dirsType) { m_sortDirsType[static_cast<int>(pane)] = dirsType; }
+    void setSortDotFirst(PaneType pane, bool dotFirst) { m_sortDotFirst[static_cast<int>(pane)] = dotFirst; }
+    void setSortCaseSensitivity(PaneType pane, Qt::CaseSensitivity caseSensitivity) { m_sortCaseSensitivity[static_cast<int>(pane)] = caseSensitivity; }
+    void setSortOrder(PaneType pane, Qt::SortOrder order) { m_sortOrder[static_cast<int>(pane)] = order; }
 
-    QString getRightFolderPath() { return m_rightFolderPath; }
-    void setRightFolderPath(const QString& rightFolderPath) { m_rightFolderPath = rightFolderPath; }
-
-    SectionType getLeftSortSectionType() { return m_leftSortSectionType; }
-    SectionType getLeftSortSectionType2nd() { return m_leftSortSectionType2nd; }
-    SortDirsType getLeftSortDirsType() { return m_leftSortDirsType; }
-    bool getLeftSortDotFirst() { return m_leftSortDotFirst; }
-    Qt::CaseSensitivity getLeftSortCaseSensitivity() { return m_leftSortCaseSensitivity; }
-    Qt::SortOrder getLeftSortOrder() { return m_leftSortOrder; }
-    void setLeftSortSectionType(SectionType sectionType) { m_leftSortSectionType = sectionType; }
-    void setLeftSortSectionType2nd(SectionType sectionType2nd) { m_leftSortSectionType2nd = sectionType2nd; }
-    void setLeftSortDirsType(SortDirsType dirsType) { m_leftSortDirsType = dirsType; }
-    void setLeftSortDotFirst(bool dotFirst) { m_leftSortDotFirst = dotFirst; }
-    void setLeftSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity) { m_leftSortCaseSensitivity = caseSensitivity; }
-    void setLeftSortOrder(Qt::SortOrder order) { m_leftSortOrder = order; }
-
-    SectionType getRightSortSectionType() { return m_rightSortSectionType; }
-    SectionType getRightSortSectionType2nd() { return m_rightSortSectionType2nd; }
-    SortDirsType getRightSortDirsType() { return m_rightSortDirsType; }
-    bool getRightSortDotFirst() { return m_rightSortDotFirst; }
-    Qt::CaseSensitivity getRightSortCaseSensitivity() { return m_rightSortCaseSensitivity; }
-    Qt::SortOrder getRightSortOrder() { return m_rightSortOrder; }
-    void setRightSortSectionType(SectionType sectionType) { m_rightSortSectionType = sectionType; }
-    void setRightSortSectionType2nd(SectionType sectionType2nd) { m_rightSortSectionType2nd = sectionType2nd; }
-    void setRightSortDirsType(SortDirsType dirsType) { m_rightSortDirsType = dirsType; }
-    void setRightSortDotFirst(bool dotFirst) { m_rightSortDotFirst = dotFirst; }
-    void setRightSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity) { m_rightSortCaseSensitivity = caseSensitivity; }
-    void setRightSortOrder(Qt::SortOrder order) { m_rightSortOrder = order; }
-
-    FilterFlags getLeftFilterSettings() const { return m_leftFilterSettings; }
-    void setLeftFilterSettings(FilterFlags filterSettings) { m_leftFilterSettings = filterSettings; }
-
-    FilterFlags getRightFilterSettings() const { return m_rightFilterSettings; }
-    void setRightFilterSettings(FilterFlags filterSettings) { m_rightFilterSettings = filterSettings; }
+    FilterFlags getFilterSettings(PaneType pane) const { return m_filterSettings[static_cast<int>(pane)]; }
+    void setFilterSettings(PaneType pane, FilterFlags filterSettings) { m_filterSettings[static_cast<int>(pane)] = filterSettings; }
 
     DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
     void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
@@ -220,26 +198,17 @@ private:
     PaneMode m_paneMode = DEFAULT_PANE_MODE;
     PaneType m_activePane = DEFAULT_ACTIVE_PANE;
 
-    FolderAtStartup m_leftFolderAtStartup = DEFAULT_FOLDER_AT_STARTUP_TYPE;
-    QString m_leftFolderPath = DEFAULT_FOLDER_PATH_AT_STARTUP;
-    FolderAtStartup m_rightFolderAtStartup = DEFAULT_FOLDER_AT_STARTUP_TYPE;
-    QString m_rightFolderPath = DEFAULT_FOLDER_PATH_AT_STARTUP;
+    FolderAtStartup m_folderAtStartup[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_FOLDER_AT_STARTUP_TYPE, DEFAULT_FOLDER_AT_STARTUP_TYPE };
+    QString         m_folderPath[static_cast<int>(PaneType::PaneTypeNum)]      = { DEFAULT_FOLDER_PATH_AT_STARTUP, DEFAULT_FOLDER_PATH_AT_STARTUP };
 
-    SectionType m_leftSortSectionType = DEFAULT_SORT_SECTION_TYPE;
-    SectionType m_leftSortSectionType2nd = DEFAULT_SORT_SECTION_TYPE_2ND;
-    SortDirsType m_leftSortDirsType = DEFAULT_SORT_DIRS_TYPE;
-    bool m_leftSortDotFirst = DEFAULT_SORT_DOT_FIRST;
-    Qt::CaseSensitivity m_leftSortCaseSensitivity = DEFAULT_SORT_CASE_SENSITIVITY;
-    Qt::SortOrder m_leftSortOrder = DEFAULT_SORT_ORDER;
-    SectionType m_rightSortSectionType = DEFAULT_SORT_SECTION_TYPE;
-    SectionType m_rightSortSectionType2nd = DEFAULT_SORT_SECTION_TYPE_2ND;
-    SortDirsType m_rightSortDirsType = DEFAULT_SORT_DIRS_TYPE;
-    bool m_rightSortDotFirst = DEFAULT_SORT_DOT_FIRST;
-    Qt::CaseSensitivity m_rightSortCaseSensitivity = DEFAULT_SORT_CASE_SENSITIVITY;
-    Qt::SortOrder m_rightSortOrder = DEFAULT_SORT_ORDER;
+    SectionType         m_sortSectionType[static_cast<int>(PaneType::PaneTypeNum)]     = { DEFAULT_SORT_SECTION_TYPE,     DEFAULT_SORT_SECTION_TYPE     };
+    SectionType         m_sortSectionType2nd[static_cast<int>(PaneType::PaneTypeNum)]  = { DEFAULT_SORT_SECTION_TYPE_2ND, DEFAULT_SORT_SECTION_TYPE_2ND };
+    SortDirsType        m_sortDirsType[static_cast<int>(PaneType::PaneTypeNum)]        = { DEFAULT_SORT_DIRS_TYPE,        DEFAULT_SORT_DIRS_TYPE        };
+    bool                m_sortDotFirst[static_cast<int>(PaneType::PaneTypeNum)]        = { DEFAULT_SORT_DOT_FIRST,        DEFAULT_SORT_DOT_FIRST        };
+    Qt::CaseSensitivity m_sortCaseSensitivity[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_SORT_CASE_SENSITIVITY, DEFAULT_SORT_CASE_SENSITIVITY };
+    Qt::SortOrder       m_sortOrder[static_cast<int>(PaneType::PaneTypeNum)]           = { DEFAULT_SORT_ORDER,            DEFAULT_SORT_ORDER            };
 
-    FilterFlags m_leftFilterSettings = DEFAULT_FILTER_FLAGS;
-    FilterFlags m_rightFilterSettings = DEFAULT_FILTER_FLAGS;
+    FilterFlags m_filterSettings[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_FILTER_FLAGS, DEFAULT_FILTER_FLAGS };
 
     DragAndDropBehaviorType m_dragAndDropBehaviorType = DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE;
 
