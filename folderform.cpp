@@ -521,7 +521,11 @@ void FolderForm::onDeselectAll()
 {
     qDebug() << "FolderForm::onDeselectAll()";
 
+    QModelIndex currentIndex = ui->folderView->currentIndex();      // clearSelected() するとカーソルが消えてしまうので、再設定のために保存
+
     m_folderModel->clearSelected();
+
+    ui->folderView->setCursor(currentIndex);
 
     updateMarkedLabel();            // clearSelected() は onSelectedFile は通知されないので、自分で updateMarkedLabel() を呼ぶ
 }
