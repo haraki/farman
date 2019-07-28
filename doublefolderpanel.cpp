@@ -665,8 +665,8 @@ void DoubleFolderPanel::onAttributes()
 #ifdef Q_OS_WIN
                                 fileAttrFlags,
 #endif
-                                file.fileTime(QFile::FileBirthTime),
-                                file.fileTime(QFile::FileModificationTime),
+                                fileInfo.fileTime(QFile::FileBirthTime),
+                                fileInfo.fileTime(QFile::FileModificationTime),
                                 getFileSizeOnDisk(filePath),
                                 parentWidget());
     if(dialog.exec() != QDialog::Accepted)
