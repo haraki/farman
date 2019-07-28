@@ -26,6 +26,17 @@ bool isSystemFile(const QString& filePath)
     return false;
 }
 
+bool isArchiveFile(const QString& filePath)
+{
+    DWORD attrFlags = ::GetFileAttributes(filePath.toStdWString().c_str());
+    if(attrFlags != static_cast<DWORD>(-1) && (attrFlags & FILE_ATTRIBUTE_ARCHIVE))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 qint64 getFileSizeOnDisk(const QString& filePath)
 {
     DWORD sectorsPerCluster = 0;
