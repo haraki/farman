@@ -172,6 +172,21 @@ enum class PreferencesDialogTabPage : int
 };
 
 #ifdef Q_OS_WIN
+// ファイルアトリビュートフラグ
+enum class WinFileAttrFlag : int
+{
+    None = 0,
+
+    ReadOnly = (1 << 0),          // 読み取り専用
+    Hidden   = (1 << 1),          // 隠し
+    Archive  = (1 << 2),          // アーカイブ
+    System   = (1 << 3),          // システム
+};
+Q_DECLARE_FLAGS(WinFileAttrFlags, WinFileAttrFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(WinFileAttrFlags)
+#endif
+
+#ifdef Q_OS_WIN
 #define LINEFEED_CODE       "\r\n"
 #else
 #define LINEFEED_CODE       "\n"

@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QStorageInfo>
 #include <QDebug>
+#include "types.h"
 #include "win32.h"
 #include "misc.h"
 
@@ -35,6 +36,93 @@ bool isArchiveFile(const QString& filePath)
     }
 
     return false;
+}
+
+bool setFileAttrFlags(const QString& filePath, WinFileAttrFlags fileAttrFlags)
+{
+    LPCWSTR lpFileName =filePath.toStdWString().c_str();
+
+    DWORD attrFlags = ::GetFileAttributes(lpFileName);
+    if(attrFlags == static_cast<DWORD>(-1))
+    {
+        qDebug() << "GetFileAttributes() failed. filePath : " << filePath;
+
+        return false;
+    }
+
+    if(fileAttrFlags & WinFileAttrFlag::ReadOnly)
+    {
+        attrFlags |= FILE_ATTRIBUTE_READONLY;
+    }
+    else
+    {
+        attrFlags &= ~static_cast<unsigned long>(FILE_ATTRIBUTE_READONLY);
+    }
+    if(fileAttrFlags & WinFileAttrFlag::Hidden)
+    {
+        attrFlags |= FILE_ATTRIBUTE_HIDDEN;
+    }
+    else
+    {
+        attrFlags &= ~static_cast<unsigned long>(FILE_ATTRIBUTE_HIDDEN);
+    }
+    if(fileAttrFlags & WinFileAttrFlag::System)
+    {
+        attrFlags |= FILE_ATTRIBUTE_SYSTEM;
+    }
+    else
+    {
+        attrFlags &= ~static_cast<unsigned long>(FILE_ATTRIBUTE_SYSTEM);
+    }
+    if(fileAttrFlags & WinFileAttrFlag::Archive)
+    {
+        attrFlags |= FILE_ATTRIBUTE_ARCHIVE;
+    }
+    else
+    {
+        attrFlags &= ~static_cast<unsigned long>(FILE_ATTRIBUTE_ARCHIVE);
+    }
+
+    if(!::SetFileAttributes(lpFileName, attrFlags))
+    {
+        qDebug() << "SetFileAttributes() failed. filePath : " << filePath << ", attrFlags : " << attrFlags;
+
+        return false;
+    }
+
+    return true;
+}
+
+WinFileAttrFlags getFileAttrFlags(const QString& filePath)
+{
+    WinFileAttrFlags fileAttrFlags = WinFileAttrFlag::None;
+
+    DWORD attrFlags = ::GetFileAttributes(filePath.toStdWString().c_str());
+    if(attrFlags == static_cast<DWORD>(-1))
+    {
+        qDebug() << "GetFileAttributes() failed. filePath : " << filePath;
+
+        return WinFileAttrFlag::None;
+    }
+
+    if(attrFlags & FILE_ATTRIBUTE_READONLY)
+    {
+        fileAttrFlags |= WinFileAttrFlag::ReadOnly;
+    }
+    if(attrFlags & FILE_ATTRIBUTE_HIDDEN)
+    {
+        fileAttrFlags |= WinFileAttrFlag::Hidden;
+    }
+    if(attrFlags & FILE_ATTRIBUTE_SYSTEM)
+    {
+        fileAttrFlags |= WinFileAttrFlag::System;
+    }
+    if(attrFlags & FILE_ATTRIBUTE_ARCHIVE)
+    {
+        fileAttrFlags |= WinFileAttrFlag::Archive;
+    }
+
+    return fileAttrFlags;
 }
 
 qint64 getFileSizeOnDisk(const QString& filePath)

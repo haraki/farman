@@ -6,6 +6,7 @@
 #ifdef Q_OS_WIN
 
 #include <QString>
+#include "types.h"
 
 namespace Farman
 {
@@ -15,6 +16,8 @@ namespace Win32
 
 extern bool isSystemFile(const QString& filePath);
 extern bool isArchiveFile(const QString& filePath);
+extern bool setFileAttrFlags(const QString& filePath, WinFileAttrFlags fileAttrFlags);
+extern WinFileAttrFlags getFileAttrFlags(const QString& filePath);
 extern qint64 getFileSizeOnDisk(const QString& filePath);
 extern QString getCompilerVersion();
 
