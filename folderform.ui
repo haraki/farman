@@ -41,8 +41,8 @@
        </property>
        <property name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/images/bookmark_off.svg</normaloff>
-         <normalon>:/images/bookmark_on.svg</normalon>:/images/bookmark_off.svg</iconset>
+         <normaloff>:/resources/images/bookmark_off.svg</normaloff>
+         <normalon>:/resources/images/bookmark_on.svg</normalon>:/resources/images/bookmark_off.svg</iconset>
        </property>
        <property name="checkable">
         <bool>true</bool>

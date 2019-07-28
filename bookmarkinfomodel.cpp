@@ -10,7 +10,7 @@ BookmarkInfoModel::BookmarkInfoModel(bool system/* = true*/, bool showIcon/* = t
     : QAbstractTableModel(parent)
     , m_fileSystemModel(new QFileSystemModel(this))
     , m_showIcon(showIcon)
-    , m_bookmarkIcon(new QIcon(":/images/bookmark_on.svg"))
+    , m_bookmarkIcon(new QIcon(":/resources/images/bookmark_on.svg"))
 {
     initialize(system);
 }

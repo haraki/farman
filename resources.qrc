@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>text/license.txt</file>
-        <file>images/bookmark_off.svg</file>
-        <file>images/bookmark_on.svg</file>
+        <file>resources/text/license.txt</file>
+        <file>resources/images/bookmark_off.svg</file>
+        <file>resources/images/bookmark_on.svg</file>
     </qresource>
 </RCC>

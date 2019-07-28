@@ -9,7 +9,7 @@ LicenseDialog::LicenseDialog(QWidget *parent/* = Q_NULLPTR*/) :
 {
     ui->setupUi(this);
 
-    QFile licenseTxt(":/text/license.txt");
+    QFile licenseTxt(":/resources/text/license.txt");
     if(licenseTxt.open(QFile::ReadOnly))
     {
         QString licenseHtml;
