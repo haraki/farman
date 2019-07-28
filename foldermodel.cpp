@@ -256,13 +256,6 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
         switch(sectionType)
         {
         case SectionType::FileName:
-#ifdef Q_OS_WIN
-            if(fi.fileName() != ".." && isDrive(modelIndex))
-            {
-                ret = fi.absolutePath();
-            }
-            else
-#endif
             if(!fi.isDir() && !fi.completeBaseName().isEmpty())
             {
                 ret = fi.completeBaseName();
@@ -280,13 +273,6 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
             }
             break;
         case SectionType::FileSize:
-#ifdef Q_OS_WIN
-            if(isDrive(modelIndex))
-            {
-                ret = QString("<Drive>");
-            }
-            else
-#endif
             if(fi.isDir())
             {
                 ret = QString("<Folder>");
@@ -695,22 +681,6 @@ bool FolderModel::sectionTypeLessThan(QFileInfo& l_info, QFileInfo& r_info, Sect
 
     return false;
 }
-
-#ifdef Q_OS_WIN
-bool FolderModel::isDrive(const QModelIndex& index) const
-{
-    QFileInfo fi = fileInfo(index);
-    foreach(QFileInfo drive, QDir::drives())
-    {
-        if(drive.absoluteFilePath() == fi.absoluteFilePath())
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-#endif
 
 int FolderModel::getFileNum()
 {

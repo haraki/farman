@@ -76,11 +76,6 @@ public:
     void setSelectAll();
     void clearSelected();
 
-#ifdef Q_OS_WIN
-    bool isDrive(const QModelIndex& index) const;
-    bool isWindowsSystemFile(const QFileInfo& fileInfo) const;
-#endif
-
     // カレントディレクトリ内のファイル・ディレクトリ数を返す
     int getFileNum();               // ファイル数を返す(ディレクトリは含まない)
     int getDirNum();                // ディレクトリ数を返す(".." は除外)
