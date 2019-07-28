@@ -134,7 +134,7 @@
    </widget>
    <widget class="QMenu" name="menuGo">
     <property name="title">
-     <string>Go</string>
+     <string>Go(&amp;G)</string>
     </property>
     <addaction name="actionGoToFolder"/>
    </widget>
@@ -275,7 +275,7 @@
     <string>Attributes</string>
    </property>
    <property name="shortcut">
-    <string>T</string>
+    <string>A</string>
    </property>
   </action>
   <action name="actionPreferences">
@@ -404,7 +404,10 @@
   </action>
   <action name="actionGoToFolder">
    <property name="text">
-    <string>Go to folder...</string>
+    <string>Go to folder...(&amp;G)</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to folder</string>
    </property>
    <property name="shortcut">
     <string>G</string>
@@ -448,7 +451,7 @@
   </action>
   <action name="actionDeselectAll">
    <property name="text">
-    <string>Deselect all(&amp;R)</string>
+    <string>Deselect all(&amp;-)</string>
    </property>
    <property name="toolTip">
     <string>Deselect all</string>
