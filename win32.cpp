@@ -15,9 +15,9 @@ namespace Farman
 namespace Win32
 {
 
-bool isSystemFile(const QFileInfo& fileInfo)
+bool isSystemFile(const QString& filePath)
 {
-    DWORD attrFlags = ::GetFileAttributes(fileInfo.filePath().toStdWString().c_str());
+    DWORD attrFlags = ::GetFileAttributes(filePath.toStdWString().c_str());
     if(attrFlags != static_cast<DWORD>(-1) && (attrFlags & FILE_ATTRIBUTE_SYSTEM))
     {
         return true;

@@ -502,13 +502,21 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
         return false;
     }
 
-    if(!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden())
+    if((!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden())
+#ifdef Q_OS_WIN
+    || (!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
+#endif
+      )
     {
         // 隠しファイル非表示時、カレントディレクトリが属するディレクトリは隠しであっても表示する
         // 非表示にすると、隠し属性の親ディレクトリに移動した際、FolderView が正常に表示されなくなってしまう現象を回避するため
         if(!cfi.isDir())
         {
             return false;
+        }
+        else if(cfi.fileName() == "..")
+        {
+            return true;
         }
 
         // source_row(childIndex)が指すディレクトリが、カレントディレクトリ(fsModel->rootPath())が属するディレクトリであるかを確認する
@@ -530,18 +538,12 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
         {
             return true;
         }
-        else if(cfi.fileName() != "..")
-        {
-            return false;
-        }
+//        else if(cfi.fileName() != "..")
+//        {
+//            return false;
+//        }
     }
 
-#ifdef Q_OS_WIN
-    if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi))
-    {
-        return false;
-    }
-#endif
     return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 }
 
@@ -725,10 +727,10 @@ int FolderModel::getFileDirNum(QDir::Filters filters)
         }
 
 #ifdef Q_OS_WIN
-        if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi))
-        {
-            continue;
-        }
+//        if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi))
+//        {
+//            continue;
+//        }
 #endif
         count++;
     }
@@ -800,7 +802,7 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
         }
     }
 #ifdef Q_OS_WIN
-    else if(fi.fileName() != ".." && isSystemFile(fi))
+    else if(fi.fileName() != ".." && Win32::isSystemFile(fi.absoluteFilePath()))
     {
         if(selected)
         {

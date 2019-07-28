@@ -5,7 +5,6 @@
 
 #ifdef Q_OS_WIN
 
-#include <QFileInfo>
 #include <QString>
 
 namespace Farman
@@ -14,7 +13,7 @@ namespace Farman
 namespace Win32
 {
 
-extern bool isSystemFile(const QFileInfo& fileInfo);
+extern bool isSystemFile(const QString& filePath);
 extern qint64 getFileSizeOnDisk(const QString& filePath);
 extern QString getCompilerVersion();
 
