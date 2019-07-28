@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QFile>
 #include <QDateTime>
+#include "types.h"
 
 namespace Ui {
 class FileAttributesDialog;
@@ -21,6 +22,9 @@ class FileAttributesDialog : public QDialog
 public:
     explicit FileAttributesDialog(const QFileInfo& fileInfo,
                                   QFile::Permissions permissions,
+#ifdef Q_OS_WIN
+                                  WinFileAttrFlags fileAttrFlags,
+#endif
                                   const QDateTime& created,
                                   const QDateTime& lastModified,
                                   const qint64 fileSizeOnDisk,
@@ -28,6 +32,9 @@ public:
     ~FileAttributesDialog();
 
     QFile::Permissions getPermissions() const;
+#ifdef Q_OS_WIN
+    WinFileAttrFlags getFileAttrFlags() const;
+#endif
     QDateTime getCreated() const;
     QDateTime getLastModified() const;
 
@@ -37,6 +44,9 @@ private:
     Ui::FileAttributesDialog *ui;
 
     QFile::Permissions m_permissions;
+#ifdef Q_OS_WIN
+    WinFileAttrFlags m_fileAttrFlags;
+#endif
     QDateTime m_created;
     QDateTime m_lastModified;
 };

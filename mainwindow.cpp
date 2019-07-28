@@ -100,9 +100,30 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             m_file,
             SLOT(onRenameFile(const QString&, const QString&, const QString&)));
     connect(doubleFolderPanel,
-            SIGNAL(changeFileAttributes(const QString&, const QFile::Permissions&, const QDateTime&, const QDateTime&)),
+#ifdef Q_OS_WIN
+            SIGNAL(changeFileAttributes(const QString&,
+                                        const WinFileAttrFlags&,
+                                        const QDateTime&,
+                                        const QDateTime&)),
+#else
+            SIGNAL(changeFileAttributes(const QString&,
+                                        const QFile::Permissions&,
+                                        const QDateTime&,
+                                        const QDateTime&)),
+#endif
             m_file,
-            SLOT(onChangeFileAttributes(const QString&, const QFile::Permissions&, const QDateTime&, const QDateTime&)));
+#ifdef Q_OS_WIN
+            SLOT(onChangeFileAttributes(const QString&,
+                                        const WinFileAttrFlags&,
+                                        const QDateTime&,
+                                        const QDateTime&))
+#else
+            SLOT(onChangeFileAttributes(const QString&,
+                                        const QFile::Permissions&,
+                                        const QDateTime&,
+                                        const QDateTime&))
+#endif
+           );
 
     connect(m_file,
             SIGNAL(createNewFileFinished(const QString&)),

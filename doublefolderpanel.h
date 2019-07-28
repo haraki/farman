@@ -69,7 +69,11 @@ Q_SIGNALS:
     void createNewFile(const QString& path, const QString& fileName);
     void renameFile(const QString& path, const QString& oldName, const QString& newName);
     void changeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                              const WinFileAttrFlags& newFileAttrFlags,
+#else
                               const QFile::Permissions& newPermissions,
+#endif
                               const QDateTime& newCreated,
                               const QDateTime& newLastModified);
 
@@ -108,7 +112,11 @@ private:
     void emitCreateNewFile(const QString& path, const QString& fileName);
     void emitRenameFile(const QString& path, const QString& oldName, const QString& newName);
     void emitChangeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                                  const WinFileAttrFlags& newFileAttrFlags,
+#else
                                   const QFile::Permissions& newPermissions,
+#endif
                                   const QDateTime& newCreated,
                                   const QDateTime& newLastModified);
 

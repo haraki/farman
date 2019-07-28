@@ -7,6 +7,7 @@
 #include "workingdialog.h"
 #include "settings.h"
 #include "mainwindow.h"
+#include "win32.h"
 
 namespace Farman
 {
@@ -196,23 +197,54 @@ bool File::renameFile(const QString& path, const QString& oldName, const QString
 }
 
 bool File::changeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                                const WinFileAttrFlags& newFileAttrFlags,
+#else
                                 const QFile::Permissions& newPermissions,
+#endif
                                 const QDateTime& newCreated,
                                 const QDateTime& newLastModified)
 {
     QFile file(path);
     QFileInfo fileInfo(file);
 
+    qDebug() << "created : " << fileInfo.created() << ", newCreated : " << newCreated;
+    qDebug() << "lastModified : " << fileInfo.lastModified() << ", newLastModified : " << newLastModified;
+
+#ifdef Q_OS_WIN
+    bool changeFileAttr     = Win32::getFileAttrFlags(path) != newFileAttrFlags;
+#else
     bool changePermission   = file.permissions() != newPermissions;
+#endif
     bool changeCreated      = fileInfo.created() != newCreated;
     bool changeLastModified = fileInfo.lastModified() != newLastModified;
 
-    if(changePermission || changeCreated || changeLastModified)
+    if(changeCreated || changeLastModified
+#ifdef Q_OS_WIN
+       || changeFileAttr
+#else
+       || changePermission
+#endif
+      )
     {
         emitOutputConsole(QString("%1 ... ").arg(path));
 
         QStringList outputStrings;
 
+#ifdef Q_OS_WIN
+        if(changeFileAttr)
+        {
+            if(Win32::setFileAttrFlags(path, newFileAttrFlags))
+            {
+                outputStrings.append(tr("Changed file attributes"));
+            }
+            else
+            {
+                outputStrings.append(tr("Failed to change file attributes"));
+                qDebug() << "Failed to change file attributes.";
+            }
+        }
+#else
         if(changePermission)
         {
             if(file.setPermissions(newPermissions))
@@ -225,7 +257,7 @@ bool File::changeFileAttributes(const QString& path,
                 qDebug() << "Failed to change permissions. " << file.errorString();
             }
         }
-
+#endif
         if(changeCreated || changeLastModified)
         {
             if(file.open(QFile::ReadWrite))
@@ -320,11 +352,22 @@ void File::onRenameFile(const QString& path, const QString& oldName, const QStri
 }
 
 void File::onChangeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                                  const WinFileAttrFlags& newFileAttrFlags,
+#else
                                   const QFile::Permissions& newPermissions,
+#endif
                                   const QDateTime& newCreated,
                                   const QDateTime& newLastModified)
 {
-    changeFileAttributes(path, newPermissions, newCreated, newLastModified);
+    changeFileAttributes(path,
+#ifdef Q_OS_WIN
+                         newFileAttrFlags,
+#else
+                         newPermissions,
+#endif
+                         newCreated,
+                         newLastModified);
 }
 
 void File::onCopyFileFinished(int result)

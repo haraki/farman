@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFile>
 #include <QDateTime>
+#include "types.h"
 
 namespace Farman
 {
@@ -31,7 +32,11 @@ public Q_SLOTS:
     void onCreateNewFile(const QString& path, const QString& fileName);
     void onRenameFile(const QString& path, const QString& oldName, const QString& newName);
     void onChangeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                                const WinFileAttrFlags& newFileAttrFlags,
+#else
                                 const QFile::Permissions& newPermissions,
+#endif
                                 const QDateTime& newCreated,
                                 const QDateTime& newLastModified);
 
@@ -43,7 +48,11 @@ private:
     bool createNewFile(const QString& path, const QString& fileName);
     bool renameFile(const QString& path, const QString& oldName, const QString& newName);
     bool changeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                              const WinFileAttrFlags& newFileAttrFlags,
+#else
                               const QFile::Permissions& newPermissions,
+#endif
                               const QDateTime& newCreated,
                               const QDateTime& newLastModified);
 

@@ -4,12 +4,16 @@
 #include <QMimeDatabase>
 #include "fileattributesdialog.h"
 #include "ui_fileattributesdialog.h"
+#include "win32.h"
 
 namespace Farman
 {
 
 FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
                                            QFile::Permissions permissions,
+#ifdef Q_OS_WIN
+                                           WinFileAttrFlags fileAttrFlags,
+#endif
                                            const QDateTime& created,
                                            const QDateTime& lastModified,
                                            const qint64 fileSizeOnDisk,
@@ -17,6 +21,9 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
     QDialog(parent),
     ui(new Ui::FileAttributesDialog),
     m_permissions(permissions),
+#ifdef Q_OS_WIN
+    m_fileAttrFlags(fileAttrFlags),
+#endif
     m_created(created),
     m_lastModified(lastModified)
 {
@@ -45,6 +52,17 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
 
     ui->ownershipUserLabel->setText(fileInfo.owner());
     ui->ownershipGroupLabel->setText(fileInfo.group());
+#ifdef Q_OS_WIN
+    ui->permissionsWinGroupBox->setVisible(true);
+    ui->permissionsGroupBox->setVisible(false);
+
+    ui->permissionsWinReadOnlyCheckBox->setChecked((fileAttrFlags & WinFileAttrFlag::ReadOnly) == static_cast<int>(WinFileAttrFlag::ReadOnly));
+    ui->permissionsWinHiddenCheckBox->setChecked((fileAttrFlags & WinFileAttrFlag::Hidden) == static_cast<int>(WinFileAttrFlag::Hidden));
+    ui->permissionsWinSystemCheckBox->setChecked((fileAttrFlags & WinFileAttrFlag::System) == static_cast<int>(WinFileAttrFlag::System));
+    ui->permissionsWinArchiveCheckBox->setChecked((fileAttrFlags & WinFileAttrFlag::Archive) == static_cast<int>(WinFileAttrFlag::Archive));
+#else
+    ui->permissionsGroupBox->setVisible(true);
+    ui->permissionsWinGroupBox->setVisible(false);
 
     ui->permissionsOwnerReadCheckBox->setChecked((permissions & QFile::Permission::ReadOwner) == QFile::Permission::ReadOwner);
     ui->permissionsOwnerWriteCheckBox->setChecked((permissions & QFile::Permission::WriteOwner) == QFile::Permission::WriteOwner);
@@ -57,9 +75,14 @@ FileAttributesDialog::FileAttributesDialog(const QFileInfo& fileInfo,
     ui->permissionsOtherReadCheckBox->setChecked((permissions & QFile::Permission::ReadOther) == QFile::Permission::ReadOther);
     ui->permissionsOtherWriteCheckBox->setChecked((permissions & QFile::Permission::WriteOther) == QFile::Permission::WriteOther);
     ui->permissionsOtherExecuteCheckBox->setChecked((permissions & QFile::Permission::ExeOther) == QFile::Permission::ExeOther);
-
+#endif
     ui->timestampCreatedDateTimeEdit->setDateTime(created);
     ui->timestampLastModifiedDateTimeEdit->setDateTime(lastModified);
+
+    QRect geo = this->geometry();
+    geo.setHeight(0);
+    setMinimumSize(0, geo.height());
+    setMaximumSize(geo.width(), geo.height());
 }
 
 FileAttributesDialog::~FileAttributesDialog()
@@ -71,6 +94,13 @@ QFile::Permissions FileAttributesDialog::getPermissions() const
 {
     return m_permissions;
 }
+
+#ifdef Q_OS_WIN
+WinFileAttrFlags FileAttributesDialog::getFileAttrFlags() const
+{
+    return m_fileAttrFlags;
+}
+#endif
 
 QDateTime FileAttributesDialog::getCreated() const
 {
@@ -84,6 +114,26 @@ QDateTime FileAttributesDialog::getLastModified() const
 
 void FileAttributesDialog::accept()
 {
+#ifdef Q_OS_WIN
+    m_fileAttrFlags = WinFileAttrFlag::None;
+
+    if(ui->permissionsWinReadOnlyCheckBox->isChecked())
+    {
+        m_fileAttrFlags |= WinFileAttrFlag::ReadOnly;
+    }
+    if(ui->permissionsWinHiddenCheckBox->isChecked())
+    {
+        m_fileAttrFlags |= WinFileAttrFlag::Hidden;
+    }
+    if(ui->permissionsWinSystemCheckBox->isChecked())
+    {
+        m_fileAttrFlags |= WinFileAttrFlag::System;
+    }
+    if(ui->permissionsWinArchiveCheckBox->isChecked())
+    {
+        m_fileAttrFlags |= WinFileAttrFlag::Archive;
+    }
+#else
     m_permissions = 0;
 
     if(ui->permissionsOwnerReadCheckBox->isChecked())
@@ -126,7 +176,7 @@ void FileAttributesDialog::accept()
     }
 
     qDebug() << "permissions == " << m_permissions;
-
+#endif
     m_created = ui->timestampCreatedDateTimeEdit->dateTime();
     m_lastModified = ui->timestampLastModifiedDateTimeEdit->dateTime();
 

@@ -656,9 +656,15 @@ void DoubleFolderPanel::onAttributes()
     QFileInfo fileInfo = activeForm->getCurrentFileInfo();
     QString filePath = fileInfo.absoluteFilePath();
     QFile file(filePath);
+#ifdef Q_OS_WIN
+    WinFileAttrFlags fileAttrFlags = Win32::getFileAttrFlags(filePath);
+#endif
 
     FileAttributesDialog dialog(fileInfo,
                                 file.permissions(),
+#ifdef Q_OS_WIN
+                                fileAttrFlags,
+#endif
                                 file.fileTime(QFile::FileBirthTime),
                                 file.fileTime(QFile::FileModificationTime),
                                 getFileSizeOnDisk(filePath),
@@ -669,9 +675,15 @@ void DoubleFolderPanel::onAttributes()
     }
 
     emitChangeFileAttributes(filePath,
+#ifdef Q_OS_WIN
+                             dialog.getFileAttrFlags(),
+#else
                              dialog.getPermissions(),
+#endif
                              dialog.getCreated(),
                              dialog.getLastModified());
+
+    refresh();
 }
 
 void DoubleFolderPanel::onSelectAll()
@@ -924,11 +936,22 @@ void DoubleFolderPanel::emitRenameFile(const QString& path, const QString& oldNa
 }
 
 void DoubleFolderPanel::emitChangeFileAttributes(const QString& path,
+#ifdef Q_OS_WIN
+                                                 const WinFileAttrFlags& newFileAttrFlags,
+#else
                                                  const QFile::Permissions& newPermissions,
+#endif
                                                  const QDateTime& newCreated,
                                                  const QDateTime& newLastModified)
 {
-    emit changeFileAttributes(path, newPermissions, newCreated, newLastModified);
+    emit changeFileAttributes(path,
+#ifdef Q_OS_WIN
+                              newFileAttrFlags,
+#else
+                              newPermissions,
+#endif
+                              newCreated,
+                              newLastModified);
 }
 
 void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
