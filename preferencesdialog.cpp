@@ -277,6 +277,8 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
     m_fontSettings = Settings::getInstance()->getFontSettings();
     m_colorSettings = Settings::getInstance()->getColorSettings();
 
+    ui->folderViewInactiveFontGroupBox->setChecked(Settings::getInstance()->getEnableInactiveFontColor());
+
     ui->folderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
 
     setAppearanceFontAndColorOption();
@@ -662,6 +664,40 @@ void PreferencesDialog::on_folderViewFontSelectedBGColorPushButton_clicked()
     }
 }
 
+void PreferencesDialog::on_folderViewInactiveFontColorPushButton_clicked()
+{
+    chooseColor("folderView_inactive", "folderView_inactive_background", ui->folderViewInactiveFontLineEdit);
+}
+
+void PreferencesDialog::on_folderViewInactiveFontSelectedColorPushButton_clicked()
+{
+    chooseColor("folderView_inactive_selected", "folderView_inactive_selected_background", ui->folderViewInactiveFontSelectedLineEdit);
+}
+
+void PreferencesDialog::on_folderViewInactiveFontBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderView_inactive_background"], newColor))
+    {
+        m_colorSettings["folderView_inactive_background"] = newColor;
+
+        setFontColorSample("folderView_inactive", "folderView_inactive_background", ui->folderViewInactiveFontLineEdit);
+    }
+}
+
+void PreferencesDialog::on_folderViewInactiveFontSelectedBGColorPushButton_clicked()
+{
+    QColor newColor = QColor();
+
+    if(showChooseColorDialog(m_colorSettings["folderView_inactive_selected_background"], newColor))
+    {
+        m_colorSettings["folderView_inactive_selected_background"] = newColor;
+
+        setFontColorSample("folderView_inactive_selected", "folderView_inactive_selected_background", ui->folderViewInactiveFontSelectedLineEdit);
+    }
+}
+
 void PreferencesDialog::on_folderViewCursorColorPushButton_clicked()
 {
     QColor newColor = QColor();
@@ -1016,6 +1052,9 @@ void PreferencesDialog::setAppearanceFontAndColorOption()
     setFontColorSample("folderView_cursor",            "folderView_cursor",              ui->folderViewCursorLineEdit);
     setFontColorSample("folderView_cursor_inactive",   "folderView_cursor_inactive",     ui->folderViewCursorInactiveLineEdit);
 
+    setFontColorSample("folderView_inactive",          "folderView_inactive_background",          ui->folderViewInactiveFontLineEdit);
+    setFontColorSample("folderView_inactive_selected", "folderView_inactive_selected_background", ui->folderViewInactiveFontSelectedLineEdit);
+
     // Folder Path
 
     font = m_fontSettings["folderPath"];
@@ -1276,6 +1315,8 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setFontSettings(m_fontSettings);
     Settings::getInstance()->setColorSettings(m_colorSettings);
+
+    Settings::getInstance()->setEnableInactiveFontColor(ui->folderViewInactiveFontGroupBox->isChecked());
 
     Settings::getInstance()->setCursorWidth(ui->folderViewCursorWidthSpinBox->value());
 

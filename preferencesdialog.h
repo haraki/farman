@@ -78,6 +78,12 @@ private slots:
     void on_folderViewFontBGColorPushButton_clicked();
     void on_folderViewFontSelectedBGColorPushButton_clicked();
 
+    void on_folderViewInactiveFontColorPushButton_clicked();
+    void on_folderViewInactiveFontSelectedColorPushButton_clicked();
+
+    void on_folderViewInactiveFontBGColorPushButton_clicked();
+    void on_folderViewInactiveFontSelectedBGColorPushButton_clicked();
+
     void on_folderViewCursorColorPushButton_clicked();
     void on_folderViewCursorInactiveColorPushButton_clicked();
 
