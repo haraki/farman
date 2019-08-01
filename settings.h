@@ -128,6 +128,9 @@ public:
     const QMap<QString, QFont>& getFontSettings() { return m_fontSettings; }
     void setFontSettings(const QMap<QString, QFont>& settings) { m_fontSettings = settings; }
 
+    bool getEnableInactiveFontColor() { return m_enableInactiveFontColor; }
+    void setEnableInactiveFontColor(bool enable) { m_enableInactiveFontColor = enable; }
+
     int getCursorWidth() { return m_cursorWidth; }
     void setCursorWidth(int cursorWidth) { m_cursorWidth = cursorWidth; }
 
@@ -237,6 +240,8 @@ private:
     QMap<QString, QColor> m_colorSettings = DEFAULT_COLOR_SETTINGS;
 
     QMap<QString, QFont> m_fontSettings;
+
+    bool m_enableInactiveFontColor = DEFAULT_ENABLE_INACTIVE_FONT_COLOR;
 
     int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
 

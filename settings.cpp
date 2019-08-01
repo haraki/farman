@@ -179,6 +179,9 @@ void Settings::initialize()
         }
     }
 
+    // Enable inactive font color
+    m_enableInactiveFontColor = value("main/enableInactiveFontColor", DEFAULT_ENABLE_INACTIVE_FONT_COLOR).toBool();
+
     // Cursor width
     m_cursorWidth = value("main/cursorWidth", QString("%1").arg(DEFAULT_CURSOR_WIDTH)).toInt();
 
@@ -392,6 +395,9 @@ void Settings::flush()
         const QFont& fontSettingValue = m_fontSettings[fontSettingKey];
         setValue("main/font/" + fontSettingKey, fontSettingValue.toString());
     }
+
+    // Enable inactive font color
+    setValue("main/enableInactiveFontColor", m_enableInactiveFontColor);
 
     // Cursor width
     setValue("main/cursorWidth", m_cursorWidth);

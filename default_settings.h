@@ -80,6 +80,12 @@ static const QMap<QString, QColor> DEFAULT_COLOR_SETTINGS =
     { "folderView_background",          "#ffffff", },
     { "folderView_selected_background", "#b2d7ff", },
 
+    { "folderView_inactive",                     "#888888", },
+    { "folderView_inactive_selected",            "#AAAAAA", },
+
+    { "folderView_inactive_background",          "#AAAAAA", },
+    { "folderView_inactive_selected_background", "#888888", },
+
     { "folderView_cursor",              "#0000ff", },
     { "folderView_cursor_inactive",     "#cccccc", },
 
@@ -150,6 +156,8 @@ static const QMap<QString, FontSettingParams> DEFAULT_FONT_SETTING_PARAMS =
     { "textViewer", FONT_SETTING_PARAMS, },
     { "hexViewer",  FONT_SETTING_PARAMS, },
 };
+
+static Q_DECL_CONSTEXPR bool DEFAULT_ENABLE_INACTIVE_FONT_COLOR = false;
 
 static Q_DECL_CONSTEXPR int DEFAULT_CURSOR_WIDTH = 1;
 
