@@ -49,7 +49,7 @@ QItemSelectionModel::SelectionFlags FolderView::selectionCommand(const QModelInd
 void FolderView::selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag/* = QItemSelectionModel::Toggle*/)
 {
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
-    Q_ASSERT(folderModel);
+    Q_ASSERT(folderModel != Q_NULLPTR);
 
     const QModelIndex index = currentIndex();
     if(!index.isValid() || folderModel->rowCount(index.parent()) == 0)
@@ -77,7 +77,7 @@ void FolderView::setCursor(const QModelIndex& index)
 void FolderView::movePreviousCursor()
 {
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
-    Q_ASSERT(folderModel);
+    Q_ASSERT(folderModel != Q_NULLPTR);
 
     const QModelIndex index = currentIndex();
     if(!index.isValid() || folderModel->rowCount(index.parent()) == 0)
@@ -104,7 +104,7 @@ void FolderView::movePreviousCursor()
 void FolderView::moveNextCursor()
 {
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
-    Q_ASSERT(folderModel);
+    Q_ASSERT(folderModel != Q_NULLPTR);
 
     const QModelIndex index = currentIndex();
     if(!index.isValid() || folderModel->rowCount(index.parent()) == 0)
@@ -141,7 +141,7 @@ void FolderView::refresh(const QModelIndex& topLeft, const QModelIndex& bottomRi
 void FolderView::onDoubleClicked(const QModelIndex& index)
 {
     FolderModel* folderModel = qobject_cast<FolderModel*>(model());
-    Q_ASSERT(folderModel);
+    Q_ASSERT(folderModel != Q_NULLPTR);
 
     if(!index.isValid())
     {
@@ -182,7 +182,7 @@ void FolderView::keyPressEvent(QKeyEvent *e)
     {
         // Return は Designer のショートカットの設定では効かないようなので、ハードコーディングする
         FolderModel* folderModel = qobject_cast<FolderModel*>(model());
-        Q_ASSERT(folderModel);
+        Q_ASSERT(folderModel != Q_NULLPTR);
 
         const QModelIndex index = currentIndex();
         if(!index.isValid())
@@ -289,7 +289,7 @@ void FolderView::dropEvent(QDropEvent *e)
     if(this != source)
     {
         FolderModel* folderModel = qobject_cast<FolderModel*>(model());
-        Q_ASSERT(folderModel);
+        Q_ASSERT(folderModel != Q_NULLPTR);
 
         QString dstDirPath = folderModel->filePath(rootIndex());
         QStringList srcPaths;

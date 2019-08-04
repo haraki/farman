@@ -107,8 +107,7 @@ int TextView::LineNumberArea::getAreaWidth() const
     }
 
     TextView* parent = qobject_cast<TextView*>(this->parent());
-
-    Q_ASSERT(parent);
+    Q_ASSERT(parent != Q_NULLPTR);
 
     int digits = parent->getDigitsLineNumber();
     if(digits < 2)
@@ -132,15 +131,15 @@ void TextView::LineNumberArea::paintEvent(QPaintEvent* e)
     }
 
     QPainter painter(this);
-    TextView* parent = qobject_cast<TextView*>(this->parent());
 
-    Q_ASSERT(parent);
+    TextView* parent = qobject_cast<TextView*>(this->parent());
+    Q_ASSERT(parent != Q_NULLPTR);
 
     painter.fillRect(e->rect(), this->palette().base());
 
     QTextBlock block = parent->firstVisibleBlock();
-    int top = parent->blockBoundingGeometry(block).translated(parent->contentOffset()).top();
-    int bottom = top + parent->blockBoundingRect(block).height();
+    int top = static_cast<int>(parent->blockBoundingGeometry(block).translated(parent->contentOffset()).top());
+    int bottom = top + static_cast<int>(parent->blockBoundingRect(block).height());
     int width = this->width();
     int height = parent->fontMetrics().height();
 

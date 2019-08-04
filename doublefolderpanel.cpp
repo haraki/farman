@@ -284,54 +284,53 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
     case QEvent::KeyPress:
     {
         QKeyEvent* keyEvent = static_cast<QKeyEvent*>(e);
-        if(keyEvent != Q_NULLPTR)
+        if(keyEvent == Q_NULLPTR)
         {
-            Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
+            break;
+        }
 
-            qDebug() << "DoubleFolderPanel::eventFilter : " << key;
+        Qt::Key key = static_cast<Qt::Key>(keyEvent->key());
 
-            FolderForm* activeForm = getActiveFolderForm();
-            if(activeForm == Q_NULLPTR)
+        qDebug() << "DoubleFolderPanel::eventFilter : " << key;
+
+        FolderForm* activeForm = getActiveFolderForm();
+        Q_ASSERT(activeForm != Q_NULLPTR);
+
+        switch(key)
+        {
+        case Qt::Key_Left:
+            if(m_paneMode == PaneMode::Single || m_activePane == PaneType::Left)
             {
-                break;
+                activeForm->onGoToParentDir();
+            }
+            else
+            {
+                setActivePane(PaneType::Left);
             }
 
-            switch(key)
+            ret = true;
+
+            break;
+
+        case Qt::Key_Right:
+            if(m_paneMode == PaneMode::Dual)
             {
-            case Qt::Key_Left:
-                if(m_paneMode == PaneMode::Single || m_activePane == PaneType::Left)
+                if(m_activePane == PaneType::Right)
                 {
                     activeForm->onGoToParentDir();
                 }
                 else
                 {
-                    setActivePane(PaneType::Left);
+                    setActivePane(PaneType::Right);
                 }
-
-                ret = true;
-
-                break;
-
-            case Qt::Key_Right:
-                if(m_paneMode == PaneMode::Dual)
-                {
-                    if(m_activePane == PaneType::Right)
-                    {
-                        activeForm->onGoToParentDir();
-                    }
-                    else
-                    {
-                        setActivePane(PaneType::Right);
-                    }
-                }
-
-                ret = true;
-
-                break;
-
-            default:
-                break;
             }
+
+            ret = true;
+
+            break;
+
+        default:
+            break;
         }
 
         break;
@@ -346,10 +345,7 @@ bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
 void DoubleFolderPanel::onSelectStorageBookmark()
 {
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     SelectBookmarkDialog dialog(parentWidget());
     if(dialog.exec() != QDialog::Accepted)
@@ -378,10 +374,7 @@ void DoubleFolderPanel::onSetPaneMode(PaneMode paneMode)
 void DoubleFolderPanel::onChangeSortSettings()
 {
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     SectionType sectionType = activeForm->getSortSectionType();
     SectionType sectionType2nd = activeForm->getSortSectionType2nd();
@@ -420,10 +413,7 @@ void DoubleFolderPanel::onChangeSortSettings()
 void DoubleFolderPanel::onChangeFilterSettings()
 {
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     FilterFlags filterFlags = activeForm->getFilterFlags();
     QStringList nameMaskFilters = activeForm->getNameMaskFilters();
@@ -451,16 +441,10 @@ void DoubleFolderPanel::onCopy()
     qDebug() << "DoubleFolderPanel::onCopy()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     FolderForm* inactiveForm = getInactiveFolderForm();
-    if(inactiveForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
 
     QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
     if(selectedFileInfoList.size() == 0)
@@ -493,16 +477,10 @@ void DoubleFolderPanel::onMove()
     qDebug() << "DoubleFolderPanel::onMove()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     FolderForm* inactiveForm = getInactiveFolderForm();
-    if(inactiveForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
 
     QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
     if(selectedFileInfoList.size() == 0)
@@ -535,10 +513,7 @@ void DoubleFolderPanel::onRemove()
     qDebug() << "DoubleFolderPanel::onRemove()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
     if(selectedFileInfoList.size() == 0)
@@ -570,10 +545,7 @@ void DoubleFolderPanel::onMakeDirectory()
     qDebug() << "DoubleFolderPanel::onMakeDirectory()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     QString currentDirPath = activeForm->getCurrentDirPath();
     if(currentDirPath.isEmpty())
@@ -601,10 +573,7 @@ void DoubleFolderPanel::onCreateNewFile()
     qDebug() << "DoubleFolderPanel::onCreateNewFile()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     QString currentDirPath = activeForm->getCurrentDirPath();
     if(currentDirPath.isEmpty())
@@ -632,10 +601,7 @@ void DoubleFolderPanel::onRename()
     qDebug() << "DoubleFolderPanel::onRename()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     QString oldName = activeForm->getCurrentFileName();
     if(oldName.isEmpty() || oldName == "..")
@@ -670,10 +636,7 @@ void DoubleFolderPanel::onAttributes()
     qDebug() << "DoubleFolderPanel::onAttributes()";
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     QString currentFileName = activeForm->getCurrentFileName();
     if(currentFileName.isEmpty() || currentFileName == "..")
@@ -780,8 +743,7 @@ void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
 
-    FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Left)
+    if(m_activePane == PaneType::Left)
     {
         emitStatusChanged(newFileInfo.absoluteFilePath());
     }
@@ -791,8 +753,7 @@ void DoubleFolderPanel::onRightCurrentChanged(const QFileInfo& newFileInfo, cons
 {
     qDebug() << "DoubleFolderPanel::onRightCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
 
-    FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Right)
+    if(m_activePane == PaneType::Right)
     {
         emitStatusChanged(newFileInfo.absoluteFilePath());
     }
@@ -807,10 +768,9 @@ void DoubleFolderPanel::onLeftFocusChanged(bool inFocus)
         m_activePane = PaneType::Left;      // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
 
         FolderForm* activeForm = getActiveFolderForm();
-        if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Left)
-        {
-            emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
-        }
+        Q_ASSERT(activeForm != Q_NULLPTR);
+
+        emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
     }
 
     emitFocusChanged(PaneType::Left, inFocus);
@@ -825,10 +785,9 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
         m_activePane = PaneType::Right;     // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
 
         FolderForm* activeForm = getActiveFolderForm();
-        if(activeForm != Q_NULLPTR && activeForm->getPaneType() == PaneType::Right)
-        {
-            emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
-        }
+        Q_ASSERT(activeForm != Q_NULLPTR);
+
+        emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
     }
 
     emitFocusChanged(PaneType::Right, inFocus);
@@ -854,6 +813,7 @@ void DoubleFolderPanel::onLeftDirectoryBookmarked(const QString &path, bool mark
 
     FolderForm* folderForm = getFolderForm(PaneType::Right);
     Q_ASSERT(folderForm != Q_NULLPTR);
+
     folderForm->checkBookmark();
 
     emitDirectoryBookmarked(PaneType::Left, path, marked);
@@ -865,6 +825,7 @@ void DoubleFolderPanel::onRightDirectoryBookmarked(const QString &path, bool mar
 
     FolderForm* folderForm = getFolderForm(PaneType::Left);
     Q_ASSERT(folderForm != Q_NULLPTR);
+
     folderForm->checkBookmark();
 
     emitDirectoryBookmarked(PaneType::Right, path, marked);
@@ -986,10 +947,15 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
 {
     m_paneMode = paneMode;
 
+    FolderForm* activeForm   = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
+
     switch(paneMode)
     {
     case PaneMode::Single:
-        if(getActiveFolderForm()->getPaneType() == PaneType::Left)
+        if(m_activePane == PaneType::Left)
         {
             ui->leftPanel->setVisible(true);
             ui->rightPanel->setVisible(false);
@@ -1000,14 +966,14 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
             ui->rightPanel->setVisible(true);
         }
 
-        getActiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getSinglePaneFileSizeFormatType());
-        getActiveFolderForm()->setFileSizeComma(Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable());
-        getActiveFolderForm()->setDateFormatType(Settings::getInstance()->getSinglePaneDateFormatType());
-        getActiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getSinglePaneDateFormatOriginalString());
-        getInactiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getSinglePaneFileSizeFormatType());
-        getInactiveFolderForm()->setFileSizeComma(Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable());
-        getInactiveFolderForm()->setDateFormatType(Settings::getInstance()->getSinglePaneDateFormatType());
-        getInactiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getSinglePaneDateFormatOriginalString());
+        activeForm->setFileSizeFormatType(Settings::getInstance()->getSinglePaneFileSizeFormatType());
+        activeForm->setFileSizeComma(Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable());
+        activeForm->setDateFormatType(Settings::getInstance()->getSinglePaneDateFormatType());
+        activeForm->setDateFormatOriginalString(Settings::getInstance()->getSinglePaneDateFormatOriginalString());
+        inactiveForm->setFileSizeFormatType(Settings::getInstance()->getSinglePaneFileSizeFormatType());
+        inactiveForm->setFileSizeComma(Settings::getInstance()->getSinglePaneFileSizeDetailCommaEnable());
+        inactiveForm->setDateFormatType(Settings::getInstance()->getSinglePaneDateFormatType());
+        inactiveForm->setDateFormatOriginalString(Settings::getInstance()->getSinglePaneDateFormatOriginalString());
 
         break;
 
@@ -1015,14 +981,14 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
         ui->leftPanel->setVisible(true);
         ui->rightPanel->setVisible(true);
 
-        getActiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getDualPaneFileSizeFormatType());
-        getActiveFolderForm()->setFileSizeComma(Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable());
-        getActiveFolderForm()->setDateFormatType(Settings::getInstance()->getDualPaneDateFormatType());
-        getActiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getDualPaneDateFormatOriginalString());
-        getInactiveFolderForm()->setFileSizeFormatType(Settings::getInstance()->getDualPaneFileSizeFormatType());
-        getInactiveFolderForm()->setFileSizeComma(Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable());
-        getInactiveFolderForm()->setDateFormatType(Settings::getInstance()->getDualPaneDateFormatType());
-        getInactiveFolderForm()->setDateFormatOriginalString(Settings::getInstance()->getDualPaneDateFormatOriginalString());
+        activeForm->setFileSizeFormatType(Settings::getInstance()->getDualPaneFileSizeFormatType());
+        activeForm->setFileSizeComma(Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable());
+        activeForm->setDateFormatType(Settings::getInstance()->getDualPaneDateFormatType());
+        activeForm->setDateFormatOriginalString(Settings::getInstance()->getDualPaneDateFormatOriginalString());
+        inactiveForm->setFileSizeFormatType(Settings::getInstance()->getDualPaneFileSizeFormatType());
+        inactiveForm->setFileSizeComma(Settings::getInstance()->getDualPaneFileSizeDetailCommaEnable());
+        inactiveForm->setDateFormatType(Settings::getInstance()->getDualPaneDateFormatType());
+        inactiveForm->setDateFormatOriginalString(Settings::getInstance()->getDualPaneDateFormatOriginalString());
 
         break;
 
@@ -1042,14 +1008,12 @@ void DoubleFolderPanel::setActivePane(PaneType pane)
     Settings::getInstance()->setActivePane(pane);
 
     FolderForm* folderForm = getFolderForm(pane);
-    if(folderForm != Q_NULLPTR)
-    {
-        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
-        if(folderView != Q_NULLPTR)
-        {
-            folderView->setFocus();
-        }
-    }
+    Q_ASSERT(folderForm != Q_NULLPTR);
+
+    FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+    Q_ASSERT(folderView != Q_NULLPTR);
+
+    folderView->setFocus();
 }
 
 FolderForm* DoubleFolderPanel::getFolderForm(PaneType pane)
@@ -1077,17 +1041,15 @@ FolderForm* DoubleFolderPanel::getInactiveFolderForm()
 
 void DoubleFolderPanel::refresh()
 {
-    FolderForm* activeFolderForm = getActiveFolderForm();
-    if(activeFolderForm != Q_NULLPTR)
-    {
-        activeFolderForm->refresh();
-    }
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-    FolderForm* inactiveFolderForm = getInactiveFolderForm();
-    if(inactiveFolderForm != Q_NULLPTR)
-    {
-        inactiveFolderForm->refresh();
-    }
+    activeForm->refresh();
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
+
+    inactiveForm->refresh();
 }
 
 void DoubleFolderPanel::setVisible(bool visible)

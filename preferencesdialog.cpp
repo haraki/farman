@@ -971,7 +971,7 @@ void PreferencesDialog::on_textEditorSelectButton_clicked()
 
 void PreferencesDialog::setFileSizeExample(FileSizeFormatType fileSizeFormatType, bool comma, QLineEdit* exampleLineEdit)
 {
-    Q_ASSERT(exampleLineEdit);
+    Q_ASSERT(exampleLineEdit != Q_NULLPTR);
 
     const int exampleSize = 1234567;
     QString exampleStr = "";
@@ -994,7 +994,7 @@ void PreferencesDialog::setFileSizeExample(FileSizeFormatType fileSizeFormatType
 
 void PreferencesDialog::setDateExample(DateFormatType dataFormatType, const QString& orgFormat, QLineEdit* exampleLineEdit)
 {
-    Q_ASSERT(exampleLineEdit);
+    Q_ASSERT(exampleLineEdit != Q_NULLPTR);
 
     const QDateTime exampleDateTime = QDateTime::fromString("2001-01-23T12:34:56", Qt::ISODate);
     QString exampleStr = "";

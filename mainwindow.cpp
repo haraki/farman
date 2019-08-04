@@ -228,18 +228,12 @@ void MainWindow::onOpenFile(ViewerType viewerType)
     qDebug() << "MainWindow::onOpenFile()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    if(activeFolderForm == Q_NULLPTR)
-    {
-        return;
-    }
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-    QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
+    QString path = activeForm->getCurrentFileInfo().absoluteFilePath();
 
     openFile(path, viewerType);
 }
@@ -366,18 +360,12 @@ void MainWindow::on_actionOpenWithApp_triggered()
     qDebug() << "MainWindow::on_actionOpenWithApp_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    if(activeFolderForm == Q_NULLPTR)
-    {
-        return;
-    }
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-    const QString path = activeFolderForm->getCurrentFileInfo().absoluteFilePath();
+    const QString path = activeForm->getCurrentFileInfo().absoluteFilePath();
 
     onOpenWithApp(path);
 }
@@ -387,18 +375,12 @@ void MainWindow::on_actionOpenWithTextEditor_triggered()
     qDebug() << "MainWindow::on_actionOpenWithTextEditor_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    if(activeFolderForm == Q_NULLPTR)
-    {
-        return;
-    }
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-    QList<QFileInfo> selectedFileInfoList = activeFolderForm->getSelectedFileInfoList();
+    QList<QFileInfo> selectedFileInfoList = activeForm->getSelectedFileInfoList();
     if(selectedFileInfoList.size() == 0)
     {
         return;
@@ -410,7 +392,7 @@ void MainWindow::on_actionOpenWithTextEditor_triggered()
         filePaths.push_back(fileInfo.absoluteFilePath());
     }
 
-    onOpenWithTextEditor(activeFolderForm->getCurrentDirPath(), filePaths);
+    onOpenWithTextEditor(activeForm->getCurrentDirPath(), filePaths);
 }
 
 void MainWindow::on_actionCreateNewFile_triggered()
@@ -418,10 +400,9 @@ void MainWindow::on_actionCreateNewFile_triggered()
     qDebug() << "MainWindow::on_actionCreateNewFile_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onCreateNewFile();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onCreateNewFile();
 }
 
 void MainWindow::on_actionGoToFolder_triggered()
@@ -429,18 +410,12 @@ void MainWindow::on_actionGoToFolder_triggered()
     qDebug() << "MainWindow::on_actionGoToFolder_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return;
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    if(activeFolderForm == Q_NULLPTR)
-    {
-        return;
-    }
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-    activeFolderForm->onChangeDir();
+    activeForm->onChangeDir();
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -455,10 +430,9 @@ void MainWindow::on_actionSinglePane_triggered()
     qDebug() << "MainWindow::on_actionSinglePane_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onSetPaneMode(PaneMode::Single);
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onSetPaneMode(PaneMode::Single);
 }
 
 void MainWindow::on_actionDualPane_triggered()
@@ -466,10 +440,9 @@ void MainWindow::on_actionDualPane_triggered()
     qDebug() << "MainWindow::on_actionDualPane_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onSetPaneMode(PaneMode::Dual);
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onSetPaneMode(PaneMode::Dual);
 }
 
 void MainWindow::on_actionSortSettings_triggered()
@@ -477,10 +450,9 @@ void MainWindow::on_actionSortSettings_triggered()
     qDebug() << "MainWindow::on_actionSortSetting_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onChangeSortSettings();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onChangeSortSettings();
 }
 
 void MainWindow::on_actionFilterSettings_triggered()
@@ -488,10 +460,9 @@ void MainWindow::on_actionFilterSettings_triggered()
     qDebug() << "MainWindow::on_actionFilterSettings_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onChangeFilterSettings();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onChangeFilterSettings();
 }
 
 void MainWindow::on_actionCopy_triggered()
@@ -499,10 +470,9 @@ void MainWindow::on_actionCopy_triggered()
     qDebug() << "MainWindow::on_actionCopy_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onCopy();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onCopy();
 }
 
 void MainWindow::on_actionMove_triggered()
@@ -510,10 +480,9 @@ void MainWindow::on_actionMove_triggered()
     qDebug() << "MainWindow::on_actionMove_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onMove();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onMove();
 }
 
 void MainWindow::on_actionRemove_triggered()
@@ -521,10 +490,9 @@ void MainWindow::on_actionRemove_triggered()
     qDebug() << "MainWindow::on_actionRemove_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onRemove();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onRemove();
 }
 
 void MainWindow::on_actionMakeDirectory_triggered()
@@ -532,10 +500,9 @@ void MainWindow::on_actionMakeDirectory_triggered()
     qDebug() << "MainWindow::on_actionMakeDirectory_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onMakeDirectory();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onMakeDirectory();
 }
 
 void MainWindow::on_actionRename_triggered()
@@ -543,10 +510,9 @@ void MainWindow::on_actionRename_triggered()
     qDebug() << "MainWindow::on_actionRename_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onRename();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onRename();
 }
 
 void MainWindow::on_actionAttributes_triggered()
@@ -554,10 +520,9 @@ void MainWindow::on_actionAttributes_triggered()
     qDebug() << "MainWindow::on_actionAttributes_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onAttributes();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onAttributes();
 }
 
 void MainWindow::on_actionSelectAll_triggered()
@@ -565,10 +530,9 @@ void MainWindow::on_actionSelectAll_triggered()
     qDebug() << "MainWindow::on_actionSelectAll_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onSelectAll();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onSelectAll();
 }
 
 void MainWindow::on_actionDeselectAll_triggered()
@@ -576,10 +540,9 @@ void MainWindow::on_actionDeselectAll_triggered()
     qDebug() << "MainWindow::on_actionDeselectAll_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onDeselectAll();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onDeselectAll();
 }
 
 void MainWindow::on_actionCopyFullPath_triggered()
@@ -587,10 +550,9 @@ void MainWindow::on_actionCopyFullPath_triggered()
     qDebug() << "MainWindow::on_actionCopyFullPath_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onCopyFullPath();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onCopyFullPath();
 }
 
 void MainWindow::on_actionCopyFileName_triggered()
@@ -598,10 +560,9 @@ void MainWindow::on_actionCopyFileName_triggered()
     qDebug() << "MainWindow::on_actionCopyFileName_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onCopyFileName();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onCopyFileName();
 }
 
 void MainWindow::on_actionBookmark_toggled(bool arg1)
@@ -611,11 +572,11 @@ void MainWindow::on_actionBookmark_toggled(bool arg1)
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    Q_ASSERT(activeFolderForm != Q_NULLPTR);
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-    activeFolderForm->onBookmarkDir(arg1);
-    activeFolderForm->checkBookmark();
+    activeForm->onBookmarkDir(arg1);
+    activeForm->checkBookmark();
 }
 
 void MainWindow::on_actionSelectStorageBookmark_triggered()
@@ -623,10 +584,9 @@ void MainWindow::on_actionSelectStorageBookmark_triggered()
     qDebug() << "MainWindow::on_actionSelectStorageBookmark_triggered()";
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->onSelectStorageBookmark();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onSelectStorageBookmark();
 }
 
 void MainWindow::on_actionBookmarkManager_triggered()
@@ -684,10 +644,7 @@ void MainWindow::on_actionAbout_triggered()
 int MainWindow::openFile(const QString& path, ViewerType viewerType/* = ViewerType::Auto*/)
 {
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return -1;
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
     QFileInfo fileInfo = QFileInfo(path);
 
@@ -701,13 +658,10 @@ int MainWindow::openFile(const QString& path, ViewerType viewerType/* = ViewerTy
         // ディレクトリ移動
         if(viewerType == ViewerType::Auto)
         {
-            FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-            if(activeFolderForm == Q_NULLPTR)
-            {
-                return -1;
-            }
+            FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+            Q_ASSERT(activeForm != Q_NULLPTR);
 
-            int ret = activeFolderForm->setPath(path);
+            int ret = activeForm->setPath(path);
             if(ret < 0)
             {
                 emitOutputConsole(tr("Folder can not be opened : %1\n").arg(path));
@@ -761,10 +715,7 @@ int MainWindow::closeViewer(const QString& viewerObjectName)
     delete viewer;
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel == Q_NULLPTR)
-    {
-        return -1;
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
     if(!doubleFolderPanel->isVisible())
     {
@@ -841,10 +792,9 @@ void MainWindow::updateSettings()
     initPalette();
 
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        doubleFolderPanel->updateSettings();
-    }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->updateSettings();
 }
 
 void MainWindow::setVisibleConsole(bool visible)
@@ -858,24 +808,18 @@ void MainWindow::setVisibleConsole(bool visible)
 
 QDialog::DialogCode MainWindow::launchPreferencesDialog(PreferencesDialogTabPage page/* = PreferencesDialogTabPage::General*/)
 {
-    QString leftDirPath = "";
-    QString rightDirPath = "";
-
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    if(doubleFolderPanel != Q_NULLPTR)
-    {
-        FolderForm* l_folderForm = doubleFolderPanel->getFolderForm(PaneType::Left);
-        if(l_folderForm != Q_NULLPTR)
-        {
-            leftDirPath = l_folderForm->getCurrentDirPath();
-        }
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-        FolderForm* r_folderForm = doubleFolderPanel->getFolderForm(PaneType::Right);
-        if(r_folderForm != Q_NULLPTR)
-        {
-            rightDirPath = r_folderForm->getCurrentDirPath();
-        }
-    }
+    FolderForm* l_folderForm = doubleFolderPanel->getFolderForm(PaneType::Left);
+    Q_ASSERT(l_folderForm != Q_NULLPTR);
+
+    QString leftDirPath = l_folderForm->getCurrentDirPath();
+
+    FolderForm* r_folderForm = doubleFolderPanel->getFolderForm(PaneType::Right);
+    Q_ASSERT(r_folderForm != Q_NULLPTR);
+
+    QString rightDirPath = r_folderForm->getCurrentDirPath();
 
     PreferencesDialog dialog(this->size(), this->pos(), leftDirPath, rightDirPath, page, this);
     QDialog::DialogCode ret = static_cast<QDialog::DialogCode>(dialog.exec());
@@ -908,11 +852,11 @@ void MainWindow::checkBookmark()
     DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
     Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
-    FolderForm* activeFolderForm = doubleFolderPanel->getActiveFolderForm();
-    Q_ASSERT(activeFolderForm != Q_NULLPTR);
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
     ui->actionBookmark->blockSignals(true);
-    if(Settings::getInstance()->searchBookmarkDirPath(activeFolderForm->getCurrentDirPath()) >= 0)
+    if(Settings::getInstance()->searchBookmarkDirPath(activeForm->getCurrentDirPath()) >= 0)
     {
         ui->actionBookmark->setChecked(true);
     }

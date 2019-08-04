@@ -273,10 +273,10 @@ ImageViewer::ItemWidget::ItemWidget(QByteArray& buffer) :
     qDebug() << "ImageViewer::ItemWidget::ItemWidget()";
 
     m_buffer = new QBuffer(&buffer);
-    Q_ASSERT(m_buffer);
+    Q_ASSERT(m_buffer != Q_NULLPTR);
 
     m_movie = new QMovie(m_buffer);
-    Q_ASSERT(m_movie);
+    Q_ASSERT(m_movie != Q_NULLPTR);
 
     setMovie(m_movie);
 
