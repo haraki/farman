@@ -89,7 +89,10 @@ private Q_SLOTS:
     void on_actionSelectAll_triggered();
     void on_actionDeselectAll_triggered();
     void on_actionCopyFullPath_triggered();
+    void on_actionCopyFileName_triggered();
     void on_actionGoToFolder_triggered();
+    void on_actionSetSameFolderToTarget_triggered();
+    void on_actionSetSameFolderFromTarget_triggered();
     void on_actionBookmark_toggled(bool arg1);
     void on_actionSelectStorageBookmark_triggered();
     void on_actionBookmarkManager_triggered();
@@ -97,8 +100,6 @@ private Q_SLOTS:
     void on_actionConsole_triggered(bool checked);
     void on_consoleDockWidget_visibilityChanged(bool visible);
     void on_actionAbout_triggered();
-
-    void on_actionCopyFileName_triggered();
 
 private:
     Ui::MainWindow *ui;

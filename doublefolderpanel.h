@@ -51,6 +51,8 @@ public:
     void onDeselectAll();
     void onCopyFullPath();
     void onCopyFileName();
+    void onSetSameFolderToTarget();
+    void onSetSameFolderFromTarget();
 
 Q_SIGNALS:
     void outputConsole(const QString& consoleString);

@@ -407,19 +407,6 @@ void MainWindow::on_actionCreateNewFile_triggered()
     doubleFolderPanel->onCreateNewFile();
 }
 
-void MainWindow::on_actionGoToFolder_triggered()
-{
-    qDebug() << "MainWindow::on_actionGoToFolder_triggered()";
-
-    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
-    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
-
-    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
-    Q_ASSERT(activeForm != Q_NULLPTR);
-
-    activeForm->onChangeDir();
-}
-
 void MainWindow::on_actionQuit_triggered()
 {
     qDebug() << "MainWindow::on_actionQuit_triggered()";
@@ -565,6 +552,39 @@ void MainWindow::on_actionCopyFileName_triggered()
     Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
     doubleFolderPanel->onCopyFileName();
+}
+
+void MainWindow::on_actionGoToFolder_triggered()
+{
+    qDebug() << "MainWindow::on_actionGoToFolder_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->onChangeDir();
+}
+
+void MainWindow::on_actionSetSameFolderToTarget_triggered()
+{
+    qDebug() << "MainWindow::on_actionSetSameFolderToTarget_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onSetSameFolderToTarget();
+}
+
+void MainWindow::on_actionSetSameFolderFromTarget_triggered()
+{
+    qDebug() << "MainWindow::on_actionSetSameFolderFromTarget_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    doubleFolderPanel->onSetSameFolderFromTarget();
 }
 
 void MainWindow::on_actionBookmark_toggled(bool arg1)

@@ -739,6 +739,28 @@ void DoubleFolderPanel::onCopyFileName()
     emitOutputConsole(tr("Copy file name to clipboard\n"));
 }
 
+void DoubleFolderPanel::onSetSameFolderToTarget()
+{
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
+
+    inactiveForm->setPath(activeForm->getCurrentDirPath());
+}
+
+void DoubleFolderPanel::onSetSameFolderFromTarget()
+{
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
+
+    activeForm->setPath(inactiveForm->getCurrentDirPath());
+}
+
 void DoubleFolderPanel::onLeftCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo)
 {
     qDebug() << "DoubleFolderPanel::onLeftCurrentChanged : old : " << oldFileInfo.filePath() << " new : " << newFileInfo.filePath();
