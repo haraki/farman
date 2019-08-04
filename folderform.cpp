@@ -109,7 +109,6 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 
 void FolderForm::setAppearance(const QFont& viewFont,
                                const QFont& pathFont,
-                               const QMap<ColorRoleType, QColor>& colors,
                                const QColor& pathColor,
                                const QColor& pathBgColor)
 {
@@ -117,20 +116,21 @@ void FolderForm::setAppearance(const QFont& viewFont,
 
     ui->folderPathEdit->setFont(pathFont);
 
-    m_folderModel->initBrushes(colors);
-
-    QPalette pal;
-
-    pal = ui->folderView->palette();
-    pal.setColor(QPalette::Base, colors[ColorRoleType::Background]);
-    ui->folderView->setAutoFillBackground(true);
-    ui->folderView->setPalette(pal);
-
-    pal = ui->folderPathEdit->palette();
+    QPalette pal = ui->folderPathEdit->palette();
     pal.setColor(QPalette::Text, pathColor);
     pal.setColor(QPalette::Base, pathBgColor);
     ui->folderPathEdit->setAutoFillBackground(true);
     ui->folderPathEdit->setPalette(pal);
+}
+
+void FolderForm::setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors)
+{
+    m_folderModel->initBrushes(folderViewColors);
+
+    QPalette pal = ui->folderView->palette();
+    pal.setColor(QPalette::Base, folderViewColors[FolderViewColorRoleType::Background]);
+    ui->folderView->setAutoFillBackground(true);
+    ui->folderView->setPalette(pal);
 }
 
 void FolderForm::setFileSizeFormatType(FileSizeFormatType formatType)

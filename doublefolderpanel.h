@@ -26,6 +26,7 @@ public:
     void closeEvent(QCloseEvent* e) Q_DECL_OVERRIDE;
 
     void updateSettings();
+    void updateFolderViewColorsSettings();
 
     void refresh();
 

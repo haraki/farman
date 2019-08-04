@@ -75,7 +75,7 @@ enum class SortDirsType : int
     SortDirsTypeNum
 };
 
-enum class ColorRoleType : int
+enum class FolderViewColorRoleType : int
 {
     Unknown = -1,
 
@@ -93,7 +93,7 @@ enum class ColorRoleType : int
     Background,
     Selected_Background,
 
-    ColorRoleTypeNum
+    FolderViewColorRoleTypeNum
 };
 
 enum class FileSizeFormatType : int

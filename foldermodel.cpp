@@ -794,11 +794,11 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
     {
         if(selected)
         {
-            ret = getBrush(ColorRoleType::Folder_Selected);
+            ret = getBrush(FolderViewColorRoleType::Folder_Selected);
         }
         else
         {
-            ret = getBrush(ColorRoleType::Folder);
+            ret = getBrush(FolderViewColorRoleType::Folder);
         }
     }
 #ifdef Q_OS_WIN
@@ -818,33 +818,33 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
     {
         if(selected)
         {
-            ret = getBrush(ColorRoleType::Hidden_Selected);
+            ret = getBrush(FolderViewColorRoleType::Hidden_Selected);
         }
         else
         {
-            ret = getBrush(ColorRoleType::Hidden);
+            ret = getBrush(FolderViewColorRoleType::Hidden);
         }
     }
     else if((fi.fileName() != "..") && (!fi.isWritable()))
     {
         if(selected)
         {
-            ret = getBrush(ColorRoleType::ReadOnly_Selected);
+            ret = getBrush(FolderViewColorRoleType::ReadOnly_Selected);
         }
         else
         {
-            ret = getBrush(ColorRoleType::ReadOnly);
+            ret = getBrush(FolderViewColorRoleType::ReadOnly);
         }
     }
     else
     {
         if(selected)
         {
-            ret = getBrush(ColorRoleType::Normal_Selected);
+            ret = getBrush(FolderViewColorRoleType::Normal_Selected);
         }
         else
         {
-            ret = getBrush(ColorRoleType::Normal);
+            ret = getBrush(FolderViewColorRoleType::Normal);
         }
     }
 
@@ -857,21 +857,21 @@ QBrush FolderModel::getBackgroundBrush(const QModelIndex& index) const
 
     if(isSelected(index))
     {
-        ret = getBrush(ColorRoleType::Selected_Background);
+        ret = getBrush(FolderViewColorRoleType::Selected_Background);
     }
     else
     {
-        ret = getBrush(ColorRoleType::Background);
+        ret = getBrush(FolderViewColorRoleType::Background);
     }
 
     return ret;
 }
 
-QBrush FolderModel::getBrush(ColorRoleType colorRole) const
+QBrush FolderModel::getBrush(FolderViewColorRoleType colorRole) const
 {
     QBrush ret;
 
-    QMap<ColorRoleType, QBrush>::const_iterator itr = m_brushes.find(colorRole);
+    QMap<FolderViewColorRoleType, QBrush>::const_iterator itr = m_brushes.find(colorRole);
     if(itr != m_brushes.end())
     {
         ret = *itr;
@@ -885,7 +885,7 @@ void FolderModel::setFont(const QFont& font)
     m_font = font;
 }
 
-void FolderModel::initBrushes(const QMap<ColorRoleType, QColor>& colors)
+void FolderModel::initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors)
 {
     m_brushes.clear();
 

@@ -190,22 +190,6 @@ void DoubleFolderPanel::updateSettings()
 {
     const QFont viewFont = Settings::getInstance()->getFontSetting("folderView");
 
-    QMap<ColorRoleType, QColor> colors;
-
-    colors[ColorRoleType::Normal]              = Settings::getInstance()->getColorSetting("folderView_normal");
-    colors[ColorRoleType::Normal_Selected]     = Settings::getInstance()->getColorSetting("folderView_normal_selected");
-    colors[ColorRoleType::Folder]              = Settings::getInstance()->getColorSetting("folderView_folder");
-    colors[ColorRoleType::Folder_Selected]     = Settings::getInstance()->getColorSetting("folderView_folder_selected");
-    colors[ColorRoleType::ReadOnly]            = Settings::getInstance()->getColorSetting("folderView_readOnly");
-    colors[ColorRoleType::ReadOnly_Selected]   = Settings::getInstance()->getColorSetting("folderView_readOnly_selected");
-    colors[ColorRoleType::Hidden]              = Settings::getInstance()->getColorSetting("folderView_hidden");
-    colors[ColorRoleType::Hidden_Selected]     = Settings::getInstance()->getColorSetting("folderView_hidden_selected");
-    colors[ColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_system");
-    colors[ColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_system_selected");
-
-    colors[ColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_background");
-    colors[ColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_selected_background");
-
     const QFont pathFont = Settings::getInstance()->getFontSetting("folderPath");
 
     const QColor pathColor = Settings::getInstance()->getColorSetting("folderPath_text");
@@ -223,26 +207,70 @@ void DoubleFolderPanel::updateSettings()
                                                                Settings::getInstance()->getDualPaneDateFormatOriginalString();
 
     FolderForm* activeForm = getActiveFolderForm();
-    if(activeForm != Q_NULLPTR)
-    {
-        activeForm->setAppearance(viewFont, pathFont, colors, pathColor, pathBgColor);
+    Q_ASSERT(activeForm != Q_NULLPTR);
 
-        activeForm->setFileSizeFormatType(fileSizeFormatType);
-        activeForm->setFileSizeComma(fileSizeComma);
-        activeForm->setDateFormatType(dateFormatType);
-        activeForm->setDateFormatOriginalString(dateOrgString);
+    activeForm->setAppearance(viewFont, pathFont, pathColor, pathBgColor);
+    activeForm->setFileSizeFormatType(fileSizeFormatType);
+    activeForm->setFileSizeComma(fileSizeComma);
+    activeForm->setDateFormatType(dateFormatType);
+    activeForm->setDateFormatOriginalString(dateOrgString);
+
+    FolderForm* inactiveForm = getInactiveFolderForm();
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
+
+    inactiveForm->setAppearance(viewFont, pathFont, pathColor, pathBgColor);
+    inactiveForm->setFileSizeFormatType(fileSizeFormatType);
+    inactiveForm->setFileSizeComma(fileSizeComma);
+    inactiveForm->setDateFormatType(dateFormatType);
+    inactiveForm->setDateFormatOriginalString(dateOrgString);
+
+    updateFolderViewColorsSettings();
+}
+
+void DoubleFolderPanel::updateFolderViewColorsSettings()
+{
+    QMap<FolderViewColorRoleType, QColor> folderViewColors;
+
+    folderViewColors[FolderViewColorRoleType::Normal]              = Settings::getInstance()->getColorSetting("folderView_normal");
+    folderViewColors[FolderViewColorRoleType::Normal_Selected]     = Settings::getInstance()->getColorSetting("folderView_normal_selected");
+    folderViewColors[FolderViewColorRoleType::Folder]              = Settings::getInstance()->getColorSetting("folderView_folder");
+    folderViewColors[FolderViewColorRoleType::Folder_Selected]     = Settings::getInstance()->getColorSetting("folderView_folder_selected");
+    folderViewColors[FolderViewColorRoleType::ReadOnly]            = Settings::getInstance()->getColorSetting("folderView_readOnly");
+    folderViewColors[FolderViewColorRoleType::ReadOnly_Selected]   = Settings::getInstance()->getColorSetting("folderView_readOnly_selected");
+    folderViewColors[FolderViewColorRoleType::Hidden]              = Settings::getInstance()->getColorSetting("folderView_hidden");
+    folderViewColors[FolderViewColorRoleType::Hidden_Selected]     = Settings::getInstance()->getColorSetting("folderView_hidden_selected");
+    folderViewColors[FolderViewColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_system");
+    folderViewColors[FolderViewColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_system_selected");
+
+    folderViewColors[FolderViewColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_background");
+    folderViewColors[FolderViewColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_selected_background");
+
+    FolderForm* activeForm = getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->setAppearanceFolderViewColors(folderViewColors);
+
+    if(Settings::getInstance()->getEnableInactiveFontColor())
+    {
+        folderViewColors[FolderViewColorRoleType::Normal]              =
+        folderViewColors[FolderViewColorRoleType::Folder]              =
+        folderViewColors[FolderViewColorRoleType::ReadOnly]            =
+        folderViewColors[FolderViewColorRoleType::Hidden]              =
+        folderViewColors[FolderViewColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_inactive");
+        folderViewColors[FolderViewColorRoleType::Normal_Selected]     =
+        folderViewColors[FolderViewColorRoleType::Folder_Selected]     =
+        folderViewColors[FolderViewColorRoleType::ReadOnly_Selected]   =
+        folderViewColors[FolderViewColorRoleType::Hidden_Selected]     =
+        folderViewColors[FolderViewColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_inactive_selected");
+
+        folderViewColors[FolderViewColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_inactive_background");
+        folderViewColors[FolderViewColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_inactive_selected_background");
     }
 
     FolderForm* inactiveForm = getInactiveFolderForm();
-    if(inactiveForm != Q_NULLPTR)
-    {
-        inactiveForm->setAppearance(viewFont, pathFont, colors, pathColor, pathBgColor);
+    Q_ASSERT(inactiveForm != Q_NULLPTR);
 
-        inactiveForm->setFileSizeFormatType(fileSizeFormatType);
-        inactiveForm->setFileSizeComma(fileSizeComma);
-        inactiveForm->setDateFormatType(dateFormatType);
-        inactiveForm->setDateFormatOriginalString(dateOrgString);
-    }
+    inactiveForm->setAppearanceFolderViewColors(folderViewColors);
 }
 
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)
@@ -1008,6 +1036,8 @@ void DoubleFolderPanel::setActivePane(PaneType pane)
     qDebug() << "DoubleFolderPanel::setActivePane()" << ((pane == PaneType::Left) ? "left" : "right");
 
     m_activePane = pane;
+
+    updateFolderViewColorsSettings();
 
     Settings::getInstance()->setActivePane(pane);
 

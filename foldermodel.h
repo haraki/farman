@@ -23,7 +23,7 @@ public:
     ~FolderModel() Q_DECL_OVERRIDE;
 
     void setFont(const QFont& font);
-    void initBrushes(const QMap<ColorRoleType, QColor>& colors);
+    void initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors);
 
     using QSortFilterProxyModel::index;
     QModelIndex index(const QString &path, int column = 0) const;
@@ -144,7 +144,7 @@ private:
 
     QBrush getTextBrush(const QModelIndex& index) const;
     QBrush getBackgroundBrush(const QModelIndex& index) const;
-    QBrush getBrush(ColorRoleType colorRole) const;
+    QBrush getBrush(FolderViewColorRoleType colorRole) const;
 
     void emitRootPathChanged(const QString &newPath);
     void emitFileRenamed(const QString &path, const QString &oldName, const QString &newName);
@@ -167,7 +167,7 @@ private:
     QString m_dateFormatOriginalString;
 
     QFont m_font;
-    QMap<ColorRoleType, QBrush> m_brushes;
+    QMap<FolderViewColorRoleType, QBrush> m_brushes;
 
     QItemSelectionModel* m_selectionModel;
 };
