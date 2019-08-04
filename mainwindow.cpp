@@ -26,7 +26,9 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     , m_viewerDispatcher(Q_NULLPTR)
 {
     ui->setupUi(this);
-
+#ifdef QT_DEBUG
+    this->setWindowTitle(this->windowTitle() + " (Debug)");
+#endif
     m_file = new File(this);
     m_viewerDispatcher = new ViewerDispatcher(ui->mainWidget);
 
