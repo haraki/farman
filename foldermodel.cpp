@@ -514,10 +514,6 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
         {
             return false;
         }
-        else if(cfi.fileName() == "..")
-        {
-            return true;
-        }
 
         // source_row(childIndex)が指すディレクトリが、カレントディレクトリ(fsModel->rootPath())が属するディレクトリであるかを確認する
         std::function<bool (const QModelIndex&)> isBelong =
@@ -538,10 +534,10 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
         {
             return true;
         }
-//        else if(cfi.fileName() != "..")
-//        {
-//            return false;
-//        }
+        else if(cfi.fileName() != "..")
+        {
+            return false;
+        }
     }
 
     return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
@@ -727,10 +723,10 @@ int FolderModel::getFileDirNum(QDir::Filters filters)
         }
 
 #ifdef Q_OS_WIN
-//        if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi))
-//        {
-//            continue;
-//        }
+        if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
+        {
+            continue;
+        }
 #endif
         count++;
     }
@@ -806,11 +802,11 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
     {
         if(selected)
         {
-            ret = getBrush(ColorRoleType::System_Selected);
+            ret = getBrush(FolderViewColorRoleType::System_Selected);
         }
         else
         {
-            ret = getBrush(ColorRoleType::System);
+            ret = getBrush(FolderViewColorRoleType::System);
         }
     }
 #endif
