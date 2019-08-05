@@ -23,7 +23,7 @@ public:
     ~FolderModel() Q_DECL_OVERRIDE;
 
     void setFont(const QFont& font);
-    void initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors);
+    void initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors, bool folderColorTopPrio);
 
     using QSortFilterProxyModel::index;
     QModelIndex index(const QString &path, int column = 0) const;
@@ -168,6 +168,8 @@ private:
 
     QFont m_font;
     QMap<FolderViewColorRoleType, QBrush> m_brushes;
+
+    bool m_folderColorTopPriority;
 
     QItemSelectionModel* m_selectionModel;
 };

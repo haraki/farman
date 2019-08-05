@@ -335,111 +335,33 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-60</y>
             <width>555</width>
-            <height>574</height>
+            <height>595</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Main(&amp;M)</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_10">
-           <item row="0" column="0" colspan="2">
-            <widget class="QGroupBox" name="folderViewFontGroupBox">
+           <item row="3" column="0">
+            <widget class="QGroupBox" name="folderPathGroupBox">
              <property name="title">
-              <string>Font</string>
+              <string>Folder path</string>
              </property>
-             <layout class="QGridLayout" name="gridLayout_2">
-              <property name="leftMargin">
-               <number>12</number>
-              </property>
-              <property name="topMargin">
-               <number>12</number>
-              </property>
+             <layout class="QGridLayout" name="gridLayout_12">
               <property name="spacing">
                <number>8</number>
               </property>
-              <item row="0" column="1" colspan="2">
-               <widget class="QLabel" name="folderViewFontFontLabel">
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="folderViewFontFontPushButton">
-                <property name="text">
-                 <string>Font</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="4">
-               <widget class="QPushButton" name="folderViewFontReadOnlySelectedColorPushButton">
+              <item row="1" column="0">
+               <widget class="QPushButton" name="folderPathColorPushButton">
                 <property name="text">
                  <string>Color</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QPushButton" name="folderViewFontSystemColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="folderViewFontNormalLabel">
-                <property name="text">
-                 <string>Normal :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="4">
-               <widget class="QPushButton" name="folderViewFontSelectedBGColorPushButton">
-                <property name="text">
-                 <string>BG Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="folderViewFontFolderLabel">
-                <property name="text">
-                 <string>Folder :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="4">
-               <widget class="QPushButton" name="folderViewFontHiddenSelectedColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="QPushButton" name="folderViewFontReadOnlyColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="folderViewFontHiddenLabel">
-                <property name="text">
-                 <string>Hidden :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QLineEdit" name="folderViewFontSystemLineEdit">
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="folderPathLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
                 </property>
@@ -454,45 +376,210 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="4">
-               <widget class="QPushButton" name="folderViewFontSystemSelectedColorPushButton">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="folderPathFontPushButton">
+                <property name="text">
+                 <string>Font</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="folderPathBGColorPushButton">
+                <property name="text">
+                 <string>BG Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
+               <widget class="QLabel" name="folderPathFontLabel">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QGroupBox" name="folderViewCursorGroupBox">
+             <property name="title">
+              <string>Cursor</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <property name="spacing">
+               <number>8</number>
+              </property>
+              <item row="0" column="5">
+               <widget class="QPushButton" name="folderViewCursorInactiveColorPushButton">
                 <property name="text">
                  <string>Color</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="folderViewFontNormalColorPushButton">
+              <item row="0" column="0">
+               <widget class="QLabel" name="folderViewCursorWidthLabel">
                 <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="4">
-               <widget class="QPushButton" name="folderViewFontFolderSelectedColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="folderViewFontReadOnlyLabel">
-                <property name="text">
-                 <string>Read only :</string>
+                 <string>Width :</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
-               <widget class="QPushButton" name="folderViewFontHiddenColorPushButton">
+              <item row="0" column="1">
+               <widget class="QSpinBox" name="folderViewCursorWidthSpinBox">
+                <property name="suffix">
+                 <string> px</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="folderViewCursorLineEdit">
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QLineEdit" name="folderViewCursorInactiveLineEdit">
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QPushButton" name="folderViewCursorColorPushButton">
                 <property name="text">
                  <string>Color</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="5">
+              <item row="0" column="4">
+               <widget class="QLabel" name="folderViewCursorColorInactiveLabel">
+                <property name="text">
+                 <string>(Inactive)</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QGroupBox" name="consoleGroupBox">
+             <property name="title">
+              <string>Console</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_14">
+              <property name="spacing">
+               <number>8</number>
+              </property>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="consoleLineEdit">
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="text">
+                 <string>Sample</string>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="consoleColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="consoleFontPushButton">
+                <property name="text">
+                 <string>Font</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="consoleBGColorPushButton">
+                <property name="text">
+                 <string>BG Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" colspan="2">
+               <widget class="QLabel" name="consoleFontLabel">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QGroupBox" name="folderViewFontGroupBox">
+             <property name="title">
+              <string>Font</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <property name="spacing">
+               <number>8</number>
+              </property>
+              <item row="4" column="6">
+               <widget class="QLineEdit" name="folderViewFontReadOnlySelectedLineEdit">
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="text">
+                 <string>Sample</string>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="folderViewFontFolderColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="6">
                <widget class="QLineEdit" name="folderViewFontSystemSelectedLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
@@ -508,17 +595,31 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1" colspan="2">
-               <widget class="QLabel" name="folderViewFontFontColorLabel">
+              <item row="6" column="1">
+               <widget class="QPushButton" name="folderViewFontSystemColorPushButton">
                 <property name="text">
-                 <string>Font color</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                 <string>Color</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="5">
+              <item row="0" column="1">
+               <widget class="QLabel" name="folderViewFontFontLabel">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="folderViewFontHiddenLabel">
+                <property name="text">
+                 <string>Hidden :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="6">
                <widget class="QLineEdit" name="folderViewFontFolderSelectedLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
@@ -550,54 +651,14 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="folderViewFontSystemLabel">
-                <property name="text">
-                 <string>System :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QPushButton" name="folderViewFontBGColorPushButton">
-                <property name="text">
-                 <string>BG Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLineEdit" name="folderViewFontFolderLineEdit">
-                <property name="focusPolicy">
-                 <enum>Qt::NoFocus</enum>
-                </property>
-                <property name="text">
-                 <string>Sample</string>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QPushButton" name="folderViewFontFolderColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3" rowspan="7">
+              <item row="1" column="3" rowspan="8" colspan="2">
                <widget class="Line" name="folderViewFontLine">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
                </widget>
               </item>
-              <item row="5" column="5">
+              <item row="5" column="6">
                <widget class="QLineEdit" name="folderViewFontHiddenSelectedLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
@@ -613,14 +674,67 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="4">
-               <widget class="QPushButton" name="folderViewFontNormalSelectedColorPushButton">
+              <item row="5" column="1">
+               <widget class="QPushButton" name="folderViewFontHiddenColorPushButton">
                 <property name="text">
                  <string>Color</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="5">
+              <item row="2" column="1">
+               <widget class="QPushButton" name="folderViewFontNormalColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2">
+               <widget class="QLineEdit" name="folderViewFontSystemLineEdit">
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
+                <property name="text">
+                 <string>Sample</string>
+                </property>
+                <property name="frame">
+                 <bool>false</bool>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="folderViewFontReadOnlyLabel">
+                <property name="text">
+                 <string>Read only :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="folderViewFontFontColorLabel">
+                <property name="text">
+                 <string>Font color</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="folderViewFontSystemLabel">
+                <property name="text">
+                 <string>System :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="6">
                <widget class="QLineEdit" name="folderViewFontNormalSelectedLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
@@ -636,8 +750,28 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="5">
-               <widget class="QLineEdit" name="folderViewFontReadOnlySelectedLineEdit">
+              <item row="2" column="0">
+               <widget class="QLabel" name="folderViewFontNormalLabel">
+                <property name="text">
+                 <string>Normal :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="folderViewFontFolderLabel">
+                <property name="text">
+                 <string>Folder :</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QLineEdit" name="folderViewFontHiddenLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
                 </property>
@@ -652,8 +786,8 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="2">
-               <widget class="QLineEdit" name="folderViewFontHiddenLineEdit">
+              <item row="3" column="2">
+               <widget class="QLineEdit" name="folderViewFontFolderLineEdit">
                 <property name="focusPolicy">
                  <enum>Qt::NoFocus</enum>
                 </property>
@@ -684,7 +818,77 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="4" colspan="2">
+              <item row="4" column="1">
+               <widget class="QPushButton" name="folderViewFontReadOnlyColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QPushButton" name="folderViewFontFontPushButton">
+                <property name="text">
+                 <string>Font</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="5">
+               <widget class="QPushButton" name="folderViewFontSelectedBGColorPushButton">
+                <property name="text">
+                 <string>BG Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QPushButton" name="folderViewFontBGColorPushButton">
+                <property name="text">
+                 <string>BG Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0" colspan="7">
+               <widget class="QCheckBox" name="folderViewFolderColorTopPriorityCheckBox">
+                <property name="text">
+                 <string>Make the folder color the top priority.</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="5">
+               <widget class="QPushButton" name="folderViewFontSystemSelectedColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="5">
+               <widget class="QPushButton" name="folderViewFontHiddenSelectedColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="5">
+               <widget class="QPushButton" name="folderViewFontReadOnlySelectedColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="5">
+               <widget class="QPushButton" name="folderViewFontFolderSelectedColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="5">
+               <widget class="QPushButton" name="folderViewFontNormalSelectedColorPushButton">
+                <property name="text">
+                 <string>Color</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="5" colspan="2">
                <widget class="QLabel" name="folderViewFontSelectedFontColorLabel">
                 <property name="text">
                  <string>Selected font color</string>
@@ -802,209 +1006,6 @@
              </layout>
             </widget>
            </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QGroupBox" name="folderViewCursorGroupBox">
-             <property name="title">
-              <string>Cursor</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_3">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <item row="0" column="5">
-               <widget class="QPushButton" name="folderViewCursorInactiveColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="folderViewCursorWidthLabel">
-                <property name="text">
-                 <string>Width :</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QSpinBox" name="folderViewCursorWidthSpinBox">
-                <property name="suffix">
-                 <string> px</string>
-                </property>
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>10</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="folderViewCursorLineEdit">
-                <property name="focusPolicy">
-                 <enum>Qt::NoFocus</enum>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="6">
-               <widget class="QLineEdit" name="folderViewCursorInactiveLineEdit">
-                <property name="focusPolicy">
-                 <enum>Qt::NoFocus</enum>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QPushButton" name="folderViewCursorColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QLabel" name="folderViewCursorColorInactiveLabel">
-                <property name="text">
-                 <string>(Inactive)</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QGroupBox" name="folderPathGroupBox">
-             <property name="title">
-              <string>Folder path</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_12">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="folderPathColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="folderPathLineEdit">
-                <property name="focusPolicy">
-                 <enum>Qt::NoFocus</enum>
-                </property>
-                <property name="text">
-                 <string>Sample</string>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="folderPathFontPushButton">
-                <property name="text">
-                 <string>Font</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="folderPathBGColorPushButton">
-                <property name="text">
-                 <string>BG Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1" colspan="2">
-               <widget class="QLabel" name="folderPathFontLabel">
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QGroupBox" name="consoleGroupBox">
-             <property name="title">
-              <string>Console</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_14">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="consoleLineEdit">
-                <property name="focusPolicy">
-                 <enum>Qt::NoFocus</enum>
-                </property>
-                <property name="text">
-                 <string>Sample</string>
-                </property>
-                <property name="frame">
-                 <bool>false</bool>
-                </property>
-                <property name="readOnly">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QPushButton" name="consoleColorPushButton">
-                <property name="text">
-                 <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QPushButton" name="consoleFontPushButton">
-                <property name="text">
-                 <string>Font</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="consoleBGColorPushButton">
-                <property name="text">
-                 <string>BG Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1" colspan="2">
-               <widget class="QLabel" name="consoleFontLabel">
-                <property name="text">
-                 <string>TextLabel</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="textViewerPage">
@@ -1012,8 +1013,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>322</width>
-            <height>263</height>
+            <width>570</width>
+            <height>535</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1217,8 +1218,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>300</width>
-            <height>183</height>
+            <width>570</width>
+            <height>535</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1391,8 +1392,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>338</width>
-            <height>125</height>
+            <width>570</width>
+            <height>535</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1964,6 +1965,12 @@
   <tabstop>folderViewFontSystemSelectedColorPushButton</tabstop>
   <tabstop>folderViewFontBGColorPushButton</tabstop>
   <tabstop>folderViewFontSelectedBGColorPushButton</tabstop>
+  <tabstop>folderViewFolderColorTopPriorityCheckBox</tabstop>
+  <tabstop>folderViewInactiveFontGroupBox</tabstop>
+  <tabstop>folderViewInactiveFontColorPushButton</tabstop>
+  <tabstop>folderViewInactiveFontBGColorPushButton</tabstop>
+  <tabstop>folderViewInactiveFontSelectedColorPushButton</tabstop>
+  <tabstop>folderViewInactiveFontSelectedBGColorPushButton</tabstop>
   <tabstop>folderViewCursorWidthSpinBox</tabstop>
   <tabstop>folderViewCursorColorPushButton</tabstop>
   <tabstop>folderViewCursorInactiveColorPushButton</tabstop>

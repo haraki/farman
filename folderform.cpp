@@ -123,9 +123,9 @@ void FolderForm::setAppearance(const QFont& viewFont,
     ui->folderPathEdit->setPalette(pal);
 }
 
-void FolderForm::setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors)
+void FolderForm::setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio)
 {
-    m_folderModel->initBrushes(folderViewColors);
+    m_folderModel->initBrushes(folderViewColors, folderColorTopPrio);
 
     QPalette pal = ui->folderView->palette();
     pal.setColor(QPalette::Base, folderViewColors[FolderViewColorRoleType::Background]);

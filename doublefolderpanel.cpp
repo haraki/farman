@@ -248,7 +248,7 @@ void DoubleFolderPanel::updateFolderViewColorsSettings()
     FolderForm* activeForm = getActiveFolderForm();
     Q_ASSERT(activeForm != Q_NULLPTR);
 
-    activeForm->setAppearanceFolderViewColors(folderViewColors);
+    activeForm->setAppearanceFolderViewColors(folderViewColors, Settings::getInstance()->getFolderColorTopPriority());
 
     if(Settings::getInstance()->getEnableInactiveFontColor())
     {
@@ -270,7 +270,7 @@ void DoubleFolderPanel::updateFolderViewColorsSettings()
     FolderForm* inactiveForm = getInactiveFolderForm();
     Q_ASSERT(inactiveForm != Q_NULLPTR);
 
-    inactiveForm->setAppearanceFolderViewColors(folderViewColors);
+    inactiveForm->setAppearanceFolderViewColors(folderViewColors, Settings::getInstance()->getFolderColorTopPriority());
 }
 
 bool DoubleFolderPanel::eventFilter(QObject *watched, QEvent *e)

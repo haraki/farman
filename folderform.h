@@ -43,7 +43,7 @@ public:
                        const QFont& pathFont,
                        const QColor& pathColor,
                        const QColor& pathBgColor);
-    void setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors);
+    void setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio);
 
     void setFileSizeFormatType(FileSizeFormatType formatType);
     FileSizeFormatType getFileSizeFormatType() const;

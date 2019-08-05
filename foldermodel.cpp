@@ -790,7 +790,7 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
     QFileInfo fi = fileInfo(index);
     bool selected = isSelected(index);
 
-    if(fi.isDir())
+    if(m_folderColorTopPriority && fi.isDir())
     {
         if(selected)
         {
@@ -834,6 +834,17 @@ QBrush FolderModel::getTextBrush(const QModelIndex& index) const
         else
         {
             ret = getBrush(FolderViewColorRoleType::ReadOnly);
+        }
+    }
+    else if(!m_folderColorTopPriority && fi.isDir())
+    {
+        if(selected)
+        {
+            ret = getBrush(FolderViewColorRoleType::Folder_Selected);
+        }
+        else
+        {
+            ret = getBrush(FolderViewColorRoleType::Folder);
         }
     }
     else
@@ -885,7 +896,7 @@ void FolderModel::setFont(const QFont& font)
     m_font = font;
 }
 
-void FolderModel::initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors)
+void FolderModel::initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors, bool folderColorTopPrio)
 {
     m_brushes.clear();
 
@@ -893,6 +904,8 @@ void FolderModel::initBrushes(const QMap<FolderViewColorRoleType, QColor>& color
     {
         m_brushes[colorRole] = QBrush(colors[colorRole]);
     }
+
+    m_folderColorTopPriority = folderColorTopPrio;
 }
 
 bool FolderModel::isSelected(const QModelIndex& index) const
