@@ -179,6 +179,9 @@ void Settings::initialize()
         }
     }
 
+    // Folder color top priority
+    m_folderColorTopPriority = value("main/folderColorTopPriority", DEFAULT_FOLDER_COLOR_TOP_PRIORITY).toBool();
+
     // Enable inactive font color
     m_enableInactiveFontColor = value("main/enableInactiveFontColor", DEFAULT_ENABLE_INACTIVE_FONT_COLOR).toBool();
 
@@ -395,6 +398,9 @@ void Settings::flush()
         const QFont& fontSettingValue = m_fontSettings[fontSettingKey];
         setValue("main/font/" + fontSettingKey, fontSettingValue.toString());
     }
+
+    // Folder color top priority
+    setValue("main/folderColorTopPriority", m_folderColorTopPriority);
 
     // Enable inactive font color
     setValue("main/enableInactiveFontColor", m_enableInactiveFontColor);

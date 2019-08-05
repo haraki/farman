@@ -128,8 +128,11 @@ public:
     const QMap<QString, QFont>& getFontSettings() { return m_fontSettings; }
     void setFontSettings(const QMap<QString, QFont>& settings) { m_fontSettings = settings; }
 
+    bool getFolderColorTopPriority() { return m_folderColorTopPriority; }
+    void setFolderColorTopPriority(bool enabled) { m_folderColorTopPriority = enabled; }
+
     bool getEnableInactiveFontColor() { return m_enableInactiveFontColor; }
-    void setEnableInactiveFontColor(bool enable) { m_enableInactiveFontColor = enable; }
+    void setEnableInactiveFontColor(bool enabled) { m_enableInactiveFontColor = enabled; }
 
     int getCursorWidth() { return m_cursorWidth; }
     void setCursorWidth(int cursorWidth) { m_cursorWidth = cursorWidth; }
@@ -240,6 +243,8 @@ private:
     QMap<QString, QColor> m_colorSettings = DEFAULT_COLOR_SETTINGS;
 
     QMap<QString, QFont> m_fontSettings;
+
+    bool m_folderColorTopPriority = DEFAULT_FOLDER_COLOR_TOP_PRIORITY;
 
     bool m_enableInactiveFontColor = DEFAULT_ENABLE_INACTIVE_FONT_COLOR;
 
