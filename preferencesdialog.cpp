@@ -23,7 +23,13 @@ PreferencesDialog::PreferencesDialog(const QSize& mainWindowSize,
     ui(new Ui::PreferencesDialog)
 {
     ui->setupUi(this);
-
+#ifndef Q_OS_WIN
+    ui->folderViewFontSystemLabel->setVisible(false);
+    ui->folderViewFontSystemLineEdit->setVisible(false);
+    ui->folderViewFontSystemColorPushButton->setVisible(false);
+    ui->folderViewFontSystemSelectedLineEdit->setVisible(false);
+    ui->folderViewFontSystemSelectedColorPushButton->setVisible(false);
+#endif
     ui->tabWidget->setCurrentIndex(static_cast<int>(page));
 
     initialize(mainWindowSize, mainWindowPos, leftDirPath, rightDirPath);
