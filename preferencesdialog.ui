@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>784</height>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -335,9 +335,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-60</y>
-            <width>555</width>
-            <height>595</height>
+            <y>0</y>
+            <width>581</width>
+            <height>568</height>
            </rect>
           </property>
           <attribute name="label">
@@ -599,13 +599,6 @@
                <widget class="QPushButton" name="folderViewFontSystemColorPushButton">
                 <property name="text">
                  <string>Color</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="folderViewFontFontLabel">
-                <property name="text">
-                 <string>TextLabel</string>
                 </property>
                </widget>
               </item>
@@ -898,6 +891,13 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="1" colspan="6">
+               <widget class="QLabel" name="folderViewFontFontLabel">
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1013,8 +1013,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>570</width>
-            <height>535</height>
+            <width>338</width>
+            <height>242</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1218,8 +1218,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>570</width>
-            <height>535</height>
+            <width>338</width>
+            <height>172</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1392,8 +1392,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>570</width>
-            <height>535</height>
+            <width>302</width>
+            <height>101</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1475,7 +1475,14 @@
       <attribute name="title">
        <string>Folder view(&amp;F)</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_16" columnstretch="1,1">
+      <layout class="QGridLayout" name="gridLayout_16" columnstretch="1,0">
+       <item row="3" column="0" colspan="2">
+        <widget class="QCheckBox" name="allowCursorAroundCheckBox">
+         <property name="text">
+          <string>Loop movement of the cursor(&amp;L)</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="singlePaneGroupBox">
          <property name="title">
@@ -1613,6 +1620,79 @@
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QGroupBox" name="autoDialogCloseGroupBox">
+         <property name="title">
+          <string>Auto dialog close at successful operation(&amp;A)</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseCopyCheckBox">
+            <property name="text">
+             <string>Copy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseMoveCheckBox">
+            <property name="text">
+             <string>Move</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="autoDialogCloseRemoveCheckBox">
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="dragAndDropBehaviorGroupBox">
+         <property name="title">
+          <string>Drag &amp;&amp; Drop behavior(&amp;B)</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item>
+           <widget class="QRadioButton" name="dragAndDropBehaviorSelectRadioButton">
+            <property name="text">
+             <string>Select</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="dragAndDropBehaviorCopyRadioButton">
+            <property name="text">
+             <string>Copy</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="dragAndDropBehaviorMoveRadioButton">
+            <property name="text">
+             <string>Move</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QCheckBox" name="moveCursorOpenViewerCheckBox">
+         <property name="text">
+          <string>Move the cursor to the next, after open the viewer with Enter key(&amp;M)</string>
+         </property>
         </widget>
        </item>
        <item row="1" column="0" colspan="2">
@@ -1754,92 +1834,15 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="dragAndDropBehaviorGroupBox">
-         <property name="title">
-          <string>Drag &amp;&amp; Drop behavior(&amp;B)</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_15">
-          <property name="spacing">
-           <number>8</number>
-          </property>
-          <item row="2" column="0" colspan="2">
-           <widget class="QRadioButton" name="dragAndDropBehaviorMoveRadioButton">
-            <property name="text">
-             <string>Move</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QRadioButton" name="dragAndDropBehaviorCopyRadioButton">
-            <property name="text">
-             <string>Copy</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QRadioButton" name="dragAndDropBehaviorSelectRadioButton">
-            <property name="text">
-             <string>Select</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="autoDialogCloseGroupBox">
-         <property name="title">
-          <string>Auto dialog close at successful operation(&amp;A)</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QCheckBox" name="autoDialogCloseCopyCheckBox">
-            <property name="text">
-             <string>Copy</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="autoDialogCloseMoveCheckBox">
-            <property name="text">
-             <string>Move</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="autoDialogCloseRemoveCheckBox">
-            <property name="text">
-             <string>Remove</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QCheckBox" name="allowCursorAroundCheckBox">
-         <property name="text">
-          <string>Loop movement of the cursor(&amp;L)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="QCheckBox" name="moveCursorOpenViewerCheckBox">
-         <property name="text">
-          <string>Move the cursor to the next, after open the viewer with Enter key(&amp;M)</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="0">
-        <spacer name="verticalSpacer_4">
+        <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>86</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>
