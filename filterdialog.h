@@ -17,10 +17,10 @@ class FilterDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FilterDialog(FilterFlags filterFlags, const QStringList& nameMaskFilters, QWidget *parent = Q_NULLPTR);
+    explicit FilterDialog(AttrFilterFlags attrFilterFlags, const QStringList& nameMaskFilters, QWidget *parent = Q_NULLPTR);
     ~FilterDialog() Q_DECL_OVERRIDE;
 
-    FilterFlags getFilterFlags();
+    AttrFilterFlags getAttrFilterFlags();
     QStringList getNameMaskFilters();
 
 private Q_SLOTS:
@@ -31,7 +31,7 @@ private:
     bool valicationFilterString(const QString &nameMaskFilterString);
 
     Ui::FilterDialog *ui;
-    FilterFlags m_filterFlags;
+    AttrFilterFlags m_attrFilterFlags;
     QStringList m_nameMaskFilters;
 };
 

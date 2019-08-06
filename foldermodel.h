@@ -47,8 +47,8 @@ public:
     void setSortOrder(Qt::SortOrder order);
     Qt::SortOrder sortOrder() const;
 
-    void setFilterFlags(FilterFlags filterFlags);
-    FilterFlags getFilterFlags() const;
+    void setAttrFilterFlags(AttrFilterFlags attrFilterFlags);
+    AttrFilterFlags getAttrFilterFlags() const;
 
     void setFileSizeFormatType(FileSizeFormatType formatType);
     FileSizeFormatType getFileSizeFormatType() const;
@@ -152,7 +152,7 @@ private:
     void emitLayoutChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
     void emitLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
-    FilterFlags m_filterFlags;
+    AttrFilterFlags m_attrFilterFlags;
 
     int m_sortColumn;
     int m_sortColumn2nd;

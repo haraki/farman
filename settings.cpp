@@ -95,7 +95,7 @@ void Settings::initialize()
         m_sortOrder[static_cast<int>(pane)]           = getValueSortOrder(prefix);
 
         // Filter settings
-        m_filterSettings[static_cast<int>(pane)] = getValueFilterSettings(prefix);
+        m_attrFilterSettings[static_cast<int>(pane)] = getValueAttrFilterSettings(prefix);
     }
 
     // Drag & Drop behavior in FolderView
@@ -332,10 +332,10 @@ void Settings::flush()
     setValueSortOrder(m_sortOrder[static_cast<int>(PaneType::Right)], "right");
 
     // Left side Filter settings
-    setValueFilterSettings(m_filterSettings[static_cast<int>(PaneType::Left)], "left");
+    setValueAttrFilterSettings(m_attrFilterSettings[static_cast<int>(PaneType::Left)], "left");
 
     // Right side Filter settings
-    setValueFilterSettings(m_filterSettings[static_cast<int>(PaneType::Right)], "right");
+    setValueAttrFilterSettings(m_attrFilterSettings[static_cast<int>(PaneType::Right)], "right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Copy) ? "copy" :
@@ -703,29 +703,29 @@ void Settings::setValueSortOrder(Qt::SortOrder order, const QString& prefix)
     setValue("main/" + prefix + "SortOrder", sortOrderValue);
 }
 
-FilterFlags Settings::getValueFilterSettings(const QString& prefix) const
+AttrFilterFlags Settings::getValueAttrFilterSettings(const QString& prefix) const
 {
-    FilterFlags ret = FilterFlag::None;
+    AttrFilterFlags ret = AttrFilterFlag::None;
 
     if(value("main/" + prefix + "FilterHidden", false).toBool())
     {
-        ret |= FilterFlag::Hidden;
+        ret |= AttrFilterFlag::Hidden;
     }
 
     if(value("main/" + prefix + "FilterSystem", false).toBool())
     {
-        ret |= FilterFlag::System;
+        ret |= AttrFilterFlag::System;
     }
 
     return ret;
 }
 
-void Settings::setValueFilterSettings(FilterFlags filterSettings, const QString& prefix)
+void Settings::setValueAttrFilterSettings(AttrFilterFlags attrFilterSettings, const QString& prefix)
 {
-    bool filterHiddenValue = (filterSettings & FilterFlag::Hidden) ? true : false;
+    bool filterHiddenValue = (attrFilterSettings & AttrFilterFlag::Hidden) ? true : false;
     setValue("main/" + prefix + "FilterHidden", filterHiddenValue);
 
-    bool filterSystemValue = (filterSettings & FilterFlag::System) ? true : false;
+    bool filterSystemValue = (attrFilterSettings & AttrFilterFlag::System) ? true : false;
     setValue("main/" + prefix + "FilterSystem", filterSystemValue);
 }
 

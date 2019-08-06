@@ -6,20 +6,20 @@
 namespace Farman
 {
 
-FilterDialog::FilterDialog(FilterFlags filterFlags,  const QStringList& nameMaskFilters, QWidget *parent) :
+FilterDialog::FilterDialog(AttrFilterFlags attrFilterFlags,  const QStringList& nameMaskFilters, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FilterDialog),
-    m_filterFlags(filterFlags),
+    m_attrFilterFlags(attrFilterFlags),
     m_nameMaskFilters(nameMaskFilters)
 {
     ui->setupUi(this);
 
-    if(filterFlags & FilterFlag::Hidden)
+    if(attrFilterFlags & AttrFilterFlag::Hidden)
     {
         ui->showHiddenCheckBox->setChecked(true);
     }
 #ifdef Q_OS_WIN
-    if(filterFlags & FilterFlag::System)
+    if(attrFilterFlags & AttrFilterFlag::System)
     {
         ui->showSystemCheckBox->setChecked(true);
     }
@@ -39,9 +39,9 @@ FilterDialog::~FilterDialog()
     delete ui;
 }
 
-FilterFlags FilterDialog::getFilterFlags()
+AttrFilterFlags FilterDialog::getAttrFilterFlags()
 {
-    return m_filterFlags;
+    return m_attrFilterFlags;
 }
 
 QStringList FilterDialog::getNameMaskFilters()
@@ -51,15 +51,15 @@ QStringList FilterDialog::getNameMaskFilters()
 
 void FilterDialog::accept()
 {
-    m_filterFlags = FilterFlag::None;
+    m_attrFilterFlags = AttrFilterFlag::None;
     if(ui->showHiddenCheckBox->isChecked())
     {
-        m_filterFlags |= FilterFlag::Hidden;
+        m_attrFilterFlags |= AttrFilterFlag::Hidden;
     }
 #ifdef Q_OS_WIN
     if(ui->showSystemCheckBox->isChecked())
     {
-        m_filterFlags |= FilterFlag::System;
+        m_attrFilterFlags |= AttrFilterFlag::System;
     }
 #endif
     m_nameMaskFilters = ui->nameMaskFilterLineEdit->text().simplified().split(' ', QString::SkipEmptyParts);
@@ -68,7 +68,7 @@ void FilterDialog::accept()
         m_nameMaskFilters = QStringList("*");
     }
 
-    qDebug() << "filterFlags : " << m_filterFlags << ", nameMaskFilters : " << m_nameMaskFilters;
+    qDebug() << "attrFilterFlags : " << m_attrFilterFlags << ", nameMaskFilters : " << m_nameMaskFilters;
 
     QDialog::accept();
 }

@@ -61,7 +61,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             path = QDir::currentPath();
         }
 
-        FilterFlags filterFlags = Settings::getInstance()->getFilterSettings(pane);
+        AttrFilterFlags attrFilterFlags = Settings::getInstance()->getAttrFilterSettings(pane);
         SectionType sortSectionType = Settings::getInstance()->getSortSectionType(pane);
         SectionType sortSectionType2nd = Settings::getInstance()->getSortSectionType2nd(pane);
         SortDirsType sortDirsType = Settings::getInstance()->getSortDirsType(pane);
@@ -70,7 +70,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         Qt::SortOrder sortOrder = Settings::getInstance()->getSortOrder(pane);
 
         FolderForm* folderForm = new FolderForm(pane,
-                                                filterFlags,
+                                                attrFilterFlags,
                                                 sortSectionType,
                                                 sortSectionType2nd,
                                                 sortDirsType,
@@ -415,23 +415,23 @@ void DoubleFolderPanel::onChangeFilterSettings()
     FolderForm* activeForm = getActiveFolderForm();
     Q_ASSERT(activeForm != Q_NULLPTR);
 
-    FilterFlags filterFlags = activeForm->getFilterFlags();
+    AttrFilterFlags attrFilterFlags = activeForm->getAttrFilterFlags();
     QStringList nameMaskFilters = activeForm->getNameMaskFilters();
 
-    FilterDialog dialog(filterFlags, nameMaskFilters, parentWidget());
+    FilterDialog dialog(attrFilterFlags, nameMaskFilters, parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
-    filterFlags = dialog.getFilterFlags();
+    attrFilterFlags = dialog.getAttrFilterFlags();
     nameMaskFilters = dialog.getNameMaskFilters();
-    activeForm->setFilterFlags(filterFlags);
+    activeForm->setAttrFilterFlags(attrFilterFlags);
     activeForm->setNameMaskFilters(nameMaskFilters);
 
     PaneType pane = activeForm->getPaneType();
 
-    Settings::getInstance()->setFilterSettings(pane, filterFlags);
+    Settings::getInstance()->setAttrFilterSettings(pane, attrFilterFlags);
 
     activeForm->refresh(true);          // 選択状態のファイルがあると refresh でクラッシュするので選択状態を解除する
 }

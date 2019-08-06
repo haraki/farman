@@ -13,7 +13,7 @@ namespace Farman
 {
 
 FolderForm::FolderForm(PaneType pane,
-                       FilterFlags filterFlags,
+                       AttrFilterFlags attrFilterFlags,
                        SectionType sortSectionType,
                        SectionType sortSectionType2nd,
                        SortDirsType sortDirsType,
@@ -43,7 +43,7 @@ FolderForm::FolderForm(PaneType pane,
     m_folderModel->setDateFormatType(dateFormatType);
     m_folderModel->setDateFormatOriginalString(dateOrgString);
 
-    m_folderModel->setFilterFlags(filterFlags);
+    m_folderModel->setAttrFilterFlags(attrFilterFlags);
     m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
     updateFilterLabel();
 
@@ -173,16 +173,16 @@ QString FolderForm::getDateFormatOriginalString() const
     return m_folderModel->getDateFormatOriginalString();
 }
 
-void FolderForm::setFilterFlags(FilterFlags filterFlags)
+void FolderForm::setAttrFilterFlags(AttrFilterFlags attrFilterFlags)
 {
-    m_folderModel->setFilterFlags(filterFlags);
+    m_folderModel->setAttrFilterFlags(attrFilterFlags);
 
     updateFilterLabel();
 }
 
-FilterFlags FolderForm::getFilterFlags() const
+AttrFilterFlags FolderForm::getAttrFilterFlags() const
 {
-    return m_folderModel->getFilterFlags();
+    return m_folderModel->getAttrFilterFlags();
 }
 
 void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
@@ -201,11 +201,11 @@ void FolderForm::updateFilterLabel()
 {
     qDebug() << "FolderForm::updateFilterLabel()";
 
-    FilterFlags filterFlags = getFilterFlags();
+    AttrFilterFlags attrFilterFlags = getAttrFilterFlags();
 
-    QString flagsStr = tr("Hidden : ") + ((filterFlags & FilterFlag::Hidden) ? tr("Show") : tr("Hide"))
+    QString flagsStr = tr("Hidden : ") + ((attrFilterFlags & AttrFilterFlag::Hidden) ? tr("Show") : tr("Hide"))
 #ifdef Q_OS_WIN
-                     + ", " + tr("System : ") + ((filterFlags & FilterFlag::System) ? tr("Show") : tr("Hide"))
+                     + ", " + tr("System : ") + ((attrFilterFlags & AttrFilterFlag::System) ? tr("Show") : tr("Hide"))
 #endif
                      ;
 

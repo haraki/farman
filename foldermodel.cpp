@@ -174,14 +174,14 @@ Qt::SortOrder FolderModel::sortOrder() const
     return m_sortOrder;
 }
 
-void FolderModel::setFilterFlags(FilterFlags filterFlags)
+void FolderModel::setAttrFilterFlags(AttrFilterFlags attrfilterFlags)
 {
-    m_filterFlags = filterFlags;
+    m_attrFilterFlags = attrfilterFlags;
 }
 
-FilterFlags FolderModel::getFilterFlags() const
+AttrFilterFlags FolderModel::getAttrFilterFlags() const
 {
-    return m_filterFlags;
+    return m_attrFilterFlags;
 }
 
 void FolderModel::setFileSizeFormatType(FileSizeFormatType formatType)
@@ -502,9 +502,9 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
         return false;
     }
 
-    if((!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden())
+    if((!(m_attrFilterFlags & AttrFilterFlag::Hidden) && cfi.isHidden())
 #ifdef Q_OS_WIN
-    || (!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
+    || (!(m_attrFilterFlags & AttrFilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
 #endif
       )
     {
@@ -717,13 +717,13 @@ int FolderModel::getFileDirNum(QDir::Filters filters)
     int count = 0;
     for(const QFileInfo& cfi : dir.entryInfoList(fsModel->nameFilters(), dirFilters))
     {
-        if(!(m_filterFlags & FilterFlag::Hidden) && cfi.isHidden())
+        if(!(m_attrFilterFlags & AttrFilterFlag::Hidden) && cfi.isHidden())
         {
             continue;
         }
 
 #ifdef Q_OS_WIN
-        if(!(m_filterFlags & FilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
+        if(!(m_attrFilterFlags & FilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
         {
             continue;
         }

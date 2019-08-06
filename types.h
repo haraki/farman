@@ -114,8 +114,8 @@ enum class DateFormatType : int
     DateFormatTypeNum,
 };
 
-// フィルター
-enum class FilterFlag : int
+// 属性フィルタ
+enum class AttrFilterFlag : int
 {
     None = 0,
 
@@ -124,8 +124,10 @@ enum class FilterFlag : int
 
     Parent = (1 << 8),          // ".."
 };
-Q_DECLARE_FLAGS(FilterFlags, FilterFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(FilterFlags)
+Q_DECLARE_FLAGS(AttrFilterFlags, AttrFilterFlag)
+Q_DECLARE_OPERATORS_FOR_FLAGS(AttrFilterFlags)
+
+//
 
 // 同名ファイルが存在する場合の処理タイプ
 enum class OverwriteMethodType : int

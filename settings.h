@@ -68,8 +68,8 @@ public:
     void setSortCaseSensitivity(PaneType pane, Qt::CaseSensitivity caseSensitivity) { m_sortCaseSensitivity[static_cast<int>(pane)] = caseSensitivity; }
     void setSortOrder(PaneType pane, Qt::SortOrder order) { m_sortOrder[static_cast<int>(pane)] = order; }
 
-    FilterFlags getFilterSettings(PaneType pane) const { return m_filterSettings[static_cast<int>(pane)]; }
-    void setFilterSettings(PaneType pane, FilterFlags filterSettings) { m_filterSettings[static_cast<int>(pane)] = filterSettings; }
+    AttrFilterFlags getAttrFilterSettings(PaneType pane) const { return m_attrFilterSettings[static_cast<int>(pane)]; }
+    void setAttrFilterSettings(PaneType pane, AttrFilterFlags attrFilterSettings) { m_attrFilterSettings[static_cast<int>(pane)] = attrFilterSettings; }
 
     DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
     void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
@@ -188,8 +188,8 @@ private:
     void setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
     void setValueSortOrder(Qt::SortOrder order, const QString& prefix);
 
-    FilterFlags getValueFilterSettings(const QString& prefix) const;
-    void setValueFilterSettings(FilterFlags filterSettings, const QString& prefix);
+    AttrFilterFlags getValueAttrFilterSettings(const QString& prefix) const;
+    void setValueAttrFilterSettings(AttrFilterFlags filterSettings, const QString& prefix);
 
     static Settings* s_instance;
 
@@ -214,7 +214,7 @@ private:
     Qt::CaseSensitivity m_sortCaseSensitivity[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_SORT_CASE_SENSITIVITY, DEFAULT_SORT_CASE_SENSITIVITY };
     Qt::SortOrder       m_sortOrder[static_cast<int>(PaneType::PaneTypeNum)]           = { DEFAULT_SORT_ORDER,            DEFAULT_SORT_ORDER            };
 
-    FilterFlags m_filterSettings[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_FILTER_FLAGS, DEFAULT_FILTER_FLAGS };
+    AttrFilterFlags m_attrFilterSettings[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_ATTR_FILTER_FLAGS, DEFAULT_ATTR_FILTER_FLAGS };
 
     DragAndDropBehaviorType m_dragAndDropBehaviorType = DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE;
 

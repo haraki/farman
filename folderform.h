@@ -23,7 +23,7 @@ class FolderForm : public QWidget
 
 public:
     explicit FolderForm(PaneType pane,
-                        FilterFlags filterFlags,
+                        AttrFilterFlags attrFilterFlags,
                         SectionType sortSectionType,
                         SectionType sortSectionType2nd,
                         SortDirsType sortDirsType,
@@ -57,8 +57,8 @@ public:
     void setDateFormatOriginalString(const QString& orgString);
     QString getDateFormatOriginalString() const;
 
-    void setFilterFlags(FilterFlags filterFlags);
-    FilterFlags getFilterFlags() const;
+    void setAttrFilterFlags(AttrFilterFlags filterFlags);
+    AttrFilterFlags getAttrFilterFlags() const;
     void setNameMaskFilters(const QStringList& nameMaskFilters);
     QStringList getNameMaskFilters() const;
 
