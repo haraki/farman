@@ -5,6 +5,7 @@
 #include <QItemSelectionModel>
 #include <QFileIconProvider>
 #include <functional>
+#include <QFontMetricsF>
 #include "foldermodel.h"
 #include "types.h"
 #include "win32.h"
@@ -25,11 +26,21 @@ static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries |
 
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
+    m_attrFilterFlags(AttrFilterFlag::None),
+    m_fileFolderFilterType(FileFolderFilterType::All),
     m_sortColumn(0),
     m_sortColumn2nd(-1),
     m_sortDirsType(SortDirsType::NoSpecify),
     m_sortDotFirst(true),
     m_sortOrder(Qt::AscendingOrder),
+    m_fileSizeFormatType(FileSizeFormatType::SI),
+    m_fileSizeComma(false),
+    m_dateFormatType(DateFormatType::Default),
+    m_dateFormatOriginalString("yyyy-MM-dd HH:mm:ss"),
+    m_font(),
+    m_brushes(),
+    m_iconSize(16),
+    m_folderColorTopPriority(false),
     m_selectionModel(new QItemSelectionModel(this))
 {
     setSortCaseSensitivity(Qt::CaseInsensitive);
@@ -333,11 +344,11 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
     case Qt::TextAlignmentRole:
         if(sectionType == SectionType::FileSize || sectionType == SectionType::LastModified)
         {
-            ret = Qt::AlignRight;
+            ret = Qt::AlignRight + Qt::AlignVCenter;
         }
         else
         {
-            ret = Qt::AlignLeft;
+            ret = Qt::AlignLeft + Qt::AlignVCenter;
         }
 
         break;
@@ -355,7 +366,7 @@ QVariant FolderModel::data(const QModelIndex &modelIndex, int role) const
     case QFileSystemModel::FileIconRole:
         if(sectionType == SectionType::FileName)
         {
-            ret = fileIcon(modelIndex);
+            ret = fileIcon(modelIndex).pixmap(m_iconSize, m_iconSize);
         }
 
         break;
@@ -945,6 +956,8 @@ QBrush FolderModel::getBrush(FolderViewColorRoleType colorRole) const
 void FolderModel::setFont(const QFont& font)
 {
     m_font = font;
+
+    m_iconSize = QFontMetrics(font).height();
 }
 
 void FolderModel::initBrushes(const QMap<FolderViewColorRoleType, QColor>& colors, bool folderColorTopPrio)

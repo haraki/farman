@@ -50,6 +50,9 @@ FolderForm::FolderForm(PaneType pane,
 
     setSortSettings(sortSectionType, sortSectionType2nd, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
 
+    ui->folderView->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    ui->folderView->verticalHeader()->setMinimumSectionSize(0);
+
     ui->folderView->setModel(m_folderModel);
 
     ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
@@ -114,6 +117,8 @@ void FolderForm::setAppearance(const QFont& viewFont,
                                const QColor& pathBgColor)
 {
     m_folderModel->setFont(viewFont);
+
+    ui->folderView->verticalHeader()->setDefaultSectionSize(QFontMetrics(viewFont).height());
 
     ui->folderPathEdit->setFont(pathFont);
 

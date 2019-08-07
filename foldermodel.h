@@ -172,6 +172,8 @@ private:
     QFont m_font;
     QMap<FolderViewColorRoleType, QBrush> m_brushes;
 
+    int m_iconSize;
+
     bool m_folderColorTopPriority;
 
     QItemSelectionModel* m_selectionModel;
