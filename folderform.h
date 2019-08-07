@@ -59,6 +59,8 @@ public:
 
     void setAttrFilterFlags(AttrFilterFlags filterFlags);
     AttrFilterFlags getAttrFilterFlags() const;
+    void setFileFolderFilterType(FileFolderFilterType fileFolderFilterType);
+    FileFolderFilterType getFileFolderFilterType() const;
     void setNameMaskFilters(const QStringList& nameMaskFilters);
     QStringList getNameMaskFilters() const;
 

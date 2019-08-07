@@ -416,17 +416,20 @@ void DoubleFolderPanel::onChangeFilterSettings()
     Q_ASSERT(activeForm != Q_NULLPTR);
 
     AttrFilterFlags attrFilterFlags = activeForm->getAttrFilterFlags();
+    FileFolderFilterType fileFolderFilterType = activeForm->getFileFolderFilterType();
     QStringList nameMaskFilters = activeForm->getNameMaskFilters();
 
-    FilterDialog dialog(attrFilterFlags, nameMaskFilters, parentWidget());
+    FilterDialog dialog(attrFilterFlags, fileFolderFilterType, nameMaskFilters, parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
     attrFilterFlags = dialog.getAttrFilterFlags();
+    fileFolderFilterType = dialog.getFileFolderFilterType();
     nameMaskFilters = dialog.getNameMaskFilters();
     activeForm->setAttrFilterFlags(attrFilterFlags);
+    activeForm->setFileFolderFilterType(fileFolderFilterType);
     activeForm->setNameMaskFilters(nameMaskFilters);
 
     PaneType pane = activeForm->getPaneType();

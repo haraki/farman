@@ -49,6 +49,8 @@ public:
 
     void setAttrFilterFlags(AttrFilterFlags attrFilterFlags);
     AttrFilterFlags getAttrFilterFlags() const;
+    void setFileFolderFilterType(FileFolderFilterType fileFolderFilterType);
+    FileFolderFilterType getFileFolderFilterType() const;
 
     void setFileSizeFormatType(FileSizeFormatType formatType);
     FileSizeFormatType getFileSizeFormatType() const;
@@ -153,6 +155,7 @@ private:
     void emitLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
     AttrFilterFlags m_attrFilterFlags;
+    FileFolderFilterType m_fileFolderFilterType;
 
     int m_sortColumn;
     int m_sortColumn2nd;

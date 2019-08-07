@@ -127,7 +127,13 @@ enum class AttrFilterFlag : int
 Q_DECLARE_FLAGS(AttrFilterFlags, AttrFilterFlag)
 Q_DECLARE_OPERATORS_FOR_FLAGS(AttrFilterFlags)
 
-//
+// ファイル／フォルダ フィルタ
+enum class FileFolderFilterType : int
+{
+    All = 0,        // 全て
+    File,           // ファイルのみ
+    Folder,         // フォルダのみ
+};
 
 // 同名ファイルが存在する場合の処理タイプ
 enum class OverwriteMethodType : int

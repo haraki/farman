@@ -189,7 +189,7 @@ private:
     void setValueSortOrder(Qt::SortOrder order, const QString& prefix);
 
     AttrFilterFlags getValueAttrFilterSettings(const QString& prefix) const;
-    void setValueAttrFilterSettings(AttrFilterFlags filterSettings, const QString& prefix);
+    void setValueAttrFilterSettings(AttrFilterFlags attrFilterSettings, const QString& prefix);
 
     static Settings* s_instance;
 

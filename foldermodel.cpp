@@ -184,6 +184,16 @@ AttrFilterFlags FolderModel::getAttrFilterFlags() const
     return m_attrFilterFlags;
 }
 
+void FolderModel::setFileFolderFilterType(FileFolderFilterType fileFolderFilterType)
+{
+    m_fileFolderFilterType = fileFolderFilterType;
+}
+
+FileFolderFilterType FolderModel::getFileFolderFilterType() const
+{
+    return m_fileFolderFilterType;
+}
+
 void FolderModel::setFileSizeFormatType(FileSizeFormatType formatType)
 {
     m_fileSizeFormatType = formatType;
@@ -502,6 +512,51 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
         return false;
     }
 
+    // source_row(childIndex)が指すディレクトリが、カレントディレクトリ(fsModel->rootPath())が属するディレクトリであるかを確認する
+    //  TODO: std::function だと実行速度が遅くなるらしいので、そのうち修正する(std::function にしているのは、こうしないとラムダの再帰呼び出しができないため)
+    std::function<bool (const QModelIndex&)> isEnclosing =
+            [&isEnclosing, &fsModel, &cfi](const QModelIndex& dirIndex)
+    {
+        if(!dirIndex.isValid())
+        {
+            return false;
+        }
+
+        QFileInfo dfi = fsModel->fileInfo(dirIndex);
+
+        if(cfi.absoluteFilePath() == dfi.absoluteFilePath())
+        {
+            return true;
+        }
+        else if(dfi.isRoot())
+        {
+            return false;
+        }
+
+        return isEnclosing(dirIndex.parent());
+    };
+
+    if(cfi.isDir())
+    {
+        if(m_fileFolderFilterType == FileFolderFilterType::File)
+        {
+            // ファイルのみ表示の場合、カレントディレクトリが属するディレクトリは表示する
+            // 非表示にすると Folder View が正常に表示されなくなってしまうため
+
+            if(!isEnclosing(fsModel->index(fsModel->rootPath())))
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        if(m_fileFolderFilterType == FileFolderFilterType::Folder)
+        {
+            return false;
+        }
+    }
+
     if((!(m_attrFilterFlags & AttrFilterFlag::Hidden) && cfi.isHidden())
 #ifdef Q_OS_WIN
     || (!(m_attrFilterFlags & AttrFilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
@@ -515,26 +570,11 @@ bool FolderModel::filterAcceptsRow(int source_row, const QModelIndex &source_par
             return false;
         }
 
-        // source_row(childIndex)が指すディレクトリが、カレントディレクトリ(fsModel->rootPath())が属するディレクトリであるかを確認する
-        std::function<bool (const QModelIndex&)> isBelong =
-                [&isBelong, &fsModel, &childIndex](const QModelIndex& dirIndex)
-        {
-            if(!dirIndex.isValid() || fsModel->fileInfo(dirIndex).isRoot())
-            {
-                return false;
-            }
-            else if(childIndex == dirIndex)
-            {
-                return true;
-            }
-            return isBelong(dirIndex.parent());
-        };
-
-        if(isBelong(fsModel->index(fsModel->rootPath())))
+        if(isEnclosing(fsModel->index(fsModel->rootPath())))
         {
             return true;
         }
-        else if(cfi.fileName() != "..")
+        else
         {
             return false;
         }
@@ -717,13 +757,28 @@ int FolderModel::getFileDirNum(QDir::Filters filters)
     int count = 0;
     for(const QFileInfo& cfi : dir.entryInfoList(fsModel->nameFilters(), dirFilters))
     {
+        if(cfi.isDir())
+        {
+            if(m_fileFolderFilterType == FileFolderFilterType::File)
+            {
+                continue;
+            }
+        }
+        else
+        {
+            if(m_fileFolderFilterType == FileFolderFilterType::Folder)
+            {
+                continue;
+            }
+        }
+
         if(!(m_attrFilterFlags & AttrFilterFlag::Hidden) && cfi.isHidden())
         {
             continue;
         }
 
 #ifdef Q_OS_WIN
-        if(!(m_attrFilterFlags & FilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
+        if(!(m_attrFilterFlags & AttrFilterFlag::System) && Win32::isSystemFile(cfi.absoluteFilePath()))
         {
             continue;
         }

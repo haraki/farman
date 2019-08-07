@@ -36,6 +36,8 @@ static Q_DECL_CONSTEXPR Qt::SortOrder DEFAULT_SORT_ORDER = Qt::AscendingOrder;
 
 static Q_DECL_CONSTEXPR AttrFilterFlags DEFAULT_ATTR_FILTER_FLAGS = AttrFilterFlag::Hidden | AttrFilterFlag::System;
 
+static Q_DECL_CONSTEXPR FileFolderFilterType DEFAULT_FILE_FOLDER_FILTER_TYPE = FileFolderFilterType::All;
+
 static Q_DECL_CONSTEXPR char DEFAULT_NAME_MASK_FILTERS[] = "*";
 
 static Q_DECL_CONSTEXPR OverwriteMethodType DEFAULT_OVERWRITE_METHOD_TYPE = OverwriteMethodType::Overwrite;

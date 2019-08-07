@@ -6,10 +6,14 @@
 namespace Farman
 {
 
-FilterDialog::FilterDialog(AttrFilterFlags attrFilterFlags,  const QStringList& nameMaskFilters, QWidget *parent) :
+FilterDialog::FilterDialog(AttrFilterFlags attrFilterFlags,
+                           FileFolderFilterType fileFolderFilterType,
+                           const QStringList& nameMaskFilters,
+                           QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::FilterDialog),
     m_attrFilterFlags(attrFilterFlags),
+    m_fileFolderFilterType(fileFolderFilterType),
     m_nameMaskFilters(nameMaskFilters)
 {
     ui->setupUi(this);
@@ -27,6 +31,19 @@ FilterDialog::FilterDialog(AttrFilterFlags attrFilterFlags,  const QStringList& 
     ui->showSystemCheckBox->setVisible(false);
 #endif
 
+    if(fileFolderFilterType == FileFolderFilterType::File)
+    {
+        ui->showFileOnlyRadioButton->setChecked(true);
+    }
+    else if(fileFolderFilterType == FileFolderFilterType::Folder)
+    {
+        ui->showFolderOnlyRadioButton->setChecked(true);
+    }
+    else
+    {
+        ui->showAllRadioButton->setChecked(true);
+    }
+
     QString nameMaskFilterString = nameMaskFilters.join(' ');
 
     ui->nameMaskFilterLineEdit->setText(nameMaskFilterString);
@@ -39,12 +56,17 @@ FilterDialog::~FilterDialog()
     delete ui;
 }
 
-AttrFilterFlags FilterDialog::getAttrFilterFlags()
+AttrFilterFlags FilterDialog::getAttrFilterFlags() const
 {
     return m_attrFilterFlags;
 }
 
-QStringList FilterDialog::getNameMaskFilters()
+FileFolderFilterType FilterDialog::getFileFolderFilterType() const
+{
+    return m_fileFolderFilterType;
+}
+
+QStringList FilterDialog::getNameMaskFilters() const
 {
     return m_nameMaskFilters;
 }
@@ -62,6 +84,21 @@ void FilterDialog::accept()
         m_attrFilterFlags |= AttrFilterFlag::System;
     }
 #endif
+
+    m_fileFolderFilterType = FileFolderFilterType::All;
+    if(ui->showFileOnlyRadioButton->isChecked())
+    {
+        m_fileFolderFilterType = FileFolderFilterType::File;
+    }
+    else if(ui->showFolderOnlyRadioButton->isChecked())
+    {
+        m_fileFolderFilterType = FileFolderFilterType::Folder;
+    }
+    else
+    {
+        m_fileFolderFilterType = FileFolderFilterType::All;
+    }
+
     m_nameMaskFilters = ui->nameMaskFilterLineEdit->text().simplified().split(' ', QString::SkipEmptyParts);
     if(m_nameMaskFilters.isEmpty())
     {

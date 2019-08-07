@@ -44,6 +44,7 @@ FolderForm::FolderForm(PaneType pane,
     m_folderModel->setDateFormatOriginalString(dateOrgString);
 
     m_folderModel->setAttrFilterFlags(attrFilterFlags);
+    m_folderModel->setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
     m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
     updateFilterLabel();
 
@@ -185,6 +186,18 @@ AttrFilterFlags FolderForm::getAttrFilterFlags() const
     return m_folderModel->getAttrFilterFlags();
 }
 
+void FolderForm::setFileFolderFilterType(FileFolderFilterType fileFolderFilterType)
+{
+    m_folderModel->setFileFolderFilterType(fileFolderFilterType);
+
+    updateFilterLabel();
+}
+
+FileFolderFilterType FolderForm::getFileFolderFilterType() const
+{
+    return m_folderModel->getFileFolderFilterType();
+}
+
 void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
 {
     m_folderModel->setNameFilters(nameMaskFilters);
@@ -202,14 +215,24 @@ void FolderForm::updateFilterLabel()
     qDebug() << "FolderForm::updateFilterLabel()";
 
     AttrFilterFlags attrFilterFlags = getAttrFilterFlags();
+    FileFolderFilterType fileFolderFilterType = getFileFolderFilterType();
 
-    QString flagsStr = tr("Hidden : ") + ((attrFilterFlags & AttrFilterFlag::Hidden) ? tr("Show") : tr("Hide"))
+    QString filterStr = tr("Hidden : ") + ((attrFilterFlags & AttrFilterFlag::Hidden) ? tr("Show") : tr("Hide"))
 #ifdef Q_OS_WIN
-                     + ", " + tr("System : ") + ((attrFilterFlags & AttrFilterFlag::System) ? tr("Show") : tr("Hide"))
+                      + ", " + tr("System : ") + ((attrFilterFlags & AttrFilterFlag::System) ? tr("Show") : tr("Hide"))
 #endif
-                     ;
+                      ;
 
-    ui->filterLabel->setText(tr("Filter : ") + getNameMaskFilters().join(' ') + ", " + flagsStr);
+    if(fileFolderFilterType == FileFolderFilterType::File)
+    {
+        filterStr += ", " + tr("File only");
+    }
+    else if(fileFolderFilterType == FileFolderFilterType::Folder)
+    {
+        filterStr += ", " + tr("Folder only");
+    }
+
+    ui->filterLabel->setText(tr("Filter : ") + getNameMaskFilters().join(' ') + ", " + filterStr);
 }
 
 void FolderForm::setSortSettings(SectionType sectionType,
@@ -278,6 +301,7 @@ int FolderForm::setPath(const QString& dirPath)
     }
 
     m_folderModel->clearSelected();
+    setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
     setNameMaskFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
 
     m_folderModel->setRootPath(dirPath);
