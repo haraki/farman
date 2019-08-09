@@ -190,6 +190,8 @@ void DoubleFolderPanel::updateSettings()
 {
     const QFont viewFont = Settings::getInstance()->getFontSetting("folderView");
 
+    const qreal viewRowHeight = Settings::getInstance()->getFolderViewRowHeight();
+
     const QFont pathFont = Settings::getInstance()->getFontSetting("folderPath");
 
     const QColor pathColor = Settings::getInstance()->getColorSetting("folderPath_text");
@@ -209,7 +211,7 @@ void DoubleFolderPanel::updateSettings()
     FolderForm* activeForm = getActiveFolderForm();
     Q_ASSERT(activeForm != Q_NULLPTR);
 
-    activeForm->setAppearance(viewFont, pathFont, pathColor, pathBgColor);
+    activeForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor);
     activeForm->setFileSizeFormatType(fileSizeFormatType);
     activeForm->setFileSizeComma(fileSizeComma);
     activeForm->setDateFormatType(dateFormatType);
@@ -218,7 +220,7 @@ void DoubleFolderPanel::updateSettings()
     FolderForm* inactiveForm = getInactiveFolderForm();
     Q_ASSERT(inactiveForm != Q_NULLPTR);
 
-    inactiveForm->setAppearance(viewFont, pathFont, pathColor, pathBgColor);
+    inactiveForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor);
     inactiveForm->setFileSizeFormatType(fileSizeFormatType);
     inactiveForm->setFileSizeComma(fileSizeComma);
     inactiveForm->setDateFormatType(dateFormatType);

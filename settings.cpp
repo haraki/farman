@@ -182,6 +182,9 @@ void Settings::initialize()
     // Folder color top priority
     m_folderColorTopPriority = value("main/folderColorTopPriority", DEFAULT_FOLDER_COLOR_TOP_PRIORITY).toBool();
 
+    // Folder view row height
+    m_folderViewRowHeight = value("main/folderViewRowHeight", DEFAULT_FOLDER_VIEW_ROW_HEIGHT).toReal();
+
     // Enable inactive font color
     m_enableInactiveFontColor = value("main/enableInactiveFontColor", DEFAULT_ENABLE_INACTIVE_FONT_COLOR).toBool();
 
@@ -401,6 +404,9 @@ void Settings::flush()
 
     // Folder color top priority
     setValue("main/folderColorTopPriority", m_folderColorTopPriority);
+
+    // Folder view row height
+    setValue("main/folderViewRowHeight", m_folderViewRowHeight);
 
     // Enable inactive font color
     setValue("main/enableInactiveFontColor", m_enableInactiveFontColor);

@@ -131,6 +131,9 @@ public:
     bool getFolderColorTopPriority() { return m_folderColorTopPriority; }
     void setFolderColorTopPriority(bool enabled) { m_folderColorTopPriority = enabled; }
 
+    qreal getFolderViewRowHeight() { return m_folderViewRowHeight; }
+    void setFolderViewRowHeight(qreal height) { m_folderViewRowHeight = height; }
+
     bool getEnableInactiveFontColor() { return m_enableInactiveFontColor; }
     void setEnableInactiveFontColor(bool enabled) { m_enableInactiveFontColor = enabled; }
 
@@ -245,6 +248,8 @@ private:
     QMap<QString, QFont> m_fontSettings;
 
     bool m_folderColorTopPriority = DEFAULT_FOLDER_COLOR_TOP_PRIORITY;
+
+    qreal m_folderViewRowHeight = DEFAULT_FOLDER_VIEW_ROW_HEIGHT;
 
     bool m_enableInactiveFontColor = DEFAULT_ENABLE_INACTIVE_FONT_COLOR;
 

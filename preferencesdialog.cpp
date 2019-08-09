@@ -285,6 +285,8 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
 
     ui->folderViewFolderColorTopPriorityCheckBox->setChecked(Settings::getInstance()->getFolderColorTopPriority());
 
+    ui->folderViewRowHeightDoubleSpinBox->setValue(Settings::getInstance()->getFolderViewRowHeight());
+
     ui->folderViewInactiveFontGroupBox->setChecked(Settings::getInstance()->getEnableInactiveFontColor());
 
     ui->folderViewCursorWidthSpinBox->setValue(Settings::getInstance()->getCursorWidth());
@@ -1325,6 +1327,8 @@ void PreferencesDialog::on_buttonBox_accepted()
     Settings::getInstance()->setColorSettings(m_colorSettings);
 
     Settings::getInstance()->setFolderColorTopPriority(ui->folderViewFolderColorTopPriorityCheckBox->isChecked());
+
+    Settings::getInstance()->setFolderViewRowHeight(ui->folderViewRowHeightDoubleSpinBox->value());
 
     Settings::getInstance()->setEnableInactiveFontColor(ui->folderViewInactiveFontGroupBox->isChecked());
 

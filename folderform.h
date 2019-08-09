@@ -40,6 +40,7 @@ public:
     PaneType getPaneType() const { return m_paneType; }
 
     void setAppearance(const QFont& viewFont,
+                       const qreal viewRowHeight,
                        const QFont& pathFont,
                        const QColor& pathColor,
                        const QColor& pathBgColor);

@@ -112,13 +112,14 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 }
 
 void FolderForm::setAppearance(const QFont& viewFont,
+                               const qreal viewRowHeight,
                                const QFont& pathFont,
                                const QColor& pathColor,
                                const QColor& pathBgColor)
 {
     m_folderModel->setFont(viewFont);
 
-    ui->folderView->verticalHeader()->setDefaultSectionSize(QFontMetrics(viewFont).height());
+    ui->folderView->verticalHeader()->setDefaultSectionSize(static_cast<int>(QFontMetrics(viewFont).height() * viewRowHeight));
 
     ui->folderPathEdit->setFont(pathFont);
 
