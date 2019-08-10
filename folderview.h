@@ -17,6 +17,8 @@ public:
     explicit FolderView(QWidget *parent = Q_NULLPTR);
     virtual ~FolderView() Q_DECL_OVERRIDE;
 
+    void setCursorAppearance(int width, const QColor& activeColor, const QColor& inactiveColor);
+
     using QTableView::setModel;
     void setModel(FolderModel *folderModel);
 

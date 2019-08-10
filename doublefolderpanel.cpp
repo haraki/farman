@@ -189,14 +189,13 @@ void DoubleFolderPanel::closeEvent(QCloseEvent* e)
 void DoubleFolderPanel::updateSettings()
 {
     const QFont viewFont = Settings::getInstance()->getFontSetting("folderView");
-
     const qreal viewRowHeight = Settings::getInstance()->getFolderViewRowHeight();
-
     const QFont pathFont = Settings::getInstance()->getFontSetting("folderPath");
-
     const QColor pathColor = Settings::getInstance()->getColorSetting("folderPath_text");
-
     const QColor pathBgColor = Settings::getInstance()->getColorSetting("folderPath_background");
+    const int cursorWidth = Settings::getInstance()->getCursorWidth();
+    const QColor cursorActiveColor = Settings::getInstance()->getColorSetting("folderView_cursor");
+    const QColor cursorInactiveColor = Settings::getInstance()->getColorSetting("folderView_cursor_inactive");
 
     FileSizeFormatType fileSizeFormatType = (m_paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
                                                                                Settings::getInstance()->getDualPaneFileSizeFormatType();
@@ -211,7 +210,8 @@ void DoubleFolderPanel::updateSettings()
     FolderForm* activeForm = getActiveFolderForm();
     Q_ASSERT(activeForm != Q_NULLPTR);
 
-    activeForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor);
+    activeForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor,
+                              cursorWidth, cursorActiveColor, cursorInactiveColor);
     activeForm->setFileSizeFormatType(fileSizeFormatType);
     activeForm->setFileSizeComma(fileSizeComma);
     activeForm->setDateFormatType(dateFormatType);
@@ -220,7 +220,8 @@ void DoubleFolderPanel::updateSettings()
     FolderForm* inactiveForm = getInactiveFolderForm();
     Q_ASSERT(inactiveForm != Q_NULLPTR);
 
-    inactiveForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor);
+    inactiveForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor,
+                                cursorWidth, cursorActiveColor, cursorInactiveColor);
     inactiveForm->setFileSizeFormatType(fileSizeFormatType);
     inactiveForm->setFileSizeComma(fileSizeComma);
     inactiveForm->setDateFormatType(dateFormatType);

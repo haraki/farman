@@ -115,10 +115,14 @@ void FolderForm::setAppearance(const QFont& viewFont,
                                const qreal viewRowHeight,
                                const QFont& pathFont,
                                const QColor& pathColor,
-                               const QColor& pathBgColor)
+                               const QColor& pathBgColor,
+                               const int cursorWidth,
+                               const QColor cursorActiveColor,
+                               const QColor cursorInactiveColor)
 {
     m_folderModel->setFont(viewFont);
 
+    ui->folderView->setCursorAppearance(cursorWidth, cursorActiveColor, cursorInactiveColor);
     ui->folderView->verticalHeader()->setDefaultSectionSize(static_cast<int>(QFontMetrics(viewFont).height() * viewRowHeight));
 
     ui->folderPathEdit->setFont(pathFont);

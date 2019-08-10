@@ -43,7 +43,10 @@ public:
                        const qreal viewRowHeight,
                        const QFont& pathFont,
                        const QColor& pathColor,
-                       const QColor& pathBgColor);
+                       const QColor& pathBgColor,
+                       const int cursorWidth,
+                       const QColor cursorActiveColor,
+                       const QColor cursorInactiveColor);
     void setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio);
 
     void setFileSizeFormatType(FileSizeFormatType formatType);

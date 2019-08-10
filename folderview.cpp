@@ -31,6 +31,14 @@ FolderView::~FolderView()
 
 }
 
+void FolderView::setCursorAppearance(int width, const QColor& activeColor, const QColor& inactiveColor)
+{
+    FolderViewStyledItemDelegate* styledItemDelegate = dynamic_cast<FolderViewStyledItemDelegate*>(itemDelegate());
+    Q_ASSERT(styledItemDelegate != NULL);
+
+    styledItemDelegate->setCursorAppearance(width, activeColor, inactiveColor);
+}
+
 void FolderView::setModel(FolderModel *model)
 {
     QTableView::setModel(model);
