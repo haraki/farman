@@ -40,13 +40,16 @@ public:
     PaneType getPaneType() const { return m_paneType; }
 
     void setAppearance(const QFont& viewFont,
-                       const qreal viewRowHeight,
+                       qreal viewRowHeight,
                        const QFont& pathFont,
                        const QColor& pathColor,
                        const QColor& pathBgColor,
-                       const int cursorWidth,
+                       int cursorWidth,
                        const QColor cursorActiveColor,
-                       const QColor cursorInactiveColor);
+                       const QColor cursorInactiveColor,
+                       bool loopMove,
+                       bool moveOpenViewer,
+                       DragAndDropBehaviorType behaviorType);
     void setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio);
 
     void setFileSizeFormatType(FileSizeFormatType formatType);

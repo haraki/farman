@@ -189,13 +189,16 @@ void DoubleFolderPanel::closeEvent(QCloseEvent* e)
 void DoubleFolderPanel::updateSettings()
 {
     const QFont viewFont = Settings::getInstance()->getFontSetting("folderView");
-    const qreal viewRowHeight = Settings::getInstance()->getFolderViewRowHeight();
+    qreal viewRowHeight = Settings::getInstance()->getFolderViewRowHeight();
     const QFont pathFont = Settings::getInstance()->getFontSetting("folderPath");
     const QColor pathColor = Settings::getInstance()->getColorSetting("folderPath_text");
     const QColor pathBgColor = Settings::getInstance()->getColorSetting("folderPath_background");
-    const int cursorWidth = Settings::getInstance()->getCursorWidth();
+    int cursorWidth = Settings::getInstance()->getCursorWidth();
     const QColor cursorActiveColor = Settings::getInstance()->getColorSetting("folderView_cursor");
     const QColor cursorInactiveColor = Settings::getInstance()->getColorSetting("folderView_cursor_inactive");
+    bool loopMove = Settings::getInstance()->getAllowCursorAround();
+    bool moveOpenViewer = Settings::getInstance()->getMoveCursorOpenViewer();
+    DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
 
     FileSizeFormatType fileSizeFormatType = (m_paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
                                                                                Settings::getInstance()->getDualPaneFileSizeFormatType();
@@ -211,7 +214,8 @@ void DoubleFolderPanel::updateSettings()
     Q_ASSERT(activeForm != Q_NULLPTR);
 
     activeForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor,
-                              cursorWidth, cursorActiveColor, cursorInactiveColor);
+                              cursorWidth, cursorActiveColor, cursorInactiveColor,
+                              loopMove, moveOpenViewer, behaviorType);
     activeForm->setFileSizeFormatType(fileSizeFormatType);
     activeForm->setFileSizeComma(fileSizeComma);
     activeForm->setDateFormatType(dateFormatType);
@@ -221,7 +225,8 @@ void DoubleFolderPanel::updateSettings()
     Q_ASSERT(inactiveForm != Q_NULLPTR);
 
     inactiveForm->setAppearance(viewFont, viewRowHeight, pathFont, pathColor, pathBgColor,
-                                cursorWidth, cursorActiveColor, cursorInactiveColor);
+                                cursorWidth, cursorActiveColor, cursorInactiveColor,
+                                loopMove, moveOpenViewer, behaviorType);
     inactiveForm->setFileSizeFormatType(fileSizeFormatType);
     inactiveForm->setFileSizeComma(fileSizeComma);
     inactiveForm->setDateFormatType(dateFormatType);

@@ -112,17 +112,23 @@ bool FolderForm::eventFilter(QObject *watched, QEvent *e)
 }
 
 void FolderForm::setAppearance(const QFont& viewFont,
-                               const qreal viewRowHeight,
+                               qreal viewRowHeight,
                                const QFont& pathFont,
                                const QColor& pathColor,
                                const QColor& pathBgColor,
-                               const int cursorWidth,
+                               int cursorWidth,
                                const QColor cursorActiveColor,
-                               const QColor cursorInactiveColor)
+                               const QColor cursorInactiveColor,
+                               bool loopMove,
+                               bool moveOpenViewer,
+                               DragAndDropBehaviorType behaviorType)
 {
     m_folderModel->setFont(viewFont);
 
     ui->folderView->setCursorAppearance(cursorWidth, cursorActiveColor, cursorInactiveColor);
+    ui->folderView->setCursorBehaivior(loopMove, moveOpenViewer);
+    ui->folderView->setDragAndDropBehavior(behaviorType);
+
     ui->folderView->verticalHeader()->setDefaultSectionSize(static_cast<int>(QFontMetrics(viewFont).height() * viewRowHeight));
 
     ui->folderPathEdit->setFont(pathFont);

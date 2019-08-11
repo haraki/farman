@@ -3,6 +3,7 @@
 
 #include <QTableView>
 #include <QString>
+#include "types.h"
 
 namespace Farman
 {
@@ -18,6 +19,8 @@ public:
     virtual ~FolderView() Q_DECL_OVERRIDE;
 
     void setCursorAppearance(int width, const QColor& activeColor, const QColor& inactiveColor);
+    void setCursorBehaivior(bool loopMove, bool moveOpenViewer);
+    void setDragAndDropBehavior(DragAndDropBehaviorType behaviorType);
 
     using QTableView::setModel;
     void setModel(FolderModel *folderModel);
@@ -55,6 +58,10 @@ private:
     void emitCopyFile(const QStringList& srcPaths, const QString& dstDirPath);
     void emitMoveFile(const QStringList& srcPaths, const QString& dstDirPath);
     void emitSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag);
+
+    bool m_loopMove;
+    bool m_moveOpenViewer;
+    DragAndDropBehaviorType m_dragAndDropBehaviorType;
 };
 
 }           // namespace Farman

@@ -9,7 +9,7 @@
 #include "folderviewstyleditemdelegate.h"
 #include "foldermodel.h"
 #include "file.h"
-#include "settings.h"
+#include "default_settings.h"
 #include "types.h"
 
 namespace Farman
@@ -17,6 +17,9 @@ namespace Farman
 
 FolderView::FolderView(QWidget *parent/* = Q_NULLPTR*/)
     : QTableView(parent)
+    , m_loopMove(DEFAULT_ALLOW_CURSOR_AROUND)
+    , m_moveOpenViewer(DEFAULT_MOVE_CURSOR_OPEN_VIEWER)
+    , m_dragAndDropBehaviorType(DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE)
 {
     setItemDelegate(new FolderViewStyledItemDelegate(this));
 
@@ -37,6 +40,17 @@ void FolderView::setCursorAppearance(int width, const QColor& activeColor, const
     Q_ASSERT(styledItemDelegate != NULL);
 
     styledItemDelegate->setCursorAppearance(width, activeColor, inactiveColor);
+}
+
+void FolderView::setCursorBehaivior(bool loopMove, bool moveOpenViewer)
+{
+    m_loopMove = loopMove;
+    m_moveOpenViewer = moveOpenViewer;
+}
+
+void FolderView::setDragAndDropBehavior(DragAndDropBehaviorType behaviorType)
+{
+    m_dragAndDropBehaviorType = behaviorType;
 }
 
 void FolderView::setModel(FolderModel *model)
@@ -96,7 +110,7 @@ void FolderView::movePreviousCursor()
     int rowNext = index.row() - 1;
     if(rowNext < 0)
     {
-        if(!Settings::getInstance()->getAllowCursorAround())
+        if(!m_loopMove)
         {
             return;
         }
@@ -123,7 +137,7 @@ void FolderView::moveNextCursor()
     int rowNext = index.row() + 1;
     if(rowNext == folderModel->rowCount(index.parent()))
     {
-        if(!Settings::getInstance()->getAllowCursorAround())
+        if(!m_loopMove)
         {
             return;
         }
@@ -208,7 +222,7 @@ void FolderView::keyPressEvent(QKeyEvent *e)
             emitOpen(path);
         }
 
-        if(Settings::getInstance()->getMoveCursorOpenViewer())
+        if(m_moveOpenViewer)
         {
             moveNextCursor();
         }
@@ -318,7 +332,7 @@ void FolderView::dropEvent(QDropEvent *e)
         qDebug() << "srcPaths : " << srcPaths;
         qDebug() << "dstDirPath : " << dstDirPath;
 
-        DragAndDropBehaviorType behaviorType = Settings::getInstance()->getDragAndDropBehaviorType();
+        DragAndDropBehaviorType behaviorType = m_dragAndDropBehaviorType;
         if(behaviorType == DragAndDropBehaviorType::Select)
         {
             // コピー or 移動選択用ポップアップメニュー表示
