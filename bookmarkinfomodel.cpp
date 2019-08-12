@@ -95,7 +95,7 @@ int BookmarkInfoModel::rowCount(const QModelIndex &parent) const
         return 0;
     }
 
-    return m_infos.count();
+    return m_infos.size();
 }
 
 int BookmarkInfoModel::columnCount(const QModelIndex &parent) const
@@ -110,7 +110,7 @@ int BookmarkInfoModel::columnCount(const QModelIndex &parent) const
 
 QVariant BookmarkInfoModel::data(const QModelIndex &index, int role) const
 {
-    if(!index.isValid() || index.row() < 0 || index.row() >= m_infos.count())
+    if(!index.isValid() || index.row() < 0 || index.row() >= m_infos.size())
     {
         return QVariant();
     }
