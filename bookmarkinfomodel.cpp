@@ -1,6 +1,6 @@
 ﻿#include <QStorageInfo>
 #include <QDebug>
-#include "settings.h"
+#include "bookmarkmanager.h"
 #include "bookmarkinfomodel.h"
 
 namespace Farman
@@ -61,7 +61,7 @@ int BookmarkInfoModel::initialize(bool system)
         }
     }
 
-    for(auto& bookmark : Settings::getInstance()->getBookmarkDirPathList())
+    for(auto& bookmark : BookmarkManager::getInstance()->getList())
     {
         m_infos.push_back({BookmarkInfo::Type::User, bookmark.first, bookmark.second});
     }
@@ -254,13 +254,11 @@ bool BookmarkInfoModel::moveRows(const QModelIndex &sourceParent, int sourceRow,
 
 int BookmarkInfoModel::saveToSettings()
 {
-    QList<QPair<QString, QString>> dirPathList;
+    BookmarkManager::getInstance()->initialize();
     for(auto& info : m_infos)
     {
-        dirPathList.push_back({info.getName(), info.getPath()});
+        BookmarkManager::getInstance()->push_back({info.getName(), info.getPath()});
     }
-
-    Settings::getInstance()->setBookmarkDirPathList(dirPathList);
 
     return 0;
 }

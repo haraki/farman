@@ -163,16 +163,6 @@ public:
     QString getTextEditorArgs() { return m_textEditorArgs; }
     void setTextEditorArgs(const QString& textEditorArgs) { m_textEditorArgs = textEditorArgs; }
 
-    const QList<QPair<QString, QString>>& getBookmarkDirPathList() { return m_bookmarkDirPathList; }
-    void setBookmarkDirPathList(const QList<QPair<QString, QString>>& dirPathList) { m_bookmarkDirPathList = dirPathList; }
-    QPair<QString, QString> getBookmarkDirPath(const QString& name);
-    QPair<QString, QString> getBookmarkDirPath(int index);
-    int searchBookmarkDirPath(const QString& path);
-    int insertBookmarkDirPath(const QString dirPath, int index = -1);
-    int insertBookmarkDirPath(const QPair<QString, QString>& dirPath, int index = -1);
-    int removeBookmarkDirPath(const QPair<QString, QString>& dirPath);
-    int removeBookmarkDirPath(int index);
-
 private:
     Settings();
 
@@ -267,8 +257,6 @@ private:
 
     QString m_textEditorPath = DEFAULT_TEXT_EDITOR_PATH;
     QString m_textEditorArgs = DEFAULT_TEXT_EDITOR_ARGS;
-
-    QList<QPair<QString, QString>> m_bookmarkDirPathList;
 };
 
 }

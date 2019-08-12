@@ -28,6 +28,7 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     bookmarkeditdialog.cpp \
     bookmarkinfomodel.cpp \
+    bookmarkmanager.cpp \
     bookmarkmanagerdialog.cpp \
     licensedialog.cpp \
     mainwindow.cpp \
@@ -66,6 +67,7 @@ HEADERS  += mainwindow.h \
     bookmarkeditdialog.h \
     bookmarkinfo.h \
     bookmarkinfomodel.h \
+    bookmarkmanager.h \
     bookmarkmanagerdialog.h \
     default_settings.h \
     folderform.h \

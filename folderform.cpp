@@ -6,7 +6,8 @@
 #include "folderform.h"
 #include "ui_folderform.h"
 #include "foldermodel.h"
-#include "settings.h"
+#include "default_settings.h"
+#include "bookmarkmanager.h"
 #include "bookmarkeditdialog.h"
 
 namespace Farman
@@ -517,7 +518,7 @@ int FolderForm::onChangeDir()
 void FolderForm::onBookmarkDir(bool marked)
 {
     const QString currentPath = getCurrentDirPath();
-    int index = Settings::getInstance()->searchBookmarkDirPath(currentPath);
+    int index = BookmarkManager::getInstance()->search(currentPath);
 
     if(marked)
     {
@@ -534,14 +535,14 @@ void FolderForm::onBookmarkDir(bool marked)
                 return;
             }
 
-            Settings::getInstance()->insertBookmarkDirPath({retInfo.getName(), retInfo.getPath()});
+            BookmarkManager::getInstance()->insert({retInfo.getName(), retInfo.getPath()});
         }
     }
     else
     {
         if(index >= 0)
         {
-            Settings::getInstance()->removeBookmarkDirPath(index);
+            BookmarkManager::getInstance()->remove(index);
         }
     }
 
@@ -577,7 +578,7 @@ void FolderForm::checkBookmark()
     const QString& currentPath = getCurrentDirPath();
 
     ui->bookmarkToolButton->blockSignals(true);
-    if(Settings::getInstance()->searchBookmarkDirPath(currentPath) >= 0)
+    if(BookmarkManager::getInstance()->search(currentPath) >= 0)
     {
         ui->bookmarkToolButton->setChecked(true);
     }

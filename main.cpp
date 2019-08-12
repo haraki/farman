@@ -1,4 +1,5 @@
 ﻿#include "mainwindow.h"
+#include "bookmarkmanager.h"
 #include "settings.h"
 #include <QApplication>
 
@@ -11,6 +12,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+    Farman::BookmarkManager::create();
     Farman::Settings::create();
 
     Farman::MainWindow w;

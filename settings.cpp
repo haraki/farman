@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 #include "settings.h"
+#include "bookmarkmanager.h"
 
 namespace Farman
 {
@@ -240,14 +241,14 @@ void Settings::initialize()
     m_textEditorArgs = value("main/textEditorArgs", DEFAULT_TEXT_EDITOR_ARGS).toString();
 
     // Bookmark directory paths
-    m_bookmarkDirPathList.clear();
+    BookmarkManager::getInstance()->initialize();
     int size = beginReadArray("main/bookmarkDirPathList");
     if(size > 0)
     {
         for(int i = 0;i < size;i++)
         {
             setArrayIndex(i);
-            m_bookmarkDirPathList.append({value("name").toString(), value("path").toString()});
+            BookmarkManager::getInstance()->append({value("name").toString(), value("path").toString()});
         }
     }
     else
@@ -264,7 +265,7 @@ void Settings::initialize()
 
         for(auto location : locations)
         {
-            m_bookmarkDirPathList.append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
+            BookmarkManager::getInstance()->append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
         }
     }
     endArray();
@@ -452,95 +453,16 @@ void Settings::flush()
 
     // Bookmark directory paths
     beginWriteArray("main/bookmarkDirPathList");
-    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
+    for(int i = 0;i < BookmarkManager::getInstance()->getSize();i++)
     {
         setArrayIndex(i);
-        setValue("name", m_bookmarkDirPathList[i].first);
-        setValue("path", m_bookmarkDirPathList[i].second);
+
+        QPair<QString, QString> bookmark = BookmarkManager::getInstance()->get(i);
+
+        setValue("name", bookmark.first);
+        setValue("path", bookmark.second);
     }
     endArray();
-}
-
-QPair<QString, QString> Settings::getBookmarkDirPath(const QString& name)
-{
-    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
-    {
-        if(m_bookmarkDirPathList[i].first == name)
-        {
-            return getBookmarkDirPath(i);
-        }
-    }
-
-    return QPair<QString, QString>();
-}
-
-QPair<QString, QString> Settings::getBookmarkDirPath(int index)
-{
-    if(index < 0 || index >= m_bookmarkDirPathList.count())
-    {
-        return QPair<QString, QString>();
-    }
-
-    return m_bookmarkDirPathList[index];
-}
-
-int Settings::searchBookmarkDirPath(const QString& path)
-{
-    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
-    {
-        if(m_bookmarkDirPathList[i].second == path)
-        {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-int Settings::insertBookmarkDirPath(const QString dirPath, int index/* = -1*/)
-{
-    return insertBookmarkDirPath({dirPath, dirPath}, index);
-}
-
-int Settings::insertBookmarkDirPath(const QPair<QString, QString>& dirPath, int index/* = -1*/)
-{
-    if(index < 0 || index >= m_bookmarkDirPathList.count())
-    {
-        index = m_bookmarkDirPathList.count();
-    }
-
-    m_bookmarkDirPathList.insert(index, dirPath);
-
-    qDebug() << "insert bookmark : " << dirPath << ", index : " << index;
-
-    return index;
-}
-
-int Settings::removeBookmarkDirPath(const QPair<QString, QString>& dirPath)
-{
-    for(int i = 0;i < m_bookmarkDirPathList.size();i++)
-    {
-        if(m_bookmarkDirPathList[i] == dirPath)
-        {
-            return removeBookmarkDirPath(i);
-        }
-    }
-
-    return -1;
-}
-
-int Settings::removeBookmarkDirPath(int index)
-{
-    if(index < 0 || index >= m_bookmarkDirPathList.count())
-    {
-        return -1;
-    }
-
-    qDebug() << "remove bookmark : " << m_bookmarkDirPathList[index] << ", index : " << index;
-
-    m_bookmarkDirPathList.removeAt(index);
-
-    return index;
 }
 
 QColor Settings::getValueColorSetting(const QString& key, const QColor& defColor)

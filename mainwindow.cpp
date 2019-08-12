@@ -10,6 +10,7 @@
 #include "doublefolderpanel.h"
 #include "settings.h"
 #include "preferencesdialog.h"
+#include "bookmarkmanager.h"
 #include "bookmarkmanagerdialog.h"
 #include "viewerdispatcher.h"
 #include "imageviewer.h"
@@ -878,7 +879,7 @@ void MainWindow::checkBookmark()
     Q_ASSERT(activeForm != Q_NULLPTR);
 
     ui->actionBookmark->blockSignals(true);
-    if(Settings::getInstance()->searchBookmarkDirPath(activeForm->getCurrentDirPath()) >= 0)
+    if(BookmarkManager::getInstance()->search(activeForm->getCurrentDirPath()) >= 0)
     {
         ui->actionBookmark->setChecked(true);
     }
