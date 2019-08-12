@@ -60,7 +60,7 @@ QPair<QString, QString> BookmarkManager::get(const QString& name) const
 
 QPair<QString, QString> BookmarkManager::get(int index) const
 {
-    if(index < 0 || index >= m_list.count())
+    if(index < 0 || index >= m_list.size())
     {
         return QPair<QString, QString>();
     }
@@ -98,7 +98,7 @@ int BookmarkManager::insert(const QString path, int index/* = -1*/)
 
 int BookmarkManager::insert(const QPair<QString, QString>& bookmark, int index/* = -1*/)
 {
-    if(index < 0 || index >= m_list.count())
+    if(index < 0 || index >= m_list.size())
     {
         index = push_back(bookmark);
     }
@@ -116,7 +116,7 @@ int BookmarkManager::push_back(const QPair<QString, QString>& bookmark)
 {
     m_list.push_back(bookmark);
 
-    return m_list.count() - 1;
+    return m_list.size() - 1;
 }
 
 int BookmarkManager::remove(const QPair<QString, QString>& bookmark)
@@ -134,7 +134,7 @@ int BookmarkManager::remove(const QPair<QString, QString>& bookmark)
 
 int BookmarkManager::remove(int index)
 {
-    if(index < 0 || index >= m_list.count())
+    if(index < 0 || index >= m_list.size())
     {
         return -1;
     }

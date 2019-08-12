@@ -24,7 +24,7 @@ File::~File()
 
 bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
 {
-    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstDirPath, false);
+    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstDirPath, false, Settings::getInstance()->getCopyUnitSize());
 
     connect(copyWorker,
             SIGNAL(outputConsole(const QString)),
@@ -58,7 +58,7 @@ bool File::copyFile(const QStringList& srcPaths, const QString& dstDirPath)
 
 bool File::moveFile(const QStringList& srcPaths, const QString& dstPath)
 {
-    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true);
+    CopyWorker* copyWorker = new CopyWorker(srcPaths, dstPath, true, Settings::getInstance()->getCopyUnitSize());
 
     connect(copyWorker,
             SIGNAL(outputConsole(const QString)),

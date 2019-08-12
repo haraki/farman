@@ -8,13 +8,12 @@
 #include <QThread>
 #include "copyworker.h"
 #include "workerresult.h"
-#include "settings.h"
 #include "default_settings.h"
 
 namespace Farman
 {
 
-CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool moveMode, QObject *parent)
+CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool moveMode, qint64 unitSize, QObject *parent)
     : Worker(parent)
     , m_srcPaths(srcPaths)
     , m_dstPath(dstPath)
@@ -22,9 +21,8 @@ CopyWorker::CopyWorker(const QStringList& srcPaths, const QString& dstPath, bool
     , m_methodType(DEFAULT_OVERWRITE_METHOD_TYPE)
     , m_methodTypeKeep(false)
     , m_renameFileName("")
-    , m_copyUnitSize(DEFAULT_COPY_UNIT_SIZE)
+    , m_copyUnitSize(unitSize)
 {
-    m_copyUnitSize = Settings::getInstance()->getCopyUnitSize();
 }
 
 CopyWorker::~CopyWorker()
