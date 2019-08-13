@@ -17,6 +17,7 @@ public:
     static BookmarkManager* getInstance();
 
     void initialize();
+    void setDefault();
 
     const QList<QPair<QString, QString>>& getList() const;
     int getSize() const;

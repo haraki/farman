@@ -1,7 +1,6 @@
 ﻿#include <QTextCodec>
 #include <QCoreApplication>
 #include <QFontDatabase>
-#include <QStandardPaths>
 #include <QDebug>
 #include "settings.h"
 #include "bookmarkmanager.h"
@@ -253,20 +252,7 @@ void Settings::initialize()
     }
     else
     {
-        QStandardPaths::StandardLocation locations[] = {
-            QStandardPaths::HomeLocation,
-            QStandardPaths::DesktopLocation,
-            QStandardPaths::DocumentsLocation,
-            QStandardPaths::DownloadLocation,
-            QStandardPaths::PicturesLocation,
-            QStandardPaths::MusicLocation,
-            QStandardPaths::MoviesLocation,
-        };
-
-        for(auto location : locations)
-        {
-            BookmarkManager::getInstance()->append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
-        }
+        BookmarkManager::getInstance()->setDefault();
     }
     endArray();
 }

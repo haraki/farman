@@ -1,4 +1,5 @@
-﻿#include <QDebug>
+﻿#include <QStandardPaths>
+#include <QDebug>
 #include "bookmarkmanager.h"
 
 namespace Farman
@@ -33,6 +34,24 @@ BookmarkManager::BookmarkManager()
 void BookmarkManager::initialize()
 {
     m_list.clear();
+}
+
+void BookmarkManager::setDefault()
+{
+    QStandardPaths::StandardLocation locations[] = {
+        QStandardPaths::HomeLocation,
+        QStandardPaths::DesktopLocation,
+        QStandardPaths::DocumentsLocation,
+        QStandardPaths::DownloadLocation,
+        QStandardPaths::PicturesLocation,
+        QStandardPaths::MusicLocation,
+        QStandardPaths::MoviesLocation,
+    };
+
+    for(auto location : locations)
+    {
+        append({QStandardPaths::displayName(location), QStandardPaths::standardLocations(location)[0]});
+    }
 }
 
 const QList<QPair<QString, QString>>& BookmarkManager::getList() const
