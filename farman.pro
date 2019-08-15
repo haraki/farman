@@ -30,6 +30,7 @@ SOURCES += main.cpp\
     bookmarkinfomodel.cpp \
     bookmarkmanager.cpp \
     bookmarkmanagerdialog.cpp \
+    historymanager.cpp \
     licensedialog.cpp \
     mainwindow.cpp \
     folderform.cpp \
@@ -75,6 +76,7 @@ HEADERS  += mainwindow.h \
     foldermodel.h \
     folderview.h \
     doublefolderpanel.h \
+    historymanager.h \
     licensedialog.h \
     misc.h \
     selectbookmarkdialog.h \
