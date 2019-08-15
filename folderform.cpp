@@ -30,6 +30,7 @@ FolderForm::FolderForm(PaneType pane,
     , ui(new Ui::FolderForm)
     , m_paneType(pane)
     , m_folderModel(new FolderModel(this))
+    , m_historyManager(new HistoryManager(this))
 {
     ui->setupUi(this);
 
@@ -79,10 +80,13 @@ FolderForm::FolderForm(PaneType pane,
             SLOT(onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
 
     ui->folderView->installEventFilter(this);
+
+    m_historyManager->initialize();
 }
 
 FolderForm::~FolderForm()
 {
+    delete m_historyManager;
     delete m_folderModel;
     delete ui;
 }
@@ -295,7 +299,7 @@ Qt::SortOrder FolderForm::getSortOrder() const
     return m_folderModel->sortOrder();
 }
 
-int FolderForm::setPath(const QString& dirPath)
+int FolderForm::setPath(const QString& dirPath, bool addHistory/* = true*/)
 {
     if(m_folderModel->rootPath() == dirPath)
     {
@@ -318,6 +322,11 @@ int FolderForm::setPath(const QString& dirPath)
     m_folderModel->setRootPath(dirPath);
 
     ui->folderPathEdit->setText(dirPath);
+
+    if(addHistory && m_historyManager->search(dirPath) != 0)
+    {
+        m_historyManager->setPath(dirPath);
+    }
 
     return 0;
 }
@@ -356,6 +365,20 @@ QFileInfo FolderForm::getCurrentFileInfo()
     }
 
     return QFileInfo();
+}
+
+QString FolderForm::getPreviousDirPath()
+{
+    Q_ASSERT(m_historyManager != Q_NULLPTR);
+
+    return m_historyManager->getPrevious();
+}
+
+QString FolderForm::getNextDirPath()
+{
+    Q_ASSERT(m_historyManager != Q_NULLPTR);
+
+    return m_historyManager->getNext();
 }
 
 QList<QFileInfo> FolderForm::getSelectedFileInfoList()
@@ -490,6 +513,32 @@ int FolderForm::onGoToParentDir()
     qDebug() << "================== onGoToParentDir() : " << newPath;
 
     return setPath(newPath);
+}
+
+int FolderForm::onPreviousDir()
+{
+    QString path = m_historyManager->getPrevious();
+    if(path.isEmpty())
+    {
+        return -1;
+    }
+
+    m_historyManager->setPreviousIndex();
+
+    return setPath(path, false);
+}
+
+int FolderForm::onNextDir()
+{
+    QString path = m_historyManager->getNext();
+    if(path.isEmpty())
+    {
+        return -1;
+    }
+
+    m_historyManager->setNextIndex();
+
+    return setPath(path, false);
 }
 
 int FolderForm::onChangeDir()

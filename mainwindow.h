@@ -46,6 +46,7 @@ private:
     bool launchExternalApp(const QString& command, const QString dirPath);
 
     void checkBookmark();
+    void checkHistory();
 
     void about();
 
@@ -90,6 +91,8 @@ private Q_SLOTS:
     void on_actionDeselectAll_triggered();
     void on_actionCopyFullPath_triggered();
     void on_actionCopyFileName_triggered();
+    void on_actionPrevious_triggered();
+    void on_actionNext_triggered();
     void on_actionGoToFolder_triggered();
     void on_actionSetSameFolderToTarget_triggered();
     void on_actionSetSameFolderFromTarget_triggered();

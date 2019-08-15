@@ -136,6 +136,9 @@
     <property name="title">
      <string>Go(&amp;G)</string>
     </property>
+    <addaction name="actionPrevious"/>
+    <addaction name="actionNext"/>
+    <addaction name="separator"/>
     <addaction name="actionGoToFolder"/>
     <addaction name="separator"/>
     <addaction name="actionSetSameFolderToTarget"/>
@@ -505,6 +508,34 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+E</string>
+   </property>
+  </action>
+  <action name="actionPrevious">
+   <property name="text">
+    <string>Previous(&amp;P)</string>
+   </property>
+   <property name="iconText">
+    <string>Previous</string>
+   </property>
+   <property name="toolTip">
+    <string>Previous</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+[</string>
+   </property>
+  </action>
+  <action name="actionNext">
+   <property name="text">
+    <string>Next(&amp;N)</string>
+   </property>
+   <property name="iconText">
+    <string>Next</string>
+   </property>
+   <property name="toolTip">
+    <string>Next</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+]</string>
    </property>
   </action>
  </widget>

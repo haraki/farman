@@ -307,6 +307,7 @@ void MainWindow::onFocusChanged(PaneType pane, bool inFocus)
     }
 
     checkBookmark();
+    checkHistory();
 }
 
 void MainWindow::onDirectoryLoaded(PaneType pane, const QString& path)
@@ -317,6 +318,7 @@ void MainWindow::onDirectoryLoaded(PaneType pane, const QString& path)
              << (pane == PaneType::Left ? "left" : pane == PaneType::Right ? "right" : "unknown") << ", path : " << path;
 
     checkBookmark();
+    checkHistory();
 }
 
 void MainWindow::onDirectoryBookmarked(PaneType pane, const QString &path, bool marked)
@@ -553,6 +555,32 @@ void MainWindow::on_actionCopyFileName_triggered()
     Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
     doubleFolderPanel->onCopyFileName();
+}
+
+void MainWindow::on_actionPrevious_triggered()
+{
+    qDebug() << "MainWindow::on_actionPrevious_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->onPreviousDir();
+}
+
+void MainWindow::on_actionNext_triggered()
+{
+    qDebug() << "MainWindow::on_actionNext_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->onNextDir();
 }
 
 void MainWindow::on_actionGoToFolder_triggered()
@@ -888,6 +916,20 @@ void MainWindow::checkBookmark()
         ui->actionBookmark->setChecked(false);
     }
     ui->actionBookmark->blockSignals(false);
+}
+
+void MainWindow::checkHistory()
+{
+    qDebug() << "MainWindow::checkHistory()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    ui->actionPrevious->setEnabled(!activeForm->getPreviousDirPath().isEmpty());
+    ui->actionNext->setEnabled(!activeForm->getNextDirPath().isEmpty());
 }
 
 void MainWindow::about()

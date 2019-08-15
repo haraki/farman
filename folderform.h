@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QModelIndex>
 #include <QItemSelectionModel>
+#include "historymanager.h"
 #include "types.h"
 
 namespace Ui {
@@ -85,11 +86,14 @@ public:
     Qt::CaseSensitivity getSortCaseSensitivity() const;
     Qt::SortOrder getSortOrder() const;
 
-    int setPath(const QString& dirPath);
+    int setPath(const QString& dirPath, bool addHistory = true);
 
     QString getCurrentDirPath();
     QString getCurrentFileName();
     QFileInfo getCurrentFileInfo();
+
+    QString getPreviousDirPath();
+    QString getNextDirPath();
 
     QList<QFileInfo> getSelectedFileInfoList();
 
@@ -97,6 +101,8 @@ public:
 
     int onGoToChildDir();
     int onGoToParentDir();
+    int onPreviousDir();
+    int onNextDir();
     int onChangeDir();
     void onBookmarkDir(bool marked);
     void onSelectAll();
@@ -126,21 +132,23 @@ private Q_SLOTS:
     void on_goToFolderToolButton_clicked();
     void on_bookmarkToolButton_toggled(bool checked);
 
+private:
+    bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
+
+    int getTotalColumnWidth(int withOutColumn = -1);
+
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void emitDirectoryLoaded(const QString &path);
     void emitFocusChanged(bool inFocus);
     void emitDirectoryBookmarked(const QString &path, bool marked);
 
 private:
-    bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
-
-    int getTotalColumnWidth(int withOutColumn = -1);
-
-private:
     Ui::FolderForm *ui;
 
     const PaneType m_paneType;
-    FolderModel *m_folderModel;
+    FolderModel* m_folderModel;
+
+    HistoryManager* m_historyManager;
 };
 
 }           // namespace Farman
