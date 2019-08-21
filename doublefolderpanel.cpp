@@ -35,8 +35,9 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
 {
     ui->setupUi(this);
 
+    m_activePane = Settings::getInstance()->getActivePane();
+
     PaneMode paneMode = Settings::getInstance()->getPaneMode();
-    PaneType activePane = Settings::getInstance()->getActivePane();
 
     FileSizeFormatType fileSizeFormatType = (paneMode == PaneMode::Single) ? Settings::getInstance()->getSinglePaneFileSizeFormatType() :
                                                                              Settings::getInstance()->getDualPaneFileSizeFormatType();
@@ -50,17 +51,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
 
     for(auto pane : {PaneType::Left, PaneType::Right})
     {
-        QString path = QDir::homePath();
-        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(pane);
-        if(folderAtStartup == FolderAtStartup::LastTime || folderAtStartup == FolderAtStartup::Fixed)
-        {
-            path = Settings::getInstance()->getFolderPath(pane);
-        }
-        if(!QDir(path).exists())
-        {
-            path = QDir::currentPath();
-        }
-
         AttrFilterFlags attrFilterFlags = Settings::getInstance()->getAttrFilterSettings(pane);
         SectionType sortSectionType = Settings::getInstance()->getSortSectionType(pane);
         SectionType sortSectionType2nd = Settings::getInstance()->getSortSectionType2nd(pane);
@@ -85,7 +75,6 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         Q_ASSERT(folderForm != Q_NULLPTR);
 
         folderForm->setObjectName(QStringLiteral("folderForm"));
-        folderForm->setPath(path);
 
         QVBoxLayout* vLayout = new QVBoxLayout();
         vLayout->setSpacing(6);
@@ -156,9 +145,21 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                 SIGNAL(moveFile(const QStringList&, const QString&)),
                 this,
                 SLOT(onMoveFile(const QStringList&, const QString&)));
+
+        QString path = QDir::homePath();
+        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(pane);
+        if(folderAtStartup == FolderAtStartup::LastTime || folderAtStartup == FolderAtStartup::Fixed)
+        {
+            path = Settings::getInstance()->getFolderPath(pane);
+        }
+        if(!QDir(path).exists())
+        {
+            path = QDir::currentPath();
+        }
+
+        folderForm->setPath(path);
     }
 
-    setActivePane(activePane);
     setPaneMode(paneMode);
 }
 
@@ -439,6 +440,7 @@ void DoubleFolderPanel::onChangeFilterSettings()
     activeForm->setAttrFilterFlags(attrFilterFlags);
     activeForm->setFileFolderFilterType(fileFolderFilterType);
     activeForm->setNameMaskFilters(nameMaskFilters);
+    activeForm->updateFilterLabel();
 
     PaneType pane = activeForm->getPaneType();
 

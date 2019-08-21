@@ -47,7 +47,6 @@ FolderForm::FolderForm(PaneType pane,
     m_folderModel->setAttrFilterFlags(attrFilterFlags);
     m_folderModel->setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
     m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
-    updateFilterLabel();
 
     setSortSettings(sortSectionType, sortSectionType2nd, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
 
@@ -194,8 +193,6 @@ QString FolderForm::getDateFormatOriginalString() const
 void FolderForm::setAttrFilterFlags(AttrFilterFlags attrFilterFlags)
 {
     m_folderModel->setAttrFilterFlags(attrFilterFlags);
-
-    updateFilterLabel();
 }
 
 AttrFilterFlags FolderForm::getAttrFilterFlags() const
@@ -206,8 +203,6 @@ AttrFilterFlags FolderForm::getAttrFilterFlags() const
 void FolderForm::setFileFolderFilterType(FileFolderFilterType fileFolderFilterType)
 {
     m_folderModel->setFileFolderFilterType(fileFolderFilterType);
-
-    updateFilterLabel();
 }
 
 FileFolderFilterType FolderForm::getFileFolderFilterType() const
@@ -218,8 +213,6 @@ FileFolderFilterType FolderForm::getFileFolderFilterType() const
 void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
 {
     m_folderModel->setNameFilters(nameMaskFilters);
-
-    updateFilterLabel();
 }
 
 QStringList FolderForm::getNameMaskFilters() const
@@ -320,6 +313,7 @@ int FolderForm::setPath(const QString& dirPath)
     m_folderModel->clearSelected();
     setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
     setNameMaskFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
+    updateFilterLabel();
 
     m_folderModel->setRootPath(dirPath);
 

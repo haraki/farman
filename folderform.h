@@ -105,6 +105,7 @@ public:
     void checkBookmark();
 
     void updateMarkedLabel();
+    void updateFilterLabel();
 
     void refresh(bool clearSelected = false);
 
@@ -132,8 +133,6 @@ private Q_SLOTS:
 
 private:
     bool eventFilter(QObject *watched, QEvent *e) Q_DECL_OVERRIDE;
-
-    void updateFilterLabel();
 
     int getTotalColumnWidth(int withOutColumn = -1);
 
