@@ -381,6 +381,11 @@ QString FolderForm::getNextDirPath()
     return m_historyManager->getNext();
 }
 
+const HistoryManager* FolderForm::getHistoryManager()
+{
+    return m_historyManager;
+}
+
 QList<QFileInfo> FolderForm::getSelectedFileInfoList()
 {
     QModelIndexList indexList = m_folderModel->getSelectedIndexList();

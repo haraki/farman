@@ -136,8 +136,16 @@
     <property name="title">
      <string>Go(&amp;G)</string>
     </property>
+    <widget class="QMenu" name="menuHistory">
+     <property name="title">
+      <string>History(&amp;H)</string>
+     </property>
+     <addaction name="actionEmpty"/>
+    </widget>
     <addaction name="actionPrevious"/>
     <addaction name="actionNext"/>
+    <addaction name="separator"/>
+    <addaction name="menuHistory"/>
     <addaction name="separator"/>
     <addaction name="actionGoToFolder"/>
     <addaction name="separator"/>
@@ -154,24 +162,24 @@
   </widget>
   <action name="actionSinglePane">
    <property name="text">
-    <string>Single pane(&amp;1)</string>
+    <string>Single pane(&amp;S)</string>
    </property>
    <property name="toolTip">
     <string>Single pane</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+1</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionDualPane">
    <property name="text">
-    <string>Dual pane(&amp;2)</string>
+    <string>Dual pane(&amp;D)</string>
    </property>
    <property name="toolTip">
     <string>Dual pane</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+2</string>
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionSortSettings">
@@ -536,6 +544,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+]</string>
+   </property>
+  </action>
+  <action name="actionEmpty">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>(Empty)</string>
    </property>
   </action>
  </widget>

@@ -18,6 +18,7 @@ namespace Farman
 
 class File;
 class ViewerDispatcher;
+class HistoryManager;
 
 class MainWindow : public QMainWindow
 {
@@ -56,6 +57,9 @@ Q_SIGNALS:
 private:
     void emitOutputConsole(const QString& consoleString);
 
+    void updateHistoryMenu(const HistoryManager* historyManager);
+    void clearHistoryMenu(QMenu* menuHistory);
+
 private Q_SLOTS:
     void onOpenFile(ViewerType viewerType);
     void onOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);
@@ -93,6 +97,7 @@ private Q_SLOTS:
     void on_actionCopyFileName_triggered();
     void on_actionPrevious_triggered();
     void on_actionNext_triggered();
+    void on_actionHistory_triggered();
     void on_actionGoToFolder_triggered();
     void on_actionSetSameFolderToTarget_triggered();
     void on_actionSetSameFolderFromTarget_triggered();

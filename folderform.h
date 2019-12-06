@@ -94,6 +94,7 @@ public:
 
     QString getPreviousDirPath();
     QString getNextDirPath();
+    const HistoryManager* getHistoryManager();
 
     QList<QFileInfo> getSelectedFileInfoList();
 

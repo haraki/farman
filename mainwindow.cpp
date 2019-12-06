@@ -583,6 +583,22 @@ void MainWindow::on_actionNext_triggered()
     activeForm->onNextDir();
 }
 
+void MainWindow::on_actionHistory_triggered()
+{
+    qDebug() << "MainWindow::on_actionHistory_triggered()";
+
+    QAction* historyAction = dynamic_cast<QAction*>(sender());
+    Q_ASSERT(historyAction != Q_NULLPTR);
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    activeForm->setPath(historyAction->text());
+}
+
 void MainWindow::on_actionGoToFolder_triggered()
 {
     qDebug() << "MainWindow::on_actionGoToFolder_triggered()";
@@ -930,6 +946,66 @@ void MainWindow::checkHistory()
 
     ui->actionPrevious->setEnabled(!activeForm->getPreviousDirPath().isEmpty());
     ui->actionNext->setEnabled(!activeForm->getNextDirPath().isEmpty());
+
+    updateHistoryMenu(activeForm->getHistoryManager());
+}
+
+void MainWindow::updateHistoryMenu(const HistoryManager* historyManager)
+{
+    QMenu* menuHistory = ui->menuGo->findChild<QMenu*>("menuHistory", Qt::FindDirectChildrenOnly);
+    Q_ASSERT(menuHistory != Q_NULLPTR);
+
+    clearHistoryMenu(menuHistory);
+
+    for(auto action : menuHistory->actions())
+    {
+        qDebug() << action->objectName();
+        action->setVisible(false);
+    }
+
+    const QList<Qt::Key> shortCutKeys =
+    {
+        Qt::Key_1,
+        Qt::Key_2,
+        Qt::Key_3,
+        Qt::Key_4,
+        Qt::Key_5,
+        Qt::Key_6,
+        Qt::Key_7,
+        Qt::Key_8,
+        Qt::Key_9,
+        Qt::Key_0,
+    };
+
+    int keysIndex = 0;
+    for(auto history : historyManager->getList())
+    {
+        QAction* historyAction = new QAction(history);
+        connect(historyAction, SIGNAL(triggered(bool)), this, SLOT(on_actionHistory_triggered()));
+        if(keysIndex < shortCutKeys.length())
+        {
+            historyAction->setShortcut(QKeySequence(Qt::CTRL + shortCutKeys[keysIndex]));
+            keysIndex++;
+        }
+
+        menuHistory->addAction(historyAction);
+    }
+}
+
+void MainWindow::clearHistoryMenu(QMenu* menuHistory)
+{
+    for(auto historyAction : menuHistory->actions())
+    {
+        if(historyAction->isVisible())
+        {
+            disconnect(historyAction, SIGNAL(triggered(bool)), this, SLOT(on_actionHistory_triggered()));
+            menuHistory->removeAction(historyAction);
+        }
+        else
+        {
+            historyAction->setVisible(true);
+        }
+    }
 }
 
 void MainWindow::about()
