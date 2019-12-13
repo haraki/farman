@@ -194,6 +194,10 @@ void Settings::initialize()
     // Console visible
     m_consoleVisible = value("main/consoleVisible", DEFAULT_CONSOLE_VISIBLE).toBool();
 
+    // History list
+    getValueHistoryList(m_historyList[static_cast<int>(PaneType::Left)], "left");
+    getValueHistoryList(m_historyList[static_cast<int>(PaneType::Right)], "right");
+
     // TextViewer
     {
         // Show line number
@@ -404,6 +408,10 @@ void Settings::flush()
     // Console visible
     setValue("main/consoleVisible", m_consoleVisible);
 
+    // History list
+    setValueHistoryList(m_historyList[static_cast<int>(PaneType::Left)], "left");
+    setValueHistoryList(m_historyList[static_cast<int>(PaneType::Right)], "right");
+
     // Text Viewer
     {
         // Show line number
@@ -498,6 +506,17 @@ QFont Settings::getFontSetting(const QString& fontSettingType)
 void Settings::setFontSetting(const QString& fontSettingType, const QFont& font)
 {
     m_fontSettings[fontSettingType] = font;
+}
+
+const QList<QString>& Settings::getHistoryList(PaneType pane)
+{
+    return m_historyList[static_cast<int>(pane)];
+}
+
+void Settings::setHistoryList(PaneType pane, const QList<QString>& historyList)
+{
+    m_historyList[static_cast<int>(pane)].clear();
+    m_historyList[static_cast<int>(pane)] = historyList;
 }
 
 SectionType Settings::getValueSortSectionType(const QString& prefix)
@@ -641,6 +660,30 @@ void Settings::setValueAttrFilterSettings(AttrFilterFlags attrFilterSettings, co
 
     bool filterSystemValue = (attrFilterSettings & AttrFilterFlag::System) ? true : false;
     setValue("main/" + prefix + "FilterSystem", filterSystemValue);
+}
+
+void Settings::getValueHistoryList(QList<QString>& historyList, const QString& prefix)
+{
+    historyList.clear();
+
+    int size = beginReadArray("main/" + prefix + "HistoryList");
+    for(int i = 0;i < size;i++)
+    {
+        setArrayIndex(i);
+        historyList.append(value("history").toString());
+    }
+    endArray();
+}
+
+void Settings::setValueHistoryList(const QList<QString>& historyList, const QString& prefix)
+{
+    beginWriteArray("main/" + prefix + "HistoryList");
+    for(int i = 0;i < historyList.size();i++)
+    {
+        setArrayIndex(i);
+        setValue("history", historyList[i]);
+    }
+    endArray();
 }
 
 }

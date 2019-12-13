@@ -143,6 +143,9 @@ public:
     bool getConsoleVisible() { return m_consoleVisible; }
     void setConsoleVisible(bool visible) { m_consoleVisible = visible; }
 
+    const QList<QString>& getHistoryList(PaneType pane);
+    void setHistoryList(PaneType pane, const QList<QString>& historyList);
+
     bool getTextViewerShowLineNumber() { return m_textViewerShowLineNumber; }
     void setTextViewerShowLineNumber(bool show) { m_textViewerShowLineNumber = show; }
 
@@ -183,6 +186,9 @@ private:
 
     AttrFilterFlags getValueAttrFilterSettings(const QString& prefix) const;
     void setValueAttrFilterSettings(AttrFilterFlags attrFilterSettings, const QString& prefix);
+
+    void getValueHistoryList(QList<QString>& historyList, const QString& prefix);
+    void setValueHistoryList(const QList<QString>& historyList, const QString& prefix);
 
     static Settings* s_instance;
 
@@ -246,6 +252,8 @@ private:
     int m_cursorWidth = DEFAULT_CURSOR_WIDTH;
 
     bool m_consoleVisible = DEFAULT_CONSOLE_VISIBLE;
+
+    QList<QString> m_historyList[static_cast<int>(PaneType::PaneTypeNum)];
 
     bool m_textViewerShowLineNumber = DEFAULT_TEXT_VIEWER_SHOW_LINE_NUMBER;
     bool m_textViewerWordWrap = DEFAULT_TEXT_VIEWER_WORD_WRAP;
