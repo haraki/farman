@@ -38,6 +38,8 @@ public:
                         QWidget *parent = Q_NULLPTR);
     ~FolderForm() Q_DECL_OVERRIDE;
 
+    void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+
     PaneType getPaneType() const { return m_paneType; }
 
     void setAppearance(const QFont& viewFont,

@@ -168,22 +168,16 @@ DoubleFolderPanel::~DoubleFolderPanel()
     delete ui;
 }
 
-void DoubleFolderPanel::closeEvent(QCloseEvent* e)
+void DoubleFolderPanel::closeEvent(QCloseEvent* event)
 {
-    Q_UNUSED(e);
-
     qDebug() << "DoubleFolderPanel::closeEvent()";
 
     for(auto pane : {PaneType::Left, PaneType::Right})
     {
-        FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(pane);
-        if(folderAtStartup == FolderAtStartup::LastTime)
-        {
-            FolderForm* folderForm = getFolderForm(pane);
-            Q_ASSERT(folderForm != Q_NULLPTR);
+        FolderForm* folderForm = getFolderForm(pane);
+        Q_ASSERT(folderForm != Q_NULLPTR);
 
-            Settings::getInstance()->setFolderPath(pane, folderForm->getCurrentDirPath());
-        }
+        folderForm->closeEvent(event);
     }
 }
 

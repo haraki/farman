@@ -9,6 +9,7 @@
 #include "default_settings.h"
 #include "bookmarkmanager.h"
 #include "bookmarkeditdialog.h"
+#include "settings.h"
 
 namespace Farman
 {
@@ -82,6 +83,7 @@ FolderForm::FolderForm(PaneType pane,
     ui->folderView->installEventFilter(this);
 
     m_historyManager->initialize();
+    m_historyManager->setList(Settings::getInstance()->getHistoryList(m_paneType));
 }
 
 FolderForm::~FolderForm()
@@ -89,6 +91,19 @@ FolderForm::~FolderForm()
     delete m_historyManager;
     delete m_folderModel;
     delete ui;
+}
+
+void FolderForm::closeEvent(QCloseEvent* event)
+{
+    Q_UNUSED(event)
+
+    FolderAtStartup folderAtStartup = Settings::getInstance()->getFolderAtStartup(m_paneType);
+    if(folderAtStartup == FolderAtStartup::LastTime)
+    {
+        Settings::getInstance()->setFolderPath(m_paneType, getCurrentDirPath());
+    }
+
+    Settings::getInstance()->setHistoryList(m_paneType, m_historyManager->getList());
 }
 
 bool FolderForm::eventFilter(QObject *watched, QEvent *e)
