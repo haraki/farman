@@ -62,6 +62,17 @@ int HistoryManager::search(const QString& path) const
 
 int HistoryManager::setPath(const QString& path)
 {
+    int index = m_list.indexOf(path);
+    if(index >= 0)
+    {
+        m_list.removeAt(index);
+
+        if(m_index > 0 && index <= m_index)
+        {
+            m_index--;
+        }
+    }
+
     if(m_index == 0)
     {
         m_list.push_front(path);
@@ -80,8 +91,6 @@ int HistoryManager::setPath(const QString& path)
             m_list.pop_front();
         }
     }
-
-    qDebug() << "index : " << m_index << ", History : " << m_list;
 
     return 0;
 }
