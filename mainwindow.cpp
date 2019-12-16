@@ -153,7 +153,7 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
     setVisibleConsole(Settings::getInstance()->getConsoleVisible());
 
     updateSettings();
-    //doubleFolderPanel->refresh();
+    doubleFolderPanel->refresh();
 
     resizeDocks({ui->consoleDockWidget}, {ui->consoleDockWidget->minimumHeight()}, Qt::Vertical);
 }
