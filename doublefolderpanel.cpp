@@ -794,12 +794,7 @@ void DoubleFolderPanel::onLeftFocusChanged(bool inFocus)
 
     if(inFocus)
     {
-        m_activePane = PaneType::Left;      // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
-
-        FolderForm* activeForm = getActiveFolderForm();
-        Q_ASSERT(activeForm != Q_NULLPTR);
-
-        emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
+        setActivePane(PaneType::Left, false);
     }
 
     emitFocusChanged(PaneType::Left, inFocus);
@@ -811,12 +806,7 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
 
     if(inFocus)
     {
-        m_activePane = PaneType::Right;     // マウスクリックによるフォーカス変更時は setActivePane() が呼ばれないため、ここで書き換える
-
-        FolderForm* activeForm = getActiveFolderForm();
-        Q_ASSERT(activeForm != Q_NULLPTR);
-
-        emitStatusChanged(activeForm->getCurrentFileInfo().absoluteFilePath());
+        setActivePane(PaneType::Right, false);
     }
 
     emitFocusChanged(PaneType::Right, inFocus);
@@ -1026,7 +1016,7 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
     }
 }
 
-void DoubleFolderPanel::setActivePane(PaneType pane)
+void DoubleFolderPanel::setActivePane(PaneType pane, bool focus/* = true*/)
 {
     qDebug() << "DoubleFolderPanel::setActivePane()" << ((pane == PaneType::Left) ? "left" : "right");
 
@@ -1039,10 +1029,13 @@ void DoubleFolderPanel::setActivePane(PaneType pane)
     FolderForm* folderForm = getFolderForm(pane);
     Q_ASSERT(folderForm != Q_NULLPTR);
 
-    FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
-    Q_ASSERT(folderView != Q_NULLPTR);
+    if(focus)
+    {
+        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+        Q_ASSERT(folderView != Q_NULLPTR);
 
-    folderView->setFocus();
+        folderView->setFocus();
+    }
 }
 
 FolderForm* DoubleFolderPanel::getFolderForm(PaneType pane)

@@ -124,7 +124,7 @@ private:
                                   const QDateTime& newLastModified);
 
     void setPaneMode(PaneMode paneMode);
-    void setActivePane(PaneType pane);
+    void setActivePane(PaneType pane, bool focus = true);
 
     Ui::DoubleFolderPanel *ui;
 
