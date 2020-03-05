@@ -71,14 +71,6 @@ FolderForm::FolderForm(PaneType pane,
             SIGNAL(directoryLoaded(const QString&)),
             this,
             SLOT(onDirectoryLoaded(const QString&)));
-    connect(m_folderModel,
-            SIGNAL(layoutChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)),
-            this,
-            SLOT(onLayoutChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
-    connect(m_folderModel,
-            SIGNAL(layoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)),
-            this,
-            SLOT(onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
 
     ui->folderView->installEventFilter(this);
 
@@ -321,6 +313,13 @@ int FolderForm::setPath(const QString& dirPath, bool addHistory/* = true*/)
         return 0;
     }
 
+    if(m_folderModel->isDirectoryLoading())
+    {
+        qDebug() << "FolderForm::setPath() : Now loading......";
+
+        return -1;
+    }
+
     // ディレクトリが空(".." も存在しない)場合は Open できないとみなしてエラー
     if(QDir(dirPath).isEmpty(QDir::AllEntries | QDir::NoDot))
     {
@@ -456,42 +455,25 @@ void FolderForm::onDirectoryLoaded(const QString& path)
     QModelIndex currentRootIndex = ui->folderView->rootIndex();
     QModelIndex newRootIndex = m_folderModel->index(path);
 
+    qDebug() << "FolderForm::onDirectoryLoaded : current : " << currentRootIndex.row() << " new : " << newRootIndex.row();
+
     ui->folderView->setRootIndex(newRootIndex);
 
     if(currentRootIndex.parent() == newRootIndex)
     {
         ui->folderView->setCursor(currentRootIndex);
     }
-
-    checkBookmark();
-
-    emitDirectoryLoaded(path);
-}
-
-void FolderForm::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
-{
-    qDebug() << "FolderForm::onLayoutChanged() parents : " << parents << ", hint : " << hint;
-
-    QModelIndex cursorIndex = ui->folderView->currentIndex();
-
-    qDebug() << "cursorIndex.isValid() : " << cursorIndex.isValid() << ", cursorIndex.row() : " << cursorIndex.row();
-
-    if(!cursorIndex.isValid() || cursorIndex.row() < 0)
+    else
     {
         // 初期カーソル位置はリストの先頭
-        cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
+        QModelIndex cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
         ui->folderView->setCursor(cursorIndex);
     }
 
     updateMarkedLabel();
-}
+    checkBookmark();
 
-void FolderForm::onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
-{
-    Q_UNUSED(parents)
-    Q_UNUSED(hint)
-
-    qDebug() << "FolderForm::onLayoutAboutToBeChanged()";
+    emitDirectoryLoaded(path);
 }
 
 void FolderForm::setCursor(const QString& fileName)

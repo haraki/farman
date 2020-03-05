@@ -26,6 +26,7 @@ static Q_DECL_CONSTEXPR QDir::Filters FIX_FILTER_FLAGS = QDir::AllEntries |
 
 FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     QSortFilterProxyModel(parent),
+    m_isDirectoryLoading(false),
     m_attrFilterFlags(AttrFilterFlag::None),
     m_fileFolderFilterType(FileFolderFilterType::All),
     m_sortColumn(0),
@@ -50,10 +51,6 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
     fsModel->setFilter(FIX_FILTER_FLAGS);
     fsModel->setNameFilterDisables(false);
 
-    // layoutChanged シグナルを受け取るスロット QSortFilterProxyModel::_q_sourceLayoutChanged() 内において、フィルタ及びソートが実行される
-    // フィルタ及びソート実行後に FolderModel::onLayoutChanged() を呼ばれるようにするため、
-    // 上記のシグナルとスロットを connect している setSourceModel() を必ず先に呼び出しておく必要がある
-    // (同一シグナルに対するスロットの呼び出し順は、connect された順(Qt v5.12.3 で確認))
     setSourceModel(fsModel);
 
     connect(fsModel,
@@ -68,14 +65,6 @@ FolderModel::FolderModel(QObject *parent/* = Q_NULLPTR*/) :
             SIGNAL(directoryLoaded(QString)),
             this,
             SLOT(onDirectoryLoaded(QString)));
-    connect(fsModel,
-            SIGNAL(layoutChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)),
-            this,
-            SLOT(onLayoutChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
-    connect(fsModel,
-            SIGNAL(layoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)),
-            this,
-            SLOT(onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>&, QAbstractItemModel::LayoutChangeHint)));
 }
 
 FolderModel::~FolderModel()
@@ -95,17 +84,9 @@ void FolderModel::onFileRenamed(const QString &path, const QString &oldName, con
 
 void FolderModel::onDirectoryLoaded(const QString &path)
 {
+    m_isDirectoryLoading = false;
+
     emitDirectoryLoaded(path);
-}
-
-void FolderModel::onLayoutChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
-{
-    emitLayoutChanged(parents, hint);
-}
-
-void FolderModel::onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
-{
-    emitLayoutAboutToBeChanged(parents, hint);
 }
 
 QModelIndex FolderModel::index(const QString &path, int column/* = 0*/) const
@@ -997,19 +978,11 @@ void FolderModel::emitDirectoryLoaded(const QString &path)
     emit directoryLoaded(path);
 }
 
-void FolderModel::emitLayoutChanged(const QList<QPersistentModelIndex>& parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
-{
-    emit layoutChanged(parents, hint);
-}
-
-void FolderModel::emitLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents/* = QList<QPersistentModelIndex>()*/, QAbstractItemModel::LayoutChangeHint hint/* = QAbstractItemModel::NoLayoutChangeHint*/)
-{
-    emit layoutAboutToBeChanged(parents, hint);
-}
-
 // QFileSystemModel specific API
 QModelIndex FolderModel::setRootPath(const QString &path)
 {
+    m_isDirectoryLoading = true;
+
     QFileSystemModel* fsModel = qobject_cast<QFileSystemModel*>(sourceModel());
 
     return mapFromSource(fsModel->setRootPath(path));

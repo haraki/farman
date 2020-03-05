@@ -128,8 +128,6 @@ protected Q_SLOTS:
     void onSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag);
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
     void onDirectoryLoaded(const QString &path);
-    void onLayoutChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
-    void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private Q_SLOTS:
     void on_goToFolderToolButton_clicked();

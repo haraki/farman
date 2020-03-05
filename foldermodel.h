@@ -28,6 +28,8 @@ public:
     using QSortFilterProxyModel::index;
     QModelIndex index(const QString &path, int column = 0) const;
 
+    bool isDirectoryLoading() { return m_isDirectoryLoading; }
+
     void setSortSectionType(SectionType sectionType);
     SectionType sortSectionType() const;
     void setSortSectionType2nd(SectionType sectionType2nd);
@@ -121,15 +123,11 @@ Q_SIGNALS:
     void rootPathChanged(const QString &newPath);
     void fileRenamed(const QString &path, const QString &oldName, const QString &newName);
     void directoryLoaded(const QString &path);
-    void layoutChanged(const QList<QPersistentModelIndex> &parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
-    void layoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private Q_SLOTS:
     void onRootPathChanged(const QString &newPath);
     void onFileRenamed(const QString &path, const QString &oldName, const QString &newName);
     void onDirectoryLoaded(const QString &path);
-    void onLayoutChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
-    void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
 
 private:
     int getFileDirNum(QDir::Filters filters);
@@ -151,8 +149,8 @@ private:
     void emitRootPathChanged(const QString &newPath);
     void emitFileRenamed(const QString &path, const QString &oldName, const QString &newName);
     void emitDirectoryLoaded(const QString &path);
-    void emitLayoutChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
-    void emitLayoutAboutToBeChanged(const QList<QPersistentModelIndex>& parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint);
+
+    bool m_isDirectoryLoading;
 
     AttrFilterFlags m_attrFilterFlags;
     FileFolderFilterType m_fileFolderFilterType;
