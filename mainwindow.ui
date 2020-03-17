@@ -105,6 +105,7 @@
     <addaction name="separator"/>
     <addaction name="actionOpenWithApp"/>
     <addaction name="actionOpenWithTextEditor"/>
+    <addaction name="actionOpenWithTerminal"/>
     <addaction name="actionCreateNewFile"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -140,7 +141,6 @@
      <property name="title">
       <string>History(&amp;H)</string>
      </property>
-     <addaction name="actionEmpty"/>
     </widget>
     <addaction name="actionPrevious"/>
     <addaction name="actionNext"/>
@@ -546,12 +546,18 @@
     <string>Ctrl+]</string>
    </property>
   </action>
-  <action name="actionEmpty">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <action name="actionOpenWithTerminal">
    <property name="text">
-    <string>(Empty)</string>
+    <string>Open with Terminal(&amp;R)</string>
+   </property>
+   <property name="iconText">
+    <string>Open with Terminal(R)</string>
+   </property>
+   <property name="toolTip">
+    <string>Open with Terminal</string>
+   </property>
+   <property name="shortcut">
+    <string>T</string>
    </property>
   </action>
  </widget>
