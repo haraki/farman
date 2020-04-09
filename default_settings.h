@@ -187,6 +187,17 @@ static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_PATH[] = "";
 static Q_DECL_CONSTEXPR char DEFAULT_TEXT_EDITOR_ARGS[] = "$F";
 #endif
 
+#if defined(Q_OS_WIN)
+static Q_DECL_CONSTEXPR char DEFAULT_TERMINAL_PATH[] = "cmd.exe";
+static Q_DECL_CONSTEXPR char DEFAULT_TERMINAL_ARGS[] = "/k cd /d $C";
+#elif defined(Q_OS_MAC)
+static Q_DECL_CONSTEXPR char DEFAULT_TERMINAL_PATH[] = "/Applications/Utilities/Terminal.app";
+static Q_DECL_CONSTEXPR char DEFAULT_TERMINAL_ARGS[] = "--args -c cd $C";
+#else
+static Q_DECL_CONSTEXPR char DEFAULT_TERMINAL_PATH[] = "";
+static Q_DECL_CONSTEXPR char DEFAULT_TERMINAL_ARGS[] = "";
+#endif
+
 }           // namespace Farman
 
 #endif // DEFAULT_SETTINGS_H

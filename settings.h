@@ -166,6 +166,11 @@ public:
     QString getTextEditorArgs() { return m_textEditorArgs; }
     void setTextEditorArgs(const QString& textEditorArgs) { m_textEditorArgs = textEditorArgs; }
 
+    QString getTerminalPath() { return m_terminalPath; }
+    void setTerminalPath(const QString& terminalPath) { m_terminalPath = terminalPath; }
+    QString getTerminalArgs() { return m_terminalArgs; }
+    void setTerminalArgs(const QString& terminalArgs) { m_terminalArgs = terminalArgs; }
+
 private:
     Settings();
 
@@ -265,6 +270,9 @@ private:
 
     QString m_textEditorPath = DEFAULT_TEXT_EDITOR_PATH;
     QString m_textEditorArgs = DEFAULT_TEXT_EDITOR_ARGS;
+
+    QString m_terminalPath = DEFAULT_TERMINAL_PATH;
+    QString m_terminalArgs = DEFAULT_TERMINAL_ARGS;
 };
 
 }

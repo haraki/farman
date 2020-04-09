@@ -243,6 +243,9 @@ void Settings::initialize()
     m_textEditorPath = value("main/textEditorPath", DEFAULT_TEXT_EDITOR_PATH).toString();
     m_textEditorArgs = value("main/textEditorArgs", DEFAULT_TEXT_EDITOR_ARGS).toString();
 
+    m_terminalPath = value("main/terminalPath", DEFAULT_TERMINAL_PATH).toString();
+    m_terminalArgs = value("main/terminalArgs", DEFAULT_TERMINAL_ARGS).toString();
+
     // Bookmark directory paths
     BookmarkManager::getInstance()->initialize();
     int size = beginReadArray("main/bookmarkDirPathList");
@@ -444,6 +447,9 @@ void Settings::flush()
     // External Application
     setValue("main/textEditorPath", m_textEditorPath);
     setValue("main/textEditorArgs", m_textEditorArgs);
+
+    setValue("main/terminalPath", m_terminalPath);
+    setValue("main/terminalArgs", m_terminalArgs);
 
     // Bookmark directory paths
     beginWriteArray("main/bookmarkDirPathList");
