@@ -311,6 +311,9 @@ void PreferencesDialog::initialize(const QSize& mainWindowSize,
     ui->textEditorPathLineEdit->setText(Settings::getInstance()->getTextEditorPath());
     ui->textEditorArgsLineEdit->setText(Settings::getInstance()->getTextEditorArgs());
 
+    ui->terminalPathLineEdit->setText(Settings::getInstance()->getTerminalPath());
+    ui->terminalArgsLineEdit->setText(Settings::getInstance()->getTerminalArgs());
+
     setViewerFontAndColorOption();
 }
 
@@ -979,6 +982,40 @@ void PreferencesDialog::on_textEditorSelectButton_clicked()
     }
 }
 
+void PreferencesDialog::on_terminalSelectButton_clicked()
+{
+    QString appPath = ui->terminalPathLineEdit->text();
+    QString dirPath = QFileInfo(appPath).absolutePath();
+
+    if(dirPath.isEmpty())
+    {
+#ifdef Q_OS_WIN
+        // Program Files フォルダのパスを取得するには環境変数 PROGRAMFILES から取得するしかない
+        // (QStandartPaths::standardLocations() では返されない)
+        // 参考 : https://doc.qt.io/qt-5/qstandardpaths.html#StandardLocation-enum
+        dirPath = qEnvironmentVariable("PROGRAMFILES", "C:\\Program Files");
+#else
+        dirPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).at(0);
+#endif
+    }
+
+    appPath = QFileDialog::getOpenFileName(this,
+                                           tr("Choose application."),
+                                           dirPath,
+#if defined(Q_OS_WIN)
+                                           tr("Applications (*.exe *.com *.bat *.pif);;All files (*)"));
+#elif defined(Q_OS_MAC)
+                                           tr("Applications (*.app);;All files (*)"));
+#else
+                                           tr("All files (*)"));
+#endif
+
+    if(!appPath.isEmpty())
+    {
+        ui->terminalPathLineEdit->setText(appPath);
+    }
+}
+
 void PreferencesDialog::setFileSizeExample(FileSizeFormatType fileSizeFormatType, bool comma, QLineEdit* exampleLineEdit)
 {
     Q_ASSERT(exampleLineEdit != Q_NULLPTR);
@@ -1350,6 +1387,9 @@ void PreferencesDialog::on_buttonBox_accepted()
 
     Settings::getInstance()->setTextEditorPath(ui->textEditorPathLineEdit->text());
     Settings::getInstance()->setTextEditorArgs(ui->textEditorArgsLineEdit->text());
+
+    Settings::getInstance()->setTerminalPath(ui->terminalPathLineEdit->text());
+    Settings::getInstance()->setTerminalArgs(ui->terminalArgsLineEdit->text());
 }
 
 }           // namespace Farman

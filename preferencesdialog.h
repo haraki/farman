@@ -115,6 +115,7 @@ private slots:
     void on_imageViewerTransparentBGColorPushButton_clicked();
 
     void on_textEditorSelectButton_clicked();
+    void on_terminalSelectButton_clicked();
 
     void on_buttonBox_accepted();
 
