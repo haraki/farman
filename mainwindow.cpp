@@ -279,6 +279,13 @@ void MainWindow::onCreateNewFileFinished(const QString& filePath)
     openWithTextEditor(QFileInfo(filePath).absolutePath(), filePaths);
 }
 
+void MainWindow::onOpenWithTerminal(const QString& dirPath)
+{
+    qDebug() << "MainWindow::onOpenWithTerminal()";
+
+    openWithTerminal(dirPath);
+}
+
 void MainWindow::onStatusChanged(const QString& statusString)
 {
     qDebug() << "MainWindow::onStatusChanged : " << statusString;
@@ -408,6 +415,19 @@ void MainWindow::on_actionCreateNewFile_triggered()
     Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
 
     doubleFolderPanel->onCreateNewFile();
+}
+
+void Farman::MainWindow::on_actionOpenWithTerminal_triggered()
+{
+    qDebug() << "MainWindow::on_actionOpenWithTerminal_triggered()";
+
+    DoubleFolderPanel* doubleFolderPanel = ui->mainWidget->findChild<DoubleFolderPanel*>("DoubleFolderPanel");
+    Q_ASSERT(doubleFolderPanel != Q_NULLPTR);
+
+    FolderForm* activeForm = doubleFolderPanel->getActiveFolderForm();
+    Q_ASSERT(activeForm != Q_NULLPTR);
+
+    onOpenWithTerminal(activeForm->getCurrentDirPath());
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -844,6 +864,48 @@ int MainWindow::openWithTextEditor(const QString& dirPath, const QStringList& fi
     command += "\"" + appPath + "\" " + args;
 
     qDebug() << "dirPath : " << dirPath << ", filePaths : " << filePaths << ", command : " << command;
+
+    if(!launchExternalApp(command, dirPath))
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
+int MainWindow::openWithTerminal(const QString& dirPath)
+{
+    if(dirPath.isEmpty() || !QDir(dirPath).exists())
+    {
+        return -1;
+    }
+
+    QString appPath = Settings::getInstance()->getTerminalPath();
+    QString args = Settings::getInstance()->getTerminalArgs();
+
+    if(appPath.isEmpty())
+    {
+        if(QMessageBox::warning(this,
+                                tr("Error"),
+                                tr("The external terminal has not been set.<br />Do you want to set it?"),
+                                QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+        {
+            launchPreferencesDialog(PreferencesDialogTabPage::ExternalApp);
+        }
+
+        return 0;
+    }
+
+#ifdef Q_OS_MAC
+    QString command = "open -n -a ";
+#else
+    QString command = "";
+#endif
+    args.replace("$C", "\"" + dirPath + "\"");                  // カレントディレクトリ
+
+    command += "\"" + appPath + "\" " + args;
+
+    qDebug() << "dirPath : " << dirPath << ", command : " << command;
 
     if(!launchExternalApp(command, dirPath))
     {

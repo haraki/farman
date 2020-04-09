@@ -38,6 +38,7 @@ private:
     int closeViewer(const QString& viewerObjectName);
     int openWithApp(const QString& path);
     int openWithTextEditor(const QString& dirPath, const QStringList& filePaths);
+    int openWithTerminal(const QString& dirPath);
 
     void updateSettings();
 
@@ -67,6 +68,7 @@ private Q_SLOTS:
     void onOpenWithApp(const QString& path);
     void onOpenWithTextEditor(const QString& dirPath, const QStringList& filePaths);
     void onCreateNewFileFinished(const QString& filePath);
+    void onOpenWithTerminal(const QString& dirPath);
     void onOutputConsole(const QString& consoleString);
     void onStatusChanged(const QString& statusString);
     void onFocusChanged(PaneType pane, bool inFocus);
@@ -80,6 +82,7 @@ private Q_SLOTS:
     void on_actionOpenWithApp_triggered();
     void on_actionOpenWithTextEditor_triggered();
     void on_actionCreateNewFile_triggered();
+    void on_actionOpenWithTerminal_triggered();
     void on_actionQuit_triggered();
     void on_actionSinglePane_triggered();
     void on_actionDualPane_triggered();
