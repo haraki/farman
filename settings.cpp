@@ -245,6 +245,20 @@ void Settings::initialize()
 
     m_terminalPath = value("main/terminalPath", DEFAULT_TERMINAL_PATH).toString();
     m_terminalArgs = value("main/terminalArgs", DEFAULT_TERMINAL_ARGS).toString();
+#if defined(Q_OS_MAC)
+    if(QSysInfo::productVersion() >= "10.15")
+    {
+        // macOS 10.15(Catalina) で、OSに予めインストールされているアプリは /System/Application フォルダに移動されたことによる対応
+        if(m_textEditorPath == DEFAULT_TEXT_EDITOR_PATH)
+        {
+            m_textEditorPath = "/System" + m_textEditorPath;
+        }
+        if(m_terminalPath == DEFAULT_TERMINAL_PATH)
+        {
+            m_terminalPath = "/System" + m_terminalPath;
+        }
+    }
+#endif
 
     // Bookmark directory paths
     BookmarkManager::getInstance()->initialize();
