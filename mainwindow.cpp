@@ -819,7 +819,7 @@ int MainWindow::openWithApp(const QString& path)
         return -1;
     }
 
-    if(!QDesktopServices::openUrl(QUrl("file:///" + path)))
+    if(!QDesktopServices::openUrl(QUrl("file:///" + QUrl::toPercentEncoding(path))))
     {
         qDebug() << "open url error:" << path;
         emitOutputConsole(tr("Open failed : %1\n").arg(path));
