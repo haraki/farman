@@ -9,6 +9,7 @@ namespace Farman
 {
 
 static constexpr int unitReadSize = 65536 * 8;
+static constexpr int progressMax = 1000;
 
 ReadFileWorker::ReadFileWorker(const QString& filePath, QByteArray* buffer, QObject *parent/* = Q_NULLPTR*/) :
     Worker(parent),
@@ -46,7 +47,7 @@ void ReadFileWorker::run()
         return;
     }
 
-    int fileSize = file.size();
+    qint64 fileSize = file.size();
     if(fileSize == 0)
     {
         file.close();
@@ -57,7 +58,7 @@ void ReadFileWorker::run()
         return;
     }
 
-    emitStart(0, fileSize);
+    emitStart(0, progressMax);
 
     while(!file.atEnd())
     {
@@ -85,7 +86,7 @@ void ReadFileWorker::run()
         }
 
         m_buffer->append(data);
-        emitProgress(m_buffer->size());
+        emitProgress(m_buffer->size() * progressMax / fileSize);
     }
 
     file.close();
