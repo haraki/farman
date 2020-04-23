@@ -8,6 +8,8 @@
 namespace Farman
 {
 
+static constexpr qint64 subProgressBarMax = 1000;
+
 WorkingDialog::WorkingDialog(Worker* worker,
                              bool autoClose,
                              bool subProgress/* = false*/,
@@ -86,24 +88,30 @@ void WorkingDialog::onProgress(int value)
     ui->mainProgressLabel->setText(m_mainProgressLabelFormat.arg(value).arg(ui->mainProgressBar->maximum()));
 }
 
-void WorkingDialog::onStartSub(int min, int max)
+void WorkingDialog::onStartSub(qint64 min, qint64 max)
 {
     qDebug() << "WorkingDialog::onStartSub(" << min << "," << max << ");";
 
-    ui->subProgressBar->setMinimum(min);
-    ui->subProgressBar->setMaximum(max);
-    ui->subProgressBar->setValue(min);
+    m_subMax = max;
+
+    int subProgressBarMin = static_cast<int>(min * subProgressBarMax / max);
+
+    ui->subProgressBar->setMinimum(subProgressBarMin);
+    ui->subProgressBar->setMaximum(subProgressBarMax);
+    ui->subProgressBar->setValue(subProgressBarMin);
 
     ui->subProgressLabel->setText(m_subProgressLabelFormat.arg(min).arg(max));
 }
 
-void WorkingDialog::onProgressSub(int value)
+void WorkingDialog::onProgressSub(qint64 value)
 {
 //    qDebug() << "WorkingDialog::onProgressSub(" << value << ");";
 
-    ui->subProgressBar->setValue(value);
+    int subProgressBarValue = static_cast<int>(value * subProgressBarMax / m_subMax);
 
-    ui->subProgressLabel->setText(m_subProgressLabelFormat.arg(value).arg(ui->subProgressBar->maximum()));
+    ui->subProgressBar->setValue(subProgressBarValue);
+
+    ui->subProgressLabel->setText(m_subProgressLabelFormat.arg(value).arg(m_subMax));
 }
 
 void WorkingDialog::onFinished(int result)
@@ -150,8 +158,8 @@ int WorkingDialog::exec()
 //    connect(m_worker, SIGNAL(information(QString)), ui->label, SLOT(setText(QString)));
     if(m_enabledSubProgress)
     {
-        connect(m_worker, SIGNAL(startSub(int,int)), this, SLOT(onStartSub(int,int)));
-        connect(m_worker, SIGNAL(progressSub(int)), this, SLOT(onProgressSub(int)));
+        connect(m_worker, SIGNAL(startSub(qint64,qint64)), this, SLOT(onStartSub(qint64,qint64)));
+        connect(m_worker, SIGNAL(progressSub(qint64)), this, SLOT(onProgressSub(qint64)));
     }
 
     m_worker->exec();

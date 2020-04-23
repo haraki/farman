@@ -38,8 +38,8 @@ protected Q_SLOTS:
     virtual void onProgress(int value);
     virtual void onFinished(int result);
     virtual void onError(const QString& err);
-    virtual void onStartSub(int min, int max);
-    virtual void onProgressSub(int value);
+    virtual void onStartSub(qint64 min, qint64 max);
+    virtual void onProgressSub(qint64 value);
 
 private slots:
     void on_closePushButton_clicked();
@@ -51,6 +51,8 @@ private:
     bool m_finishedWork;
 
     bool m_enabledSubProgress;
+
+    qint64 m_subMax;
 
     QString m_mainProgressLabelFormat;
     QString m_subProgressLabelFormat;

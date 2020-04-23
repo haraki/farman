@@ -345,12 +345,12 @@ void CopyWorker::cancelConfirmOverwrite()
     m_confirmWait.wakeAll();
 }
 
-void CopyWorker::emitStartSub(int min, int max)
+void CopyWorker::emitStartSub(qint64 min, qint64 max)
 {
     emit startSub(min, max);
 }
 
-void CopyWorker::emitProgressSub(int value)
+void CopyWorker::emitProgressSub(qint64 value)
 {
     emit progressSub(value);
 }
@@ -378,7 +378,7 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
     qint64 remineSize = srcFile.size();
     qint64 totalSize = 0;
 
-    emitStartSub(0, static_cast<int>(remineSize / 1024));
+    emitStartSub(0, remineSize);
 
     while(!srcFile.atEnd())
     {
@@ -409,7 +409,7 @@ int CopyWorker::copy(const QString& srcPath, const QString& dstPath)
         remineSize -= readSize;
         totalSize += readSize;
 
-        emitProgressSub(static_cast<int>(totalSize / 1024));
+        emitProgressSub(totalSize);
     }
 
     if(result == WorkerResult::Success)
