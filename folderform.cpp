@@ -32,6 +32,8 @@ FolderForm::FolderForm(PaneType pane,
     , m_paneType(pane)
     , m_folderModel(new FolderModel(this))
     , m_historyManager(new HistoryManager(this))
+    , m_currentPath("")
+    , m_currentLoadedPath("")
 {
     ui->setupUi(this);
 
@@ -333,6 +335,8 @@ int FolderForm::setPath(const QString& dirPath, bool addHistory/* = true*/)
     setNameMaskFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
     updateFilterLabel();
 
+    m_currentPath = dirPath;
+
     m_folderModel->setRootPath(dirPath);
 
     ui->folderPathEdit->setText(dirPath);
@@ -450,7 +454,15 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
 
 void FolderForm::onDirectoryLoaded(const QString& path)
 {
-    qDebug() << "directory loaded." << path;
+    qDebug() << "directory loaded." << path << ", currentPath : " << m_currentPath << ", currentLoadedPath : " << m_currentLoadedPath;
+
+    if(m_currentPath != path)
+    {
+        qDebug() << "============================================================ m_currentPath != path";
+        return;
+    }
+
+    m_currentLoadedPath = path;
 
     QModelIndex currentRootIndex = ui->folderView->rootIndex();
     QModelIndex newRootIndex = m_folderModel->index(path);

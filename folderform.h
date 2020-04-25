@@ -150,6 +150,9 @@ private:
     FolderModel* m_folderModel;
 
     HistoryManager* m_historyManager;
+
+    QString m_currentPath;
+    QString m_currentLoadedPath;
 };
 
 }           // namespace Farman
