@@ -22,7 +22,8 @@ REVISION = $$system(git rev-parse HEAD)
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 DEFINES += APP_REVISION=\\\"$$REVISION\\\"
 
-INCLUDEPATH += ./QHexView/include
+INCLUDEPATH += ./QHexView/include \
+               ./FolderModel
 
 SOURCES += main.cpp\
     aboutdialog.cpp \
@@ -36,7 +37,6 @@ SOURCES += main.cpp\
     folderform.cpp \
     folderview.cpp \
     folderviewstyleditemdelegate.cpp \
-    foldermodel.cpp \
     doublefolderpanel.cpp \
     selectbookmarkdialog.cpp \
     sortdialog.cpp \
@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     QHexView/src/QHexView.cpp \
     hexviewer.cpp \
     file.cpp \
-    xnix.cpp
+    xnix.cpp \
+    FolderModel/foldermodel.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -73,7 +74,6 @@ HEADERS  += mainwindow.h \
     default_settings.h \
     folderform.h \
     folderviewstyleditemdelegate.h \
-    foldermodel.h \
     folderview.h \
     doublefolderpanel.h \
     historymanager.h \
@@ -104,7 +104,8 @@ HEADERS  += mainwindow.h \
     QHexView/include/QHexView.h \
     hexviewer.h \
     file.h \
-    xnix.h
+    xnix.h \
+    FolderModel/foldermodel.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \

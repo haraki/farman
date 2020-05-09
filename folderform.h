@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QModelIndex>
 #include <QItemSelectionModel>
+#include "foldermodel.h"
 #include "historymanager.h"
 #include "types.h"
 
@@ -16,7 +17,6 @@ class QResizeEvent;
 
 namespace Farman
 {
-class FolderModel;
 
 class FolderForm : public QWidget
 {
@@ -24,13 +24,13 @@ class FolderForm : public QWidget
 
 public:
     explicit FolderForm(PaneType pane,
-                        AttrFilterFlags attrFilterFlags,
+                        FilterFlags filterFlags,
                         SectionType sortSectionType,
                         SectionType sortSectionType2nd,
                         SortDirsType sortDirsType,
                         bool sortDotFirst,
-                        Qt::CaseSensitivity sortCaseSensitivity,
-                        Qt::SortOrder sortOrder,
+                        SortCaseSensitivity sortCaseSensitivity,
+                        SortOrderType sortOrder,
                         FileSizeFormatType fileSizeformatType,
                         bool fileSizeComma,
                         DateFormatType dateFormatType,
@@ -53,7 +53,7 @@ public:
                        bool loopMove,
                        bool moveOpenViewer,
                        DragAndDropBehaviorType behaviorType);
-    void setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio);
+    void setAppearanceFolderViewColors(const QMap<ColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio);
 
     void setFileSizeFormatType(FileSizeFormatType formatType);
     FileSizeFormatType getFileSizeFormatType() const;
@@ -67,10 +67,8 @@ public:
     void setDateFormatOriginalString(const QString& orgString);
     QString getDateFormatOriginalString() const;
 
-    void setAttrFilterFlags(AttrFilterFlags filterFlags);
-    AttrFilterFlags getAttrFilterFlags() const;
-    void setFileFolderFilterType(FileFolderFilterType fileFolderFilterType);
-    FileFolderFilterType getFileFolderFilterType() const;
+    void setFilterFlags(FilterFlags filterFlags);
+    FilterFlags getFilterFlags() const;
     void setNameMaskFilters(const QStringList& nameMaskFilters);
     QStringList getNameMaskFilters() const;
 
@@ -78,15 +76,15 @@ public:
                          SectionType sectionType2nd,
                          SortDirsType dirsType,
                          bool dotFirst,
-                         Qt::CaseSensitivity caseSensitivity,
-                         Qt::SortOrder order);
+                         SortCaseSensitivity caseSensitivity,
+                         SortOrderType order);
     SectionType getSortSectionType() const;
     SectionType getSortSectionType2nd() const;
-    int getSortColumn() const;
+//    int getSortColumn() const;
     SortDirsType getSortDirsType() const;
     bool getSortDotFirst() const;
-    Qt::CaseSensitivity getSortCaseSensitivity() const;
-    Qt::SortOrder getSortOrder() const;
+    SortCaseSensitivity getSortCaseSensitivity() const;
+    SortOrderType getSortOrder() const;
 
     int setPath(const QString& dirPath, bool addHistory = true);
 

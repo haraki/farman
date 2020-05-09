@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QDir>
 #include "types.h"
+#include "foldermodel.h"
 
 namespace Ui {
 class SortDialog;
@@ -21,8 +22,8 @@ public:
                         SectionType sectionType2nd,
                         SortDirsType dirsType,
                         bool dotFirst,
-                        Qt::CaseSensitivity caseSensitivity,
-                        Qt::SortOrder order,
+                        SortCaseSensitivity caseSensitivity,
+                        SortOrderType order,
                         QWidget *parent = Q_NULLPTR);
     ~SortDialog() Q_DECL_OVERRIDE;
 
@@ -30,8 +31,8 @@ public:
     SectionType getSortSectionType2nd();
     SortDirsType getSortDirsType();
     bool getSortDotFirst();
-    Qt::CaseSensitivity getSortCaseSensitivity();
-    Qt::SortOrder getSortOrder();
+    SortCaseSensitivity getSortCaseSensitivity();
+    SortOrderType getSortOrder();
 
 private slots:
     void on_sortNameRadioButton_clicked();
@@ -49,8 +50,8 @@ private:
     SectionType m_sortSectionType2nd;
     SortDirsType m_sortDirsType;
     bool m_sortDotFirst;
-    Qt::CaseSensitivity m_sortCaseSensitivity;
-    Qt::SortOrder m_sortOrder;
+    SortCaseSensitivity m_sortCaseSensitivity;
+    SortOrderType m_sortOrder;
 };
 
 }           // namespace Farman

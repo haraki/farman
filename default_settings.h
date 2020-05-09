@@ -9,6 +9,7 @@
 #include <QPoint>
 #include <QFont>
 #include "types.h"
+#include "foldermodel.h"
 
 namespace Farman
 {
@@ -29,15 +30,13 @@ static Q_DECL_CONSTEXPR FolderAtStartup DEFAULT_FOLDER_AT_STARTUP_TYPE = FolderA
 static Q_DECL_CONSTEXPR char DEFAULT_FOLDER_PATH_AT_STARTUP[] = "";
 
 static Q_DECL_CONSTEXPR SectionType DEFAULT_SORT_SECTION_TYPE = SectionType::FileName;
-static Q_DECL_CONSTEXPR SectionType DEFAULT_SORT_SECTION_TYPE_2ND = SectionType::NoSpecify;
+static Q_DECL_CONSTEXPR SectionType DEFAULT_SORT_SECTION_TYPE_2ND = SectionType::Unknown;
 static Q_DECL_CONSTEXPR SortDirsType DEFAULT_SORT_DIRS_TYPE = SortDirsType::NoSpecify;
 static Q_DECL_CONSTEXPR bool DEFAULT_SORT_DOT_FIRST = true;
-static Q_DECL_CONSTEXPR Qt::CaseSensitivity DEFAULT_SORT_CASE_SENSITIVITY = Qt::CaseInsensitive;
-static Q_DECL_CONSTEXPR Qt::SortOrder DEFAULT_SORT_ORDER = Qt::AscendingOrder;
+static Q_DECL_CONSTEXPR SortCaseSensitivity DEFAULT_SORT_CASE_SENSITIVITY = SortCaseSensitivity::Insensitive;
+static Q_DECL_CONSTEXPR SortOrderType DEFAULT_SORT_ORDER = SortOrderType::Ascending;
 
-static Q_DECL_CONSTEXPR AttrFilterFlags DEFAULT_ATTR_FILTER_FLAGS = AttrFilterFlag::Hidden | AttrFilterFlag::System;
-
-static Q_DECL_CONSTEXPR FileFolderFilterType DEFAULT_FILE_FOLDER_FILTER_TYPE = FileFolderFilterType::All;
+static Q_DECL_CONSTEXPR FilterFlags DEFAULT_FILTER_FLAGS = FilterFlag::Hidden | FilterFlag::System | FilterFlag::AllEntrys;
 
 static Q_DECL_CONSTEXPR char DEFAULT_NAME_MASK_FILTERS[] = "*";
 

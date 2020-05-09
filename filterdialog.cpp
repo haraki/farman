@@ -6,24 +6,22 @@
 namespace Farman
 {
 
-FilterDialog::FilterDialog(AttrFilterFlags attrFilterFlags,
-                           FileFolderFilterType fileFolderFilterType,
+FilterDialog::FilterDialog(FilterFlags filterFlags,
                            const QStringList& nameMaskFilters,
                            QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::FilterDialog),
-    m_attrFilterFlags(attrFilterFlags),
-    m_fileFolderFilterType(fileFolderFilterType),
+    m_filterFlags(filterFlags),
     m_nameMaskFilters(nameMaskFilters)
 {
     ui->setupUi(this);
 
-    if(attrFilterFlags & AttrFilterFlag::Hidden)
+    if(filterFlags & FilterFlag::Hidden)
     {
         ui->showHiddenCheckBox->setChecked(true);
     }
 #ifdef Q_OS_WIN
-    if(attrFilterFlags & AttrFilterFlag::System)
+    if(filterFlags & FilterFlag::System)
     {
         ui->showSystemCheckBox->setChecked(true);
     }
@@ -31,13 +29,13 @@ FilterDialog::FilterDialog(AttrFilterFlags attrFilterFlags,
     ui->showSystemCheckBox->setVisible(false);
 #endif
 
-    if(fileFolderFilterType == FileFolderFilterType::File)
+    if(filterFlags & FilterFlag::Files && !(filterFlags & FilterFlag::Dirs))
     {
         ui->showFileOnlyRadioButton->setChecked(true);
     }
-    else if(fileFolderFilterType == FileFolderFilterType::Folder)
+    else if(filterFlags & FilterFlag::Dirs && !(filterFlags & FilterFlag::Files))
     {
-        ui->showFolderOnlyRadioButton->setChecked(true);
+        ui->showFileOnlyRadioButton->setChecked(true);
     }
     else
     {
@@ -56,14 +54,9 @@ FilterDialog::~FilterDialog()
     delete ui;
 }
 
-AttrFilterFlags FilterDialog::getAttrFilterFlags() const
+FilterFlags FilterDialog::getFilterFlags() const
 {
-    return m_attrFilterFlags;
-}
-
-FileFolderFilterType FilterDialog::getFileFolderFilterType() const
-{
-    return m_fileFolderFilterType;
+    return m_filterFlags;
 }
 
 QStringList FilterDialog::getNameMaskFilters() const
@@ -73,30 +66,29 @@ QStringList FilterDialog::getNameMaskFilters() const
 
 void FilterDialog::accept()
 {
-    m_attrFilterFlags = AttrFilterFlag::None;
+    m_filterFlags = FilterFlag::None;
     if(ui->showHiddenCheckBox->isChecked())
     {
-        m_attrFilterFlags |= AttrFilterFlag::Hidden;
+        m_filterFlags |= FilterFlag::Hidden;
     }
 #ifdef Q_OS_WIN
     if(ui->showSystemCheckBox->isChecked())
     {
-        m_attrFilterFlags |= AttrFilterFlag::System;
+        m_filterFlags |= FilterFlag::System;
     }
 #endif
 
-    m_fileFolderFilterType = FileFolderFilterType::All;
     if(ui->showFileOnlyRadioButton->isChecked())
     {
-        m_fileFolderFilterType = FileFolderFilterType::File;
+        m_filterFlags |= FilterFlag::Files;
     }
     else if(ui->showFolderOnlyRadioButton->isChecked())
     {
-        m_fileFolderFilterType = FileFolderFilterType::Folder;
+        m_filterFlags |= FilterFlag::Dirs;
     }
     else
     {
-        m_fileFolderFilterType = FileFolderFilterType::All;
+        m_filterFlags |= (FilterFlag::Files | FilterFlag::Dirs);
     }
 
     m_nameMaskFilters = ui->nameMaskFilterLineEdit->text().simplified().split(' ', QString::SkipEmptyParts);
@@ -105,7 +97,7 @@ void FilterDialog::accept()
         m_nameMaskFilters = QStringList("*");
     }
 
-    qDebug() << "attrFilterFlags : " << m_attrFilterFlags << ", nameMaskFilters : " << m_nameMaskFilters;
+    qDebug() << "filterFlags : " << m_filterFlags << ", nameMaskFilters : " << m_nameMaskFilters;
 
     QDialog::accept();
 }

@@ -15,13 +15,13 @@ namespace Farman
 {
 
 FolderForm::FolderForm(PaneType pane,
-                       AttrFilterFlags attrFilterFlags,
+                       FilterFlags filterFlags,
                        SectionType sortSectionType,
                        SectionType sortSectionType2nd,
                        SortDirsType sortDirsType,
                        bool sortDotFirst,
-                       Qt::CaseSensitivity sortCaseSensitivity,
-                       Qt::SortOrder sortOrder,
+                       SortCaseSensitivity sortCaseSensitivity,
+                       SortOrderType sortOrder,
                        FileSizeFormatType fileSizeformatType,
                        bool fileSizeComma,
                        DateFormatType dateFormatType,
@@ -37,17 +37,12 @@ FolderForm::FolderForm(PaneType pane,
 
     ui->goToFolderToolButton->setIcon(QApplication::style()->standardIcon(QStyle::SP_FileDialogStart));
 
-    m_folderModel->setReadOnly(true);
-    m_folderModel->setDynamicSortFilter(true);
-    m_folderModel->setSortLocaleAware(true);
-
     m_folderModel->setFileSizeFormatType(fileSizeformatType);
     m_folderModel->setFileSizeComma(fileSizeComma);
     m_folderModel->setDateFormatType(dateFormatType);
     m_folderModel->setDateFormatOriginalString(dateOrgString);
 
-    m_folderModel->setAttrFilterFlags(attrFilterFlags);
-    m_folderModel->setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
+    m_folderModel->setFilterFlags(filterFlags);
     m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
 
     setSortSettings(sortSectionType, sortSectionType2nd, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
@@ -57,13 +52,13 @@ FolderForm::FolderForm(PaneType pane,
 
     ui->folderView->setModel(m_folderModel);
 
-    ui->folderView->setSelectionModel(m_folderModel->getSelectionModel());
+    ui->folderView->setSelectionModel(m_folderModel->selectionModel());
 
     connect(ui->folderView,
             SIGNAL(selectedFile(const QString&, QItemSelectionModel::SelectionFlag)),
             this,
             SLOT(onSelectedFile(const QString&, QItemSelectionModel::SelectionFlag)));
-    connect(m_folderModel->getSelectionModel(),
+    connect(m_folderModel->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
@@ -151,12 +146,12 @@ void FolderForm::setAppearance(const QFont& viewFont,
     ui->folderPathEdit->setPalette(pal);
 }
 
-void FolderForm::setAppearanceFolderViewColors(const QMap<FolderViewColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio)
+void FolderForm::setAppearanceFolderViewColors(const QMap<ColorRoleType, QColor>& folderViewColors, bool folderColorTopPrio)
 {
     m_folderModel->initBrushes(folderViewColors, folderColorTopPrio);
 
     QPalette pal = ui->folderView->palette();
-    pal.setColor(QPalette::Base, folderViewColors[FolderViewColorRoleType::Background]);
+    pal.setColor(QPalette::Base, folderViewColors[ColorRoleType::Background]);
     ui->folderView->setAutoFillBackground(true);
     ui->folderView->setPalette(pal);
 }
@@ -168,7 +163,7 @@ void FolderForm::setFileSizeFormatType(FileSizeFormatType formatType)
 
 FileSizeFormatType FolderForm::getFileSizeFormatType() const
 {
-    return m_folderModel->getFileSizeFormatType();
+    return m_folderModel->fileSizeFormatType();
 }
 
 void FolderForm::setFileSizeComma(bool fileSizeComma)
@@ -178,7 +173,7 @@ void FolderForm::setFileSizeComma(bool fileSizeComma)
 
 bool FolderForm::getFileSizeComma() const
 {
-    return m_folderModel->getFileSizeComma();
+    return m_folderModel->fileSizeComma();
 }
 
 void FolderForm::setDateFormatType(DateFormatType formatType)
@@ -188,7 +183,7 @@ void FolderForm::setDateFormatType(DateFormatType formatType)
 
 DateFormatType FolderForm::getDateFormatType() const
 {
-    return m_folderModel->getDateFormatType();
+    return m_folderModel->dateFormatType();
 }
 
 void FolderForm::setDateFormatOriginalString(const QString& orgString)
@@ -198,27 +193,17 @@ void FolderForm::setDateFormatOriginalString(const QString& orgString)
 
 QString FolderForm::getDateFormatOriginalString() const
 {
-    return m_folderModel->getDateFormatOriginalString();
+    return m_folderModel->dateFormatOriginalString();
 }
 
-void FolderForm::setAttrFilterFlags(AttrFilterFlags attrFilterFlags)
+void FolderForm::setFilterFlags(FilterFlags filterFlags)
 {
-    m_folderModel->setAttrFilterFlags(attrFilterFlags);
+    m_folderModel->setFilterFlags(filterFlags);
 }
 
-AttrFilterFlags FolderForm::getAttrFilterFlags() const
+FilterFlags FolderForm::getFilterFlags() const
 {
-    return m_folderModel->getAttrFilterFlags();
-}
-
-void FolderForm::setFileFolderFilterType(FileFolderFilterType fileFolderFilterType)
-{
-    m_folderModel->setFileFolderFilterType(fileFolderFilterType);
-}
-
-FileFolderFilterType FolderForm::getFileFolderFilterType() const
-{
-    return m_folderModel->getFileFolderFilterType();
+    return m_folderModel->filterFlags();
 }
 
 void FolderForm::setNameMaskFilters(const QStringList& nameMaskFilters)
@@ -235,20 +220,19 @@ void FolderForm::updateFilterLabel()
 {
     qDebug() << "FolderForm::updateFilterLabel()";
 
-    AttrFilterFlags attrFilterFlags = getAttrFilterFlags();
-    FileFolderFilterType fileFolderFilterType = getFileFolderFilterType();
+    FilterFlags filterFlags = getFilterFlags();
 
-    QString filterStr = tr("Hidden : ") + ((attrFilterFlags & AttrFilterFlag::Hidden) ? tr("Show") : tr("Hide"))
+    QString filterStr = tr("Hidden : ") + ((filterFlags & FilterFlag::Hidden) ? tr("Show") : tr("Hide"))
 #ifdef Q_OS_WIN
-                      + ", " + tr("System : ") + ((attrFilterFlags & AttrFilterFlag::System) ? tr("Show") : tr("Hide"))
+                      + ", " + tr("System : ") + ((filterFlags & FilterFlag::System) ? tr("Show") : tr("Hide"))
 #endif
                       ;
 
-    if(fileFolderFilterType == FileFolderFilterType::File)
+    if(filterFlags & FilterFlag::Files && !(filterFlags & FilterFlag::Dirs))
     {
         filterStr += ", " + tr("File only");
     }
-    else if(fileFolderFilterType == FileFolderFilterType::Folder)
+    else if(filterFlags & FilterFlag::Dirs && !(filterFlags & FilterFlag::Files))
     {
         filterStr += ", " + tr("Folder only");
     }
@@ -260,8 +244,8 @@ void FolderForm::setSortSettings(SectionType sectionType,
                                  SectionType sectionType2nd,
                                  SortDirsType dirsType,
                                  bool dotFirst,
-                                 Qt::CaseSensitivity caseSensitivity,
-                                 Qt::SortOrder order)
+                                 SortCaseSensitivity caseSensitivity,
+                                 SortOrderType order)
 {
     m_folderModel->setSortSectionType(sectionType);
     m_folderModel->setSortSectionType2nd(sectionType2nd);
@@ -281,10 +265,12 @@ SectionType FolderForm::getSortSectionType2nd() const
     return m_folderModel->sortSectionType2nd();
 }
 
+#if 0
 int FolderForm::getSortColumn() const
 {
     return m_folderModel->sortColumn();
 }
+#endif
 
 SortDirsType FolderForm::getSortDirsType() const
 {
@@ -296,12 +282,12 @@ bool FolderForm::getSortDotFirst() const
     return m_folderModel->sortDotFirst();
 }
 
-Qt::CaseSensitivity FolderForm::getSortCaseSensitivity() const
+SortCaseSensitivity FolderForm::getSortCaseSensitivity() const
 {
     return m_folderModel->sortCaseSensitivity();
 }
 
-Qt::SortOrder FolderForm::getSortOrder() const
+SortOrderType FolderForm::getSortOrder() const
 {
     return m_folderModel->sortOrder();
 }
@@ -313,13 +299,6 @@ int FolderForm::setPath(const QString& dirPath, bool addHistory/* = true*/)
         return 0;
     }
 
-    if(m_folderModel->isDirectoryLoading())
-    {
-        qDebug() << "FolderForm::setPath() : Now loading......";
-
-        return -1;
-    }
-
     // ディレクトリが空(".." も存在しない)場合は Open できないとみなしてエラー
     if(QDir(dirPath).isEmpty(QDir::AllEntries | QDir::NoDot))
     {
@@ -329,7 +308,7 @@ int FolderForm::setPath(const QString& dirPath, bool addHistory/* = true*/)
     }
 
     m_folderModel->clearSelected();
-    setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
+    setFilterFlags(getFilterFlags() | FilterFlag::AllEntrys);
     setNameMaskFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
     updateFilterLabel();
 
@@ -402,7 +381,7 @@ const HistoryManager* FolderForm::getHistoryManager()
 
 QList<QFileInfo> FolderForm::getSelectedFileInfoList()
 {
-    QModelIndexList indexList = m_folderModel->getSelectedIndexList();
+    QModelIndexList indexList = m_folderModel->selectedIndexList();
     if(indexList.size() == 0 && getCurrentFileName() != "" && getCurrentFileName() != "..")
     {
         // 選択しているアイテムが無くても、".." 以外の箇所にカーソルがあれば、それを選択しているものとする
@@ -640,7 +619,7 @@ void FolderForm::updateMarkedLabel()
 
     qint64 size = 0;
 
-    if(m_folderModel->getSelectedIndexList().size() > 0)
+    if(m_folderModel->selectedIndexList().size() > 0)
     {
         for(auto fileInfo : getSelectedFileInfoList())
         {
@@ -652,8 +631,8 @@ void FolderForm::updateMarkedLabel()
     }
 
     ui->markedLabel->setText(tr("Marked : %1 / %2, %L3 Bytes")
-                             .arg(m_folderModel->getSelectedIndexList().size())
-                             .arg(m_folderModel->getFileDirNum())
+                             .arg(m_folderModel->selectedIndexList().size())
+                             .arg(m_folderModel->fileDirNum())
                              .arg(size));
 }
 

@@ -7,6 +7,7 @@
 #include <QFont>
 #include <QColor>
 #include "types.h"
+#include "foldermodel.h"
 
 namespace Ui {
 class PreferencesDialog;

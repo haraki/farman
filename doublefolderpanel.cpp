@@ -51,16 +51,16 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
 
     for(auto pane : {PaneType::Left, PaneType::Right})
     {
-        AttrFilterFlags attrFilterFlags = Settings::getInstance()->getAttrFilterSettings(pane);
+        FilterFlags filterFlags = Settings::getInstance()->getFilterSettings(pane);
         SectionType sortSectionType = Settings::getInstance()->getSortSectionType(pane);
         SectionType sortSectionType2nd = Settings::getInstance()->getSortSectionType2nd(pane);
         SortDirsType sortDirsType = Settings::getInstance()->getSortDirsType(pane);
         bool sortDotFirst = Settings::getInstance()->getSortDotFirst(pane);
-        Qt::CaseSensitivity sortCaseSensitivity = Settings::getInstance()->getSortCaseSensitivity(pane);
-        Qt::SortOrder sortOrder = Settings::getInstance()->getSortOrder(pane);
+        SortCaseSensitivity sortCaseSensitivity = Settings::getInstance()->getSortCaseSensitivity(pane);
+        SortOrderType sortOrder = Settings::getInstance()->getSortOrder(pane);
 
         FolderForm* folderForm = new FolderForm(pane,
-                                                attrFilterFlags,
+                                                filterFlags,
                                                 sortSectionType,
                                                 sortSectionType2nd,
                                                 sortDirsType,
@@ -232,21 +232,21 @@ void DoubleFolderPanel::updateSettings()
 
 void DoubleFolderPanel::updateFolderViewColorsSettings()
 {
-    QMap<FolderViewColorRoleType, QColor> folderViewColors;
+    QMap<ColorRoleType, QColor> folderViewColors;
 
-    folderViewColors[FolderViewColorRoleType::Normal]              = Settings::getInstance()->getColorSetting("folderView_normal");
-    folderViewColors[FolderViewColorRoleType::Normal_Selected]     = Settings::getInstance()->getColorSetting("folderView_normal_selected");
-    folderViewColors[FolderViewColorRoleType::Folder]              = Settings::getInstance()->getColorSetting("folderView_folder");
-    folderViewColors[FolderViewColorRoleType::Folder_Selected]     = Settings::getInstance()->getColorSetting("folderView_folder_selected");
-    folderViewColors[FolderViewColorRoleType::ReadOnly]            = Settings::getInstance()->getColorSetting("folderView_readOnly");
-    folderViewColors[FolderViewColorRoleType::ReadOnly_Selected]   = Settings::getInstance()->getColorSetting("folderView_readOnly_selected");
-    folderViewColors[FolderViewColorRoleType::Hidden]              = Settings::getInstance()->getColorSetting("folderView_hidden");
-    folderViewColors[FolderViewColorRoleType::Hidden_Selected]     = Settings::getInstance()->getColorSetting("folderView_hidden_selected");
-    folderViewColors[FolderViewColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_system");
-    folderViewColors[FolderViewColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_system_selected");
+    folderViewColors[ColorRoleType::Normal]              = Settings::getInstance()->getColorSetting("folderView_normal");
+    folderViewColors[ColorRoleType::Normal_Selected]     = Settings::getInstance()->getColorSetting("folderView_normal_selected");
+    folderViewColors[ColorRoleType::Folder]              = Settings::getInstance()->getColorSetting("folderView_folder");
+    folderViewColors[ColorRoleType::Folder_Selected]     = Settings::getInstance()->getColorSetting("folderView_folder_selected");
+    folderViewColors[ColorRoleType::ReadOnly]            = Settings::getInstance()->getColorSetting("folderView_readOnly");
+    folderViewColors[ColorRoleType::ReadOnly_Selected]   = Settings::getInstance()->getColorSetting("folderView_readOnly_selected");
+    folderViewColors[ColorRoleType::Hidden]              = Settings::getInstance()->getColorSetting("folderView_hidden");
+    folderViewColors[ColorRoleType::Hidden_Selected]     = Settings::getInstance()->getColorSetting("folderView_hidden_selected");
+    folderViewColors[ColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_system");
+    folderViewColors[ColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_system_selected");
 
-    folderViewColors[FolderViewColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_background");
-    folderViewColors[FolderViewColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_selected_background");
+    folderViewColors[ColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_background");
+    folderViewColors[ColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_selected_background");
 
     FolderForm* activeForm = getActiveFolderForm();
     Q_ASSERT(activeForm != Q_NULLPTR);
@@ -255,19 +255,19 @@ void DoubleFolderPanel::updateFolderViewColorsSettings()
 
     if(Settings::getInstance()->getEnableInactiveFontColor())
     {
-        folderViewColors[FolderViewColorRoleType::Normal]              =
-        folderViewColors[FolderViewColorRoleType::Folder]              =
-        folderViewColors[FolderViewColorRoleType::ReadOnly]            =
-        folderViewColors[FolderViewColorRoleType::Hidden]              =
-        folderViewColors[FolderViewColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_inactive");
-        folderViewColors[FolderViewColorRoleType::Normal_Selected]     =
-        folderViewColors[FolderViewColorRoleType::Folder_Selected]     =
-        folderViewColors[FolderViewColorRoleType::ReadOnly_Selected]   =
-        folderViewColors[FolderViewColorRoleType::Hidden_Selected]     =
-        folderViewColors[FolderViewColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_inactive_selected");
+        folderViewColors[ColorRoleType::Normal]              =
+        folderViewColors[ColorRoleType::Folder]              =
+        folderViewColors[ColorRoleType::ReadOnly]            =
+        folderViewColors[ColorRoleType::Hidden]              =
+        folderViewColors[ColorRoleType::System]              = Settings::getInstance()->getColorSetting("folderView_inactive");
+        folderViewColors[ColorRoleType::Normal_Selected]     =
+        folderViewColors[ColorRoleType::Folder_Selected]     =
+        folderViewColors[ColorRoleType::ReadOnly_Selected]   =
+        folderViewColors[ColorRoleType::Hidden_Selected]     =
+        folderViewColors[ColorRoleType::System_Selected]     = Settings::getInstance()->getColorSetting("folderView_inactive_selected");
 
-        folderViewColors[FolderViewColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_inactive_background");
-        folderViewColors[FolderViewColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_inactive_selected_background");
+        folderViewColors[ColorRoleType::Background]          = Settings::getInstance()->getColorSetting("folderView_inactive_background");
+        folderViewColors[ColorRoleType::Selected_Background] = Settings::getInstance()->getColorSetting("folderView_inactive_selected_background");
     }
 
     FolderForm* inactiveForm = getInactiveFolderForm();
@@ -383,8 +383,8 @@ void DoubleFolderPanel::onChangeSortSettings()
     SectionType sectionType2nd = activeForm->getSortSectionType2nd();
     SortDirsType dirsType = activeForm->getSortDirsType();
     bool dotFirst = activeForm->getSortDotFirst();
-    Qt::CaseSensitivity caseSensitivity = activeForm->getSortCaseSensitivity();
-    Qt::SortOrder order = activeForm->getSortOrder();
+    SortCaseSensitivity caseSensitivity = activeForm->getSortCaseSensitivity();
+    SortOrderType order = activeForm->getSortOrder();
 
     SortDialog dialog(sectionType, sectionType2nd, dirsType, dotFirst, caseSensitivity, order, parentWidget());
     if(dialog.exec() != QDialog::Accepted)
@@ -418,27 +418,24 @@ void DoubleFolderPanel::onChangeFilterSettings()
     FolderForm* activeForm = getActiveFolderForm();
     Q_ASSERT(activeForm != Q_NULLPTR);
 
-    AttrFilterFlags attrFilterFlags = activeForm->getAttrFilterFlags();
-    FileFolderFilterType fileFolderFilterType = activeForm->getFileFolderFilterType();
+    FilterFlags filterFlags = activeForm->getFilterFlags();
     QStringList nameMaskFilters = activeForm->getNameMaskFilters();
 
-    FilterDialog dialog(attrFilterFlags, fileFolderFilterType, nameMaskFilters, parentWidget());
+    FilterDialog dialog(filterFlags, nameMaskFilters, parentWidget());
     if(dialog.exec() != QDialog::Accepted)
     {
         return;
     }
 
-    attrFilterFlags = dialog.getAttrFilterFlags();
-    fileFolderFilterType = dialog.getFileFolderFilterType();
+    filterFlags = dialog.getFilterFlags();
     nameMaskFilters = dialog.getNameMaskFilters();
-    activeForm->setAttrFilterFlags(attrFilterFlags);
-    activeForm->setFileFolderFilterType(fileFolderFilterType);
+    activeForm->setFilterFlags(filterFlags);
     activeForm->setNameMaskFilters(nameMaskFilters);
     activeForm->updateFilterLabel();
 
     PaneType pane = activeForm->getPaneType();
 
-    Settings::getInstance()->setAttrFilterSettings(pane, attrFilterFlags);
+    Settings::getInstance()->setFilterSettings(pane, filterFlags);
 
     activeForm->refresh(true);          // 選択状態のファイルがあると refresh でクラッシュするので選択状態を解除する
 }

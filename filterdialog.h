@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <qdir.h>
 #include "types.h"
+#include "foldermodel.h"
 
 namespace Ui {
 class FilterDialog;
@@ -17,14 +18,12 @@ class FilterDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FilterDialog(AttrFilterFlags attrFilterFlags,
-                          FileFolderFilterType fileFolderFilterType,
+    explicit FilterDialog(FilterFlags filterFlags,
                           const QStringList& nameMaskFilters,
                           QWidget *parent = Q_NULLPTR);
     ~FilterDialog() Q_DECL_OVERRIDE;
 
-    AttrFilterFlags getAttrFilterFlags() const;
-    FileFolderFilterType getFileFolderFilterType() const;
+    FilterFlags getFilterFlags() const;
     QStringList getNameMaskFilters() const;
 
 private Q_SLOTS:
@@ -35,8 +34,7 @@ private:
     bool valicationFilterString(const QString &nameMaskFilterString);
 
     Ui::FilterDialog *ui;
-    AttrFilterFlags m_attrFilterFlags;
-    FileFolderFilterType m_fileFolderFilterType;
+    FilterFlags m_filterFlags;
     QStringList m_nameMaskFilters;
 };
 

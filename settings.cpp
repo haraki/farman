@@ -95,7 +95,7 @@ void Settings::initialize()
         m_sortOrder[static_cast<int>(pane)]           = getValueSortOrder(prefix);
 
         // Filter settings
-        m_attrFilterSettings[static_cast<int>(pane)] = getValueAttrFilterSettings(prefix);
+        m_filterSettings[static_cast<int>(pane)] = getValueFilterSettings(prefix);
     }
 
     // Drag & Drop behavior in FolderView
@@ -343,10 +343,10 @@ void Settings::flush()
     setValueSortOrder(m_sortOrder[static_cast<int>(PaneType::Right)], "right");
 
     // Left side Filter settings
-    setValueAttrFilterSettings(m_attrFilterSettings[static_cast<int>(PaneType::Left)], "left");
+    setValueFilterSettings(m_filterSettings[static_cast<int>(PaneType::Left)], "left");
 
     // Right side Filter settings
-    setValueAttrFilterSettings(m_attrFilterSettings[static_cast<int>(PaneType::Right)], "right");
+    setValueFilterSettings(m_filterSettings[static_cast<int>(PaneType::Right)], "right");
 
     // Drag & Drop behavior in FolderView
     QString behaviorTypeValue = (m_dragAndDropBehaviorType == DragAndDropBehaviorType::Copy) ? "copy" :
@@ -562,7 +562,7 @@ SectionType Settings::getValueSortSectionType2nd(const QString& prefix)
           (sortTypeValue == "size") ? SectionType::FileSize :
           (sortTypeValue == "type") ? SectionType::FileType :
           (sortTypeValue == "name") ? SectionType::FileName :
-          (sortTypeValue == "none") ? SectionType::NoSpecify :
+          (sortTypeValue == "none") ? SectionType::Unknown :
                                       DEFAULT_SORT_SECTION_TYPE_2ND;
 
     return ret;
@@ -586,25 +586,25 @@ bool Settings::getValueSortDotFirst(const QString& prefix)
     return value("main/" + prefix + "SortDotFirst", DEFAULT_SORT_DOT_FIRST).toBool();
 }
 
-Qt::CaseSensitivity Settings::getValueSortCaseSensitivity(const QString& prefix)
+SortCaseSensitivity Settings::getValueSortCaseSensitivity(const QString& prefix)
 {
-    Qt::CaseSensitivity ret = DEFAULT_SORT_CASE_SENSITIVITY;
+    SortCaseSensitivity ret = DEFAULT_SORT_CASE_SENSITIVITY;
 
     QString sortCaseValue = value("main/" + prefix + "SortCase").toString();
-    ret = (sortCaseValue == "insensitive") ? Qt::CaseInsensitive :
-          (sortCaseValue == "sensitive")   ? Qt::CaseSensitive :
+    ret = (sortCaseValue == "insensitive") ? SortCaseSensitivity::Insensitive :
+          (sortCaseValue == "sensitive")   ? SortCaseSensitivity::Sensitive :
                                              DEFAULT_SORT_CASE_SENSITIVITY;
 
     return ret;
 }
 
-Qt::SortOrder Settings::getValueSortOrder(const QString& prefix)
+SortOrderType Settings::getValueSortOrder(const QString& prefix)
 {
-    Qt::SortOrder ret = Qt::AscendingOrder;
+    SortOrderType ret = SortOrderType::Ascending;
 
     QString sortOrderValue = value("main/" + prefix + "SortOrder").toString();
-    ret = (sortOrderValue == "asc")  ? Qt::AscendingOrder :
-          (sortOrderValue == "desc") ? Qt::DescendingOrder :
+    ret = (sortOrderValue == "asc")  ? SortOrderType::Ascending :
+          (sortOrderValue == "desc") ? SortOrderType::Descending :
                                        DEFAULT_SORT_ORDER;
 
     return ret;
@@ -642,43 +642,43 @@ void Settings::setValueSortDotFirst(bool dotFirst, const QString& prefix)
     setValue("main/" + prefix + "SortDotFirst", dotFirst);
 }
 
-void Settings::setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix)
+void Settings::setValueSortCaseSensitivity(SortCaseSensitivity caseSensitivity, const QString& prefix)
 {
-    QString sortCaseValue = (caseSensitivity == Qt::CaseInsensitive) ? "insensitive" :
-                                                                       "sensitive";
+    QString sortCaseValue = (caseSensitivity == SortCaseSensitivity::Insensitive) ? "insensitive" :
+                                                                                    "sensitive";
     setValue("main/" + prefix + "SortCase", sortCaseValue);
 }
 
-void Settings::setValueSortOrder(Qt::SortOrder order, const QString& prefix)
+void Settings::setValueSortOrder(SortOrderType order, const QString& prefix)
 {
-    QString sortOrderValue = (order == Qt::DescendingOrder) ? "desc" :
-                                                              "asc";
+    QString sortOrderValue = (order == SortOrderType::Descending) ? "desc" :
+                                                                    "asc";
     setValue("main/" + prefix + "SortOrder", sortOrderValue);
 }
 
-AttrFilterFlags Settings::getValueAttrFilterSettings(const QString& prefix) const
+FilterFlags Settings::getValueFilterSettings(const QString& prefix) const
 {
-    AttrFilterFlags ret = AttrFilterFlag::None;
+    FilterFlags ret = FilterFlag::None;
 
     if(value("main/" + prefix + "FilterHidden", false).toBool())
     {
-        ret |= AttrFilterFlag::Hidden;
+        ret |= FilterFlag::Hidden;
     }
 
     if(value("main/" + prefix + "FilterSystem", false).toBool())
     {
-        ret |= AttrFilterFlag::System;
+        ret |= FilterFlag::System;
     }
 
     return ret;
 }
 
-void Settings::setValueAttrFilterSettings(AttrFilterFlags attrFilterSettings, const QString& prefix)
+void Settings::setValueFilterSettings(FilterFlags filterSettings, const QString& prefix)
 {
-    bool filterHiddenValue = (attrFilterSettings & AttrFilterFlag::Hidden) ? true : false;
+    bool filterHiddenValue = (filterSettings & FilterFlag::Hidden) ? true : false;
     setValue("main/" + prefix + "FilterHidden", filterHiddenValue);
 
-    bool filterSystemValue = (attrFilterSettings & AttrFilterFlag::System) ? true : false;
+    bool filterSystemValue = (filterSettings & FilterFlag::System) ? true : false;
     setValue("main/" + prefix + "FilterSystem", filterSystemValue);
 }
 

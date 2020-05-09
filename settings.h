@@ -59,17 +59,17 @@ public:
     SectionType getSortSectionType2nd(PaneType pane) { return m_sortSectionType2nd[static_cast<int>(pane)]; }
     SortDirsType getSortDirsType(PaneType pane) { return m_sortDirsType[static_cast<int>(pane)]; }
     bool getSortDotFirst(PaneType pane) { return m_sortDotFirst[static_cast<int>(pane)]; }
-    Qt::CaseSensitivity getSortCaseSensitivity(PaneType pane) { return m_sortCaseSensitivity[static_cast<int>(pane)]; }
-    Qt::SortOrder getSortOrder(PaneType pane) { return m_sortOrder[static_cast<int>(pane)]; }
+    SortCaseSensitivity getSortCaseSensitivity(PaneType pane) { return m_sortCaseSensitivity[static_cast<int>(pane)]; }
+    SortOrderType getSortOrder(PaneType pane) { return m_sortOrder[static_cast<int>(pane)]; }
     void setSortSectionType(PaneType pane, SectionType sectionType) { m_sortSectionType[static_cast<int>(pane)] = sectionType; }
     void setSortSectionType2nd(PaneType pane, SectionType sectionType2nd) { m_sortSectionType2nd[static_cast<int>(pane)] = sectionType2nd; }
     void setSortDirsType(PaneType pane, SortDirsType dirsType) { m_sortDirsType[static_cast<int>(pane)] = dirsType; }
     void setSortDotFirst(PaneType pane, bool dotFirst) { m_sortDotFirst[static_cast<int>(pane)] = dotFirst; }
-    void setSortCaseSensitivity(PaneType pane, Qt::CaseSensitivity caseSensitivity) { m_sortCaseSensitivity[static_cast<int>(pane)] = caseSensitivity; }
-    void setSortOrder(PaneType pane, Qt::SortOrder order) { m_sortOrder[static_cast<int>(pane)] = order; }
+    void setSortCaseSensitivity(PaneType pane, SortCaseSensitivity caseSensitivity) { m_sortCaseSensitivity[static_cast<int>(pane)] = caseSensitivity; }
+    void setSortOrder(PaneType pane, SortOrderType order) { m_sortOrder[static_cast<int>(pane)] = order; }
 
-    AttrFilterFlags getAttrFilterSettings(PaneType pane) const { return m_attrFilterSettings[static_cast<int>(pane)]; }
-    void setAttrFilterSettings(PaneType pane, AttrFilterFlags attrFilterSettings) { m_attrFilterSettings[static_cast<int>(pane)] = attrFilterSettings; }
+    FilterFlags getFilterSettings(PaneType pane) const { return m_filterSettings[static_cast<int>(pane)]; }
+    void setFilterSettings(PaneType pane, FilterFlags filterSettings) { m_filterSettings[static_cast<int>(pane)] = filterSettings; }
 
     DragAndDropBehaviorType getDragAndDropBehaviorType() { return m_dragAndDropBehaviorType; }
     void setDragAndDropBehaviorType(DragAndDropBehaviorType behaviorType) { m_dragAndDropBehaviorType = behaviorType; }
@@ -180,17 +180,17 @@ private:
     SectionType getValueSortSectionType2nd(const QString& prefix);
     SortDirsType getValueSortDirsType(const QString& prefix);
     bool getValueSortDotFirst(const QString& prefix);
-    Qt::CaseSensitivity getValueSortCaseSensitivity(const QString& prefix);
-    Qt::SortOrder getValueSortOrder(const QString& prefix);
+    SortCaseSensitivity getValueSortCaseSensitivity(const QString& prefix);
+    SortOrderType getValueSortOrder(const QString& prefix);
     void setValueSortSectionType(SectionType sectionType, const QString& prefix);
     void setValueSortSectionType2nd(SectionType sectionType2nd, const QString& prefix);
     void setValueSortDirsType(SortDirsType dirsType, const QString& prefix);
     void setValueSortDotFirst(bool dotFirst, const QString& prefix);
-    void setValueSortCaseSensitivity(Qt::CaseSensitivity caseSensitivity, const QString& prefix);
-    void setValueSortOrder(Qt::SortOrder order, const QString& prefix);
+    void setValueSortCaseSensitivity(SortCaseSensitivity caseSensitivity, const QString& prefix);
+    void setValueSortOrder(SortOrderType order, const QString& prefix);
 
-    AttrFilterFlags getValueAttrFilterSettings(const QString& prefix) const;
-    void setValueAttrFilterSettings(AttrFilterFlags attrFilterSettings, const QString& prefix);
+    FilterFlags getValueFilterSettings(const QString& prefix) const;
+    void setValueFilterSettings(FilterFlags filterSettings, const QString& prefix);
 
     void getValueHistoryList(QList<QString>& historyList, const QString& prefix);
     void setValueHistoryList(const QList<QString>& historyList, const QString& prefix);
@@ -215,10 +215,10 @@ private:
     SectionType         m_sortSectionType2nd[static_cast<int>(PaneType::PaneTypeNum)]  = { DEFAULT_SORT_SECTION_TYPE_2ND, DEFAULT_SORT_SECTION_TYPE_2ND };
     SortDirsType        m_sortDirsType[static_cast<int>(PaneType::PaneTypeNum)]        = { DEFAULT_SORT_DIRS_TYPE,        DEFAULT_SORT_DIRS_TYPE        };
     bool                m_sortDotFirst[static_cast<int>(PaneType::PaneTypeNum)]        = { DEFAULT_SORT_DOT_FIRST,        DEFAULT_SORT_DOT_FIRST        };
-    Qt::CaseSensitivity m_sortCaseSensitivity[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_SORT_CASE_SENSITIVITY, DEFAULT_SORT_CASE_SENSITIVITY };
-    Qt::SortOrder       m_sortOrder[static_cast<int>(PaneType::PaneTypeNum)]           = { DEFAULT_SORT_ORDER,            DEFAULT_SORT_ORDER            };
+    SortCaseSensitivity m_sortCaseSensitivity[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_SORT_CASE_SENSITIVITY, DEFAULT_SORT_CASE_SENSITIVITY };
+    SortOrderType       m_sortOrder[static_cast<int>(PaneType::PaneTypeNum)]           = { DEFAULT_SORT_ORDER,            DEFAULT_SORT_ORDER            };
 
-    AttrFilterFlags m_attrFilterSettings[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_ATTR_FILTER_FLAGS, DEFAULT_ATTR_FILTER_FLAGS };
+    FilterFlags m_filterSettings[static_cast<int>(PaneType::PaneTypeNum)] = { DEFAULT_FILTER_FLAGS, DEFAULT_FILTER_FLAGS };
 
     DragAndDropBehaviorType m_dragAndDropBehaviorType = DEFAULT_DRAG_AND_DROP_BEHAVIOR_TYPE;
 

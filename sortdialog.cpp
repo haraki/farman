@@ -9,8 +9,8 @@ SortDialog::SortDialog(SectionType sectionType,
                        SectionType sectionType2nd,
                        SortDirsType dirsType,
                        bool dotFirst,
-                       Qt::CaseSensitivity caseSensitivity,
-                       Qt::SortOrder order,
+                       SortCaseSensitivity caseSensitivity,
+                       SortOrderType order,
                        QWidget *parent/* = Q_NULLPTR*/) :
     QDialog(parent),
     ui(new Ui::SortDialog),
@@ -65,7 +65,7 @@ SortDialog::SortDialog(SectionType sectionType,
         setSort2ndEnabled(false, true, true, true);
     }
 
-    if(order == Qt::DescendingOrder)
+    if(order == SortOrderType::Descending)
     {
         ui->orderDescendingRadioButton->setChecked(true);
     }
@@ -87,7 +87,7 @@ SortDialog::SortDialog(SectionType sectionType,
         ui->dirNoSpecifyRadioButton->setChecked(true);
     }
 
-    if(caseSensitivity == Qt::CaseInsensitive)
+    if(caseSensitivity == SortCaseSensitivity::Insensitive)
     {
         ui->caseInsensitiveRadioButton->setChecked(true);
     }
@@ -122,12 +122,12 @@ bool SortDialog::getSortDotFirst()
     return m_sortDotFirst;
 }
 
-Qt::CaseSensitivity SortDialog::getSortCaseSensitivity()
+SortCaseSensitivity SortDialog::getSortCaseSensitivity()
 {
     return m_sortCaseSensitivity;
 }
 
-Qt::SortOrder SortDialog::getSortOrder()
+SortOrderType SortDialog::getSortOrder()
 {
     return m_sortOrder;
 }
@@ -189,16 +189,16 @@ void SortDialog::accept()
     }
     else
     {
-        m_sortSectionType2nd = SectionType::NoSpecify;
+        m_sortSectionType2nd = SectionType::Unknown;
     }
 
     if(ui->orderDescendingRadioButton->isChecked())
     {
-        m_sortOrder = Qt::DescendingOrder;
+        m_sortOrder = SortOrderType::Descending;
     }
     else
     {
-        m_sortOrder = Qt::AscendingOrder;
+        m_sortOrder = SortOrderType::Ascending;
     }
 
     if(ui->dirFirstRadioButton->isChecked())
@@ -216,11 +216,11 @@ void SortDialog::accept()
 
     if(ui->caseInsensitiveRadioButton->isChecked())
     {
-        m_sortCaseSensitivity = Qt::CaseInsensitive;
+        m_sortCaseSensitivity = SortCaseSensitivity::Insensitive;
     }
     else
     {
-        m_sortCaseSensitivity = Qt::CaseSensitive;
+        m_sortCaseSensitivity = SortCaseSensitivity::Sensitive;
     }
 
     QDialog::accept();

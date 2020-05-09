@@ -1,3 +1,6 @@
 [submodule "QHexView"]
 	path = QHexView
 	url = https://github.com/haraki/QHexView.git
+[submodule "FolderModel"]
+	path = FolderModel
+	url = https://github.com/haraki/FolderModel.git
