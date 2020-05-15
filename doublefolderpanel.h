@@ -57,7 +57,7 @@ public:
 Q_SIGNALS:
     void outputConsole(const QString& consoleString);
     void statusChanged(const QString& statusString);
-    void directoryLoaded(PaneType pane, const QString& path);
+    void rootPathChanged(PaneType pane, const QString& path);
     void directoryBookmarked(PaneType pane, const QString &path, bool marked);
     void focusChanged(PaneType pane, bool inFocus);
 
@@ -85,8 +85,8 @@ protected Q_SLOTS:
     void onRightCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
     void onLeftFocusChanged(bool inFocus);
     void onRightFocusChanged(bool inFocus);
-    void onLeftDirectoryLoaded(const QString& path);
-    void onRightDirectoryLoaded(const QString& path);
+    void onLeftRootPathChanged(const QString& path);
+    void onRightRootPathChanged(const QString& path);
     void onLeftDirectoryBookmarked(const QString &path, bool marked);
     void onRightDirectoryBookmarked(const QString &path, bool marked);
 
@@ -102,7 +102,7 @@ private:
     void emitOutputConsole(const QString& consoleString);
     void emitStatusChanged(const QString& statusString);
     void emitFocusChanged(PaneType pane, bool inFocus);
-    void emitDirectoryLoaded(PaneType pane, const QString& path);
+    void emitRootPathChanged(PaneType pane, const QString& path);
     void emitDirectoryBookmarked(PaneType pane, const QString &path, bool marked);
 
     void emitOpenFile(const QString& path, ViewerType viewerType = ViewerType::Auto);

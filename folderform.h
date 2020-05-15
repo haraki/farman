@@ -118,14 +118,14 @@ public:
 
 Q_SIGNALS:
     void currentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
-    void directoryLoaded(const QString &path);
+    void rootPathChanged(const QString &path);
     void focusChanged(bool inFocus);
     void directoryBookmarked(const QString &path, bool marked);
 
 protected Q_SLOTS:
     void onSelectedFile(const QString& path, QItemSelectionModel::SelectionFlag selectionFlag);
     void onCurrentChanged(const QModelIndex& newIndex, const QModelIndex& oldIndex);
-    void onDirectoryLoaded(const QString &path);
+    void onRootPathChanged(const QString &path);
 
 private Q_SLOTS:
     void on_goToFolderToolButton_clicked();
@@ -137,7 +137,7 @@ private:
     int getTotalColumnWidth(int withOutColumn = -1);
 
     void emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInfo& oldFileInfo);
-    void emitDirectoryLoaded(const QString &path);
+    void emitRootPathChanged(const QString &path);
     void emitFocusChanged(bool inFocus);
     void emitDirectoryBookmarked(const QString &path, bool marked);
 

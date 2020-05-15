@@ -63,9 +63,9 @@ FolderForm::FolderForm(PaneType pane,
             this,
             SLOT(onCurrentChanged(const QModelIndex&, const QModelIndex&)));
     connect(m_folderModel,
-            SIGNAL(directoryLoaded(const QString&)),
+            SIGNAL(rootPathChanged(const QString&)),
             this,
-            SLOT(onDirectoryLoaded(const QString&)));
+            SLOT(onRootPathChanged(const QString&)));
 
     ui->folderView->installEventFilter(this);
 
@@ -427,22 +427,22 @@ void FolderForm::onCurrentChanged(const QModelIndex& newIndex, const QModelIndex
                        (oldIndex.row() >= 0) ? m_folderModel->fileInfo(oldIndex) : QFileInfo());
 }
 
-void FolderForm::onDirectoryLoaded(const QString& path)
+void FolderForm::onRootPathChanged(const QString& path)
 {
     qDebug() << "directory loaded." << path;
 
     QModelIndex currentRootIndex = ui->folderView->rootIndex();
     QModelIndex newRootIndex = m_folderModel->index(path);
 
-    qDebug() << "FolderForm::onDirectoryLoaded : current : " << currentRootIndex.row() << " new : " << newRootIndex.row();
+    qDebug() << "FolderForm::onRootPathChanged : current : " << currentRootIndex.row() << " new : " << newRootIndex.row();
 
     ui->folderView->setRootIndex(newRootIndex);
 
-    if(currentRootIndex.parent() == newRootIndex)
-    {
-        ui->folderView->setCursor(currentRootIndex);
-    }
-    else
+//    if(currentRootIndex.parent() == newRootIndex)
+//    {
+//        ui->folderView->setCursor(currentRootIndex);
+//    }
+//    else
     {
         // 初期カーソル位置はリストの先頭
         QModelIndex cursorIndex = m_folderModel->index(0, 0, ui->folderView->rootIndex());
@@ -452,7 +452,7 @@ void FolderForm::onDirectoryLoaded(const QString& path)
     updateMarkedLabel();
     checkBookmark();
 
-    emitDirectoryLoaded(path);
+    emitRootPathChanged(path);
 }
 
 void FolderForm::setCursor(const QString& fileName)
@@ -680,9 +680,9 @@ void FolderForm::emitCurrentChanged(const QFileInfo& newFileInfo, const QFileInf
     emit currentChanged(newFileInfo, oldFileInfo);
 }
 
-void FolderForm::emitDirectoryLoaded(const QString &path)
+void FolderForm::emitRootPathChanged(const QString &path)
 {
-    emit directoryLoaded(path);
+    emit rootPathChanged(path);
 }
 
 void FolderForm::emitFocusChanged(bool inFocus)

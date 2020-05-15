@@ -57,9 +57,9 @@ MainWindow::MainWindow(QWidget *parent/* = Q_NULLPTR*/)
             this,
             SLOT(onFocusChanged(PaneType, bool)));
     connect(doubleFolderPanel,
-            SIGNAL(directoryLoaded(PaneType, const QString&)),
+            SIGNAL(rootPathChanged(PaneType, const QString&)),
             this,
-            SLOT(onDirectoryLoaded(PaneType, const QString&)));
+            SLOT(onRootPathChanged(PaneType, const QString&)));
     connect(doubleFolderPanel,
             SIGNAL(directoryBookmarked(PaneType, const QString&, bool)),
             this,
@@ -317,11 +317,11 @@ void MainWindow::onFocusChanged(PaneType pane, bool inFocus)
     checkHistory();
 }
 
-void MainWindow::onDirectoryLoaded(PaneType pane, const QString& path)
+void MainWindow::onRootPathChanged(PaneType pane, const QString& path)
 {
     Q_ASSERT(pane == PaneType::Left || pane == PaneType::Right);
 
-    qDebug() << "MainWindow::onDirectoryLoaded : pane : "
+    qDebug() << "MainWindow::onRootPathChanged : pane : "
              << (pane == PaneType::Left ? "left" : pane == PaneType::Right ? "right" : "unknown") << ", path : " << path;
 
     checkBookmark();

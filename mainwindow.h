@@ -72,7 +72,7 @@ private Q_SLOTS:
     void onOutputConsole(const QString& consoleString);
     void onStatusChanged(const QString& statusString);
     void onFocusChanged(PaneType pane, bool inFocus);
-    void onDirectoryLoaded(PaneType pane, const QString& path);
+    void onRootPathChanged(PaneType pane, const QString& path);
     void onDirectoryBookmarked(PaneType pane, const QString &path, bool marked);
 
     void on_actionOpen_triggered();

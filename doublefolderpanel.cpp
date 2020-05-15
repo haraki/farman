@@ -88,9 +88,9 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                     this,
                     SLOT(onLeftCurrentChanged(QFileInfo,QFileInfo)));
             connect(folderForm,
-                    SIGNAL(directoryLoaded(const QString&)),
+                    SIGNAL(rootPathChanged(const QString&)),
                     this,
-                    SLOT(onLeftDirectoryLoaded(const QString&)));
+                    SLOT(onLeftRootPathChanged(const QString&)));
             connect(folderForm,
                     SIGNAL(directoryBookmarked(const QString&, bool)),
                     this,
@@ -109,9 +109,9 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
                     this,
                     SLOT(onRightCurrentChanged(QFileInfo,QFileInfo)));
             connect(folderForm,
-                    SIGNAL(directoryLoaded(const QString&)),
+                    SIGNAL(rootPathChanged(const QString&)),
                     this,
-                    SLOT(onRightDirectoryLoaded(const QString&)));
+                    SLOT(onRightRootPathChanged(const QString&)));
             connect(folderForm,
                     SIGNAL(directoryBookmarked(const QString&, bool)),
                     this,
@@ -809,18 +809,18 @@ void DoubleFolderPanel::onRightFocusChanged(bool inFocus)
     emitFocusChanged(PaneType::Right, inFocus);
 }
 
-void DoubleFolderPanel::onLeftDirectoryLoaded(const QString& path)
+void DoubleFolderPanel::onLeftRootPathChanged(const QString& path)
 {
-    qDebug() << "DoubleFolderPanel::onLeftDirectoryLoaded : path : " << path;
+    qDebug() << "DoubleFolderPanel::onLeftRootPathChanged : path : " << path;
 
-    emitDirectoryLoaded(PaneType::Left, path);
+    emitRootPathChanged(PaneType::Left, path);
 }
 
-void DoubleFolderPanel::onRightDirectoryLoaded(const QString& path)
+void DoubleFolderPanel::onRightRootPathChanged(const QString& path)
 {
-    qDebug() << "DoubleFolderPanel::onRightDirectoryLoaded : path : " << path;
+    qDebug() << "DoubleFolderPanel::onRightRootPathChanged : path : " << path;
 
-    emitDirectoryLoaded(PaneType::Right, path);
+    emitRootPathChanged(PaneType::Right, path);
 }
 
 void DoubleFolderPanel::onLeftDirectoryBookmarked(const QString &path, bool marked)
@@ -890,9 +890,9 @@ void DoubleFolderPanel::emitFocusChanged(PaneType pane, bool inFocus)
     emit focusChanged(pane, inFocus);
 }
 
-void DoubleFolderPanel::emitDirectoryLoaded(PaneType pane, const QString& path)
+void DoubleFolderPanel::emitRootPathChanged(PaneType pane, const QString& path)
 {
-    emit directoryLoaded(pane, path);
+    emit rootPathChanged(pane, path);
 }
 
 void DoubleFolderPanel::emitDirectoryBookmarked(PaneType pane, const QString& path, bool marked)
