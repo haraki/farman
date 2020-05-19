@@ -81,7 +81,7 @@ void FolderView::selectCurrent(QItemSelectionModel::SelectionFlag selectionFlag/
 
     if(folderModel->fileName(index) != "..")
     {
-        folderModel->setSelect(index.row(), selectionFlag, index.parent());
+        folderModel->setSelect(index.row(), selectionFlag);
 
         emitSelectedFile(folderModel->filePath(index), selectionFlag);
     }
@@ -313,7 +313,7 @@ void FolderView::dropEvent(QDropEvent *e)
         FolderModel* folderModel = qobject_cast<FolderModel*>(model());
         Q_ASSERT(folderModel != Q_NULLPTR);
 
-        QString dstDirPath = folderModel->filePath(rootIndex());
+        QString dstDirPath = folderModel->rootPath();
         QStringList srcPaths;
         for(QUrl url : e->mimeData()->urls())
         {
