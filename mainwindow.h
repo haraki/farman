@@ -75,6 +75,8 @@ private Q_SLOTS:
     void onDirectoryLoaded(PaneType pane, const QString& path);
     void onDirectoryBookmarked(PaneType pane, const QString &path, bool marked);
 
+    void onActionHistoryTriggered();
+
     void on_actionOpen_triggered();
     void on_actionOpenWithTextViewer_triggered();
     void on_actionOpenWithHexViewer_triggered();
@@ -100,7 +102,6 @@ private Q_SLOTS:
     void on_actionCopyFileName_triggered();
     void on_actionPrevious_triggered();
     void on_actionNext_triggered();
-    void on_actionHistory_triggered();
     void on_actionGoToFolder_triggered();
     void on_actionSetSameFolderToTarget_triggered();
     void on_actionSetSameFolderFromTarget_triggered();
