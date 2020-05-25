@@ -1018,7 +1018,7 @@ void DoubleFolderPanel::setPaneMode(PaneMode paneMode)
 
 void DoubleFolderPanel::setActivePane(PaneType pane, bool focus/* = true*/)
 {
-    qDebug() << "DoubleFolderPanel::setActivePane()" << ((pane == PaneType::Left) ? "left" : "right");
+    qDebug() << "DoubleFolderPanel::setActivePane(" << ((pane == PaneType::Left) ? "left" : "right") << "," << focus << ")";
 
     m_activePane = pane;
 
