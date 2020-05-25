@@ -151,6 +151,10 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
         if(folderAtStartup == FolderAtStartup::LastTime || folderAtStartup == FolderAtStartup::Fixed)
         {
             path = Settings::getInstance()->getFolderPath(pane);
+            if(path.isEmpty())
+            {
+                path = QDir::homePath();
+            }
         }
         if(!QDir(path).exists())
         {
