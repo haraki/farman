@@ -1030,11 +1030,11 @@ void DoubleFolderPanel::setActivePane(PaneType pane, bool focus/* = true*/)
 
     Settings::getInstance()->setActivePane(pane);
 
-    FolderForm* folderForm = getFolderForm(pane);
-    Q_ASSERT(folderForm != Q_NULLPTR);
-
     if(focus)
     {
+        FolderForm* folderForm = getFolderForm(pane);
+        Q_ASSERT(folderForm != Q_NULLPTR);
+
         FolderView* folderView = folderForm->findChild<FolderView*>(QStringLiteral("folderView"));
         Q_ASSERT(folderView != Q_NULLPTR);
 
