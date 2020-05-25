@@ -124,7 +124,7 @@ DoubleFolderPanel::DoubleFolderPanel(QWidget* parent/* = Q_NULLPTR*/)
             ui->rightPanel->setLayout(vLayout);
         }
 
-        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+        FolderView* folderView = folderForm->findChild<FolderView*>(QStringLiteral("folderView"));
         Q_ASSERT(folderView != Q_NULLPTR);
 
         folderView->installEventFilter(this);
@@ -1031,7 +1031,7 @@ void DoubleFolderPanel::setActivePane(PaneType pane, bool focus/* = true*/)
 
     if(focus)
     {
-        FolderView* folderView = folderForm->findChild<FolderView*>("folderView");
+        FolderView* folderView = folderForm->findChild<FolderView*>(QStringLiteral("folderView"));
         Q_ASSERT(folderView != Q_NULLPTR);
 
         folderView->setFocus();
