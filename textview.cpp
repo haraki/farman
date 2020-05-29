@@ -115,7 +115,7 @@ int TextView::LineNumberArea::getAreaWidth() const
         digits = 2;
     }
 
-    return parent->fontMetrics().width('8') * (digits + 2);
+    return parent->fontMetrics().horizontalAdvance('8') * (digits + 2);
 }
 
 QSize TextView::LineNumberArea::sizeHint() const

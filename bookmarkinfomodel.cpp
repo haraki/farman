@@ -42,7 +42,7 @@ int BookmarkInfoModel::initialize(bool system)
             qDebug() << "Is read only" << volume.isReadOnly();
             qDebug() << QString("Bytes available: %L1 Bytes").arg(volume.bytesAvailable());
             qDebug() << QString("Bytes free: %L1 Bytes").arg(volume.bytesFree());
-            qDebug() << QString("Bytes total: %L1 Bytes").arg(volume.bytesTotal()) << endl;
+            qDebug() << QString("Bytes total: %L1 Bytes").arg(volume.bytesTotal()) << Qt::endl;
 
             if(volume.isValid() && volume.isReady()
 #ifdef Q_OS_LINUX

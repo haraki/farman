@@ -48,7 +48,7 @@ FolderForm::FolderForm(PaneType pane,
 
     m_folderModel->setAttrFilterFlags(attrFilterFlags);
     m_folderModel->setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
-    m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
+    m_folderModel->setNameFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', Qt::SkipEmptyParts));
 
     setSortSettings(sortSectionType, sortSectionType2nd, sortDirsType, sortDotFirst, sortCaseSensitivity, sortOrder);
 
@@ -330,7 +330,7 @@ int FolderForm::setPath(const QString& dirPath, bool addHistory/* = true*/)
 
     m_folderModel->clearSelected();
     setFileFolderFilterType(DEFAULT_FILE_FOLDER_FILTER_TYPE);
-    setNameMaskFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', QString::SkipEmptyParts));
+    setNameMaskFilters(QString(DEFAULT_NAME_MASK_FILTERS).simplified().split(' ', Qt::SkipEmptyParts));
     updateFilterLabel();
 
     m_folderModel->setRootPath(dirPath);

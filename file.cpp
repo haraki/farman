@@ -211,7 +211,7 @@ bool File::changeFileAttributes(const QString& path,
     QFile file(path);
     QFileInfo fileInfo(file);
 
-    qDebug() << "created : " << fileInfo.created() << ", newCreated : " << newCreated;
+    qDebug() << "created : " << fileInfo.birthTime() << ", newCreated : " << newCreated;
     qDebug() << "lastModified : " << fileInfo.lastModified() << ", newLastModified : " << newLastModified;
 
 #ifdef Q_OS_WIN
@@ -219,7 +219,7 @@ bool File::changeFileAttributes(const QString& path,
 #else
     bool changePermission   = file.permissions() != newPermissions;
 #endif
-    bool changeCreated      = fileInfo.created() != newCreated;
+    bool changeCreated      = fileInfo.birthTime() != newCreated;
     bool changeLastModified = fileInfo.lastModified() != newLastModified;
 
     if(changeCreated || changeLastModified

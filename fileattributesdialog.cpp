@@ -134,7 +134,7 @@ void FileAttributesDialog::accept()
         m_fileAttrFlags |= WinFileAttrFlag::Archive;
     }
 #else
-    m_permissions = 0;
+    m_permissions = QFile::Permissions();
 
     if(ui->permissionsOwnerReadCheckBox->isChecked())
     {

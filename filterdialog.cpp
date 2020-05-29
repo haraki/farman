@@ -99,7 +99,7 @@ void FilterDialog::accept()
         m_fileFolderFilterType = FileFolderFilterType::All;
     }
 
-    m_nameMaskFilters = ui->nameMaskFilterLineEdit->text().simplified().split(' ', QString::SkipEmptyParts);
+    m_nameMaskFilters = ui->nameMaskFilterLineEdit->text().simplified().split(' ', Qt::SkipEmptyParts);
     if(m_nameMaskFilters.isEmpty())
     {
         m_nameMaskFilters = QStringList("*");
@@ -117,7 +117,7 @@ void FilterDialog::on_nameMaskFilterLineEdit_textChanged(const QString &arg1)
 
 bool FilterDialog::valicationFilterString(const QString &nameMaskFilterString)
 {
-    QStringList nameMaskFilters = nameMaskFilterString.simplified().split(' ', QString::SkipEmptyParts);
+    QStringList nameMaskFilters = nameMaskFilterString.simplified().split(' ', Qt::SkipEmptyParts);
     for(auto filter : nameMaskFilters)
     {
         if(filter == "." || filter == "..")
