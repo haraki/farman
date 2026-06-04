@@ -1,3 +1,8 @@
+# ATTENTION #
+
+Farman は、https://github.com/mashsoft-jp/farman にて新たに作り直しました。
+このリポジトリは削除予定です。
+
 # README #
 
 Farman は macOS 及び Windows 用に開発された2画面ファイラです。
